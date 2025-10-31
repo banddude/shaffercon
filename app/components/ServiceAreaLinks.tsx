@@ -1,12 +1,22 @@
-import { getAllServiceAreaPages } from "@/lib/pages";
+import { getAllPages, type Page } from "@/lib/pages";
 import Link from "next/link";
+import { classNames, theme } from "@/app/styles/theme";
 
 interface ServiceAreaLinksProps {
   location: string;
 }
 
 export default function ServiceAreaLinks({ location }: ServiceAreaLinksProps) {
-  const services = getAllServiceAreaPages(location);
+  // Get all pages and filter for service area pages matching this location
+  const allPages = getAllPages();
+
+  const residential = allPages.filter((page: Page) =>
+    page.slug.includes(`residential-`) && page.slug.includes(location)
+  );
+
+  const commercial = allPages.filter((page: Page) =>
+    page.slug.includes(`commercial-`) && page.slug.includes(location)
+  );
 
   // Helper function to format service name from slug
   const formatServiceName = (slug: string): string => {
@@ -23,16 +33,16 @@ export default function ServiceAreaLinks({ location }: ServiceAreaLinksProps) {
   };
 
   return (
-    <div className="service-area-links">
-      {services.residential.length > 0 && (
+    <div>
+      {residential.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className={classNames.heading4}>
             Residential Services in {location.charAt(0).toUpperCase() + location.slice(1)}
           </h2>
           <ul className="list-disc pl-6 space-y-2">
-            {services.residential.map((service) => (
+            {residential.map((service) => (
               <li key={service.slug}>
-                <Link href={`/${service.slug}`} className="text-blue-600 hover:underline">
+                <Link href={`/${service.slug}`} className={classNames.link}>
                   {formatServiceName(service.slug)}
                 </Link>
               </li>
@@ -41,15 +51,15 @@ export default function ServiceAreaLinks({ location }: ServiceAreaLinksProps) {
         </div>
       )}
 
-      {services.commercial.length > 0 && (
+      {commercial.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className={classNames.heading4}>
             Commercial Services in {location.charAt(0).toUpperCase() + location.slice(1)}
           </h2>
           <ul className="list-disc pl-6 space-y-2">
-            {services.commercial.map((service) => (
+            {commercial.map((service) => (
               <li key={service.slug}>
-                <Link href={`/${service.slug}`} className="text-blue-600 hover:underline">
+                <Link href={`/${service.slug}`} className={classNames.link}>
                   {formatServiceName(service.slug)}
                 </Link>
               </li>

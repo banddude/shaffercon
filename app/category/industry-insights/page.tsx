@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/pages";
-import type { WordPressPost } from "@/types";
+import type { Post } from "@/lib/pages";
+import Image from "next/image";
+import { classNames, theme } from "@/app/styles/theme";
 
 export default function IndustryInsightsPage() {
   const posts = getAllPosts();
@@ -8,50 +10,57 @@ export default function IndustryInsightsPage() {
   return (
     <div>
       <header className="mb-12">
-        <h1 className="text-4xl font-bold mb-4">Industry Insights</h1>
-        <p className="text-xl text-gray-600">
+        <h1 className={classNames.heading2}>Industry Insights</h1>
+        <p className="text-xl" style={{ color: theme.colors.text.secondary }}>
           Stay informed with the latest news and insights about EV charging infrastructure,
           electrical services, and industry trends.
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post: WordPressPost, index: number) => {
-          // Use existing images from WordPress content
+      <div className={classNames.gridCols3 + " gap-8"}>
+        {posts.map((post: Post, index: number) => {
+          // Use existing images from WordPress content or fallback
           const heroImages = [
             "https://shaffercon.com/wp-content/uploads/2019/11/tesla-renewable-energy-640x471.jpg",
             "https://shaffercon.com/wp-content/uploads/2019/10/IMG_1633-640x471.jpeg",
             "https://shaffercon.com/wp-content/uploads/2019/11/3-640x480.jpg",
           ];
-          const heroImage = heroImages[index % heroImages.length];
+          const heroImage = post.content.images[0]?.src || heroImages[index % heroImages.length];
+
+          const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
 
           return (
-            <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <article key={post.id} className={classNames.card}>
               <Link href={`/blog/${post.slug}`} className="no-underline">
-                <div className="aspect-video w-full overflow-hidden bg-gray-200">
-                  <img
+                <div className="aspect-video w-full overflow-hidden bg-gray-200 relative">
+                  <Image
                     src={heroImage}
-                    alt={post.title.rendered}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    alt={post.title}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
                 <div className="p-6">
-                  <h2 className="text-xl font-bold mb-3 text-gray-900 hover:text-brand-blue">
-                    {post.title.rendered}
+                  <h2 className="text-xl font-bold mb-3 text-gray-900 transition-colors" style={{ color: "inherit" }}>
+                    {post.title}
                   </h2>
-                  <div
-                    className="text-gray-600 mb-4 line-clamp-3"
-                    dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-                  />
-                  <div className="flex items-center justify-between">
-                    <time className="text-sm text-gray-500">
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
+                  {post.seo.metaDescription && (
+                    <p className={classNames.bodyMuted + " mb-4 line-clamp-3"}>
+                      {post.seo.metaDescription}
+                    </p>
+                  )}
+                  <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: theme.colors.border }}>
+                    <time className={classNames.small} dateTime={post.date}>
+                      {formattedDate}
                     </time>
-                    <span className="text-brand-blue font-semibold">Read more →</span>
+                    <span style={{ color: theme.colors.primary.main }} className="font-semibold">
+                      Read more →
+                    </span>
                   </div>
                 </div>
               </Link>

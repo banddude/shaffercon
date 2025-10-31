@@ -1,48 +1,138 @@
+"use client";
+
 import siteConfig from "@/data/site-config.json";
 import type { SiteConfig } from "@/types";
+import Link from "next/link";
+import { classNames, theme } from "@/app/styles/theme";
 
 export default function Footer() {
   const config = siteConfig as SiteConfig;
 
   return (
-    <footer className="bg-[#4a7ba7] text-white py-12 mt-16">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <h3 className="text-3xl font-normal text-center mb-12 tracking-wider">LET'S WORK TOGETHER</h3>
+    <footer
+      style={{
+        background: theme.components.footer.background,
+        color: theme.components.footer.textColor,
+      }}
+      className="py-16 mt-20"
+    >
+      <div className={classNames.container}>
+        {/* CTA Section */}
+        <div className="mb-16 text-center">
+          <h3 className="text-4xl font-bold mb-4">Ready to Get Started?</h3>
+          <p className="text-lg mb-8 max-w-2xl mx-auto" style={{ color: theme.colors.neutral[300] }}>
+            Contact our team today for a free consultation on your electrical or EV charging needs
+          </p>
+          <a
+            href={`tel:${config.contact.phone}`}
+            className={classNames.buttonPrimary}
+            style={{
+              background: theme.components.button.primary.background,
+              color: theme.components.button.primary.textColor,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = theme.components.button.primary.backgroundHover;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = theme.components.button.primary.background;
+            }}
+          >
+            Call Now: {config.contact.phone}
+          </a>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="text-center md:text-left">
-            <h4 className="text-sm font-bold mb-4 text-white uppercase tracking-wide">WORKING HOURS</h4>
-            <p className="text-white mb-0">{config.contact.workingHours}</p>
+        {/* Footer Grid */}
+        <div
+          className={classNames.gridCols4 + " mb-12 pb-12"}
+          style={{
+            borderBottom: `1px solid ${theme.colors.neutral[700]}`,
+            gap: "3rem",
+          }}
+        >
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-lg font-bold mb-6">Quick Links</h4>
+            <ul className="space-y-3">
+              <li>
+                <Link
+                  href="/"
+                  className={classNames.linkLight}
+                  style={{ color: theme.colors.primary.light }}
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about-us"
+                  className={classNames.linkLight}
+                  style={{ color: theme.colors.primary.light }}
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/industry-insights"
+                  className={classNames.linkLight}
+                  style={{ color: theme.colors.primary.light }}
+                >
+                  Industry Insights
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact-us"
+                  className={classNames.linkLight}
+                  style={{ color: theme.colors.primary.light }}
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          <div className="text-center md:text-left">
-            <h4 className="text-sm font-bold mb-4 text-white uppercase tracking-wide">LOCATION</h4>
-            <p className="text-white mb-0">
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-lg font-bold mb-6">Contact</h4>
+            <ul className="space-y-3" style={{ color: theme.colors.neutral[300] }}>
+              <li>
+                <a href={`tel:${config.contact.phone}`} className={classNames.linkLight} style={{ color: theme.colors.primary.light }}>
+                  {config.contact.phone}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${config.contact.email}`} className={classNames.linkLight} style={{ color: theme.colors.primary.light }}>
+                  {config.contact.email}
+                </a>
+              </li>
+              <li>{config.contact.workingHours}</li>
+            </ul>
+          </div>
+
+          {/* Location */}
+          <div>
+            <h4 className="text-lg font-bold mb-6">Location</h4>
+            <p style={{ color: theme.colors.neutral[300] }}>
               {config.contact.address.street}<br />
               {config.contact.address.city}, {config.contact.address.state} {config.contact.address.zip}
             </p>
           </div>
 
-          <div className="text-center md:text-left">
-            <h4 className="text-sm font-bold mb-4 text-white uppercase tracking-wide">REACH OUT TO US</h4>
-            <p className="text-white mb-1">
-              Call or Text: <a href={`tel:${config.contact.phone}`} className="text-white hover:text-gray-200 no-underline">{config.contact.phone}</a>
-            </p>
-            <p className="text-white mb-0">
-              Email: <a href={`mailto:${config.contact.email}`} className="text-white hover:text-gray-200 no-underline">{config.contact.email}</a>
-            </p>
-          </div>
-
-          <div className="text-center md:text-left">
-            <h4 className="text-sm font-bold mb-4 text-white uppercase tracking-wide">Licenses</h4>
-            {config.business.licenses.map((license, index) => (
-              <p key={index} className="text-white mb-1">{license}</p>
-            ))}
+          {/* Licenses */}
+          <div>
+            <h4 className="text-lg font-bold mb-6">Licenses</h4>
+            <ul className="space-y-2 text-sm" style={{ color: theme.colors.neutral[300] }}>
+              {config.business.licenses.map((license, index) => (
+                <li key={index}>{license}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 text-center border-t border-white/20">
-          <p className="text-white text-sm mb-0">&copy; {new Date().getFullYear()} {config.siteName}</p>
+        {/* Copyright */}
+        <div className="text-center text-sm" style={{ color: theme.colors.neutral[400] }}>
+          <p>&copy; {new Date().getFullYear()} {config.siteName}. All rights reserved.</p>
         </div>
       </div>
     </footer>

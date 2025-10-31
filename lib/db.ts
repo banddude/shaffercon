@@ -1,31 +1,71 @@
 import Database from "better-sqlite3";
 import path from "path";
 
-const dbPath = path.join(process.cwd(), "data", "site.db");
-const db = new Database(dbPath);
+let db: Database.Database | null = null;
 
-// Create tables if they don't exist
-db.exec(`
-  CREATE TABLE IF NOT EXISTS pages (
-    id INTEGER PRIMARY KEY,
-    date TEXT,
-    slug TEXT UNIQUE NOT NULL,
-    title TEXT,
-    content TEXT,
-    data TEXT
-  );
+export function getDb() {
+  if (!db) {
+    const dbPath = path.join(process.cwd(), "data", "site.db");
+    db = new Database(dbPath, { readonly: true });
+  }
+  return db;
+}
 
-  CREATE TABLE IF NOT EXISTS posts (
-    id INTEGER PRIMARY KEY,
-    date TEXT,
-    slug TEXT UNIQUE NOT NULL,
-    title TEXT,
-    content TEXT,
-    data TEXT
-  );
+export interface PageRow {
+  id: number;
+  date: string;
+  slug: string;
+  title: string;
+  content: string;
+  meta_title: string | null;
+  meta_description: string | null;
+  canonical_url: string | null;
+  og_image: string | null;
+  schema_json: string | null;
+  yoast_json: string | null;
+  parsed_content: string;
+}
 
-  CREATE INDEX IF NOT EXISTS idx_pages_slug ON pages(slug);
-  CREATE INDEX IF NOT EXISTS idx_posts_slug ON posts(slug);
-`);
+export interface PostRow {
+  id: number;
+  date: string;
+  slug: string;
+  title: string;
+  content: string;
+  meta_title: string | null;
+  meta_description: string | null;
+  canonical_url: string | null;
+  og_image: string | null;
+  schema_json: string | null;
+  yoast_json: string | null;
+  parsed_content: string;
+}
+
+export interface ParsedContent {
+  page_type: string;
+  slug: string;
+  headings: Array<{ level: string; text: string }>;
+  all_text_content: string[];
+  lists: Array<{ type: string; items: string[] }>;
+  images: Array<{ src: string; alt: string }>;
+  links: Array<{ href: string; text: string }>;
+}
+
+export interface PageSection {
+  id: number;
+  page_id: number;
+  section_type: string;
+  heading: string | null;
+  content: string | null;
+  section_order: number;
+}
+
+export interface FormField {
+  id: number;
+  section_id: number;
+  field_name: string;
+  field_type: string | null;
+  field_order: number;
+}
 
 export default db;

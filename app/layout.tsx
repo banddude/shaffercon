@@ -2,14 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import siteConfig from "@/data/site-config.json";
-import type { SiteConfig } from "@/types";
-
-const config = siteConfig as SiteConfig;
+import { theme } from "./styles/theme";
 
 export const metadata: Metadata = {
-  title: config.siteName,
-  description: config.description,
+  title: "Shaffer Construction",
+  description: "Los Angeles electrical contractor specializing in EV charging installation",
 };
 
 export default function RootLayout({
@@ -19,15 +16,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body
+        className="flex flex-col min-h-screen"
+        style={{
+          background: theme.colors.background.light,
+          color: theme.colors.text.primary,
+        }}
+      >
         <Header />
-
         <main className="flex-grow">
-          <div className="container mx-auto px-4 py-8 max-w-6xl">
-            {children}
-          </div>
+          {children}
         </main>
-
         <Footer />
       </body>
     </html>

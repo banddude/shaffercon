@@ -1,49 +1,82 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import menuData from "@/data/menu-structure.json";
 import siteConfig from "@/data/site-config.json";
-import type { MenuData, SiteConfig } from "@/types";
+import { classNames, theme } from "@/app/styles/theme";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const menu = menuData as MenuData;
-  const config = siteConfig as SiteConfig;
 
   return (
-    <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo/Brand */}
-          <Link href="/" className="flex items-center no-underline hover:no-underline">
-            <img
-              src={config.logoUrl}
-              alt={config.siteName}
-              className="h-12"
+    <header
+      className="sticky top-0 z-50"
+      style={{
+        background: theme.components.header.background,
+        borderBottom: theme.components.header.borderBottom,
+      }}
+    >
+      <div className={classNames.container}>
+        <div className="flex justify-between items-center" style={{ height: theme.components.header.height }}>
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0">
+            <Image
+              src={siteConfig.logoUrl}
+              alt="Shaffer Construction"
+              width={120}
+              height={50}
+              className="h-auto"
             />
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {menu.primaryMenu.map((item) => (
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {menuData.primaryMenu.map((item) => (
               <div key={item.label} className="relative group">
                 <Link
                   href={item.href}
-                  className="text-gray-700 hover:text-brand-blue font-medium no-underline"
+                  className="px-3 py-2 font-medium flex items-center transition-colors"
+                  style={{ color: theme.colors.text.primary }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = theme.colors.primary.main)}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = theme.colors.text.primary)}
                 >
                   {item.label}
+                  {item.children && (
+                    <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  )}
                 </Link>
 
-                {/* Dropdown for Service Areas */}
+                {/* Dropdown Menu */}
                 {item.children && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div
+                    className="absolute left-0 mt-0 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 rounded-md"
+                    style={{
+                      background: theme.colors.background.light,
+                      border: `1px solid ${theme.colors.border}`,
+                      boxShadow: theme.shadows.xl,
+                    }}
+                  >
                     <div className="py-2">
                       {item.children.map((child) => (
                         <Link
                           key={child.label}
                           href={child.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline"
+                          className="block px-4 py-3 text-sm transition-colors"
+                          style={{
+                            color: theme.colors.text.primary,
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.color = theme.colors.primary.main;
+                            e.currentTarget.style.background = theme.colors.neutral[100];
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.color = theme.colors.text.primary;
+                            e.currentTarget.style.background = "transparent";
+                          }}
                         >
                           {child.label}
                         </Link>
@@ -53,20 +86,33 @@ export default function Header() {
                 )}
               </div>
             ))}
+          </nav>
 
-            {/* Phone Number */}
+          {/* CTA Button */}
+          <div className="hidden md:flex items-center space-x-4">
             <a
-              href={`tel:${config.contact.phone}`}
-              className="bg-brand-blue text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 no-underline"
+              href={`tel:${menuData.phone}`}
+              className={classNames.buttonPrimary}
+              style={{
+                background: theme.components.button.primary.background,
+                color: theme.components.button.primary.textColor,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = theme.components.button.primary.backgroundHover;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = theme.components.button.primary.background;
+              }}
             >
-              {config.contact.phone}
+              Call Now
             </a>
           </div>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-700"
+            className="md:hidden p-2 transition-colors"
+            style={{ color: theme.colors.text.primary }}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -74,24 +120,31 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4">
-            {menu.primaryMenu.map((item) => (
-              <div key={item.label} className="mb-2">
+          <div
+            className="md:hidden py-4 max-h-96 overflow-y-auto"
+            style={{
+              borderTop: theme.components.header.borderBottom,
+            }}
+          >
+            {menuData.primaryMenu.map((item) => (
+              <div key={item.label}>
                 <Link
                   href={item.href}
-                  className="block py-2 text-gray-700 hover:text-brand-blue no-underline"
+                  className="block px-3 py-2 font-medium transition-colors"
+                  style={{ color: theme.colors.text.primary }}
                 >
                   {item.label}
                 </Link>
                 {item.children && (
-                  <div className="pl-4">
+                  <div className="pl-4 space-y-1">
                     {item.children.map((child) => (
                       <Link
                         key={child.label}
                         href={child.href}
-                        className="block py-1 text-sm text-gray-600 hover:text-brand-blue no-underline"
+                        className="block px-3 py-2 text-sm transition-colors"
+                        style={{ color: theme.colors.text.secondary }}
                       >
                         {child.label}
                       </Link>
@@ -100,9 +153,19 @@ export default function Header() {
                 )}
               </div>
             ))}
+            <a
+              href={`tel:${menuData.phone}`}
+              className={`block px-3 py-2 mt-2 text-center rounded-lg ${classNames.buttonPrimary}`}
+              style={{
+                background: theme.components.button.primary.background,
+                color: theme.components.button.primary.textColor,
+              }}
+            >
+              Call Now
+            </a>
           </div>
         )}
       </div>
-    </nav>
+    </header>
   );
 }
