@@ -69,9 +69,18 @@ export default async function Home() {
       .filter((p) => p.length > 0);
   };
 
-  const paragraphs = fullContentSection?.content
+  let paragraphs = fullContentSection?.content
     ? parseParagraphs(fullContentSection.content)
     : [];
+
+  // Remove first paragraph if it matches the hero heading
+  if (
+    heroSection?.heading &&
+    paragraphs.length > 0 &&
+    paragraphs[0] === heroSection.heading
+  ) {
+    paragraphs = paragraphs.slice(1);
+  }
 
   return (
     <main className="w-full">
