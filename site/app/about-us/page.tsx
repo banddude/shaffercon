@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
-import { Section, Container, PageTitle, Paragraph } from "@/app/components/UI";
+import { Section, Container, PageTitle, SectionHeading, Paragraph } from "@/app/components/UI";
+import CTA from "@/app/components/CTA";
 
 // Get about page data
 async function getAboutPage() {
@@ -100,6 +101,9 @@ export default async function AboutPage() {
           </Container>
         </Section>
       )}
+
+      {/* CTA Section */}
+      <CTA />
     </main>
   );
 }
