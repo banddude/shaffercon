@@ -15,7 +15,7 @@ async function getHomePage() {
   if (!page) return null;
 
   const sections = db.prepare(`
-    SELECT section_type, heading, content
+    SELECT section_type, heading, content, image_url
     FROM page_sections
     WHERE page_id = ?
     ORDER BY section_order
@@ -23,6 +23,7 @@ async function getHomePage() {
     section_type: string;
     heading: string;
     content: string;
+    image_url?: string;
   }>;
 
   return {
@@ -98,10 +99,38 @@ export default async function Home() {
       {heroSection && heroSection.heading && (
         <Section border="bottom" padding="lg">
           <Container maxWidth="lg">
+            {heroSection.image_url && (
+              <div className="mb-6 rounded-lg overflow-hidden">
+                <img src={heroSection.image_url} alt="Hero" className="w-full h-auto object-cover max-h-96" />
+              </div>
+            )}
             <PageTitle>{heroSection.heading}</PageTitle>
           </Container>
         </Section>
       )}
+
+      {/* Content Sections with Images */}
+      {page.sections?.filter((s: any) => s.section_type === 'content').map((section: any, idx: number) => (
+        <Section key={idx} padding="lg">
+          <Container maxWidth="lg">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              {section.image_url && (
+                <div className="w-full md:w-1/3 flex-shrink-0">
+                  <img src={section.image_url} alt={section.heading} className="w-full h-auto rounded-lg object-cover" />
+                </div>
+              )}
+              <div className={section.image_url ? 'w-full md:w-2/3' : 'w-full'}>
+                {section.heading && (
+                  <SectionHeading className="mb-4">{section.heading}</SectionHeading>
+                )}
+                {section.content && (
+                  <Paragraph>{section.content}</Paragraph>
+                )}
+              </div>
+            </div>
+          </Container>
+        </Section>
+      ))}
 
       {/* Main Content */}
       {paragraphs.length > 0 && (

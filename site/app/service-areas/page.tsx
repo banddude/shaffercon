@@ -18,6 +18,7 @@ type PageSection = {
   section_type: string;
   heading: string | null;
   content: string | null;
+  image_url?: string | null;
 };
 
 type ServiceLocation = {
@@ -50,7 +51,7 @@ async function getServiceAreasPage() {
   if (!page) return null;
 
   const sections = db.prepare(`
-    SELECT section_type, heading, content
+    SELECT section_type, heading, content, image_url
     FROM page_sections
     WHERE page_id = ?
     ORDER BY section_order
@@ -264,6 +265,11 @@ export default async function ServiceAreasPage() {
     <main className="w-full">
       <Section border="bottom" padding="md">
         <Container maxWidth="lg">
+          {heroSection?.image_url && (
+            <div className="mb-6 rounded-lg overflow-hidden">
+              <img src={heroSection.image_url} alt="Service Areas Hero" className="w-full h-auto object-cover max-h-96" />
+            </div>
+          )}
           <div className="space-y-6">
             {tagline && (
               <p className="text-sm font-semibold uppercase tracking-[0.25em]">{tagline}</p>

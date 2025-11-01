@@ -15,7 +15,7 @@ async function getContactPage() {
   if (!page) return null;
 
   const sections = db.prepare(`
-    SELECT section_type, heading, content
+    SELECT section_type, heading, content, image_url
     FROM page_sections
     WHERE page_id = ?
     ORDER BY section_order
@@ -23,6 +23,7 @@ async function getContactPage() {
     section_type: string;
     heading: string;
     content: string;
+    image_url?: string;
   }>;
 
   return {
@@ -66,13 +67,22 @@ export default async function ContactPage() {
       <h1 className="text-4xl font-bold mb-8">{page.title}</h1>
 
       {page.sections && page.sections.map((section: any, index: number) => (
-        <div key={index} className="mb-8">
-          {section.heading && (
-            <h2 className="text-2xl font-bold mb-4">{section.heading}</h2>
-          )}
-          {section.content && (
-            <div className="prose max-w-none mb-6" dangerouslySetInnerHTML={{ __html: section.content }} />
-          )}
+        <div key={index} className="mb-12">
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            {section.image_url && (
+              <div className="w-full md:w-1/3 flex-shrink-0">
+                <img src={section.image_url} alt={section.heading} className="w-full h-auto rounded-lg object-cover" />
+              </div>
+            )}
+            <div className={section.image_url ? 'w-full md:w-2/3' : 'w-full'}>
+              {section.heading && (
+                <h2 className="text-2xl font-bold mb-4">{section.heading}</h2>
+              )}
+              {section.content && (
+                <div className="prose max-w-none mb-6" dangerouslySetInnerHTML={{ __html: section.content }} />
+              )}
+            </div>
+          </div>
         </div>
       ))}
 
