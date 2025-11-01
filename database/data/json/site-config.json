@@ -1,0 +1,30 @@
+{
+  "siteName": "Shaffer Construction, Inc.",
+  "logoUrl": "https://shaffercon.com/wp-content/uploads/2019/11/shaffer-logo.png",
+  "tagline": "A Southern California general contractor specializing in EV charging and electrical installations.",
+  "description": "Los Angeles electrical contractor for EV charger installation, residential & commercial services. Licensed, experienced—free estimates!",
+  "contact": {
+    "phone": "(323) 642-8509",
+    "email": "hello@shaffercon.com",
+    "address": {
+      "street": "325 N. Larchmont Blvd. #202",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90004"
+    },
+    "workingHours": "Mon - Fri 8:00am-5:00pm"
+  },
+  "business": {
+    "license": "LICENSED & INSURED",
+    "licenses": [
+      "A - General Engineering Contractor",
+      "B - General Building Contractor",
+      "C10 - Electrical Contractor"
+    ],
+    "serviceArea": "Serving Los Angeles and surrounding areas"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/shaffercon",
+    "instagram": "https://www.instagram.com/shafferconstructioninc"
+  }
+}
