@@ -62,6 +62,8 @@ export default async function Home() {
   const heroSection = page.sections?.find((s: any) => s.section_type === 'hero');
   const fullContentSection = page.sections?.find((s: any) => s.section_type === 'full_content');
 
+  const contentSections = page.sections?.filter((s: any) => s.section_type === 'content') || [];
+
   return (
     <main className="w-full">
       {/* Hero Section */}
@@ -78,10 +80,25 @@ export default async function Home() {
         </Section>
       )}
 
-      {/* Main Content */}
-      {fullContentSection?.content && (
-        <Section padding="lg">
+      {/* Content Sections */}
+      {contentSections.map((section: any, idx: number) => (
+        <Section key={idx} padding="lg">
           <Container maxWidth="lg">
+            {section.heading && (
+              <SectionHeading className="mb-6">{section.heading}</SectionHeading>
+            )}
+            {section.content && (
+              <Paragraph>{section.content}</Paragraph>
+            )}
+          </Container>
+        </Section>
+      ))}
+
+      {/* Why Choose Section */}
+      {fullContentSection?.content && (
+        <Section padding="lg" border="top">
+          <Container maxWidth="lg">
+            <SectionHeading className="mb-6">Why Choose Shaffer Construction?</SectionHeading>
             <Paragraph>{fullContentSection.content}</Paragraph>
           </Container>
         </Section>
