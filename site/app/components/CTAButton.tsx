@@ -22,7 +22,7 @@ export default function CTAButton({ phone }: CTAButtonProps) {
         e.currentTarget.style.background = 'white';
       }}
     >
-      Call Now: {phone}
+      {phone}
     </a>
   );
 }

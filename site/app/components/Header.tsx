@@ -38,7 +38,7 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center space-x-0">
             {menuData.primaryMenu.map((item) => (
               <div key={item.label} className="relative group">
                 <Link
