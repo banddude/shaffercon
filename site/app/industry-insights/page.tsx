@@ -1,8 +1,9 @@
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { classNames, theme } from "@/app/styles/theme";
+import { classNames } from "@/app/styles/theme";
 import CTA from "@/app/components/CTA";
+import { Section, Container, PageTitle } from "@/app/components/UI";
 
 // Get all blog posts
 async function getAllPosts() {
@@ -36,55 +37,62 @@ export default async function IndustryInsightsPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className={classNames.container + " py-8"}>
-      <div className={classNames.pageHeader}>
-        <h1 className={classNames.pageTitle}>Industry Insights</h1>
-        <p className={classNames.pageSubtitle} style={{ color: theme.colors.text.secondary }}>
-          Stay informed with the latest news, trends, and insights in electrical services, EV charging, and the construction industry.
-        </p>
-      </div>
+    <main className="w-full">
+      {/* Hero Section */}
+      <Section border="bottom" padding="lg">
+        <Container maxWidth="lg">
+          <PageTitle>Industry Insights</PageTitle>
+          <p className="text-lg mt-4">
+            Stay informed with the latest news, trends, and insights in electrical services, EV charging, and the construction industry.
+          </p>
+        </Container>
+      </Section>
 
       {/* Blog Posts Grid */}
-      <div className={classNames.blogGrid}>
-        {posts.map((post) => {
-          const postDate = new Date(post.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          });
+      <Section padding="lg">
+        <Container maxWidth="lg">
+          <div className={classNames.blogGrid}>
+            {posts.map((post) => {
+              const postDate = new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              });
 
-          return (
-            <Link
-              key={post.id}
-              href={`/industry-insights/${post.slug}`}
-              className={classNames.blogCard}
-            >
-              {/* Hero Image */}
-              {post.og_image && (
-                <div className={classNames.blogImageContainer}>
-                  <img
-                    src={post.og_image}
-                    alt={post.title}
-                    className={classNames.blogImage}
-                  />
-                </div>
-              )}
+              return (
+                <Link
+                  key={post.id}
+                  href={`/industry-insights/${post.slug}`}
+                  className={classNames.blogCard}
+                >
+                  {/* Hero Image */}
+                  {post.og_image && (
+                    <div className={classNames.blogImageContainer}>
+                      <img
+                        src={post.og_image}
+                        alt={post.title}
+                        className={classNames.blogImage}
+                      />
+                    </div>
+                  )}
 
-              <div className={classNames.blogCardContent}>
-                <div className={classNames.blogMeta}>
-                  <time>{postDate}</time>
-                </div>
-                <h2 className={`${classNames.blogTitle} ${classNames.blogTitleHover} overflow-hidden`} style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
-                  {post.title}
-                </h2>
-                {post.meta_description && (
-                  <p className={classNames.blogDescription} style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.meta_description}</p>
-                )}
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+                  <div className={classNames.blogCardContent}>
+                    <div className={classNames.blogMeta}>
+                      <time>{postDate}</time>
+                    </div>
+                    <h2 className={`${classNames.blogTitle} ${classNames.blogTitleHover} overflow-hidden`} style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
+                      {post.title}
+                    </h2>
+                    {post.meta_description && (
+                      <p className={classNames.blogDescription} style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.meta_description}</p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
 
       {/* CTA */}
       <CTA
@@ -93,6 +101,6 @@ export default async function IndustryInsightsPage() {
         buttonText="Contact Us"
         buttonHref="/contact-us"
       />
-    </div>
+    </main>
   );
 }

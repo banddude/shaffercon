@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import { typographySizes } from "@/app/styles/theme";
 
 interface PageTitleProps {
   children: ReactNode;
@@ -9,7 +10,10 @@ interface PageTitleProps {
 
 export function PageTitle({ children, className = "" }: PageTitleProps) {
   return (
-    <h1 className={`text-2xl md:text-3xl font-bold max-w-4xl leading-snug ${className}`}>
+    <h1
+      className={`${typographySizes.pageTitle} font-black tracking-tight leading-tight max-w-4xl mb-6 ${className}`}
+      style={{ color: "var(--text)" }}
+    >
       {children}
     </h1>
   );
@@ -22,7 +26,10 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ children, className = "" }: SectionHeadingProps) {
   return (
-    <h2 className={`text-xl md:text-2xl font-bold mb-4 leading-snug ${className}`}>
+    <h2
+      className={`${typographySizes.sectionHeading} font-black tracking-tight leading-tight mb-8 ${className}`}
+      style={{ color: "var(--text)" }}
+    >
       {children}
     </h2>
   );
@@ -35,7 +42,10 @@ interface SubheadingProps {
 
 export function Subheading({ children, className = "" }: SubheadingProps) {
   return (
-    <h3 className={`text-lg md:text-xl font-semibold mb-3 ${className}`}>
+    <h3
+      className={`${typographySizes.subheading} font-semibold mb-4 leading-snug ${className}`}
+      style={{ color: "var(--text)" }}
+    >
       {children}
     </h3>
   );
@@ -48,7 +58,10 @@ interface ParagraphProps {
 
 export function Paragraph({ children, className = "" }: ParagraphProps) {
   return (
-    <p className={`text-base leading-relaxed mb-4 ${className}`}>
+    <p
+      className={`${typographySizes.paragraph} leading-relaxed mb-6 ${className}`}
+      style={{ color: "var(--secondary)" }}
+    >
       {children}
     </p>
   );

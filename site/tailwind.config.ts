@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: "media", // Enable dark mode based on system preferences
+  darkMode: ["class", "media"], // Enable dark mode with class selector and system preferences fallback
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getDb, getSiteConfig } from "@/lib/db";
 import type { Metadata } from "next";
 import ContactForm from "@/app/components/ContactForm";
+import { Section, Container, PageTitle, Paragraph } from "@/app/components/UI";
 
 // Get contact page data
 async function getContactPage() {
@@ -63,30 +64,20 @@ export default async function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">{page.title}</h1>
+    <main className="w-full">
+      {/* Hero Section */}
+      <Section border="bottom" padding="lg">
+        <Container maxWidth="lg">
+          <PageTitle>{page.title}</PageTitle>
+        </Container>
+      </Section>
 
-      {page.sections && page.sections.map((section: any, index: number) => (
-        <div key={index} className="mb-12">
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            {section.image_url && (
-              <div className="w-full md:w-1/3 flex-shrink-0">
-                <img src={section.image_url} alt={section.heading} className="w-full h-auto rounded-lg object-cover" />
-              </div>
-            )}
-            <div className={section.image_url ? 'w-full md:w-2/3' : 'w-full'}>
-              {section.heading && (
-                <h2 className="text-2xl font-bold mb-4">{section.heading}</h2>
-              )}
-              {section.content && (
-                <div className="prose max-w-none mb-6" dangerouslySetInnerHTML={{ __html: section.content }} />
-              )}
-            </div>
-          </div>
-        </div>
-      ))}
-
-      <ContactForm title="Get in Touch" siteConfig={siteConfig} />
-    </div>
+      {/* Contact Form */}
+      <Section padding="lg">
+        <Container maxWidth="lg">
+          <ContactForm title="Get in Touch" siteConfig={siteConfig} />
+        </Container>
+      </Section>
+    </main>
   );
 }

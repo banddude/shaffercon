@@ -127,7 +127,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         <Container>
           <PageTitle>{page.title}</PageTitle>
           {page.hero_intro && (
-            <p className="text-base leading-relaxed mt-4">{page.hero_intro}</p>
+            <p className="text-base leading-relaxed mt-4" style={{ color: "var(--secondary)" }}>{page.hero_intro}</p>
           )}
         </Container>
       </Section>
@@ -140,8 +140,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <div className="grid md:grid-cols-2 gap-8">
               {page.benefits.map((benefit: any, index: number) => (
                 <ContentBox key={index} border padding="md">
-                  <h3 className="text-lg font-semibold mb-3">{benefit.heading}</h3>
-                  <p className="text-base leading-relaxed">{benefit.content}</p>
+                  <h3 className="text-lg font-semibold mb-3" style={{ color: "var(--text)" }}>{benefit.heading}</h3>
+                  <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>{benefit.content}</p>
                 </ContentBox>
               ))}
             </div>
@@ -156,7 +156,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <SectionHeading>Our Services Include</SectionHeading>
             <ul className="list-disc list-inside space-y-2">
               {page.offerings.map((offering: string, index: number) => (
-                <li key={index} className="text-base">{offering}</li>
+                <li key={index} className="text-base" style={{ color: "var(--secondary)" }}>{offering}</li>
               ))}
             </ul>
           </Container>
@@ -180,8 +180,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <div className="space-y-6">
               {page.faqs.map((faq: any, index: number) => (
                 <ContentBox key={index} border padding="md">
-                  <h3 className="text-lg font-semibold mb-3">{faq.question}</h3>
-                  <p className="text-base leading-relaxed">{faq.answer}</p>
+                  <h3 className="text-lg font-semibold mb-3" style={{ color: "var(--text)" }}>{faq.question}</h3>
+                  <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>{faq.answer}</p>
                 </ContentBox>
               ))}
             </div>
@@ -196,7 +196,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <SectionHeading>Related Services</SectionHeading>
             <ul className="list-disc list-inside space-y-2">
               {page.relatedServices.map((service: string, index: number) => (
-                <li key={index} className="text-base">{service}</li>
+                <li key={index} className="text-base" style={{ color: "var(--secondary)" }}>{service}</li>
               ))}
             </ul>
           </Container>
@@ -210,7 +210,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <SectionHeading>We Also Serve</SectionHeading>
             <ul className="list-disc list-inside space-y-2">
               {page.nearbyAreas.map((area: string, index: number) => (
-                <li key={index} className="text-base">{area}</li>
+                <li key={index} className="text-base" style={{ color: "var(--secondary)" }}>{area}</li>
               ))}
             </ul>
           </Container>

@@ -1,48 +1,80 @@
 /**
  * Theme configuration for Shaffer Construction
- * Centralized color scheme and styling constants
+ * 4-color system that switches between light and dark modes
  */
 
+// LIGHT MODE - 4 core colors
+const COLORS_LIGHT = {
+  primary: "#2b7fbd",      // Blue accents/links
+  secondary: "#000000",    // Black text/headings
+  background: "#ffffff",   // White background
+  text: "#000000",         // Black text
+};
+
+// DARK MODE - 4 core colors (same structure, different values)
+const COLORS_DARK = {
+  primary: "#2b7fbd",      // Blue accents/links (same)
+  secondary: "#a9a9a9",    // Grey text
+  background: "#000000",   // Black background
+  text: "#ffffff",         // White headings
+};
+
+/**
+ * Get the currently active colors based on dark mode state
+ * Checks if dark class is present on document.documentElement
+ */
+function getActiveColorScheme() {
+  try {
+    if (typeof document === "undefined" || !document.documentElement) {
+      // Server-side or document not available, default to light colors
+      return {
+        ...COLORS_LIGHT,
+        white: COLORS_LIGHT.background,
+        black: COLORS_LIGHT.secondary,
+        grey: COLORS_LIGHT.secondary,
+        blue: COLORS_LIGHT.primary,
+        border: COLORS_LIGHT.secondary,
+      };
+    }
+
+    const isDark = document.documentElement.classList.contains("dark");
+    const colorScheme = isDark ? COLORS_DARK : COLORS_LIGHT;
+
+    return {
+      ...colorScheme,
+      white: colorScheme.background,
+      black: colorScheme.secondary,
+      grey: colorScheme.secondary,
+      blue: colorScheme.primary,
+      border: colorScheme.secondary,
+    };
+  } catch (e) {
+    // Fallback to light colors if any error occurs
+    return {
+      ...COLORS_LIGHT,
+      white: COLORS_LIGHT.background,
+      black: COLORS_LIGHT.secondary,
+      grey: COLORS_LIGHT.secondary,
+      blue: COLORS_LIGHT.primary,
+      border: COLORS_LIGHT.secondary,
+    };
+  }
+}
+
 export const theme = {
+  // Light mode colors (default) - 4 core colors plus aliases for backward compatibility
   colors: {
-    primary: {
-      light: "#3786C1", // Shaffer light blue (from logo)
-      main: "#527EA2", // Shaffer medium blue (logo color - actual extracted)
-      dark: "#3D5A7A", // Shaffer dark blue
-      darker: "#2A3F52", // Shaffer darker blue
-    },
-    secondary: {
-      light: "#0ea5e9", // sky-500
-      main: "#0284c7", // sky-600
-      dark: "#0369a1", // sky-700
-    },
-    neutral: {
-      50: "#f9fafb",
-      100: "#f3f4f6",
-      200: "#e5e7eb",
-      300: "#d1d5db",
-      400: "#9ca3af",
-      500: "#6b7280",
-      600: "#4b5563",
-      700: "#374151",
-      800: "#1f2937",
-      900: "#111827",
-    },
-    text: {
-      primary: "#111827", // gray-900
-      secondary: "#6b7280", // gray-500
-      light: "#f3f4f6", // gray-100
-      muted: "#9ca3af", // gray-400
-    },
-    background: {
-      light: "#ffffff",
-      subtle: "#f9fafb",
-      dark: "#1f2937",
-      darker: "#111827",
-    },
-    border: "#e5e7eb", // gray-200
-    divider: "#d1d5db", // gray-300
+    ...COLORS_LIGHT,
+    // Aliases pointing to the 4 core colors
+    white: COLORS_LIGHT.background,
+    black: COLORS_LIGHT.secondary,
+    grey: COLORS_LIGHT.secondary,
+    blue: COLORS_LIGHT.primary,
+    border: COLORS_LIGHT.secondary,
   },
+  colorsDark: COLORS_DARK,
+  // Smart getter that returns colors based on current dark mode state
+  getActiveColors: getActiveColorScheme,
 
   typography: {
     fontFamily: {
@@ -50,15 +82,15 @@ export const theme = {
       mono: "'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
     },
     fontSize: {
-      xs: "0.75rem", // 12px
-      sm: "0.875rem", // 14px
-      base: "1rem", // 16px
-      lg: "1.125rem", // 18px
-      xl: "1.25rem", // 20px
-      "2xl": "1.5rem", // 24px
-      "3xl": "1.875rem", // 30px
-      "4xl": "2.25rem", // 36px
-      "5xl": "3rem", // 48px
+      xs: "0.75rem",
+      sm: "0.875rem",
+      base: "1rem",
+      lg: "1.125rem",
+      xl: "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
     },
     fontWeight: {
       light: 300,
@@ -78,14 +110,14 @@ export const theme = {
   },
 
   spacing: {
-    xs: "0.25rem", // 4px
-    sm: "0.5rem", // 8px
-    md: "1rem", // 16px
-    lg: "1.5rem", // 24px
-    xl: "2rem", // 32px
-    "2xl": "3rem", // 48px
-    "3xl": "4rem", // 64px
-    "4xl": "6rem", // 96px
+    xs: "0.25rem",
+    sm: "0.5rem",
+    md: "1rem",
+    lg: "1.5rem",
+    xl: "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem",
+    "4xl": "6rem",
   },
 
   shadows: {
@@ -97,10 +129,10 @@ export const theme = {
 
   borderRadius: {
     none: "0",
-    sm: "0.125rem", // 2px
-    md: "0.375rem", // 6px
-    lg: "0.5rem", // 8px
-    xl: "0.75rem", // 12px
+    sm: "0.125rem",
+    md: "0.375rem",
+    lg: "0.5rem",
+    xl: "0.75rem",
     full: "9999px",
   },
 
@@ -118,129 +150,187 @@ export const theme = {
     "2xl": "1536px",
   },
 
-  // Component-specific styles
+  // Component-specific styles - All use the 4 colors
   components: {
     header: {
       height: "80px",
-      background: "#ffffff",
-      borderBottom: "1px solid #e5e7eb",
+      background: "var(--background-light)",
+      borderBottom: "1px solid var(--background-light)",
     },
     footer: {
-      background: "#1f2937",
-      textColor: "#ffffff",
+      background: "var(--background-light)",
+      textColor: "var(--text-light)",
     },
     button: {
       primary: {
-        background: "#527EA2",
-        backgroundHover: "#3D5A7A",
-        textColor: "#ffffff",
+        background: "var(--primary-light)",
+        backgroundHover: "var(--primary-light)",
+        backgroundActive: "var(--primary-light)",
+        textColor: COLORS_LIGHT.background,
+        shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+        shadowHover: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
       },
       secondary: {
-        background: "#e5e7eb",
-        backgroundHover: "#d1d5db",
-        textColor: "#111827",
+        background: "var(--secondary-light)",
+        backgroundHover: "var(--secondary-light)",
+        backgroundActive: "var(--secondary-light)",
+        textColor: COLORS_LIGHT.background,
+        shadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      },
+      outline: {
+        border: "2px solid var(--secondary-light)",
+        background: "transparent",
+        textColor: "var(--secondary-light)",
+        backgroundHover: "var(--background-light)",
+        borderHover: "2px solid var(--secondary-light)",
       },
     },
     input: {
-      background: "#ffffff",
-      border: "1px solid #d1d5db",
-      borderFocus: "1px solid #527EA2",
+      background: "var(--background-light)",
+      border: "1px solid var(--secondary-light)",
+      borderFocus: "1px solid var(--primary-light)",
+      textColor: "var(--text-light)",
     },
     card: {
-      background: "#ffffff",
-      border: "1px solid #e5e7eb",
+      background: "var(--background-light)",
+      border: "1px solid var(--secondary-light)",
+      borderHover: "1px solid var(--secondary-light)",
       shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-      hoverShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+      shadowHover: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+      borderRadius: "1rem",
+      padding: "2rem",
+    },
+    appleCard: {
+      background: "var(--background-light)",
+      border: "1px solid var(--secondary-light)",
+      borderHover: "1px solid var(--secondary-light)",
+      borderRadius: "1.5rem",
+      shadow: "none",
+      shadowHover: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+      backdropFilter: "blur(10px)",
+      padding: "2rem",
+      transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
     },
     blogCard: {
-      background: "#ffffff",
-      titleColor: "#1f2937",
-      titleHoverColor: "#527EA2",
-      metaColor: "#6b7280",
-      descriptionColor: "#4b5563",
+      background: "var(--background-light)",
+      titleColor: "var(--text-light)",
+      titleHoverColor: "var(--primary-light)",
+      metaColor: "var(--secondary-light)",
+      descriptionColor: "var(--secondary-light)",
       imageHeight: "192px",
+      borderRadius: "0.5rem",
+      shadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      shadowHover: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
     },
     cta: {
-      background: "#527EA2",
-      textColor: "#ffffff",
-      buttonBackground: "#ffffff",
-      buttonTextColor: "#527EA2",
-      buttonHoverBackground: "#f3f4f6",
+      background: "var(--primary-light)",
+      backgroundHover: "var(--primary-light)",
+      textColor: COLORS_LIGHT.background,
+      buttonBackground: "var(--background-light)",
+      buttonTextColor: "var(--primary-light)",
+      buttonHoverBackground: "var(--background-light)",
+    },
+    section: {
+      white: {
+        background: "var(--background-light)",
+        textColor: "var(--text-light)",
+        subtextColor: "var(--secondary-light)",
+      },
+      gray: {
+        background: "var(--section-gray)",
+        textColor: "var(--text-light)",
+        subtextColor: "var(--secondary-light)",
+      },
+      dark: {
+        background: "var(--background-light)",
+        textColor: "var(--text-light)",
+        subtextColor: "var(--secondary-light)",
+      },
+      paddingSm: "3rem",
+      paddingMd: "4rem",
+      paddingLg: "6rem",
+      paddingXl: "8rem",
+    },
+    hero: {
+      minHeight: "100vh",
+      background: "var(--background-light)",
+      overlayColor: "rgba(0, 0, 0, 0.2)",
+      overlayOpacity: 0.2,
+      titleColor: "var(--text-light)",
+      subtitleColor: "var(--secondary-light)",
+      animationDuration: "0.8s",
+      animationEasing: "ease-out",
     },
   },
 };
 
+// Typography size classes - single source of truth
+export const typographySizes = {
+  pageTitle: "text-2xl sm:text-3xl lg:text-4xl",
+  sectionHeading: "text-xl sm:text-2xl lg:text-3xl",
+  subheading: "text-lg sm:text-xl",
+  paragraph: "text-base sm:text-lg",
+  small: "text-sm",
+  caption: "text-xs",
+};
+
 // CSS class name builders
 export const classNames = {
-  // Typography
-  heading1: "text-5xl font-bold text-gray-900",
-  heading2: "text-4xl font-bold text-gray-900",
-  heading3: "text-3xl font-bold text-gray-900",
-  heading4: "text-2xl font-semibold text-gray-800",
-  heading5: "text-xl font-semibold text-gray-800",
-  heading6: "text-lg font-semibold text-gray-700",
+  heading1: "text-5xl font-bold",
+  heading2: "text-4xl font-bold",
+  heading3: "text-3xl font-bold",
+  heading4: "text-2xl font-semibold",
+  heading5: "text-xl font-semibold",
+  heading6: "text-lg font-semibold",
 
-  // Text
-  body: "text-lg text-gray-700",
-  bodyMuted: "text-gray-600",
-  small: "text-sm text-gray-500",
-  caption: "text-xs text-gray-400",
+  body: "text-lg",
+  bodyMuted: "text-base",
+  small: "text-sm",
+  caption: "text-xs",
 
-  // Links
   link: "font-medium hover:underline transition-colors",
   linkLight: "transition-colors",
 
-  // Buttons
-  buttonPrimary:
-    "px-6 py-2 text-white font-semibold rounded-lg transition-colors",
-  buttonSecondary:
-    "px-6 py-2 bg-gray-200 text-gray-900 font-semibold rounded-lg hover:bg-gray-300 transition-colors",
+  buttonPrimary: "px-6 py-2 font-semibold rounded-lg transition-colors",
+  buttonSecondary: "px-6 py-2 font-semibold rounded-lg transition-colors",
 
-  // Cards
-  card: "bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow",
-  cardBorder: "bg-white rounded-lg border border-gray-200 p-6",
+  card: "rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow",
+  cardBorder: "rounded-lg border p-6",
 
-  // Containers
   container: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
   sectionContainer: "max-w-4xl mx-auto px-4",
 
-  // Sections
-  heroSection: "text-white py-16 px-4",
+  heroSection: "py-16 px-4",
   sectionPadding: "py-16",
 
-  // Grids
   gridCols1: "grid grid-cols-1",
   gridCols2: "grid grid-cols-1 md:grid-cols-2",
   gridCols3: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
   gridCols4: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
 
-  // Spacing utilities
   spacingY: "space-y-6",
   spacingX: "space-x-4",
 
-  // Borders and dividers
-  borderBottom: "border-b border-gray-200",
-  borderTop: "border-t border-gray-200",
-  divider: "border-b border-gray-300",
+  borderBottom: "border-b",
+  borderTop: "border-t",
+  divider: "border-b",
 
-  // Blog/Post specific
   blogGrid: "grid md:grid-cols-2 lg:grid-cols-3 gap-6",
-  blogCard: "flex flex-col bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden h-full",
+  blogCard: "flex flex-col rounded-lg shadow hover:shadow-lg transition overflow-hidden h-full",
   blogImageContainer: "w-full h-40 overflow-hidden flex-shrink-0",
   blogImage: "w-full h-full object-cover hover:scale-105 transition-transform duration-300",
   blogCardContent: "p-5 flex-grow flex flex-col",
-  blogMeta: "text-xs text-gray-500 mb-2",
-  blogTitle: "text-base font-bold mb-2 text-gray-800",
+  blogMeta: "text-xs mb-2",
+  blogTitle: "text-base font-bold mb-2",
   blogTitleHover: "hover:text-blue-600 transition",
-  blogDescription: "text-sm text-gray-600",
+  blogDescription: "text-sm",
 
-  // CTA Section
   ctaSection: "p-8 rounded-lg text-center mt-12",
   ctaHeading: "text-3xl font-bold mb-4",
   ctaText: "text-xl mb-6",
   ctaButton: "inline-block px-8 py-3 rounded-lg font-semibold transition",
 
-  // Page headers
   pageHeader: "mb-12",
   pageTitle: "text-4xl font-bold mb-4",
   pageSubtitle: "text-xl",

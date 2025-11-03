@@ -1,5 +1,73 @@
 # AIVA Website Database Refactoring & Layout Redesign
 
+## ⚠️ CRITICAL: COLOR SYSTEM RULES - READ FIRST
+
+**NEVER HARDCODE COLORS. NEVER. EVER. FOR ANY REASON.**
+
+The site uses a **4-COLOR SYSTEM ONLY**. These are the ONLY colors you are allowed to use:
+
+1. **primary** - Blue accents/links (`#0284c7` - same in both modes)
+2. **secondary** - Secondary text (black in light mode, grey in dark mode)
+3. **background** - Page background (white in light mode, black in dark mode)
+4. **text** - Main text/headings (black in light mode, white in dark mode)
+
+**THE COLOR SYSTEM FRAMEWORK:**
+
+The CSS variables are defined in `globals.css` and automatically swap values when dark mode is toggled via the `.dark` class:
+
+```css
+/* globals.css */
+:root {
+  --primary: #0284c7;      /* Blue - same in both modes */
+  --secondary: #000000;    /* Black text */
+  --background: #ffffff;   /* White background */
+  --text: #000000;         /* Black headings */
+}
+
+.dark {
+  --primary: #0284c7;      /* Blue - same */
+  --secondary: #a9a9a9;    /* Grey text */
+  --background: #000000;   /* Black background */
+  --text: #ffffff;         /* White headings */
+}
+```
+
+**HOW TO USE COLORS IN COMPONENTS:**
+
+✅ **CORRECT - Use CSS variables with semantic names:**
+```jsx
+style={{ color: "var(--primary)" }}
+style={{ background: "var(--background)" }}
+style={{ color: "var(--text)" }}
+style={{ color: "var(--secondary)" }}
+```
+
+❌ **WRONG - NEVER do this:**
+```jsx
+style={{ color: "#0284c7" }}                  // NO HARDCODED HEX
+style={{ background: "white" }}                // NO COLOR NAMES
+style={{ color: theme.colors.primary }}        // NO STATIC THEME REFERENCES
+const colors = theme.getActiveColors();        // NO JAVASCRIPT COLOR LOGIC
+```
+
+**THE ONLY 4 CSS VARIABLES AVAILABLE:**
+- `var(--primary)` - Primary blue color for accents and links
+- `var(--secondary)` - Secondary text color (body text, descriptions)
+- `var(--background)` - Background color for sections and containers
+- `var(--text)` - Main text color for headings and important text
+
+**ADDITIONAL UTILITY VARIABLES:**
+- `var(--section-gray)` - Alternate section background (light grey / dark grey)
+- `var(--section-border)` - Border color for section dividers
+
+**IMPORTANT:**
+- Components should NEVER know about light/dark mode
+- ALL color swapping happens ONLY in `globals.css`
+- NEVER use `theme.getActiveColors()` or check for `isDark`
+- Just use the CSS variables - they automatically update
+
+---
+
 ## 🔄 STATUS: LAYOUT & TYPOGRAPHY IMPROVEMENTS IN PROGRESS
 
 Database migration and site rebuild complete. Currently improving layout, typography, and visual hierarchy across all pages using a modular component system.

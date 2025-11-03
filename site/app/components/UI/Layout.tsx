@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import { theme } from "@/app/styles/theme";
 
 interface ContentBoxProps {
   children: ReactNode;
@@ -21,10 +22,11 @@ export function ContentBox({
     lg: "p-16",
   };
 
-  const borderClass = border ? "border rounded-lg" : "";
-
   return (
-    <div className={`${paddingClasses[padding]} ${borderClass} ${className}`}>
+    <div
+      className={`${paddingClasses[padding]} ${border ? "rounded-lg" : ""} ${className}`}
+      style={border ? { border: "1px solid var(--secondary)" } : {}}
+    >
       {children}
     </div>
   );
@@ -49,15 +51,28 @@ export function Section({
     lg: "py-16",
   };
 
-  const borderClasses = {
-    top: "border-t",
-    bottom: "border-b",
-    both: "border-t border-b",
-    none: "",
+  const getBorderStyle = () => {
+    if (border === "none") return {};
+
+    const borderStyle = "1px solid var(--secondary)";
+
+    switch (border) {
+      case "top":
+        return { borderTop: borderStyle };
+      case "bottom":
+        return { borderBottom: borderStyle };
+      case "both":
+        return { borderTop: borderStyle, borderBottom: borderStyle };
+      default:
+        return {};
+    }
   };
 
   return (
-    <section className={`${paddingClasses[padding]} ${borderClasses[border]} ${className}`}>
+    <section
+      className={`${paddingClasses[padding]} ${className}`}
+      style={getBorderStyle()}
+    >
       <div className="container mx-auto px-6">
         {children}
       </div>

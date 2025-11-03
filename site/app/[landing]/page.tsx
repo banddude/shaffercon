@@ -122,7 +122,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                   <Subheading>{section.subheading}</Subheading>
                 )}
                 {section.content && (
-                  <div className="prose prose-lg max-w-4xl">
+                  <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
                     <div dangerouslySetInnerHTML={{ __html: section.content }} />
                   </div>
                 )}
@@ -138,7 +138,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                   <Subheading>{section.subheading}</Subheading>
                 )}
                 {section.content && (
-                  <div className="prose prose-lg max-w-4xl">
+                  <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
                     <div dangerouslySetInnerHTML={{ __html: section.content }} />
                   </div>
                 )}
@@ -182,7 +182,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                 {section.heading && (
                   <SectionHeading>{section.heading}</SectionHeading>
                 )}
-                <div className="prose prose-lg max-w-4xl">
+                <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
                   <div dangerouslySetInnerHTML={{ __html: section.content }} />
                 </div>
               </div>

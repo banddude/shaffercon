@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, Grid, GridItem } from "@/app/components/UI";
 import CTA from "@/app/components/CTA";
+import LinkCardGrid from "@/app/components/LinkCardGrid";
 
 interface PageProps {
   params: Promise<{
@@ -141,21 +141,13 @@ export default async function LocationPage({ params }: PageProps) {
             {page.residential_intro && (
               <Paragraph>{page.residential_intro}</Paragraph>
             )}
-            <Grid columns={3} gap="md">
-              {page.residentialServices.map((service: any, index: number) => {
-                const serviceName = service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-                return (
-                  <GridItem key={index}>
-                    <Link
-                      href={`/service-areas/${location}/residential-${service.service_name}`}
-                      className="block p-4 border rounded transition hover:border-current text-center"
-                    >
-                      {serviceName}
-                    </Link>
-                  </GridItem>
-                );
-              })}
-            </Grid>
+            <LinkCardGrid
+              items={page.residentialServices.map((service: any) => ({
+                label: service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+                href: `/service-areas/${location}/residential-${service.service_name}`,
+              }))}
+              columns={3}
+            />
           </Container>
         </Section>
       )}
@@ -168,21 +160,13 @@ export default async function LocationPage({ params }: PageProps) {
             {page.commercial_intro && (
               <Paragraph>{page.commercial_intro}</Paragraph>
             )}
-            <Grid columns={3} gap="md">
-              {page.commercialServices.map((service: any, index: number) => {
-                const serviceName = service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-                return (
-                  <GridItem key={index}>
-                    <Link
-                      href={`/service-areas/${location}/commercial-${service.service_name}`}
-                      className="block p-4 border rounded transition hover:border-current text-center"
-                    >
-                      {serviceName}
-                    </Link>
-                  </GridItem>
-                );
-              })}
-            </Grid>
+            <LinkCardGrid
+              items={page.commercialServices.map((service: any) => ({
+                label: service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+                href: `/service-areas/${location}/commercial-${service.service_name}`,
+              }))}
+              columns={3}
+            />
           </Container>
         </Section>
       )}
@@ -206,18 +190,13 @@ export default async function LocationPage({ params }: PageProps) {
         <Section padding="md">
           <Container maxWidth="lg">
             <SectionHeading>Other Areas We Serve</SectionHeading>
-            <Grid columns={3} gap="md">
-              {page.nearbyAreas.map((area: any, index: number) => (
-                <GridItem key={index}>
-                  <Link
-                    href={`/service-areas/${area.area_slug}`}
-                    className="block p-4 border rounded transition hover:border-current text-center"
-                  >
-                    {area.area_name}
-                  </Link>
-                </GridItem>
-              ))}
-            </Grid>
+            <LinkCardGrid
+              items={page.nearbyAreas.map((area: any) => ({
+                label: area.area_name,
+                href: `/service-areas/${area.area_slug}`,
+              }))}
+              columns={3}
+            />
           </Container>
         </Section>
       )}

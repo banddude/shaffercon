@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 export interface LinkCardItem {
@@ -28,8 +30,18 @@ export default function LinkCardGrid({
     <div className={`grid ${columnClasses[columns]} ${gapClass} ${className}`}>
       {items.map(item => (
         <Link key={item.href} href={item.href} className="block h-full">
-          <div className="h-full border rounded-lg px-6 py-5 transition-transform duration-300 hover:-translate-y-0.5">
-            <h3 className="text-lg font-semibold leading-snug">{item.label}</h3>
+          <div
+            className="h-full rounded-lg px-6 py-5 transition-transform duration-300 hover:-translate-y-0.5"
+            style={{
+              border: "1px solid var(--secondary)",
+            }}
+          >
+            <h3
+              className="text-lg font-semibold leading-snug"
+              style={{ color: "var(--text)" }}
+            >
+              {item.label}
+            </h3>
           </div>
         </Link>
       ))}

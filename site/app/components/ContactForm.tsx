@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { classNames, theme } from "@/app/styles/theme";
+import { classNames } from "@/app/styles/theme";
 import type { SiteConfig } from "@/lib/db";
 
 interface ContactFormProps {
@@ -43,16 +43,25 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-8">
-      {title && <h2 className={classNames.heading2 + " mb-2"}>{title}</h2>}
-      <p className={classNames.body + " mb-8"} style={{ color: theme.colors.text.secondary }}>
+    <div
+      className="rounded-lg shadow-md p-8"
+      style={{
+        background: "var(--background)",
+      }}
+    >
+      {title && (
+        <h2 className={classNames.heading2 + " mb-2"} style={{ color: "var(--text)" }}>
+          {title}
+        </h2>
+      )}
+      <p className={classNames.body + " mb-8"} style={{ color: "var(--secondary)" }}>
         Fill out the form below and we'll get back to you as soon as possible.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="firstName" className="block text-sm font-semibold mb-2" style={{ color: theme.colors.text.primary }}>
+            <label htmlFor="firstName" className="block text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
               First Name
             </label>
             <input
@@ -64,19 +73,21 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
               required
               className="w-full px-4 py-2 rounded-lg border transition-colors"
               style={{
-                borderColor: theme.colors.border,
+                borderColor: "var(--secondary)",
+                background: "var(--background)",
+                color: "var(--text)",
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = theme.colors.primary.main;
+                e.target.style.borderColor = "var(--primary)";
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = theme.colors.border;
+                e.target.style.borderColor = "var(--secondary)";
               }}
             />
           </div>
 
           <div>
-            <label htmlFor="lastName" className="block text-sm font-semibold mb-2" style={{ color: theme.colors.text.primary }}>
+            <label htmlFor="lastName" className="block text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
               Last Name
             </label>
             <input
@@ -88,13 +99,15 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
               required
               className="w-full px-4 py-2 rounded-lg border transition-colors"
               style={{
-                borderColor: theme.colors.border,
+                borderColor: "var(--secondary)",
+                background: "var(--background)",
+                color: "var(--text)",
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = theme.colors.primary.main;
+                e.target.style.borderColor = "var(--primary)";
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = theme.colors.border;
+                e.target.style.borderColor = "var(--secondary)";
               }}
             />
           </div>
@@ -102,7 +115,7 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: theme.colors.text.primary }}>
+            <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
               Email Address
             </label>
             <input
@@ -114,19 +127,21 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
               required
               className="w-full px-4 py-2 rounded-lg border transition-colors"
               style={{
-                borderColor: theme.colors.border,
+                borderColor: "var(--secondary)",
+                background: "var(--background)",
+                color: "var(--text)",
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = theme.colors.primary.main;
+                e.target.style.borderColor = "var(--primary)";
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = theme.colors.border;
+                e.target.style.borderColor = "var(--secondary)";
               }}
             />
           </div>
 
           <div>
-            <label htmlFor="phone" className="block text-sm font-semibold mb-2" style={{ color: theme.colors.text.primary }}>
+            <label htmlFor="phone" className="block text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
               Phone Number
             </label>
             <input
@@ -137,20 +152,22 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-lg border transition-colors"
               style={{
-                borderColor: theme.colors.border,
+                borderColor: "var(--secondary)",
+                background: "var(--background)",
+                color: "var(--text)",
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = theme.colors.primary.main;
+                e.target.style.borderColor = "var(--primary)";
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = theme.colors.border;
+                e.target.style.borderColor = "var(--secondary)";
               }}
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="address" className="block text-sm font-semibold mb-2" style={{ color: theme.colors.text.primary }}>
+          <label htmlFor="address" className="block text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
             Address
           </label>
           <input
@@ -161,20 +178,21 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
             onChange={handleChange}
             className="w-full px-4 py-2 rounded-lg border transition-colors"
             style={{
-              borderColor: theme.colors.border,
+              borderColor: "var(--secondary)",
+              background: "var(--background)",
+              color: "var(--text)",
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = theme.colors.primary.main;
+              e.target.style.borderColor = "var(--primary)";
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = theme.colors.border;
+              e.target.style.borderColor = "var(--secondary)";
             }}
           />
         </div>
 
-
         <div>
-          <label htmlFor="message" className="block text-sm font-semibold mb-2" style={{ color: theme.colors.text.primary }}>
+          <label htmlFor="message" className="block text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
             Message
           </label>
           <textarea
@@ -185,13 +203,15 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
             rows={5}
             className="w-full px-4 py-2 rounded-lg border transition-colors"
             style={{
-              borderColor: theme.colors.border,
+              borderColor: "var(--secondary)",
+              background: "var(--background)",
+              color: "var(--text)",
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = theme.colors.primary.main;
+              e.target.style.borderColor = "var(--primary)";
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = theme.colors.border;
+              e.target.style.borderColor = "var(--secondary)";
             }}
           />
         </div>
@@ -200,14 +220,16 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
           type="submit"
           className={classNames.buttonPrimary}
           style={{
-            background: theme.components.button.primary.background,
-            color: theme.components.button.primary.textColor,
+            background: "var(--primary)",
+            color: "var(--background)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = theme.components.button.primary.backgroundHover;
+            e.currentTarget.style.background = "var(--primary)";
+            e.currentTarget.style.opacity = '0.9';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = theme.components.button.primary.background;
+            e.currentTarget.style.background = "var(--primary)";
+            e.currentTarget.style.opacity = '1';
           }}
         >
           Send Request
@@ -215,8 +237,14 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
       </form>
 
       {submitted && (
-        <div className="mt-6 p-4 rounded-lg" style={{ background: theme.colors.neutral[100] }}>
-          <p className={classNames.body} style={{ color: theme.colors.text.primary }}>
+        <div
+          className="mt-6 p-4 rounded-lg"
+          style={{
+            background: "var(--secondary)",
+            opacity: 0.1,
+          }}
+        >
+          <p className={classNames.body} style={{ color: "var(--text)" }}>
             Thank you for your request! Your email client should open with the form data ready to send.
           </p>
         </div>

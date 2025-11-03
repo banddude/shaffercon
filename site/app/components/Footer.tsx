@@ -11,10 +11,10 @@ export default function Footer({ siteConfig }: FooterProps) {
   const config = siteConfig;
 
   return (
-    <footer className="py-8 sm:py-12 md:py-16 mt-12 sm:mt-16 md:mt-20 border-t w-full">
+    <footer className="py-8 sm:py-12 md:py-16 mt-12 sm:mt-16 md:mt-20 border-t w-full" style={{ background: "var(--background)", color: "var(--text)", borderColor: "var(--secondary)" }}>
       <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Footer Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12 pb-8 sm:pb-12 border-b">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12 pb-8 sm:pb-12 border-b" style={{ borderColor: "var(--secondary)" }}>
           {/* Quick Links */}
           <div>
             <h4 className="text-base sm:text-lg font-bold mb-4 sm:mb-6">Quick Links</h4>
@@ -80,9 +80,33 @@ export default function Footer({ siteConfig }: FooterProps) {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="text-center text-xs sm:text-sm pt-4 sm:pt-6">
-          <p>&copy; {new Date().getFullYear()} {config.siteName}. All rights reserved.</p>
+        {/* Copyright and Social Links */}
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-4 sm:pt-6 gap-4">
+          <p className="text-xs sm:text-sm text-center sm:text-left">&copy; {new Date().getFullYear()} {config.siteName}. All rights reserved.</p>
+          {(config.social.facebook || config.social.instagram) && (
+            <div className="flex gap-4">
+              {config.social.facebook && (
+                <a
+                  href={config.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs sm:text-sm underline hover:no-underline"
+                >
+                  Facebook
+                </a>
+              )}
+              {config.social.instagram && (
+                <a
+                  href={config.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs sm:text-sm underline hover:no-underline"
+                >
+                  Instagram
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </footer>

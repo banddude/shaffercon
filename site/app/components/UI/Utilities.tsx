@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import { theme } from "@/app/styles/theme";
 
 interface ListProps {
   items: string[];
@@ -14,7 +15,7 @@ export function List({ items, ordered = false, className = "" }: ListProps) {
   return (
     <Component className={`space-y-2 mb-4 ${className}`}>
       {items.map((item, index) => (
-        <li key={index} className="ml-6">
+        <li key={index} className="ml-6" style={{ color: "var(--secondary)" }}>
           {item}
         </li>
       ))}
@@ -27,7 +28,12 @@ interface DividerProps {
 }
 
 export function Divider({ className = "" }: DividerProps) {
-  return <hr className={`my-6 ${className}`} />;
+  return (
+    <hr
+      className={`my-6 ${className}`}
+      style={{ borderColor: "var(--secondary)" }}
+    />
+  );
 }
 
 interface SpacerProps {
@@ -52,7 +58,10 @@ interface BadgeProps {
 
 export function Badge({ children, className = "" }: BadgeProps) {
   return (
-    <span className={`inline-block px-3 py-1 text-sm font-semibold border rounded ${className}`}>
+    <span
+      className={`inline-block px-3 py-1 text-sm font-semibold rounded ${className}`}
+      style={{ border: `1px solid ${"var(--secondary)"}`, color: "var(--text)" }}
+    >
       {children}
     </span>
   );

@@ -3,112 +3,173 @@
 @tailwind utilities;
 
 @layer base {
-  /* Light mode (default) */
+  /* Light mode (default) - 4 colors */
   :root {
-    --color-background: 255 255 255;
-    --color-foreground: 17 24 39;
-    --color-muted: 107 114 128;
-    --color-border: 229 231 235;
-    --color-card: 255 255 255;
-    --color-card-foreground: 17 24 39;
+    --primary: #2b7fbd;
+    --secondary: #000000;
+    --background: #ffffff;
+    --text: #000000;
+
+    /* Section backgrounds and borders */
+    --section-gray: #f9fafb;        /* Very light gray for alternate sections */
+    --section-border: #e5e7eb;      /* Light border for separation */
   }
 
-  /* Dark mode */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-background: 17 24 39;
-      --color-foreground: 249 250 251;
-      --color-muted: 156 163 175;
-      --color-border: 55 65 81;
-      --color-card: 31 41 55;
-      --color-card-foreground: 249 250 251;
-    }
+  /* Dark mode - 4 colors swap */
+  .dark {
+    --primary: #2b7fbd;
+    --secondary: #a9a9a9;
+    --background: #000000;
+    --text: #ffffff;
+
+    /* Section backgrounds and borders */
+    --section-gray: #111111;        /* Very dark gray for alternate sections */
+    --section-border: #333333;      /* Dark border for separation */
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  html[style*="dark"] {
+    color-scheme: dark;
   }
 
   body {
-    @apply bg-white text-gray-900;
-    background-color: rgb(var(--color-background));
-    color: rgb(var(--color-foreground));
+    background-color: var(--background);
+    color: var(--text);
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   }
 
-  @media (prefers-color-scheme: dark) {
-    body {
-      @apply bg-gray-900 text-gray-100;
-    }
+  .dark {
+    color-scheme: dark;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text);
+    transition: color 300ms ease-in-out;
+  }
+
+  a {
+    color: var(--primary);
+    transition: color 300ms ease-in-out;
+  }
+
+  a:hover {
+    color: var(--primary);
+  }
+
+  button {
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   }
 }
 
+/* WordPress Content Styles */
 @layer components {
-  /* WordPress Content Styles */
   .wp-content {
-    @apply text-gray-700 leading-relaxed;
+    color: var(--text);
+    line-height: 1.625;
   }
 
   .wp-content h1 {
-    @apply text-4xl font-bold mb-6 mt-8 text-gray-900;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+    color: var(--text);
   }
 
   .wp-content h2 {
-    @apply text-3xl font-bold mb-4 mt-6 text-gray-900;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    color: var(--text);
   }
 
   .wp-content h3 {
-    @apply text-2xl font-semibold mb-3 mt-4 text-gray-900;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    margin-top: 1rem;
+    color: var(--text);
   }
 
   .wp-content h4 {
-    @apply text-xl font-semibold mb-2 mt-3 text-gray-900;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 0.75rem;
+    color: var(--text);
   }
 
   .wp-content p {
-    @apply mb-4 leading-relaxed;
+    margin-bottom: 1rem;
+    line-height: 1.625;
   }
 
   .wp-content a {
-    @apply text-brand-blue hover:text-blue-800 underline;
+    color: var(--primary);
+    text-decoration: underline;
   }
 
   .wp-content ul,
   .wp-content ol {
-    @apply mb-4 ml-6 space-y-2;
+    margin-bottom: 1rem;
+    margin-left: 1.5rem;
+    gap: 0.5rem;
   }
 
   .wp-content li {
-    @apply leading-relaxed;
+    line-height: 1.625;
   }
 
   .wp-content ul li {
-    @apply list-disc;
+    list-style: disc;
   }
 
   .wp-content ol li {
-    @apply list-decimal;
+    list-style: decimal;
   }
 
   .wp-content img {
-    @apply max-w-full h-auto rounded-lg shadow-md my-6;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin: 1.5rem 0;
   }
 
   .wp-content strong,
   .wp-content b {
-    @apply font-semibold text-gray-900;
+    font-weight: 600;
+    color: var(--text);
   }
 
   .wp-content blockquote {
-    @apply border-l-4 border-brand-blue pl-4 italic my-4 text-gray-600;
+    border-left: 4px solid var(--primary);
+    padding-left: 1rem;
+    font-style: italic;
+    margin: 1rem 0;
+    color: var(--secondary);
   }
 
   .wp-content table {
-    @apply w-full border-collapse my-6;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
   }
 
   .wp-content th,
   .wp-content td {
-    @apply border border-gray-300 px-4 py-2;
+    border: 1px solid var(--secondary);
+    padding: 1rem;
   }
 
   .wp-content th {
-    @apply bg-gray-100 font-semibold;
+    background-color: var(--background);
+    font-weight: 600;
   }
 
   /* Utility classes */

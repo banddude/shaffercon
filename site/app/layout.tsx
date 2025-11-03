@@ -17,10 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className="flex flex-col min-h-screen"
+        className="flex flex-col min-h-screen transition-colors duration-300"
         style={{
-          background: theme.colors.background.light,
-          color: theme.colors.text.primary,
+          background: "var(--background)",
+          color: "var(--text)",
         }}
       >
         <HeaderWrapper />

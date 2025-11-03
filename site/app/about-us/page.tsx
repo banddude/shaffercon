@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
-import { Section, Container, PageTitle, SectionHeading, Paragraph } from "@/app/components/UI";
 import CTA from "@/app/components/CTA";
+import { Section, Container, PageTitle, Paragraph } from "@/app/components/UI";
 
 // Get about page data
 async function getAboutPage() {
@@ -97,21 +97,10 @@ export default async function AboutPage() {
       {paragraphs.length > 0 && (
         <Section padding="lg">
           <Container maxWidth="lg">
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              {fullContentSection?.image_url && (
-                <div className="w-full md:w-1/3 flex-shrink-0">
-                  <img src={fullContentSection.image_url} alt="About content" className="w-full h-auto rounded-lg object-cover" />
-                </div>
-              )}
-              <div className={fullContentSection?.image_url ? 'w-full md:w-2/3' : 'w-full'}>
-                <div className="space-y-6 max-w-none">
-                  {paragraphs.map((para, idx) => (
-                    <Paragraph key={idx} className="mb-0">
-                      {para}
-                    </Paragraph>
-                  ))}
-                </div>
-              </div>
+            <div className="space-y-6">
+              {paragraphs.map((para, idx) => (
+                <Paragraph key={idx}>{para}</Paragraph>
+              ))}
             </div>
           </Container>
         </Section>

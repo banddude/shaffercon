@@ -1,7 +1,16 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
-import { Section, Container, PageTitle, Paragraph, SectionHeading } from "@/app/components/UI";
+import { theme } from "@/app/styles/theme";
+import {
+  AppleHero,
+  AppleSection,
+  AppleCard,
+  AppleGrid,
+  AppleButton,
+} from "@/app/components/UI/AppleStyle";
+import { Paragraph, SectionHeading, Subheading } from "@/app/components/UI";
+import { HomeStatsSection } from "@/app/components/HomeStatsSection";
 
 // Get homepage data
 async function getHomePage() {
@@ -32,6 +41,20 @@ async function getHomePage() {
   };
 }
 
+// Get featured services for showcase
+async function getFeaturedServices() {
+  const db = getDb();
+  return db.prepare(`
+    SELECT DISTINCT service_name, service_type
+    FROM service_pages
+    WHERE service_type IN ('commercial_ev', 'residential_ev', 'led_retrofit')
+    LIMIT 6
+  `).all() as Array<{
+    service_name: string;
+    service_type: string;
+  }>;
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePage();
 
@@ -54,6 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const page = await getHomePage();
+  const services = await getFeaturedServices();
 
   if (!page) {
     notFound();
@@ -61,48 +85,110 @@ export default async function Home() {
 
   const heroSection = page.sections?.find((s: any) => s.section_type === 'hero');
   const fullContentSection = page.sections?.find((s: any) => s.section_type === 'full_content');
-
   const contentSections = page.sections?.filter((s: any) => s.section_type === 'content') || [];
 
+  // Get unique service types for features
+  const serviceTypes = [
+    {
+      title: "Commercial EV Charging",
+      description: "Enterprise-grade charging solutions for business fleets and commercial properties.",
+      icon: "⚡",
+      href: "/commercial-ev-chargers",
+    },
+    {
+      title: "Residential EV Charging",
+      description: "Home charging stations for electric vehicles with expert installation.",
+      icon: "🏠",
+      href: "/residential-ev-charger",
+    },
+    {
+      title: "LED Retrofit",
+      description: "Modern, energy-efficient LED lighting upgrades for homes and businesses.",
+      icon: "💡",
+      href: "/led-retrofit",
+    },
+  ];
+
   return (
-    <main className="w-full">
+    <main className="w-full overflow-hidden">
       {/* Hero Section */}
       {heroSection && heroSection.heading && (
-        <Section border="bottom" padding="lg">
-          <Container maxWidth="lg">
-            {heroSection.image_url && (
-              <div className="mb-6 rounded-lg overflow-hidden">
-                <img src={heroSection.image_url} alt="Hero" className="w-full h-auto object-cover max-h-96" />
-              </div>
-            )}
-            <PageTitle>{heroSection.heading}</PageTitle>
-          </Container>
-        </Section>
+        <AppleHero
+          title={heroSection.heading}
+          subtitle={heroSection.content || "Leading electrical contractor in Los Angeles"}
+          image={heroSection.image_url}
+        >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <AppleButton href="/contact-us" variant="primary" size="lg">
+              Get a Free Quote
+            </AppleButton>
+            <AppleButton href="/service-areas" variant="secondary" size="lg">
+              View Our Services
+            </AppleButton>
+          </div>
+        </AppleHero>
+      )}
+
+      {/* Services Showcase Section */}
+      <AppleSection
+        title="Our Services"
+        subtitle="Industry-leading electrical solutions for residential and commercial properties"
+        padding="lg"
+      >
+        <AppleGrid columns={3} gap="lg">
+          {serviceTypes.map((service, idx) => (
+            <AppleCard
+              key={idx}
+              title={service.title}
+              description={service.description}
+              icon={service.icon}
+              href={service.href}
+              cta="Explore"
+            />
+          ))}
+        </AppleGrid>
+      </AppleSection>
+
+      {/* Why Choose Section */}
+      {fullContentSection?.content && (
+        <AppleSection
+          title="Why Choose Shaffer Construction?"
+          padding="lg"
+        >
+          <div className="max-w-4xl mx-auto">
+            <Paragraph className="text-center text-lg">
+              {fullContentSection.content}
+            </Paragraph>
+            <HomeStatsSection />
+          </div>
+        </AppleSection>
       )}
 
       {/* Content Sections */}
       {contentSections.map((section: any, idx: number) => (
-        <Section key={idx} padding="lg">
-          <Container maxWidth="lg">
-            {section.heading && (
-              <SectionHeading className="mb-6">{section.heading}</SectionHeading>
-            )}
-            {section.content && (
-              <Paragraph>{section.content}</Paragraph>
-            )}
-          </Container>
-        </Section>
+        <AppleSection
+          key={idx}
+          title={section.heading}
+          padding="lg"
+        >
+          <div className="max-w-4xl mx-auto">
+            <Paragraph>{section.content}</Paragraph>
+          </div>
+        </AppleSection>
       ))}
 
-      {/* Why Choose Section */}
-      {fullContentSection?.content && (
-        <Section padding="lg" border="top">
-          <Container maxWidth="lg">
-            <SectionHeading className="mb-6">Why Choose Shaffer Construction?</SectionHeading>
-            <Paragraph>{fullContentSection.content}</Paragraph>
-          </Container>
-        </Section>
-      )}
+      {/* CTA Section */}
+      <AppleSection
+        title="Ready to Get Started?"
+        subtitle="Contact us today for a free consultation and quote on your electrical project"
+        padding="xl"
+      >
+        <div className="text-center">
+          <AppleButton href="/contact-us" variant="primary" size="lg">
+            Schedule Your Free Consultation
+          </AppleButton>
+        </div>
+      </AppleSection>
     </main>
   );
 }
