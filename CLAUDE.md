@@ -14,9 +14,81 @@
 3. **Commit & Push**: Same as above, auto-deploys to GitHub Pages
 
 ### Important Notes
-- All asset paths (images, videos) must include `/shaffercon-migration/` prefix for GitHub Pages
 - The site auto-deploys on every push to `main` branch (takes ~2 minutes)
 - Repository: https://github.com/banddude/shaffercon-migration
+- Check deployment status: https://github.com/banddude/shaffercon-migration/actions
+
+---
+
+## ⚠️ CRITICAL: BASE PATH & STATIC FILES - READ FIRST
+
+**NEVER HARDCODE THE BASE PATH. ALWAYS USE THE CENTRALIZED CONFIG.**
+
+### Base Path Configuration
+
+The site uses a centralized base path configuration in `site/app/config.ts`:
+
+```typescript
+// Base path for GitHub Pages (should match next.config.mjs basePath)
+export const BASE_PATH = '/shaffercon-migration';
+
+// Helper function to prepend base path to any URL
+export const withBasePath = (path: string): string => {
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${BASE_PATH}/${cleanPath}`;
+};
+```
+
+**HOW TO USE BASE PATHS IN COMPONENTS:**
+
+✅ **CORRECT - Use the centralized config:**
+```tsx
+import { withBasePath } from "@/app/config";
+
+// For any links or asset paths
+<a href={withBasePath("games/zappy-bird.html")}>
+<img src={withBasePath("images/logo.png")} />
+<video src={withBasePath("videos/hero.mp4")} />
+```
+
+❌ **WRONG - NEVER hardcode the base path:**
+```tsx
+<a href="/shaffercon-migration/games/zappy-bird.html">  // NO!
+<img src="/shaffercon-migration/images/logo.png" />    // NO!
+```
+
+### Static HTML Files in public/ Folder
+
+When adding static HTML files (games, external widgets, etc.) to `public/` folder:
+
+**⚠️ CRITICAL NAMING RULE:**
+- **NEVER** name a static HTML file `index.html` if a Next.js route exists with the same path
+- Next.js will overwrite `public/games/index.html` when generating the `/games` route
+- **Example:** If you have `/app/games/page.tsx`, DO NOT create `/public/games/index.html`
+
+**CORRECT APPROACH:**
+```
+public/
+  games/
+    zappy-bird.html     ✅ Unique name, no conflict
+    sparky-bros.html    ✅ Unique name, no conflict
+    style.css           ✅ CSS files are fine
+    game.js             ✅ JS files are fine
+```
+
+**WRONG APPROACH:**
+```
+public/
+  games/
+    index.html          ❌ Will be overwritten by /app/games/page.tsx build
+```
+
+### Why This Matters
+
+1. **Base Path Flexibility**: Changing deployment location only requires updating one variable
+2. **Avoid Build Conflicts**: Static HTML files with route-conflicting names get overwritten
+3. **Maintainability**: Single source of truth for all paths
+4. **GitHub Pages**: All paths must include the repository name prefix
 
 ---
 
