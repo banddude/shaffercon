@@ -44,9 +44,9 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
     <header
       className="sticky top-0 z-50"
       style={{
-        background: "transparent",
-        backdropFilter: isHomePage ? "blur(10px)" : "blur(20px)",
-        backgroundColor: isHomePage ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.3)",
+        background: isHomePage ? "transparent" : "transparent",
+        backdropFilter: isHomePage ? "blur(5px)" : "blur(20px)",
+        backgroundColor: isHomePage ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.3)",
         borderBottom: "none",
       }}
     >
