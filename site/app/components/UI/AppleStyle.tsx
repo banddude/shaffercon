@@ -88,7 +88,7 @@ export function AppleHero({
           <h1
             className={`${typographySizes.pageTitle} font-black tracking-tight leading-tight mb-6`}
             style={{
-              color: "var(--text)",
+              color: image ? "#ffffff" : "var(--text)",
               animation: "fadeInUp 0.8s ease-out",
             }}
           >
@@ -100,7 +100,7 @@ export function AppleHero({
             <p
               className={`${typographySizes.paragraph} max-w-3xl mx-auto mb-10 font-light leading-relaxed`}
               style={{
-                color: "var(--secondary)",
+                color: image ? "#d1d5db" : "var(--secondary)",
                 animation: "fadeInUp 0.8s ease-out 0.1s both",
               }}
             >
