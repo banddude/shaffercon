@@ -1,5 +1,25 @@
 # AIVA Website Database Refactoring & Layout Redesign
 
+## 🚀 DEPLOYMENT WORKFLOW - HOW TO MAKE CHANGES LIVE
+
+### Making Content Changes
+1. **Edit Database**: Update content in `database/data/site.db` using SQL
+2. **Commit Changes**: `git add . && git commit -m "Your message"`
+3. **Push to GitHub**: `git push origin main`
+4. **Auto-Deploy**: GitHub Actions automatically builds and deploys to https://banddude.github.io/shaffercon-migration/
+
+### Making Code Changes
+1. **Edit Files**: Modify Next.js components in `site/app/` or styles in `site/app/styles/`
+2. **Test Locally**: `cd site && npm run dev` to preview at http://localhost:3001
+3. **Commit & Push**: Same as above, auto-deploys to GitHub Pages
+
+### Important Notes
+- All asset paths (images, videos) must include `/shaffercon-migration/` prefix for GitHub Pages
+- The site auto-deploys on every push to `main` branch (takes ~2 minutes)
+- Repository: https://github.com/banddude/shaffercon-migration
+
+---
+
 ## ⚠️ CRITICAL: COLOR SYSTEM RULES - READ FIRST
 
 **NEVER HARDCODE COLORS. NEVER. EVER. FOR ANY REASON.**
