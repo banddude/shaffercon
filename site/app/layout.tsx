@@ -24,9 +24,7 @@ export default function RootLayout({
         }}
       >
         <HeaderWrapper />
-        <main className="flex-grow">
-          {children}
-        </main>
+        {children}
         <FooterWrapper />
       </body>
     </html>

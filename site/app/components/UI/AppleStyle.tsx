@@ -30,7 +30,6 @@ export function AppleHero({
       className="relative w-full overflow-hidden"
       style={{
         background: "var(--background)",
-        marginTop: "-80px",
       }}
     >
       {/* Background Video, GIF, or Image */}

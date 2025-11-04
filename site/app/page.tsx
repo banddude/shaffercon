@@ -110,7 +110,7 @@ export default async function Home() {
   ];
 
   return (
-    <main className="w-full overflow-hidden">
+    <main className="w-full overflow-hidden" style={{ marginTop: "-80px" }}>
       {/* Hero Section */}
       {heroSection && heroSection.heading && (
         <AppleHero
