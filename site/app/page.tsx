@@ -11,6 +11,7 @@ import {
 } from "@/app/components/UI/AppleStyle";
 import { Paragraph, SectionHeading, Subheading } from "@/app/components/UI";
 import { HomeStatsSection } from "@/app/components/HomeStatsSection";
+import { Zap, Home as HomeIcon, Lightbulb } from "lucide-react";
 
 // Get homepage data
 async function getHomePage() {
@@ -92,19 +93,19 @@ export default async function Home() {
     {
       title: "Commercial EV Charging",
       description: "Enterprise-grade charging solutions for business fleets and commercial properties.",
-      icon: "⚡",
+      icon: <Zap className="w-16 h-16" style={{ color: "var(--primary)" }} strokeWidth={2} />,
       href: "/commercial-ev-chargers",
     },
     {
       title: "Residential EV Charging",
       description: "Home charging stations for electric vehicles with expert installation.",
-      icon: "🏠",
+      icon: <HomeIcon className="w-16 h-16" style={{ color: "var(--primary)" }} strokeWidth={2} />,
       href: "/residential-ev-charger",
     },
     {
       title: "LED Retrofit",
       description: "Modern, energy-efficient LED lighting upgrades for homes and businesses.",
-      icon: "💡",
+      icon: <Lightbulb className="w-16 h-16" style={{ color: "var(--primary)" }} strokeWidth={2} />,
       href: "/led-retrofit",
     },
   ];
