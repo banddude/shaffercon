@@ -9,6 +9,7 @@ import {
 } from "@/app/components/UI/AppleStyle";
 import { useEffect, useState } from "react";
 import { withBasePath } from "@/app/config";
+import { Zap, Plug, Trophy } from "lucide-react";
 
 export default function GamesPage() {
   const [leaderboards, setLeaderboards] = useState<{
@@ -61,13 +62,13 @@ export default function GamesPage() {
       title: "Zappy Bird",
       description: "Navigate through electrical obstacles in this electrifying adventure! Tap to make Zappy fly and avoid the pipes.",
       href: withBasePath("games/zappy-bird.html"),
-      icon: "⚡",
+      icon: Zap,
     },
     {
       title: "Sparky Bros",
       description: "Join the Sparky Bros on their electrical engineering adventure! Jump and collect power-ups in this exciting platformer.",
       href: withBasePath("games/sparky-bros.html"),
-      icon: "🔌",
+      icon: Plug,
     },
   ];
 
@@ -97,7 +98,13 @@ export default function GamesPage() {
                 borderColor: "var(--secondary)",
               }}
             >
-              <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">{game.icon}</div>
+              <div className="mb-2 sm:mb-4">
+                <game.icon
+                  className="w-8 h-8 sm:w-12 sm:h-12"
+                  style={{ color: "var(--primary)" }}
+                  strokeWidth={2}
+                />
+              </div>
               <h2
                 className="text-lg sm:text-2xl font-bold mb-1 sm:mb-3"
                 style={{ color: "var(--text)" }}
@@ -123,10 +130,11 @@ export default function GamesPage() {
         {/* Leaderboards */}
         <div className="space-y-4 sm:space-y-6">
           <h2
-            className="text-xl sm:text-3xl font-bold text-center mb-3 sm:mb-6"
+            className="text-xl sm:text-3xl font-bold text-center mb-3 sm:mb-6 flex items-center justify-center gap-2 sm:gap-3"
             style={{ color: "var(--text)" }}
           >
-            🏆 Leaderboards
+            <Trophy className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: "var(--primary)" }} strokeWidth={2} />
+            Leaderboards
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
             {/* Zappy Bird Leaderboard */}
@@ -138,10 +146,11 @@ export default function GamesPage() {
               }}
             >
               <h3
-                className="text-base sm:text-xl font-bold mb-2 sm:mb-4 text-center"
+                className="text-base sm:text-xl font-bold mb-2 sm:mb-4 text-center flex items-center justify-center gap-2"
                 style={{ color: "var(--text)" }}
               >
-                ⚡ Zappy Bird
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: "var(--primary)" }} strokeWidth={2} />
+                Zappy Bird
               </h3>
               <div className="space-y-2">
                 {leaderboards.zappybird.length > 0 ? (
@@ -187,10 +196,11 @@ export default function GamesPage() {
               }}
             >
               <h3
-                className="text-base sm:text-xl font-bold mb-2 sm:mb-4 text-center"
+                className="text-base sm:text-xl font-bold mb-2 sm:mb-4 text-center flex items-center justify-center gap-2"
                 style={{ color: "var(--text)" }}
               >
-                🔌 Sparky Bros
+                <Plug className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: "var(--primary)" }} strokeWidth={2} />
+                Sparky Bros
               </h3>
               <div className="space-y-2">
                 {leaderboards.sparkybros.length > 0 ? (
