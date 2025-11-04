@@ -59,13 +59,13 @@ export default function GamesPage() {
     {
       title: "Zappy Bird",
       description: "Navigate through electrical obstacles in this electrifying adventure! Tap to make Zappy fly and avoid the pipes.",
-      href: "/games/index.html",
+      href: "/shaffercon-migration/games/index.html",
       icon: "⚡",
     },
     {
       title: "Sparky Bros",
       description: "Join the Sparky Bros on their electrical engineering adventure! Jump and collect power-ups in this exciting platformer.",
-      href: "/games/sparky-bros.html",
+      href: "/shaffercon-migration/games/sparky-bros.html",
       icon: "🔌",
     },
   ];
