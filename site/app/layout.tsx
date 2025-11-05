@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     description: "Los Angeles electrical contractor specializing in EV charging installation",
     images: [
       {
-        url: "/shaffercon/brand-assets/Shaffer-Construction-Logo-light-mode.png",
+        url: "https://banddude.github.io/shaffercon/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Shaffer Construction Logo",
+        alt: "Shaffer Construction",
       },
     ],
     type: "website",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shaffer Construction",
     description: "Los Angeles electrical contractor specializing in EV charging installation",
-    images: ["/shaffercon/brand-assets/Shaffer-Construction-Logo-light-mode.png"],
+    images: ["https://banddude.github.io/shaffercon/og-image.jpg"],
   },
 };
 
