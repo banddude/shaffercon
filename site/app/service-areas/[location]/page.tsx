@@ -53,13 +53,16 @@ async function getLocationPage(locationSlug: string) {
     ORDER BY display_order
   `).all(page.location_id) as Array<{ area_name: string; area_slug: string }>;
 
+  // Convert slug to location name (e.g., "santa-monica" -> "santa monica")
+  const locationName = locationSlug.replace(/-/g, ' ');
+
   // Get all residential services for this location
   const residentialServices = db.prepare(`
     SELECT service_name, service_type FROM service_pages
     WHERE location = ? AND service_type = 'residential'
     ORDER BY service_name
     LIMIT 20
-  `).all(locationSlug) as Array<{ service_name: string; service_type: string }>;
+  `).all(locationName) as Array<{ service_name: string; service_type: string }>;
 
   // Get all commercial services for this location
   const commercialServices = db.prepare(`
@@ -67,7 +70,7 @@ async function getLocationPage(locationSlug: string) {
     WHERE location = ? AND service_type = 'commercial'
     ORDER BY service_name
     LIMIT 20
-  `).all(locationSlug) as Array<{ service_name: string; service_type: string }>;
+  `).all(locationName) as Array<{ service_name: string; service_type: string }>;
 
   return {
     ...page,
