@@ -49,11 +49,17 @@
 </head>
 <body>
     <nav id="game-nav">
-        <a href="../../" class="nav-logo">⚡ SHAFFER CONSTRUCTION</a>
+        <a href="#" id="home-link" class="nav-logo">⚡ SHAFFER CONSTRUCTION</a>
         <div class="nav-links">
-            <a href="../../games">← Back to Games</a>
+            <a href="#" id="games-link">← Back to Games</a>
         </div>
     </nav>
+    <script src="base-path-config.js"></script>
+    <script>
+        // Set navigation links using centralized BASE_PATH
+        document.getElementById('home-link').href = withBasePath('');
+        document.getElementById('games-link').href = withBasePath('games');
+    </script>
     <div id="game-container">
         <canvas id="gameCanvas" width="800" height="600"></canvas>
 
