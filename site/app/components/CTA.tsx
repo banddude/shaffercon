@@ -1,6 +1,7 @@
 "use client";
 
-import { SectionHeading, Paragraph, Button } from "@/app/components/UI";
+import { SectionHeading, Paragraph } from "@/app/components/UI";
+import { AppleButton } from "@/app/components/UI/AppleStyle";
 import { ASSET_PATH } from "@/app/config";
 
 interface CTAProps {
@@ -77,9 +78,9 @@ export default function CTA({
           >
             {text}
           </Paragraph>
-          <Button asLink href={buttonHref} variant="primary">
+          <AppleButton href={buttonHref} variant="primary" size="lg">
             {buttonText}
-          </Button>
+          </AppleButton>
         </div>
       </div>
 

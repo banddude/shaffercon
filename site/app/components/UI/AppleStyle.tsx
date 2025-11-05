@@ -90,12 +90,11 @@ export function AppleHero({
 
 
       {/* Content */}
-      <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center px-6 py-20">
+      <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-evenly px-6 py-20">
         <div className="max-w-5xl mx-auto text-center">
           {/* Logo above title (only shows when showLogo is true) */}
           {image && showLogo && (
             <div
-              className="mb-8"
               style={{
                 animation: "fadeInUp 0.8s ease-out",
               }}
@@ -115,7 +114,7 @@ export function AppleHero({
 
           {/* Main Title */}
           <h1
-            className={`${typographySizes.pageTitle} font-black tracking-tight leading-tight mb-6`}
+            className={`${typographySizes.pageTitle} font-black tracking-tight leading-tight`}
             style={{
               color: image ? "#ffffff" : "var(--text)",
               animation: "fadeInUp 0.8s ease-out 0.1s both",
@@ -127,7 +126,7 @@ export function AppleHero({
           {/* Subtitle */}
           {subtitle && (
             <p
-              className={`${typographySizes.paragraph} max-w-3xl mx-auto mb-10 font-light leading-relaxed`}
+              className={`${typographySizes.paragraph} max-w-3xl font-light leading-relaxed`}
               style={{
                 color: image ? "#d1d5db" : "var(--secondary)",
                 animation: "fadeInUp 0.8s ease-out 0.1s both",
@@ -136,18 +135,18 @@ export function AppleHero({
               {subtitle}
             </p>
           )}
-
-          {/* Additional Content */}
-          {children && (
-            <div
-              style={{
-                animation: "fadeInUp 0.8s ease-out 0.2s both",
-              }}
-            >
-              {children}
-            </div>
-          )}
         </div>
+
+        {/* Additional Content */}
+        {children && (
+          <div
+            style={{
+              animation: "fadeInUp 0.8s ease-out 0.2s both",
+            }}
+          >
+            {children}
+          </div>
+        )}
       </div>
 
       <style>{`

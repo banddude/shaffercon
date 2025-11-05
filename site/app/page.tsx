@@ -126,7 +126,7 @@ export default async function Home() {
       {heroSection && heroSection.heading && (
         <AppleHero
           title={heroSection.heading}
-          subtitle={heroSection.content || "Leading electrical contractor in Los Angeles"}
+          subtitle={heroSection.content}
           image={heroSection.image_url ? ASSET_PATH(heroSection.image_url) : undefined}
           showLogo={true}
         >
@@ -161,7 +161,7 @@ export default async function Home() {
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
           <SlowMotionVideo
-            src={ASSET_PATH("/hero-background-optimized.mp4")}
+            src={ASSET_PATH("/ev-charging.mp4")}
             playbackRate={0.8}
             brightness={0.4}
           />
