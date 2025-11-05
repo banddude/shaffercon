@@ -191,8 +191,9 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
                 {menuData.phone}
               </a>
             </div>
+            {/* Top-level items except Service Areas and Games */}
             {menuData.primaryMenu
-              .filter((item) => item.label !== 'Service Areas' && !item.children)
+              .filter((item) => item.label !== 'Service Areas' && item.label !== 'Games' && !item.children)
               .map((item) => (
               <Link
                 key={item.label}
@@ -203,6 +204,7 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
                 {item.label}
               </Link>
             ))}
+            {/* Services children (expanded) */}
             {menuData.primaryMenu
               .filter((item) => item.label === 'Services' && item.children)
               .flatMap((item) => item.children || [])
@@ -216,8 +218,22 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
                 {child.label}
               </Link>
             ))}
+            {/* Service Areas */}
             {menuData.primaryMenu
               .filter((item) => item.label === 'Service Areas')
+              .map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="block px-3 py-2 font-medium transition-colors"
+                style={{ color: "var(--text)" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {/* Games at the end */}
+            {menuData.primaryMenu
+              .filter((item) => item.label === 'Games')
               .map((item) => (
               <Link
                 key={item.label}

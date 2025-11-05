@@ -3,17 +3,12 @@ import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
 import { ASSET_PATH } from "@/app/config";
 import {
-  Section,
-  Container,
-  PageTitle,
-  SectionHeading,
-  Grid,
-  GridItem,
-  Paragraph,
-  ContentBox,
-} from "@/app/components/UI";
+  AppleSection,
+  AppleCard,
+  AppleGrid,
+} from "@/app/components/UI/AppleStyle";
+import { Paragraph } from "@/app/components/UI";
 import CTA from "@/app/components/CTA";
-import LinkCardGrid from "@/app/components/LinkCardGrid";
 
 type PageSection = {
   section_type: string;
@@ -264,71 +259,53 @@ export default async function ServiceAreasPage() {
   const { tagline, heading } = parseHeroHeading(heroSection?.heading ?? null);
   return (
     <main className="w-full">
-      <Section border="bottom" padding="md">
-        <Container maxWidth="lg">
-          {heroSection?.image_url && (
-            <div className="mb-6 rounded-lg overflow-hidden">
-              <img src={ASSET_PATH(heroSection.image_url)} alt="Service Areas Hero" className="w-full h-auto object-cover max-h-96" />
-            </div>
-          )}
-          <div className="space-y-6">
-            {tagline && (
-              <p className="text-sm font-semibold uppercase tracking-[0.25em]">{tagline}</p>
-            )}
-            <PageTitle>{heading}</PageTitle>
-            {heroParagraph && (
-              <Paragraph className="max-w-3xl mb-0">
-                {heroParagraph}
-              </Paragraph>
-            )}
+      {/* Hero Section */}
+      <AppleSection title={heading} subtitle={heroParagraph || undefined} padding="xl">
+        {heroSection?.image_url && (
+          <div className="mb-8 rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src={ASSET_PATH(heroSection.image_url)}
+              alt="Service Areas"
+              className="w-full h-auto object-cover max-h-[500px]"
+            />
           </div>
-        </Container>
-      </Section>
+        )}
+      </AppleSection>
 
+      {/* How We Serve Section */}
       {highlightContent.length > 0 && (
-        <Section padding="md">
-          <Container maxWidth="lg">
-            <div className="space-y-12">
-              <SectionHeading className="mb-0">How We Serve California</SectionHeading>
-              <Grid columns={2} gap="lg">
-                {highlightContent.map(section => (
-                  <GridItem key={section.anchorId}>
-                    <div id={section.anchorId} className="h-full">
-                      <ContentBox border padding="md" className="h-full space-y-4">
-                        <h3 className="text-2xl font-semibold leading-snug">{section.heading}</h3>
-                        {section.paragraphs.map((paragraph, index) => (
-                          <Paragraph key={index} className="mb-0">
-                            {paragraph}
-                          </Paragraph>
-                        ))}
-                      </ContentBox>
-                    </div>
-                  </GridItem>
-                ))}
-              </Grid>
-            </div>
-          </Container>
-        </Section>
+        <AppleSection title="How We Serve California" padding="lg">
+          <AppleGrid columns={2} gap="lg">
+            {highlightContent.map(section => (
+              <AppleCard
+                key={section.anchorId}
+                title={section.heading}
+                description={section.paragraphs.join('\n\n')}
+              />
+            ))}
+          </AppleGrid>
+        </AppleSection>
       )}
 
+      {/* Service Areas Grid */}
       {page.locations && page.locations.length > 0 && (
-        <Section padding="md">
-          <Container maxWidth="lg">
-            <div className="space-y-6">
-              <SectionHeading className="mb-0">Areas We Serve</SectionHeading>
-              {locationPromptParagraph && (
-                <Paragraph className="max-w-3xl mb-0">{locationPromptParagraph}</Paragraph>
-              )}
-              <LinkCardGrid
-                items={page.locations.map(location => ({
-                  label: location.location_name,
-                  href: `/service-areas/${location.location_slug}`,
-                }))}
-                columns={3}
+        <AppleSection
+          title="Areas We Serve"
+          subtitle={locationPromptParagraph || undefined}
+          padding="lg"
+        >
+          <AppleGrid columns={3} gap="lg">
+            {page.locations.map(location => (
+              <AppleCard
+                key={location.location_slug}
+                title={location.location_name}
+                description={`Professional electrical services in ${location.location_name} and surrounding areas.`}
+                href={`/service-areas/${location.location_slug}`}
+                cta="View Services"
               />
-            </div>
-          </Container>
-        </Section>
+            ))}
+          </AppleGrid>
+        </AppleSection>
       )}
 
       <CTA />
