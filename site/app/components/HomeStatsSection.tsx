@@ -2,7 +2,7 @@
 
 export function HomeStatsSection() {
   return (
-    <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-8">
       <div className="text-center">
         <div className="text-3xl font-black mb-3" style={{ color: "var(--primary)" }}>25+</div>
         <p className="font-semibold" style={{ color: "var(--text)" }}>Years of Experience</p>

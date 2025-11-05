@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/shaffercon-migration',
-  assetPrefix: '/shaffercon-migration',
+  // Only use base path in production (GitHub Pages)
+  basePath: process.env.NODE_ENV === 'production' ? '/shaffercon-migration' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/shaffercon-migration' : '',
   images: {
     unoptimized: true, // Required for static export
     remotePatterns: [

@@ -1,26 +1,26 @@
 "use client";
 
-import { classNames } from "@/app/styles/theme";
+import { usePathname } from "next/navigation";
 
 interface CTAButtonProps {
   phone: string;
 }
 
 export default function CTAButton({ phone }: CTAButtonProps) {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
   return (
     <a
       href={`tel:${phone}`}
-      className={`${classNames.buttonPrimary} whitespace-nowrap`}
+      className="px-4 py-2 font-medium whitespace-nowrap transition-colors"
       style={{
-        background: "var(--background)",
         color: "var(--primary)",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.background = "var(--background)";
-        e.currentTarget.style.opacity = "0.9";
+        e.currentTarget.style.opacity = "0.7";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = "var(--background)";
         e.currentTarget.style.opacity = "1";
       }}
     >

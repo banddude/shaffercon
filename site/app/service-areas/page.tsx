@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
+import { ASSET_PATH } from "@/app/config";
 import {
   Section,
   Container,
@@ -267,7 +268,7 @@ export default async function ServiceAreasPage() {
         <Container maxWidth="lg">
           {heroSection?.image_url && (
             <div className="mb-6 rounded-lg overflow-hidden">
-              <img src={heroSection.image_url} alt="Service Areas Hero" className="w-full h-auto object-cover max-h-96" />
+              <img src={ASSET_PATH(heroSection.image_url)} alt="Service Areas Hero" className="w-full h-auto object-cover max-h-96" />
             </div>
           )}
           <div className="space-y-6">

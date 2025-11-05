@@ -3,11 +3,16 @@
  * This includes the base path for GitHub Pages deployment
  */
 
-// Base path for GitHub Pages (should match next.config.mjs basePath)
-export const BASE_PATH = '/shaffercon-migration';
+// Base path for GitHub Pages (only used in production)
+// In development, this will be empty string
+export const BASE_PATH = process.env.NODE_ENV === 'production' ? '/shaffercon-migration' : '';
 
 // Helper function to prepend base path to any URL
 export const withBasePath = (path: string): string => {
+  if (!BASE_PATH) {
+    // In development, ensure the path starts with /
+    return path.startsWith('/') ? path : `/${path}`;
+  }
   // Remove leading slash if present to avoid double slashes
   const cleanPath = path.startsWith('/') ? path.slice(1) : path;
   return `${BASE_PATH}/${cleanPath}`;

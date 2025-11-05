@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
+import { ASSET_PATH } from "@/app/config";
 import CTA from "@/app/components/CTA";
 import { Section, Container, PageTitle, Paragraph } from "@/app/components/UI";
 
@@ -85,7 +86,7 @@ export default async function AboutPage() {
           <Container maxWidth="lg">
             {heroSection.image_url && (
               <div className="mb-6 rounded-lg overflow-hidden">
-                <img src={heroSection.image_url} alt="About Hero" className="w-full h-auto object-cover max-h-96" />
+                <img src={ASSET_PATH(heroSection.image_url)} alt="About Hero" className="w-full h-auto object-cover max-h-96" />
               </div>
             )}
             <PageTitle>{heroSection.heading}</PageTitle>

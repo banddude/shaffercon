@@ -7,8 +7,53 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>ZappyBird - Electrician Edition</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        #game-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            border-bottom: 2px solid #FFD700;
+        }
+        #game-nav a {
+            color: #FFD700;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        #game-nav a:hover {
+            color: #FFA500;
+        }
+        #game-nav .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        #game-nav .nav-logo {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        #game-container {
+            padding-top: 60px;
+        }
+    </style>
 </head>
 <body>
+    <nav id="game-nav">
+        <a href="../../" class="nav-logo">⚡ SHAFFER CONSTRUCTION</a>
+        <div class="nav-links">
+            <a href="../../games">← Back to Games</a>
+        </div>
+    </nav>
     <div id="game-container">
         <canvas id="gameCanvas" width="400" height="600"></canvas>
         <div id="start-screen" class="screen">
