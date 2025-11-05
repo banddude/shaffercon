@@ -5,6 +5,7 @@ import { Section, Container, PageTitle, SectionHeading, Subheading, ContentBox, 
 import { AppleHero } from "@/app/components/UI/AppleStyle";
 import CTA from "@/app/components/CTA";
 import { ASSET_PATH } from "@/app/config";
+import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
 
 interface PageProps {
   params: Promise<{
@@ -103,11 +104,129 @@ export default async function ServiceLandingPage({ params }: PageProps) {
     <main className="w-full overflow-hidden">
       {/* Hero Section */}
       {page.hero_image ? (
-        <AppleHero
-          title={page.page_title || page.title}
-          subtitle={page.hero_text}
-          image={ASSET_PATH(page.hero_image)}
-        />
+        landing === 'commercial-electric-vehicle-chargers' ? (
+          <>
+            {/* Hero Video Section */}
+            <section
+              className="relative w-full overflow-hidden flex items-center justify-center"
+              style={{
+                background: "var(--background)",
+                height: "100vh",
+              }}
+            >
+              {/* Background Video */}
+              <div className="absolute inset-0">
+                <SlowMotionVideo
+                  src={ASSET_PATH("/commercial-ev-arial.mp4")}
+                  playbackRate={0.8}
+                  brightness={0.4}
+                  saturation={0.3}
+                />
+              </div>
+
+              {/* Overlay for text contrast */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundColor: "rgba(0, 0, 0, 0.4)",
+                }}
+              />
+
+              {/* Hero Content */}
+              <div className="relative z-10 w-full px-6">
+                <div className="max-w-5xl mx-auto text-center">
+                  <h1
+                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-6"
+                    style={{
+                      color: "#ffffff",
+                      animation: "fadeInUp 0.8s ease-out 0.1s both",
+                    }}
+                  >
+                    {page.page_title || page.title}
+                  </h1>
+                  {page.hero_text && (
+                    <p
+                      className="text-base sm:text-lg max-w-3xl mx-auto mb-10 font-light leading-relaxed"
+                      style={{
+                        color: "#d1d5db",
+                        animation: "fadeInUp 0.8s ease-out 0.1s both",
+                      }}
+                    >
+                      {page.hero_text}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <style>{`
+                @keyframes fadeInUp {
+                  from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                  }
+                  to {
+                    opacity: 1;
+                    transform: translateY(0);
+                  }
+                }
+              `}</style>
+            </section>
+
+            {/* First Content Card on Blank Background */}
+            {page.sections && page.sections[0] && (
+              <section
+                className="relative w-full overflow-hidden flex items-center justify-center"
+                style={{
+                  background: "var(--background)",
+                  minHeight: "100vh",
+                  padding: "4rem 0",
+                }}
+              >
+                <div className="w-full px-6">
+                  <Container maxWidth="lg">
+                    {page.sections[0].section_type === 'info_card' && (
+                      <ContentBox border padding="md">
+                        {page.sections[0].heading && (
+                          <SectionHeading>{page.sections[0].heading}</SectionHeading>
+                        )}
+                        {page.sections[0].subheading && (
+                          <Subheading>{page.sections[0].subheading}</Subheading>
+                        )}
+                        {page.sections[0].content && (
+                          <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                            <div dangerouslySetInnerHTML={{ __html: page.sections[0].content }} />
+                          </div>
+                        )}
+                      </ContentBox>
+                    )}
+
+                    {(page.sections[0].section_type === 'content_block' || page.sections[0].section_type === 'content') && (
+                      <div>
+                        {page.sections[0].heading && (
+                          <SectionHeading>{page.sections[0].heading}</SectionHeading>
+                        )}
+                        {page.sections[0].subheading && (
+                          <Subheading>{page.sections[0].subheading}</Subheading>
+                        )}
+                        {page.sections[0].content && (
+                          <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                            <div dangerouslySetInnerHTML={{ __html: page.sections[0].content }} />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </Container>
+                </div>
+              </section>
+            )}
+          </>
+        ) : (
+          <AppleHero
+            title={page.page_title || page.title}
+            subtitle={page.hero_text}
+            image={ASSET_PATH(page.hero_image)}
+          />
+        )
       ) : (
         <Section border="bottom">
           <Container>
@@ -119,8 +238,188 @@ export default async function ServiceLandingPage({ params }: PageProps) {
         </Section>
       )}
 
+      {/* Second Video Section (ev-charging.mp4) with Second Content Card - Only for Commercial EV Chargers page */}
+      {landing === 'commercial-electric-vehicle-chargers' && page.sections && page.sections[1] && (
+        <section
+          className="relative w-full overflow-visible flex items-center justify-center"
+          style={{
+            background: "var(--background)",
+            height: "100vh",
+          }}
+        >
+          {/* Background Video */}
+          <div className="absolute inset-0">
+            <SlowMotionVideo
+              src={ASSET_PATH("/ev-charging.mp4")}
+              playbackRate={1.0}
+              brightness={0.4}
+            />
+          </div>
+
+          {/* Overlay for text contrast */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+            }}
+          />
+
+          {/* Second Content Section Overlaying Video */}
+          <div className="relative z-10 w-full px-6">
+            <Container maxWidth="lg">
+              {page.sections[1].section_type === 'info_card' && (
+                <ContentBox border padding="md">
+                  {page.sections[1].heading && (
+                    <SectionHeading>{page.sections[1].heading}</SectionHeading>
+                  )}
+                  {page.sections[1].subheading && (
+                    <Subheading>{page.sections[1].subheading}</Subheading>
+                  )}
+                  {page.sections[1].content && (
+                    <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                      <div dangerouslySetInnerHTML={{ __html: page.sections[1].content }} />
+                    </div>
+                  )}
+                </ContentBox>
+              )}
+
+              {(page.sections[1].section_type === 'content_block' || page.sections[1].section_type === 'content') && (
+                <div>
+                  {page.sections[1].heading && (
+                    <SectionHeading>{page.sections[1].heading}</SectionHeading>
+                  )}
+                  {page.sections[1].subheading && (
+                    <Subheading>{page.sections[1].subheading}</Subheading>
+                  )}
+                  {page.sections[1].content && (
+                    <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                      <div dangerouslySetInnerHTML={{ __html: page.sections[1].content }} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </Container>
+          </div>
+        </section>
+      )}
+
+      {/* Third Content Card on Blank Background */}
+      {landing === 'commercial-electric-vehicle-chargers' && page.sections && page.sections[2] && (
+        <section
+          className="relative w-full overflow-hidden flex items-center justify-center"
+          style={{
+            background: "var(--background)",
+            minHeight: "100vh",
+            padding: "4rem 0",
+          }}
+        >
+          <div className="w-full px-6">
+            <Container maxWidth="lg">
+              {page.sections[2].section_type === 'info_card' && (
+                <ContentBox border padding="md">
+                  {page.sections[2].heading && (
+                    <SectionHeading>{page.sections[2].heading}</SectionHeading>
+                  )}
+                  {page.sections[2].subheading && (
+                    <Subheading>{page.sections[2].subheading}</Subheading>
+                  )}
+                  {page.sections[2].content && (
+                    <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                      <div dangerouslySetInnerHTML={{ __html: page.sections[2].content }} />
+                    </div>
+                  )}
+                </ContentBox>
+              )}
+
+              {(page.sections[2].section_type === 'content_block' || page.sections[2].section_type === 'content') && (
+                <div>
+                  {page.sections[2].heading && (
+                    <SectionHeading>{page.sections[2].heading}</SectionHeading>
+                  )}
+                  {page.sections[2].subheading && (
+                    <Subheading>{page.sections[2].subheading}</Subheading>
+                  )}
+                  {page.sections[2].content && (
+                    <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                      <div dangerouslySetInnerHTML={{ __html: page.sections[2].content }} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </Container>
+          </div>
+        </section>
+      )}
+
+      {/* Fourth Video Section (hero video) with Fourth Content Card - Only for Commercial EV Chargers page */}
+      {landing === 'commercial-electric-vehicle-chargers' && page.sections && page.sections[3] && (
+        <section
+          className="relative w-full overflow-visible flex items-center justify-center"
+          style={{
+            background: "var(--background)",
+            height: "100vh",
+          }}
+        >
+          {/* Background Video */}
+          <div className="absolute inset-0">
+            <SlowMotionVideo
+              src={ASSET_PATH(page.hero_image)}
+              playbackRate={0.8}
+              brightness={0.4}
+            />
+          </div>
+
+          {/* Overlay for text contrast */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+            }}
+          />
+
+          {/* Fourth Content Section Overlaying Video */}
+          <div className="relative z-10 w-full px-6">
+            <Container maxWidth="lg">
+              {page.sections[3].section_type === 'info_card' && (
+                <ContentBox border padding="md">
+                  {page.sections[3].heading && (
+                    <SectionHeading>{page.sections[3].heading}</SectionHeading>
+                  )}
+                  {page.sections[3].subheading && (
+                    <Subheading>{page.sections[3].subheading}</Subheading>
+                  )}
+                  {page.sections[3].content && (
+                    <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                      <div dangerouslySetInnerHTML={{ __html: page.sections[3].content }} />
+                    </div>
+                  )}
+                </ContentBox>
+              )}
+
+              {(page.sections[3].section_type === 'content_block' || page.sections[3].section_type === 'content') && (
+                <div>
+                  {page.sections[3].heading && (
+                    <SectionHeading>{page.sections[3].heading}</SectionHeading>
+                  )}
+                  {page.sections[3].subheading && (
+                    <Subheading>{page.sections[3].subheading}</Subheading>
+                  )}
+                  {page.sections[3].content && (
+                    <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                      <div dangerouslySetInnerHTML={{ __html: page.sections[3].content }} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </Container>
+          </div>
+        </section>
+      )}
+
       {/* Dynamic Sections */}
       {page.sections && page.sections.map((section: any, index: number) => (
+        // Skip first four sections for commercial EV page as they're rendered specially
+        landing === 'commercial-electric-vehicle-chargers' && (index === 0 || index === 1 || index === 2 || index === 3) ? null :
         <Section key={index} padding="md">
           <Container maxWidth="lg">
             {section.section_type === 'info_card' && (

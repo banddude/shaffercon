@@ -88,16 +88,6 @@ export function AppleHero({
         />
       )}
 
-      {/* Bottom gradient fade */}
-      {image && (
-        <div
-          className="absolute bottom-0 left-0 right-0 z-2 pointer-events-none"
-          style={{
-            height: "75px",
-            background: "linear-gradient(to top, var(--background), transparent)",
-          }}
-        />
-      )}
 
       {/* Content */}
       <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center px-6 py-20">

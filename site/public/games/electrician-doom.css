@@ -259,17 +259,19 @@ h3 {
 }
 
 .key {
-    font-size: 32px;
-    filter: drop-shadow(0 0 5px currentColor);
+    width: 30px;
+    height: 30px;
+    border: 3px solid #000;
+    box-shadow: 0 0 5px currentColor;
 }
 
 .key.hidden {
     display: none;
 }
 
-#yellow-key { color: #FFD700; }
-#red-key { color: #FF0000; }
-#blue-key { color: #0080FF; }
+#yellow-key { background-color: #FFD700; }
+#red-key { background-color: #FF0000; }
+#blue-key { background-color: #0080FF; }
 
 #level-display {
     text-align: center;
