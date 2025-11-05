@@ -23,6 +23,30 @@ let totalKills = 0;
 let totalItems = 0;
 let totalSecrets = 0;
 
+// Leaderboard functions
+function getLeaderboard() {
+    return JSON.parse(localStorage.getItem('doom-leaderboard') || '[]');
+}
+
+function saveToLeaderboard(name, level, kills, time) {
+    let leaderboard = getLeaderboard();
+    // Calculate score: level * 1000 + kills * 100 - time (in seconds)
+    const score = level * 1000 + kills * 100 - Math.floor(time);
+    leaderboard.push({ name, level, kills, time, score });
+    leaderboard.sort((a, b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0, 10); // Keep top 10
+    localStorage.setItem('doom-leaderboard', JSON.stringify(leaderboard));
+    // Trigger storage event for games page
+    window.dispatchEvent(new Event('storage'));
+}
+
+function isTopScore(level, kills, time) {
+    const leaderboard = getLeaderboard();
+    if (leaderboard.length < 10) return true;
+    const score = level * 1000 + kills * 100 - Math.floor(time);
+    return score > leaderboard[leaderboard.length - 1].score;
+}
+
 // Player State
 const player = {
     x: 3.5,
@@ -578,9 +602,11 @@ const startScreen = document.getElementById('start-screen');
 const levelCompleteScreen = document.getElementById('level-complete-screen');
 const gameOverScreen = document.getElementById('game-over-screen');
 const victoryScreen = document.getElementById('victory-screen');
+const nameEntryScreen = document.getElementById('name-entry-screen');
 const hud = document.getElementById('hud');
 const mobileControls = document.getElementById('mobile-controls');
 const messageDisplay = document.getElementById('message-display');
+const playerNameInput = document.getElementById('player-name-input');
 
 // Event Listeners
 document.getElementById('start-btn').addEventListener('click', startGame);
@@ -588,6 +614,14 @@ document.getElementById('next-level-btn').addEventListener('click', nextLevel);
 document.getElementById('restart-btn').addEventListener('click', restartLevel);
 document.getElementById('main-menu-btn').addEventListener('click', showMainMenu);
 document.getElementById('play-again-btn').addEventListener('click', startGame);
+document.getElementById('submit-name-btn').addEventListener('click', submitName);
+
+// Allow Enter key to submit name
+playerNameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        submitName();
+    }
+});
 
 // Keyboard controls
 document.addEventListener('keydown', (e) => {
@@ -749,6 +783,13 @@ function startGame() {
     totalItems = 0;
     totalSecrets = 0;
     gameTime = 0;
+
+    // Hide all screens
+    startScreen.classList.add('hidden');
+    gameOverScreen.classList.add('hidden');
+    victoryScreen.classList.add('hidden');
+    nameEntryScreen.classList.add('hidden');
+
     loadLevel(1);
 }
 
@@ -858,12 +899,39 @@ function showVictory() {
         document.exitPointerLock();
     }
 
-    document.getElementById('victory-kills').textContent = totalKills;
-    document.getElementById('victory-items').textContent = totalItems;
-    document.getElementById('victory-secrets').textContent = totalSecrets;
-    document.getElementById('victory-time').textContent = formatTime(gameTime);
+    // Check if score qualifies for leaderboard
+    if (isTopScore(currentLevel, totalKills, gameTime)) {
+        // Show name entry screen
+        document.getElementById('name-entry-level').textContent = `E1M${currentLevel}`;
+        document.getElementById('name-entry-kills').textContent = totalKills;
+        document.getElementById('name-entry-time').textContent = formatTime(gameTime);
+        nameEntryScreen.classList.remove('hidden');
+        // Focus the input
+        setTimeout(() => playerNameInput.focus(), 100);
+    } else {
+        // Show victory screen directly
+        document.getElementById('victory-kills').textContent = totalKills;
+        document.getElementById('victory-items').textContent = totalItems;
+        document.getElementById('victory-secrets').textContent = totalSecrets;
+        document.getElementById('victory-time').textContent = formatTime(gameTime);
+        victoryScreen.classList.remove('hidden');
+    }
+}
 
-    victoryScreen.classList.remove('hidden');
+function submitName() {
+    const name = playerNameInput.value.trim();
+    if (name) {
+        saveToLeaderboard(name.substring(0, 20), currentLevel, totalKills, gameTime);
+        // Hide name entry screen and show victory screen
+        nameEntryScreen.classList.add('hidden');
+        document.getElementById('victory-kills').textContent = totalKills;
+        document.getElementById('victory-items').textContent = totalItems;
+        document.getElementById('victory-secrets').textContent = totalSecrets;
+        document.getElementById('victory-time').textContent = formatTime(gameTime);
+        victoryScreen.classList.remove('hidden');
+        // Clear input for next time
+        playerNameInput.value = '';
+    }
 }
 
 function levelComplete() {

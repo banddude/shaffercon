@@ -98,19 +98,31 @@ let particles = [];
 const startScreen = document.getElementById('start-screen');
 const gameOverScreen = document.getElementById('game-over-screen');
 const winScreen = document.getElementById('win-screen');
+const nameEntryScreen = document.getElementById('name-entry-screen');
 const startBtn = document.getElementById('start-btn');
 const restartBtn = document.getElementById('restart-btn');
 const nextLevelBtn = document.getElementById('next-level-btn');
+const submitNameBtn = document.getElementById('submit-name-btn');
+const playerNameInput = document.getElementById('player-name-input');
 const scoreDisplay = document.getElementById('score');
 const livesDisplay = document.getElementById('lives');
 const coinsDisplay = document.getElementById('coins');
 const finalScoreDisplay = document.getElementById('final-score');
 const winScoreDisplay = document.getElementById('win-score');
+const highScoreValue = document.getElementById('high-score-value');
 
 // Event listeners
 startBtn.addEventListener('click', startGame);
 restartBtn.addEventListener('click', restartGame);
 nextLevelBtn.addEventListener('click', nextLevel);
+submitNameBtn.addEventListener('click', submitName);
+
+// Allow Enter key to submit name
+playerNameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        submitName();
+    }
+});
 
 document.addEventListener('keydown', (e) => {
     keys[e.code] = true;
@@ -305,6 +317,234 @@ function loadLevel(level) {
 
             pipes.push({ x: 720, y: 200, width: 60, height: 80, type: 'exit' });
         }
+    } else if (level === 3) {
+        if (isMobile) {
+            // MOBILE LEVEL 3 - Moving platforms and precision jumps
+            platforms.push({ x: 0, y: 550, width: 120, height: 50, type: 'ground' });
+            platforms.push({ x: 280, y: 550, width: 120, height: 50, type: 'ground' });
+
+            // Small platforms requiring precision
+            platforms.push({ x: 150, y: 480, width: 70, height: 20, type: 'platform' });
+            platforms.push({ x: 50, y: 400, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 270, y: 340, width: 70, height: 20, type: 'platform' });
+            platforms.push({ x: 100, y: 270, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 280, y: 200, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 130, y: 130, width: 100, height: 20, type: 'platform' });
+
+            // Wire nuts in tricky spots
+            wireNuts.push({ x: 170, y: 450, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 80, y: 370, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 290, y: 310, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 130, y: 240, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 310, y: 170, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 160, y: 100, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 340, y: 520, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 40, y: 520, width: 16, height: 16, collected: false });
+
+            // More aggressive enemies
+            enemies.push({ x: 180, y: 330, width: 24, height: 24, velocityX: 2.5, type: 'spark' });
+            enemies.push({ x: 250, y: 180, width: 24, height: 24, velocityX: -2.5, type: 'spark' });
+            enemies.push({ x: 150, y: 500, width: 24, height: 24, velocityX: 3, type: 'spark' });
+
+            // Exit pipe at top
+            pipes.push({ x: 310, y: 50, width: 60, height: 80, type: 'exit' });
+        } else {
+            // DESKTOP LEVEL 3 - Wide jumps and speed required
+            platforms.push({ x: 0, y: 550, width: 200, height: 50, type: 'ground' });
+            platforms.push({ x: 600, y: 550, width: 200, height: 50, type: 'ground' });
+
+            // Wide gaps requiring momentum
+            platforms.push({ x: 100, y: 470, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 350, y: 420, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 550, y: 380, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 250, y: 320, width: 120, height: 20, type: 'platform' });
+            platforms.push({ x: 480, y: 260, width: 110, height: 20, type: 'platform' });
+            platforms.push({ x: 150, y: 200, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 650, y: 180, width: 130, height: 20, type: 'platform' });
+
+            // Wire nuts
+            wireNuts.push({ x: 130, y: 440, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 380, y: 390, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 590, y: 350, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 290, y: 290, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 520, y: 230, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 180, y: 170, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 700, y: 150, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 100, y: 520, width: 16, height: 16, collected: false });
+
+            // Fast enemies
+            enemies.push({ x: 300, y: 360, width: 24, height: 24, velocityX: 3, type: 'spark' });
+            enemies.push({ x: 500, y: 210, width: 24, height: 24, velocityX: -3, type: 'spark' });
+            enemies.push({ x: 650, y: 500, width: 24, height: 24, velocityX: 2.5, type: 'spark' });
+            enemies.push({ x: 200, y: 140, width: 24, height: 24, velocityX: 2, type: 'spark' });
+
+            pipes.push({ x: 720, y: 100, width: 60, height: 80, type: 'exit' });
+        }
+    } else if (level === 4) {
+        if (isMobile) {
+            // MOBILE LEVEL 4 - Moderate challenge (not too narrow)
+            platforms.push({ x: 0, y: 550, width: 120, height: 50, type: 'ground' });
+            platforms.push({ x: 280, y: 550, width: 120, height: 50, type: 'ground' });
+
+            // Wider platforms for better playability
+            platforms.push({ x: 160, y: 490, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 70, y: 430, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 240, y: 370, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 110, y: 310, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 260, y: 240, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 80, y: 170, width: 110, height: 20, type: 'platform' });
+            platforms.push({ x: 240, y: 100, width: 120, height: 20, type: 'platform' });
+
+            // Wire nuts
+            wireNuts.push({ x: 190, y: 460, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 110, y: 400, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 270, y: 340, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 150, y: 280, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 300, y: 210, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 120, y: 140, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 290, y: 70, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 350, y: 520, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 30, y: 520, width: 16, height: 16, collected: false });
+
+            // Slower enemies for better balance
+            enemies.push({ x: 200, y: 410, width: 24, height: 24, velocityX: 1.8, type: 'spark' });
+            enemies.push({ x: 160, y: 290, width: 24, height: 24, velocityX: -2, type: 'spark' });
+            enemies.push({ x: 280, y: 220, width: 24, height: 24, velocityX: 2, type: 'spark' });
+            enemies.push({ x: 130, y: 150, width: 24, height: 24, velocityX: -1.8, type: 'spark' });
+
+            pipes.push({ x: 310, y: 20, width: 60, height: 80, type: 'exit' });
+        } else {
+            // DESKTOP LEVEL 4 - Moderate enemy challenge
+            platforms.push({ x: 0, y: 550, width: 150, height: 50, type: 'ground' });
+            platforms.push({ x: 250, y: 550, width: 150, height: 50, type: 'ground' });
+            platforms.push({ x: 500, y: 550, width: 150, height: 50, type: 'ground' });
+            platforms.push({ x: 700, y: 550, width: 100, height: 50, type: 'ground' });
+
+            // Multiple paths
+            platforms.push({ x: 80, y: 460, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 280, y: 450, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 500, y: 440, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 150, y: 370, width: 110, height: 20, type: 'platform' });
+            platforms.push({ x: 400, y: 350, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 620, y: 340, width: 110, height: 20, type: 'platform' });
+            platforms.push({ x: 250, y: 280, width: 120, height: 20, type: 'platform' });
+            platforms.push({ x: 500, y: 250, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 350, y: 180, width: 150, height: 20, type: 'platform' });
+
+            // Wire nuts
+            wireNuts.push({ x: 120, y: 430, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 310, y: 420, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 540, y: 410, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 190, y: 340, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 440, y: 320, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 660, y: 310, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 290, y: 250, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 540, y: 220, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 410, y: 150, width: 16, height: 16, collected: false });
+
+            // Slower enemies for better balance
+            enemies.push({ x: 150, y: 390, width: 24, height: 24, velocityX: 1.8, type: 'spark' });
+            enemies.push({ x: 350, y: 500, width: 24, height: 24, velocityX: -2.2, type: 'spark' });
+            enemies.push({ x: 550, y: 380, width: 24, height: 24, velocityX: 2, type: 'spark' });
+            enemies.push({ x: 300, y: 300, width: 24, height: 24, velocityX: -2, type: 'spark' });
+            enemies.push({ x: 650, y: 280, width: 24, height: 24, velocityX: 2.2, type: 'spark' });
+            enemies.push({ x: 400, y: 120, width: 24, height: 24, velocityX: 1.8, type: 'spark' });
+
+            pipes.push({ x: 440, y: 100, width: 60, height: 80, type: 'exit' });
+        }
+    } else if (level === 5) {
+        if (isMobile) {
+            // MOBILE LEVEL 5 - Final challenge with everything
+            platforms.push({ x: 0, y: 550, width: 80, height: 50, type: 'ground' });
+            platforms.push({ x: 320, y: 550, width: 80, height: 50, type: 'ground' });
+
+            // Extreme platforming
+            platforms.push({ x: 160, y: 500, width: 60, height: 20, type: 'platform' });
+            platforms.push({ x: 60, y: 440, width: 70, height: 20, type: 'platform' });
+            platforms.push({ x: 270, y: 400, width: 60, height: 20, type: 'platform' });
+            platforms.push({ x: 140, y: 340, width: 50, height: 20, type: 'platform' });
+            platforms.push({ x: 280, y: 280, width: 70, height: 20, type: 'platform' });
+            platforms.push({ x: 100, y: 220, width: 60, height: 20, type: 'platform' });
+            platforms.push({ x: 260, y: 160, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 120, y: 100, width: 70, height: 20, type: 'platform' });
+            platforms.push({ x: 280, y: 40, width: 90, height: 20, type: 'platform' });
+
+            // All the wire nuts
+            wireNuts.push({ x: 180, y: 470, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 85, y: 410, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 295, y: 370, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 155, y: 310, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 310, y: 250, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 120, y: 190, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 295, y: 130, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 145, y: 70, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 320, y: 10, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 30, y: 520, width: 16, height: 16, collected: false });
+
+            // Maximum enemies
+            enemies.push({ x: 190, y: 450, width: 24, height: 24, velocityX: 2.5, type: 'spark' });
+            enemies.push({ x: 240, y: 380, width: 24, height: 24, velocityX: -3, type: 'spark' });
+            enemies.push({ x: 170, y: 310, width: 24, height: 24, velocityX: 2, type: 'spark' });
+            enemies.push({ x: 280, y: 250, width: 24, height: 24, velocityX: -2.5, type: 'spark' });
+            enemies.push({ x: 130, y: 190, width: 24, height: 24, velocityX: 3, type: 'spark' });
+
+            pipes.push({ x: 310, y: -40, width: 60, height: 80, type: 'exit' });
+        } else {
+            // DESKTOP LEVEL 5 - Epic finale
+            platforms.push({ x: 0, y: 550, width: 120, height: 50, type: 'ground' });
+            platforms.push({ x: 680, y: 550, width: 120, height: 50, type: 'ground' });
+
+            // Complex multi-path layout
+            platforms.push({ x: 50, y: 480, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 200, y: 500, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 360, y: 480, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 510, y: 500, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 150, y: 410, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 320, y: 390, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 500, y: 410, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 680, y: 430, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 100, y: 320, width: 80, height: 20, type: 'platform' });
+            platforms.push({ x: 260, y: 300, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 440, y: 320, width: 90, height: 20, type: 'platform' });
+            platforms.push({ x: 620, y: 300, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 180, y: 220, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 380, y: 230, width: 110, height: 20, type: 'platform' });
+            platforms.push({ x: 580, y: 210, width: 100, height: 20, type: 'platform' });
+            platforms.push({ x: 280, y: 140, width: 120, height: 20, type: 'platform' });
+            platforms.push({ x: 500, y: 120, width: 150, height: 20, type: 'platform' });
+
+            // All the wire nuts
+            wireNuts.push({ x: 80, y: 450, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 230, y: 470, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 390, y: 450, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 550, y: 470, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 180, y: 380, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 360, y: 360, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 530, y: 380, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 720, y: 400, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 130, y: 290, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 300, y: 270, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 470, y: 290, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 660, y: 270, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 220, y: 190, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 430, y: 200, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 620, y: 180, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 330, y: 110, width: 16, height: 16, collected: false });
+            wireNuts.push({ x: 570, y: 90, width: 16, height: 16, collected: false });
+
+            // Maximum chaos
+            enemies.push({ x: 180, y: 450, width: 24, height: 24, velocityX: 3, type: 'spark' });
+            enemies.push({ x: 350, y: 430, width: 24, height: 24, velocityX: -2.5, type: 'spark' });
+            enemies.push({ x: 650, y: 480, width: 24, height: 24, velocityX: 2.5, type: 'spark' });
+            enemies.push({ x: 200, y: 350, width: 24, height: 24, velocityX: -3, type: 'spark' });
+            enemies.push({ x: 450, y: 360, width: 24, height: 24, velocityX: 3, type: 'spark' });
+            enemies.push({ x: 700, y: 340, width: 24, height: 24, velocityX: -2, type: 'spark' });
+            enemies.push({ x: 250, y: 260, width: 24, height: 24, velocityX: 2.5, type: 'spark' });
+            enemies.push({ x: 550, y: 250, width: 24, height: 24, velocityX: -2.5, type: 'spark' });
+            enemies.push({ x: 400, y: 170, width: 24, height: 24, velocityX: 3, type: 'spark' });
+
+            pipes.push({ x: 590, y: 40, width: 60, height: 80, type: 'exit' });
+        }
     }
 }
 
@@ -322,6 +562,7 @@ function startGame() {
     startScreen.classList.add('hidden');
     gameOverScreen.classList.add('hidden');
     winScreen.classList.add('hidden');
+    nameEntryScreen.classList.add('hidden');
     loadLevel(currentLevel);
     updateHUD();
     gameLoop();
@@ -335,9 +576,9 @@ function restartGame() {
 // Next level
 function nextLevel() {
     currentLevel++;
-    if (currentLevel > 2) {
+    if (currentLevel > 5) {
         currentLevel = 1;
-        score += 5000; // Bonus for completing all levels
+        score += 10000; // Bonus for completing all levels
     }
     player.x = 100;
     player.y = 400;
@@ -509,6 +750,20 @@ function loseLife() {
     }
 }
 
+// Submit name to leaderboard
+function submitName() {
+    const name = playerNameInput.value.trim();
+    if (name) {
+        saveToLeaderboard(name.substring(0, 20), score);
+        // Hide name entry screen and show game over screen
+        nameEntryScreen.classList.add('hidden');
+        finalScoreDisplay.textContent = `Score: ${score}`;
+        gameOverScreen.classList.remove('hidden');
+        // Clear input for next time
+        playerNameInput.value = '';
+    }
+}
+
 // Game over
 function gameOver() {
     gameState = 'gameOver';
@@ -516,13 +771,11 @@ function gameOver() {
     // Check if score qualifies for leaderboard
     if (isTopScore(score) && score > 0) {
         setTimeout(() => {
-            const name = prompt('🏆 Congratulations! You made the leaderboard!\n\nEnter your name:');
-            if (name && name.trim()) {
-                saveToLeaderboard(name.trim().substring(0, 20), score);
-            }
-            // Show game over screen after name entry
-            finalScoreDisplay.textContent = `Score: ${score}`;
-            gameOverScreen.classList.remove('hidden');
+            // Show custom name entry screen
+            highScoreValue.textContent = `Score: ${score}`;
+            nameEntryScreen.classList.remove('hidden');
+            // Focus the input
+            setTimeout(() => playerNameInput.focus(), 100);
         }, 500);
     } else {
         // Show game over screen

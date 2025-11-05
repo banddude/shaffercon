@@ -12,6 +12,8 @@ import {
 } from "@/app/components/UI/AppleStyle";
 import { Paragraph, SectionHeading, Subheading } from "@/app/components/UI";
 import { HomeStatsSection } from "@/app/components/HomeStatsSection";
+import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
+import CTA from "@/app/components/CTA";
 import { Zap, Home as HomeIcon, Lightbulb } from "lucide-react";
 
 // Get homepage data
@@ -89,6 +91,13 @@ export default async function Home() {
   const fullContentSection = page.sections?.find((s: any) => s.section_type === 'full_content');
   const contentSections = page.sections?.filter((s: any) => s.section_type === 'content') || [];
 
+  // Reorder content sections to: Professional, Commercial EV, Residential EV
+  const orderedContentSections = [
+    contentSections.find((s: any) => s.heading.includes("Professional Electrical")),
+    contentSections.find((s: any) => s.heading.includes("Commercial EV")),
+    contentSections.find((s: any) => s.heading.includes("Residential EV")),
+  ].filter(Boolean); // Remove any undefined sections
+
   // Get unique service types for features
   const serviceTypes = [
     {
@@ -132,27 +141,7 @@ export default async function Home() {
         </AppleHero>
       )}
 
-      {/* Services Showcase Section */}
-      <AppleSection
-        title="Our Services"
-        subtitle="Industry-leading electrical solutions for residential and commercial properties"
-        padding="lg"
-      >
-        <AppleGrid columns={3} gap="lg">
-          {serviceTypes.map((service, idx) => (
-            <AppleCard
-              key={idx}
-              title={service.title}
-              description={service.description}
-              icon={service.icon}
-              href={service.href}
-              cta="Explore"
-            />
-          ))}
-        </AppleGrid>
-      </AppleSection>
-
-      {/* Why Choose Section */}
+      {/* Why Choose Section - no video */}
       {fullContentSection?.content && (
         <AppleSection
           title="Why Choose Shaffer Construction?"
@@ -167,31 +156,153 @@ export default async function Home() {
         </AppleSection>
       )}
 
-      {/* Content Sections */}
-      {contentSections.map((section: any, idx: number) => (
-        <AppleSection
-          key={idx}
-          title={section.heading}
-          padding="lg"
-        >
-          <div className="max-w-4xl mx-auto">
-            <Paragraph>{section.content}</Paragraph>
+      {/* Services Showcase Section - with video background */}
+      <section className="relative w-full overflow-hidden" style={{ minHeight: "80vh" }}>
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <SlowMotionVideo
+            src={ASSET_PATH("/hero-background-optimized.mp4")}
+            playbackRate={0.8}
+            brightness={0.4}
+          />
+        </div>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 z-1" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }} />
+
+        {/* Content */}
+        <div className="relative z-10 w-full py-12 sm:py-20 lg:py-28">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <h2
+                className="text-2xl sm:text-3xl font-bold tracking-tight mb-4"
+                style={{ color: "#ffffff" }}
+              >
+                Our Services
+              </h2>
+              <p
+                className="text-base leading-relaxed max-w-3xl mx-auto"
+                style={{ color: "#d1d5db" }}
+              >
+                Industry-leading electrical solutions for residential and commercial properties
+              </p>
+            </div>
+
+            {/* Grid */}
+            <AppleGrid columns={3} gap="lg">
+              {serviceTypes.map((service, idx) => (
+                <AppleCard
+                  key={idx}
+                  title={service.title}
+                  description={service.description}
+                  icon={service.icon}
+                  href={service.href}
+                  cta="Explore"
+                />
+              ))}
+            </AppleGrid>
           </div>
-        </AppleSection>
-      ))}
+        </div>
+      </section>
+
+      {/* Content Sections - specific order with videos */}
+      {orderedContentSections.map((section: any, idx: number) => {
+        // Match by section heading name, not index
+        const isProfessional = section.heading.includes("Professional Electrical");
+        const isCommercialEV = section.heading.includes("Commercial EV");
+        const isResidentialEV = section.heading.includes("Residential EV");
+
+        // Professional Electrical Services - no video (should be FIRST)
+        if (isProfessional) {
+          return (
+            <AppleSection
+              key={idx}
+              title={section.heading}
+              padding="lg"
+            >
+              <div className="max-w-4xl mx-auto">
+                <Paragraph>{section.content}</Paragraph>
+              </div>
+            </AppleSection>
+          );
+        }
+
+        // Commercial EV - with video (should be SECOND)
+        if (isCommercialEV) {
+          return (
+            <section key={idx} className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
+              {/* Video Background */}
+              <div className="absolute inset-0 z-0">
+                <SlowMotionVideo
+                  src={ASSET_PATH("/commercial-ev-hero.mp4")}
+                  playbackRate={0.8}
+                  brightness={0.4}
+                />
+              </div>
+
+              {/* Overlay */}
+              <div className="absolute inset-0 z-1" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }} />
+
+              {/* Content */}
+              <div className="relative z-10 w-full py-12 sm:py-20 lg:py-28">
+                <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+                  {/* Section Header */}
+                  <div className="text-center mb-8">
+                    <h2
+                      className="text-2xl sm:text-3xl font-bold tracking-tight mb-4"
+                      style={{ color: "#ffffff" }}
+                    >
+                      {section.heading}
+                    </h2>
+                  </div>
+
+                  {/* Content */}
+                  <div className="max-w-4xl mx-auto">
+                    <Paragraph style={{ color: "#d1d5db" }}>{section.content}</Paragraph>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        // Residential EV - no video (should be THIRD)
+        if (isResidentialEV) {
+          return (
+            <AppleSection
+              key={idx}
+              title={section.heading}
+              padding="lg"
+            >
+              <div className="max-w-4xl mx-auto">
+                <Paragraph>{section.content}</Paragraph>
+              </div>
+            </AppleSection>
+          );
+        }
+
+        // Any remaining sections - no video
+        return (
+          <AppleSection
+            key={idx}
+            title={section.heading}
+            padding="lg"
+          >
+            <div className="max-w-4xl mx-auto">
+              <Paragraph>{section.content}</Paragraph>
+            </div>
+          </AppleSection>
+        );
+      })}
 
       {/* CTA Section */}
-      <AppleSection
-        title="Ready to Get Started?"
-        subtitle="Contact us today for a free consultation and quote on your electrical project"
-        padding="xl"
-      >
-        <div className="text-center">
-          <AppleButton href="/contact-us" variant="primary" size="lg">
-            Schedule Your Free Consultation
-          </AppleButton>
-        </div>
-      </AppleSection>
+      <CTA
+        heading="Ready to Get Started?"
+        text="Contact us today for a free consultation and quote on your electrical project"
+        buttonText="Schedule Your Free Consultation"
+        buttonHref="/contact-us"
+      />
     </main>
   );
 }

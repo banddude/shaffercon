@@ -128,6 +128,19 @@
             <button id="play-again-btn" class="pixel-btn">PLAY AGAIN</button>
         </div>
 
+        <!-- Name Entry Screen -->
+        <div id="name-entry-screen" class="screen hidden">
+            <h2>🏆 NEW HIGH SCORE! 🏆</h2>
+            <div id="score-details">
+                <p>Level Reached: <span id="name-entry-level"></span></p>
+                <p>Total Kills: <span id="name-entry-kills"></span></p>
+                <p>Completion Time: <span id="name-entry-time"></span></p>
+            </div>
+            <p style="font-size: 18px; margin: 20px 0;">Enter your name for the leaderboard:</p>
+            <input type="text" id="player-name-input" maxlength="20" placeholder="Your Name" style="font-family: 'Courier New', monospace; font-size: 24px; padding: 15px; width: 300px; max-width: 80%; text-align: center; border: 4px solid #FFD700; background: #000; color: #FFD700; margin-bottom: 20px;">
+            <button id="submit-name-btn" class="pixel-btn">SUBMIT</button>
+        </div>
+
         <!-- HUD -->
         <div id="hud" class="hidden">
             <div id="health-bar">
