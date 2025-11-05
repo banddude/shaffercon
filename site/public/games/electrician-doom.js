@@ -31,8 +31,8 @@ const player = {
     health: 100,
     armor: 0,
     currentWeapon: 0,
-    weapons: [true, false, false, false, false, false], // which weapons player has
-    ammo: [999, 0, 0, 0, 0, 0], // infinite for weapon 0
+    weapons: [true, false, false, false, false, false],
+    ammo: [999, 0, 0, 0, 0, 0],
     keys: { yellow: false, red: false, blue: false },
     kills: 0,
     items: 0,
@@ -41,12 +41,12 @@ const player = {
 
 // Weapons Data
 const weapons = [
-    { name: 'VOLTAGE TESTER', damage: 10, fireRate: 10, range: 10, infinite: true, color: '#FFD700' },
-    { name: 'WIRE STRIPPERS', damage: 50, fireRate: 20, range: 5, ammoUse: 1, spread: 5, color: '#FF6600' },
-    { name: 'POWER DRILL', damage: 8, fireRate: 3, range: 15, ammoUse: 1, color: '#00FFFF' },
-    { name: 'ARC WELDER', damage: 30, fireRate: 12, range: 15, ammoUse: 1, color: '#0080FF' },
-    { name: 'CIRCUIT BREAKER', damage: 80, fireRate: 25, range: 20, ammoUse: 1, explosive: true, color: '#FF0000' },
-    { name: 'TESLA COIL', damage: 200, fireRate: 40, range: 20, ammoUse: 40, area: 3, color: '#FF00FF' }
+    { name: 'VOLTAGE TESTER', damage: 15, fireRate: 8, range: 12, infinite: true, color: '#FFD700' },
+    { name: 'WIRE STRIPPERS', damage: 60, fireRate: 18, range: 6, ammoUse: 1, spread: 7, color: '#FF6600' },
+    { name: 'POWER DRILL', damage: 10, fireRate: 2, range: 15, ammoUse: 1, color: '#00FFFF' },
+    { name: 'ARC WELDER', damage: 35, fireRate: 10, range: 18, ammoUse: 1, color: '#0080FF' },
+    { name: 'CIRCUIT BREAKER', damage: 100, fireRate: 22, range: 25, ammoUse: 1, explosive: true, color: '#FF0000' },
+    { name: 'TESLA COIL', damage: 250, fireRate: 35, range: 25, ammoUse: 40, area: 4, color: '#FF00FF' }
 ];
 
 let weaponCooldown = 0;
@@ -55,141 +55,140 @@ let weaponCooldown = 0;
 const enemyTypes = {
     sparkImp: {
         name: 'Spark Imp',
-        health: 20,
-        damage: 5,
-        speed: 0.02,
-        size: 0.3,
+        health: 25,
+        damage: 8,
+        speed: 0.025,
+        size: 0.35,
         color: '#FFFF00',
-        fireRate: 60,
-        range: 8,
+        fireRate: 50,
+        range: 10,
         points: 50
     },
     wireZombie: {
         name: 'Wire Zombie',
-        health: 30,
-        damage: 10,
-        speed: 0.015,
-        size: 0.4,
+        health: 40,
+        damage: 12,
+        speed: 0.018,
+        size: 0.45,
         color: '#00FF00',
-        fireRate: 40,
-        range: 1.5,
+        fireRate: 35,
+        range: 2,
         points: 100
     },
     circuitDemon: {
         name: 'Circuit Demon',
-        health: 50,
-        damage: 15,
-        speed: 0.035,
-        size: 0.4,
+        health: 60,
+        damage: 18,
+        speed: 0.04,
+        size: 0.45,
         color: '#FF0000',
-        fireRate: 30,
-        range: 1.5,
+        fireRate: 28,
+        range: 2,
         points: 150
     },
     voltageSpectre: {
         name: 'Voltage Spectre',
-        health: 40,
-        damage: 12,
-        speed: 0.03,
-        size: 0.4,
+        health: 50,
+        damage: 15,
+        speed: 0.035,
+        size: 0.45,
         color: '#8080FF',
-        fireRate: 50,
-        range: 10,
+        fireRate: 45,
+        range: 12,
         invisible: true,
         points: 200
     },
     arcTrooper: {
         name: 'Arc Trooper',
-        health: 70,
-        damage: 20,
-        speed: 0.02,
-        size: 0.5,
+        health: 90,
+        damage: 25,
+        speed: 0.022,
+        size: 0.55,
         color: '#FF6600',
-        fireRate: 35,
-        range: 12,
+        fireRate: 32,
+        range: 15,
         points: 250
     },
     teslaBaron: {
         name: 'Tesla Baron',
-        health: 150,
-        damage: 30,
-        speed: 0.025,
-        size: 0.6,
+        health: 180,
+        damage: 35,
+        speed: 0.028,
+        size: 0.65,
         color: '#FF00FF',
-        fireRate: 40,
-        range: 10,
+        fireRate: 38,
+        range: 12,
         points: 500
     },
     masterBreaker: {
         name: 'Master Breaker',
-        health: 500,
-        damage: 50,
-        speed: 0.02,
-        size: 0.8,
+        health: 600,
+        damage: 60,
+        speed: 0.025,
+        size: 0.85,
         color: '#FFD700',
-        fireRate: 30,
-        range: 15,
+        fireRate: 25,
+        range: 18,
         boss: true,
         points: 1000
     }
 };
 
-// Pickup Types
+// Pickup Types - NO EMOJIS, pixel art drawn in code
 const pickupTypes = {
-    coffee: { health: 10, color: '#8B4513', size: 0.2, sprite: '☕' },
-    energy: { health: 25, color: '#00FF00', size: 0.25, sprite: '🔋' },
-    vest: { armor: 50, color: '#FF6600', size: 0.25, sprite: '🦺' },
-    fullGear: { armor: 100, color: '#0080FF', size: 0.3, sprite: '🛡️' },
-    yellowKey: { key: 'yellow', color: '#FFD700', size: 0.25, sprite: '🔑' },
-    redKey: { key: 'red', color: '#FF0000', size: 0.25, sprite: '🔑' },
-    blueKey: { key: 'blue', color: '#0080FF', size: 0.25, sprite: '🔑' },
-    ammo1: { ammo: 1, amount: 10, color: '#FFD700', size: 0.2, sprite: '📦' },
-    ammo2: { ammo: 2, amount: 50, color: '#00FFFF', size: 0.2, sprite: '📦' },
-    ammo3: { ammo: 3, amount: 20, color: '#0080FF', size: 0.2, sprite: '📦' },
-    ammo4: { ammo: 4, amount: 5, color: '#FF0000', size: 0.2, sprite: '📦' },
-    ammo5: { ammo: 5, amount: 40, color: '#FF00FF', size: 0.2, sprite: '📦' },
-    weapon1: { weapon: 1, color: '#FF6600', size: 0.3, sprite: '✂️' },
-    weapon2: { weapon: 2, color: '#00FFFF', size: 0.3, sprite: '🔧' },
-    weapon3: { weapon: 3, color: '#0080FF', size: 0.3, sprite: '⚡' },
-    weapon4: { weapon: 4, color: '#FF0000', size: 0.3, sprite: '💥' },
-    weapon5: { weapon: 5, color: '#FF00FF', size: 0.3, sprite: '⚡' }
+    coffee: { health: 10, color: '#8B4513', size: 0.25, type: 'health' },
+    energy: { health: 25, color: '#00FF00', size: 0.3, type: 'health' },
+    medkit: { health: 50, color: '#FF0000', size: 0.35, type: 'health' },
+    vest: { armor: 50, color: '#FF6600', size: 0.3, type: 'armor' },
+    fullGear: { armor: 100, color: '#0080FF', size: 0.35, type: 'armor' },
+    yellowKey: { key: 'yellow', color: '#FFD700', size: 0.3, type: 'key' },
+    redKey: { key: 'red', color: '#FF0000', size: 0.3, type: 'key' },
+    blueKey: { key: 'blue', color: '#0080FF', size: 0.3, type: 'key' },
+    ammo1: { ammo: 1, amount: 10, color: '#FF6600', size: 0.25, type: 'ammo' },
+    ammo2: { ammo: 2, amount: 50, color: '#00FFFF', size: 0.25, type: 'ammo' },
+    ammo3: { ammo: 3, amount: 20, color: '#0080FF', size: 0.25, type: 'ammo' },
+    ammo4: { ammo: 4, amount: 5, color: '#FF0000', size: 0.25, type: 'ammo' },
+    ammo5: { ammo: 5, amount: 40, color: '#FF00FF', size: 0.25, type: 'ammo' },
+    weapon1: { weapon: 1, color: '#FF6600', size: 0.35, type: 'weapon', symbol: 'W1' },
+    weapon2: { weapon: 2, color: '#00FFFF', size: 0.35, type: 'weapon', symbol: 'W2' },
+    weapon3: { weapon: 3, color: '#0080FF', size: 0.35, type: 'weapon', symbol: 'W3' },
+    weapon4: { weapon: 4, color: '#FF0000', size: 0.35, type: 'weapon', symbol: 'W4' },
+    weapon5: { weapon: 5, color: '#FF00FF', size: 0.35, type: 'weapon', symbol: 'W5' }
 };
 
-// Level Definitions - All 9 Levels!
+// Level Definitions - IMPROVED MAPS
 const levels = [
-    // E1M1: Power Plant Entrance
+    // E1M1: Power Plant Entrance - Tutorial level
     {
         name: 'E1M1: POWER PLANT',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,1,1,1,2,1,1,1,0,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,2,0,0,0,0,0,2,0,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,1,1,1,0,1,1,1,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,1,1,1,1,2,1,1,1,1,0,0,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 2.5, angle: 0 },
         enemies: [
-            { type: 'sparkImp', x: 7.5, y: 5.5 },
-            { type: 'sparkImp', x: 10.5, y: 8.5 },
-            { type: 'wireZombie', x: 12.5, y: 10.5 }
+            { type: 'sparkImp', x: 9.5, y: 5.5 },
+            { type: 'sparkImp', x: 12.5, y: 10.5 },
+            { type: 'wireZombie', x: 15.5, y: 10.5 }
         ],
         pickups: [
             { type: 'coffee', x: 6.5, y: 5.5 },
-            { type: 'ammo1', x: 9.5, y: 5.5 },
-            { type: 'weapon1', x: 12.5, y: 6.5 }
+            { type: 'ammo1', x: 11.5, y: 5.5 },
+            { type: 'weapon1', x: 14.5, y: 6.5 }
         ],
         doors: [
-            { x: 7, y: 3, vertical: false, locked: false },
-            { x: 4, y: 6, vertical: true, locked: false },
-            { x: 10, y: 6, vertical: true, locked: false }
+            { x: 8, y: 3, vertical: false, locked: false }
         ]
     },
 
@@ -197,41 +196,42 @@ const levels = [
     {
         name: 'E1M2: TRANSFORMER STATION',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,3,0,0,0,0,0,3,0,0,0,0,1],
-            [1,1,2,1,1,0,0,1,1,0,1,1,2,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1],
-            [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
-            [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
-            [1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
-            [1,0,0,0,0,1,1,2,1,1,0,0,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,3,0,0,0,0,0,0,0,0,3,0,0,0,0,1],
+            [1,1,1,2,1,1,0,0,1,1,1,1,0,0,1,1,2,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,1,1,2,1,1,1,1,0,0,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 2.5, angle: 0 },
         enemies: [
-            { type: 'sparkImp', x: 7.5, y: 2.5 },
-            { type: 'sparkImp', x: 7.5, y: 9.5 },
-            { type: 'wireZombie', x: 2.5, y: 6.5 },
-            { type: 'wireZombie', x: 13.5, y: 6.5 },
-            { type: 'circuitDemon', x: 7.5, y: 6.5 }
+            { type: 'sparkImp', x: 9.5, y: 2.5 },
+            { type: 'sparkImp', x: 10.5, y: 2.5 },
+            { type: 'sparkImp', x: 9.5, y: 9.5 },
+            { type: 'wireZombie', x: 3.5, y: 6.5 },
+            { type: 'wireZombie', x: 16.5, y: 6.5 },
+            { type: 'circuitDemon', x: 10.5, y: 9.5 }
         ],
         pickups: [
-            { type: 'yellowKey', x: 7.5, y: 9.5 },
-            { type: 'energy', x: 2.5, y: 10.5 },
-            { type: 'vest', x: 13.5, y: 10.5 },
-            { type: 'ammo1', x: 5.5, y: 5.5 },
-            { type: 'ammo1', x: 10.5, y: 5.5 }
+            { type: 'yellowKey', x: 9.5, y: 9.5 },
+            { type: 'energy', x: 3.5, y: 10.5 },
+            { type: 'vest', x: 16.5, y: 10.5 },
+            { type: 'ammo1', x: 7.5, y: 5.5 },
+            { type: 'ammo1', x: 12.5, y: 5.5 }
         ],
         doors: [
-            { x: 2, y: 4, vertical: false, locked: false },
-            { x: 12, y: 4, vertical: false, locked: false },
-            { x: 4, y: 3, vertical: true, locked: true, key: 'yellow' },
-            { x: 10, y: 3, vertical: true, locked: true, key: 'yellow' },
-            { x: 7, y: 11, vertical: false, locked: false }
+            { x: 3, y: 4, vertical: false, locked: false },
+            { x: 16, y: 4, vertical: false, locked: false },
+            { x: 5, y: 3, vertical: true, locked: true, key: 'yellow' },
+            { x: 14, y: 3, vertical: true, locked: true, key: 'yellow' },
+            { x: 9, y: 11, vertical: false, locked: false }
         ]
     },
 
@@ -239,42 +239,42 @@ const levels = [
     {
         name: 'E1M3: CIRCUIT BREAKER HELL',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
-            [1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1],
-            [1,0,1,0,0,0,2,0,0,2,0,0,0,1,0,1],
-            [1,0,1,0,1,1,1,0,0,1,1,1,0,1,0,1],
-            [1,0,2,0,0,0,0,0,0,0,0,0,0,2,0,1],
-            [1,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1],
-            [1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1],
-            [1,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1],
-            [1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
-            [1,0,1,1,1,1,1,0,0,1,1,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1],
+            [1,0,1,1,1,1,0,1,0,0,1,0,1,1,1,1,0,1],
+            [1,0,1,0,0,0,0,2,0,0,2,0,0,0,0,1,0,1],
+            [1,0,1,0,1,1,1,1,0,0,1,1,1,1,0,1,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+            [1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+            [1,0,1,0,1,1,1,1,0,0,1,1,1,1,0,1,0,1],
+            [1,0,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,1],
+            [1,0,1,1,1,1,0,1,0,0,1,0,1,1,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 1.5, angle: 0 },
         enemies: [
-            { type: 'sparkImp', x: 5.5, y: 3.5 },
-            { type: 'sparkImp', x: 10.5, y: 3.5 },
-            { type: 'wireZombie', x: 7.5, y: 5.5 },
-            { type: 'circuitDemon', x: 3.5, y: 7.5 },
-            { type: 'circuitDemon', x: 12.5, y: 7.5 },
-            { type: 'voltageSpectre', x: 7.5, y: 9.5 }
+            { type: 'sparkImp', x: 5.5, y: 5.5 },
+            { type: 'sparkImp', x: 12.5, y: 5.5 },
+            { type: 'wireZombie', x: 9.5, y: 7.5 },
+            { type: 'circuitDemon', x: 4.5, y: 9.5 },
+            { type: 'circuitDemon', x: 13.5, y: 9.5 },
+            { type: 'voltageSpectre', x: 9.5, y: 3.5 }
         ],
         pickups: [
-            { type: 'redKey', x: 7.5, y: 7.5 },
-            { type: 'energy', x: 3.5, y: 3.5 },
-            { type: 'energy', x: 12.5, y: 3.5 },
-            { type: 'weapon2', x: 7.5, y: 1.5 },
-            { type: 'ammo2', x: 2.5, y: 9.5 },
-            { type: 'ammo2', x: 13.5, y: 9.5 }
+            { type: 'redKey', x: 9.5, y: 5.5 },
+            { type: 'energy', x: 4.5, y: 5.5 },
+            { type: 'energy', x: 13.5, y: 5.5 },
+            { type: 'weapon2', x: 9.5, y: 1.5 },
+            { type: 'ammo2', x: 2.5, y: 10.5 },
+            { type: 'ammo2', x: 15.5, y: 10.5 }
         ],
         doors: [
-            { x: 6, y: 3, vertical: false, locked: false },
-            { x: 9, y: 3, vertical: false, locked: false },
-            { x: 2, y: 5, vertical: true, locked: true, key: 'red' },
-            { x: 13, y: 5, vertical: true, locked: true, key: 'red' }
+            { x: 7, y: 3, vertical: false, locked: false },
+            { x: 10, y: 3, vertical: false, locked: false },
+            { x: 2, y: 6, vertical: true, locked: true, key: 'red' },
+            { x: 15, y: 6, vertical: true, locked: true, key: 'red' }
         ]
     },
 
@@ -282,38 +282,38 @@ const levels = [
     {
         name: 'E1M4: HIGH VOLTAGE ZONE',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
-            [1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1],
-            [1,0,1,0,0,0,1,0,2,0,1,0,0,0,0,1,0,1],
-            [1,0,1,0,0,0,1,0,1,0,1,0,0,0,0,1,0,1],
-            [1,0,1,0,0,0,3,0,1,0,1,0,0,0,0,2,0,1],
-            [1,0,1,1,2,1,1,0,1,0,1,1,1,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1],
+            [1,0,1,0,0,0,0,1,0,2,0,1,0,0,0,0,0,1,0,1],
+            [1,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1],
+            [1,0,1,0,0,0,0,3,0,1,0,1,0,0,0,0,0,2,0,1],
+            [1,0,1,1,1,2,1,1,0,1,0,1,1,1,1,1,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 1.5, angle: 0 },
         enemies: [
-            { type: 'sparkImp', x: 5.5, y: 3.5 },
-            { type: 'sparkImp', x: 12.5, y: 3.5 },
-            { type: 'circuitDemon', x: 8.5, y: 5.5 },
-            { type: 'voltageSpectre', x: 4.5, y: 7.5 },
-            { type: 'voltageSpectre', x: 13.5, y: 7.5 },
-            { type: 'arcTrooper', x: 8.5, y: 7.5 }
+            { type: 'sparkImp', x: 6.5, y: 4.5 },
+            { type: 'sparkImp', x: 14.5, y: 4.5 },
+            { type: 'circuitDemon', x: 9.5, y: 5.5 },
+            { type: 'voltageSpectre', x: 5.5, y: 7.5 },
+            { type: 'voltageSpectre', x: 15.5, y: 7.5 },
+            { type: 'arcTrooper', x: 10.5, y: 7.5 }
         ],
         pickups: [
-            { type: 'blueKey', x: 4.5, y: 4.5 },
-            { type: 'fullGear', x: 12.5, y: 4.5 },
-            { type: 'weapon3', x: 8.5, y: 1.5 },
+            { type: 'blueKey', x: 5.5, y: 4.5 },
+            { type: 'fullGear', x: 14.5, y: 4.5 },
+            { type: 'weapon3', x: 9.5, y: 1.5 },
             { type: 'ammo3', x: 2.5, y: 7.5 },
-            { type: 'energy', x: 15.5, y: 7.5 }
+            { type: 'energy', x: 17.5, y: 7.5 }
         ],
         doors: [
-            { x: 8, y: 3, vertical: false, locked: false },
-            { x: 6, y: 5, vertical: true, locked: true, key: 'blue' },
-            { x: 15, y: 5, vertical: true, locked: true, key: 'blue' },
-            { x: 4, y: 6, vertical: false, locked: false }
+            { x: 9, y: 3, vertical: false, locked: false },
+            { x: 7, y: 5, vertical: true, locked: true, key: 'blue' },
+            { x: 17, y: 5, vertical: true, locked: true, key: 'blue' },
+            { x: 5, y: 6, vertical: false, locked: false }
         ]
     },
 
@@ -321,48 +321,49 @@ const levels = [
     {
         name: 'E1M5: THE SUBSTATION',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,0,0,3,0,1,1,1,1,0,0,2,0,0,0,0,1],
-            [1,1,1,2,1,1,1,0,1,0,0,1,0,0,1,1,1,2,1,1],
-            [1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1],
-            [1,1,1,2,1,1,1,0,1,1,1,1,0,0,1,1,1,2,1,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,3,0,1,1,1,1,0,2,0,0,0,0,0,0,1],
+            [1,1,1,1,2,1,1,1,0,1,0,0,1,0,1,1,1,2,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,2,1,1,1,0,1,1,1,1,0,1,1,1,2,1,1,1,1],
+            [1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 2.5, angle: 0 },
         enemies: [
-            { type: 'sparkImp', x: 9.5, y: 2.5 },
             { type: 'sparkImp', x: 10.5, y: 2.5 },
-            { type: 'wireZombie', x: 3.5, y: 5.5 },
-            { type: 'wireZombie', x: 16.5, y: 5.5 },
-            { type: 'circuitDemon', x: 9.5, y: 5.5 },
-            { type: 'circuitDemon', x: 10.5, y: 7.5 },
-            { type: 'voltageSpectre', x: 3.5, y: 10.5 },
-            { type: 'arcTrooper', x: 16.5, y: 10.5 },
-            { type: 'teslaBaron', x: 10.5, y: 10.5 }
+            { type: 'sparkImp', x: 11.5, y: 2.5 },
+            { type: 'wireZombie', x: 4.5, y: 5.5 },
+            { type: 'wireZombie', x: 17.5, y: 5.5 },
+            { type: 'circuitDemon', x: 10.5, y: 5.5 },
+            { type: 'circuitDemon', x: 11.5, y: 7.5 },
+            { type: 'voltageSpectre', x: 4.5, y: 10.5 },
+            { type: 'arcTrooper', x: 17.5, y: 10.5 },
+            { type: 'teslaBaron', x: 11.5, y: 10.5 }
         ],
         pickups: [
-            { type: 'yellowKey', x: 9.5, y: 4.5 },
-            { type: 'redKey', x: 10.5, y: 4.5 },
-            { type: 'blueKey', x: 10.5, y: 9.5 },
+            { type: 'yellowKey', x: 10.5, y: 5.5 },
+            { type: 'redKey', x: 11.5, y: 5.5 },
+            { type: 'blueKey', x: 11.5, y: 9.5 },
             { type: 'fullGear', x: 2.5, y: 6.5 },
-            { type: 'weapon4', x: 17.5, y: 6.5 },
-            { type: 'ammo4', x: 9.5, y: 6.5 }
+            { type: 'weapon4', x: 19.5, y: 6.5 },
+            { type: 'ammo4', x: 10.5, y: 6.5 },
+            { type: 'medkit', x: 2.5, y: 10.5 }
         ],
         doors: [
-            { x: 6, y: 3, vertical: true, locked: true, key: 'yellow' },
+            { x: 7, y: 3, vertical: true, locked: true, key: 'yellow' },
             { x: 14, y: 3, vertical: false, locked: true, key: 'red' },
-            { x: 3, y: 4, vertical: false, locked: false },
+            { x: 4, y: 4, vertical: false, locked: false },
             { x: 17, y: 4, vertical: false, locked: false },
-            { x: 8, y: 6, vertical: true, locked: false },
-            { x: 11, y: 6, vertical: true, locked: false },
-            { x: 3, y: 8, vertical: false, locked: false },
+            { x: 9, y: 6, vertical: true, locked: false },
+            { x: 12, y: 6, vertical: true, locked: false },
+            { x: 4, y: 8, vertical: false, locked: false },
             { x: 17, y: 8, vertical: false, locked: false }
         ]
     },
@@ -371,45 +372,45 @@ const levels = [
     {
         name: 'E1M6: WIRE NIGHTMARE',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,1,0,1,0,1,1,1,1,0,1,0,1,0,1],
-            [1,0,1,0,2,0,0,0,0,0,0,2,0,1,0,1],
-            [1,0,1,0,1,1,1,2,1,1,1,1,0,1,0,1],
-            [1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1],
-            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-            [1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1],
-            [1,0,1,0,1,1,1,2,1,1,1,1,0,1,0,1],
-            [1,0,0,0,1,0,0,0,0,0,0,1,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,1,1,0,1,0,1,1,1,1,0,1,0,1,1,0,1],
+            [1,0,1,0,0,2,0,0,0,0,0,0,2,0,0,1,0,1],
+            [1,0,1,0,1,1,1,1,2,1,1,1,1,1,0,1,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+            [1,0,1,0,1,1,1,1,2,1,1,1,1,1,0,1,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 1.5, angle: 0 },
         enemies: [
-            { type: 'wireZombie', x: 7.5, y: 2.5 },
-            { type: 'wireZombie', x: 7.5, y: 5.5 },
-            { type: 'circuitDemon', x: 3.5, y: 7.5 },
-            { type: 'circuitDemon', x: 11.5, y: 7.5 },
-            { type: 'voltageSpectre', x: 7.5, y: 9.5 },
-            { type: 'voltageSpectre', x: 7.5, y: 11.5 },
+            { type: 'wireZombie', x: 9.5, y: 3.5 },
+            { type: 'wireZombie', x: 9.5, y: 5.5 },
+            { type: 'circuitDemon', x: 4.5, y: 7.5 },
+            { type: 'circuitDemon', x: 13.5, y: 7.5 },
+            { type: 'voltageSpectre', x: 9.5, y: 9.5 },
+            { type: 'voltageSpectre', x: 9.5, y: 11.5 },
             { type: 'arcTrooper', x: 2.5, y: 9.5 },
-            { type: 'arcTrooper', x: 13.5, y: 9.5 },
-            { type: 'teslaBaron', x: 7.5, y: 7.5 }
+            { type: 'arcTrooper', x: 15.5, y: 9.5 },
+            { type: 'teslaBaron', x: 9.5, y: 7.5 }
         ],
         pickups: [
-            { type: 'redKey', x: 7.5, y: 4.5 },
+            { type: 'redKey', x: 9.5, y: 5.5 },
             { type: 'fullGear', x: 2.5, y: 5.5 },
-            { type: 'fullGear', x: 13.5, y: 5.5 },
-            { type: 'energy', x: 7.5, y: 10.5 },
-            { type: 'ammo3', x: 4.5, y: 7.5 },
-            { type: 'ammo4', x: 10.5, y: 7.5 }
+            { type: 'fullGear', x: 15.5, y: 5.5 },
+            { type: 'medkit', x: 9.5, y: 10.5 },
+            { type: 'ammo3', x: 5.5, y: 7.5 },
+            { type: 'ammo4', x: 12.5, y: 7.5 }
         ],
         doors: [
-            { x: 4, y: 3, vertical: true, locked: false },
-            { x: 11, y: 3, vertical: true, locked: false },
-            { x: 7, y: 4, vertical: false, locked: true, key: 'red' },
-            { x: 7, y: 10, vertical: false, locked: false }
+            { x: 5, y: 3, vertical: true, locked: false },
+            { x: 12, y: 3, vertical: true, locked: false },
+            { x: 8, y: 4, vertical: false, locked: true, key: 'red' },
+            { x: 8, y: 10, vertical: false, locked: false }
         ]
     },
 
@@ -417,48 +418,49 @@ const levels = [
     {
         name: 'E1M7: GENERATOR CORE',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1],
-            [1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1],
-            [1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
-            [1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
-            [1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
-            [1,2,2,1,0,0,0,0,0,0,0,0,0,0,1,2,2,1],
-            [1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+            [1,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,1,2,2,1],
+            [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 1.5, angle: 0 },
         enemies: [
-            { type: 'sparkImp', x: 6.5, y: 5.5 },
-            { type: 'sparkImp', x: 11.5, y: 5.5 },
-            { type: 'circuitDemon', x: 5.5, y: 6.5 },
-            { type: 'circuitDemon', x: 12.5, y: 6.5 },
-            { type: 'voltageSpectre', x: 8.5, y: 5.5 },
-            { type: 'voltageSpectre', x: 9.5, y: 6.5 },
-            { type: 'arcTrooper', x: 6.5, y: 10.5 },
-            { type: 'arcTrooper', x: 11.5, y: 10.5 },
-            { type: 'teslaBaron', x: 5.5, y: 10.5 },
-            { type: 'teslaBaron', x: 12.5, y: 10.5 },
-            { type: 'teslaBaron', x: 9.5, y: 10.5 }
+            { type: 'sparkImp', x: 7.5, y: 5.5 },
+            { type: 'sparkImp', x: 12.5, y: 5.5 },
+            { type: 'circuitDemon', x: 6.5, y: 6.5 },
+            { type: 'circuitDemon', x: 13.5, y: 6.5 },
+            { type: 'voltageSpectre', x: 9.5, y: 5.5 },
+            { type: 'voltageSpectre', x: 10.5, y: 6.5 },
+            { type: 'arcTrooper', x: 7.5, y: 10.5 },
+            { type: 'arcTrooper', x: 12.5, y: 10.5 },
+            { type: 'teslaBaron', x: 6.5, y: 10.5 },
+            { type: 'teslaBaron', x: 13.5, y: 10.5 },
+            { type: 'teslaBaron', x: 10.5, y: 10.5 }
         ],
         pickups: [
-            { type: 'blueKey', x: 9.5, y: 5.5 },
-            { type: 'weapon5', x: 8.5, y: 1.5 },
+            { type: 'blueKey', x: 10.5, y: 5.5 },
+            { type: 'weapon5', x: 9.5, y: 1.5 },
             { type: 'fullGear', x: 2.5, y: 10.5 },
-            { type: 'fullGear', x: 15.5, y: 10.5 },
-            { type: 'ammo5', x: 4.5, y: 5.5 },
-            { type: 'ammo5', x: 13.5, y: 5.5 },
-            { type: 'energy', x: 8.5, y: 10.5 }
+            { type: 'fullGear', x: 17.5, y: 10.5 },
+            { type: 'ammo5', x: 5.5, y: 5.5 },
+            { type: 'ammo5', x: 14.5, y: 5.5 },
+            { type: 'medkit', x: 9.5, y: 10.5 }
         ],
         doors: [
-            { x: 8, y: 1, vertical: false, locked: false },
             { x: 9, y: 1, vertical: false, locked: false },
-            { x: 1, y: 7, vertical: false, locked: true, key: 'blue' },
-            { x: 15, y: 7, vertical: false, locked: true, key: 'blue' }
+            { x: 10, y: 1, vertical: false, locked: false },
+            { x: 1, y: 8, vertical: false, locked: true, key: 'blue' },
+            { x: 2, y: 8, vertical: false, locked: true, key: 'blue' },
+            { x: 17, y: 8, vertical: false, locked: true, key: 'blue' }
         ]
     },
 
@@ -466,48 +468,48 @@ const levels = [
     {
         name: 'E1M8: CONTROL ROOM',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
-            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-            [1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1],
-            [1,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1],
-            [1,0,1,0,1,0,0,0,0,0,0,1,0,1,0,1],
-            [1,0,1,0,1,0,0,0,0,0,0,1,0,1,0,1],
-            [1,0,1,0,1,0,0,0,0,0,0,1,0,1,0,1],
-            [1,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1],
-            [1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1],
-            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,1],
+            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+            [1,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,0,1],
+            [1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1],
+            [1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1],
+            [1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1],
+            [1,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+            [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 1.5, angle: 0 },
         enemies: [
-            { type: 'circuitDemon', x: 5.5, y: 3.5 },
-            { type: 'circuitDemon', x: 10.5, y: 3.5 },
-            { type: 'voltageSpectre', x: 7.5, y: 5.5 },
+            { type: 'circuitDemon', x: 6.5, y: 3.5 },
+            { type: 'circuitDemon', x: 11.5, y: 3.5 },
             { type: 'voltageSpectre', x: 8.5, y: 5.5 },
-            { type: 'arcTrooper', x: 5.5, y: 6.5 },
-            { type: 'arcTrooper', x: 10.5, y: 6.5 },
-            { type: 'arcTrooper', x: 7.5, y: 7.5 },
-            { type: 'teslaBaron', x: 5.5, y: 9.5 },
-            { type: 'teslaBaron', x: 10.5, y: 9.5 },
-            { type: 'teslaBaron', x: 7.5, y: 9.5 },
-            { type: 'teslaBaron', x: 8.5, y: 9.5 }
+            { type: 'voltageSpectre', x: 9.5, y: 5.5 },
+            { type: 'arcTrooper', x: 6.5, y: 6.5 },
+            { type: 'arcTrooper', x: 11.5, y: 6.5 },
+            { type: 'arcTrooper', x: 8.5, y: 7.5 },
+            { type: 'teslaBaron', x: 6.5, y: 9.5 },
+            { type: 'teslaBaron', x: 11.5, y: 9.5 },
+            { type: 'teslaBaron', x: 8.5, y: 9.5 },
+            { type: 'teslaBaron', x: 9.5, y: 9.5 }
         ],
         pickups: [
-            { type: 'redKey', x: 7.5, y: 6.5 },
+            { type: 'redKey', x: 8.5, y: 6.5 },
             { type: 'fullGear', x: 2.5, y: 3.5 },
-            { type: 'fullGear', x: 13.5, y: 3.5 },
+            { type: 'fullGear', x: 15.5, y: 3.5 },
             { type: 'fullGear', x: 2.5, y: 9.5 },
-            { type: 'fullGear', x: 13.5, y: 9.5 },
-            { type: 'ammo5', x: 6.5, y: 6.5 },
-            { type: 'ammo5', x: 9.5, y: 6.5 },
-            { type: 'energy', x: 7.5, y: 1.5 },
-            { type: 'energy', x: 8.5, y: 1.5 }
+            { type: 'fullGear', x: 15.5, y: 9.5 },
+            { type: 'ammo5', x: 7.5, y: 6.5 },
+            { type: 'ammo5', x: 10.5, y: 6.5 },
+            { type: 'medkit', x: 8.5, y: 1.5 },
+            { type: 'medkit', x: 9.5, y: 1.5 }
         ],
         doors: [
-            { x: 7, y: 1, vertical: true, locked: true, key: 'red' },
-            { x: 8, y: 1, vertical: true, locked: true, key: 'red' }
+            { x: 8, y: 1, vertical: true, locked: true, key: 'red' },
+            { x: 9, y: 1, vertical: true, locked: true, key: 'red' }
         ]
     },
 
@@ -515,43 +517,43 @@ const levels = [
     {
         name: 'E1M9: MASTER BREAKER',
         map: [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ],
         start: { x: 2.5, y: 2.5, angle: 0 },
         enemies: [
-            { type: 'masterBreaker', x: 10.5, y: 7.5 },
-            { type: 'teslaBaron', x: 6.5, y: 5.5 },
-            { type: 'teslaBaron', x: 14.5, y: 5.5 },
-            { type: 'teslaBaron', x: 6.5, y: 9.5 },
-            { type: 'teslaBaron', x: 14.5, y: 9.5 },
-            { type: 'arcTrooper', x: 8.5, y: 5.5 },
-            { type: 'arcTrooper', x: 12.5, y: 5.5 },
-            { type: 'arcTrooper', x: 8.5, y: 9.5 },
-            { type: 'arcTrooper', x: 12.5, y: 9.5 }
+            { type: 'masterBreaker', x: 11.5, y: 7.5 },
+            { type: 'teslaBaron', x: 7.5, y: 5.5 },
+            { type: 'teslaBaron', x: 15.5, y: 5.5 },
+            { type: 'teslaBaron', x: 7.5, y: 9.5 },
+            { type: 'teslaBaron', x: 15.5, y: 9.5 },
+            { type: 'arcTrooper', x: 9.5, y: 5.5 },
+            { type: 'arcTrooper', x: 13.5, y: 5.5 },
+            { type: 'arcTrooper', x: 9.5, y: 9.5 },
+            { type: 'arcTrooper', x: 13.5, y: 9.5 }
         ],
         pickups: [
             { type: 'fullGear', x: 2.5, y: 5.5 },
-            { type: 'fullGear', x: 17.5, y: 5.5 },
+            { type: 'fullGear', x: 19.5, y: 5.5 },
             { type: 'fullGear', x: 2.5, y: 9.5 },
-            { type: 'fullGear', x: 17.5, y: 9.5 },
-            { type: 'energy', x: 2.5, y: 7.5 },
-            { type: 'energy', x: 17.5, y: 7.5 },
-            { type: 'ammo5', x: 10.5, y: 2.5 },
-            { type: 'ammo5', x: 10.5, y: 11.5 },
-            { type: 'ammo4', x: 5.5, y: 7.5 },
-            { type: 'ammo4', x: 15.5, y: 7.5 }
+            { type: 'fullGear', x: 19.5, y: 9.5 },
+            { type: 'medkit', x: 2.5, y: 7.5 },
+            { type: 'medkit', x: 19.5, y: 7.5 },
+            { type: 'ammo5', x: 11.5, y: 2.5 },
+            { type: 'ammo5', x: 11.5, y: 11.5 },
+            { type: 'ammo4', x: 6.5, y: 7.5 },
+            { type: 'ammo4', x: 16.5, y: 7.5 }
         ],
         doors: []
     }
@@ -628,6 +630,7 @@ if ('ontouchstart' in window) {
 
     const setupButton = (id, action) => {
         const btn = document.getElementById(id);
+        if (!btn) return;
         btn.addEventListener('touchstart', (e) => {
             e.preventDefault();
             action(true);
@@ -646,6 +649,70 @@ if ('ontouchstart' in window) {
     setupButton('btn-strafe-right', (down) => keys['d'] = down);
     setupButton('btn-shoot', (down) => keys[' '] = down);
     setupButton('btn-use', (down) => keys['e'] = down);
+}
+
+// ====================================
+// PIXEL ART DRAWING FUNCTIONS
+// ====================================
+
+function drawPixelPickup(spriteCtx, w, h, pickup) {
+    const pixelSize = Math.max(1, Math.floor(Math.min(w, h) / 8));
+
+    spriteCtx.fillStyle = pickup.color;
+
+    if (pickup.type === 'health') {
+        // Health cross
+        spriteCtx.fillRect(w/2 - pixelSize, h/4, pixelSize*2, h/2);
+        spriteCtx.fillRect(w/4, h/2 - pixelSize, w/2, pixelSize*2);
+    } else if (pickup.type === 'armor') {
+        // Armor shield
+        spriteCtx.fillRect(w/4, h/4, w/2, h/2);
+        spriteCtx.fillRect(w/3, h/4 - pixelSize, w/3, pixelSize);
+        spriteCtx.fillRect(w/2 - pixelSize/2, h*3/4, pixelSize, h/4);
+    } else if (pickup.type === 'key') {
+        // Key shape
+        spriteCtx.fillRect(w/4, h/3, pixelSize*2, pixelSize*2);
+        spriteCtx.fillRect(w/4 + pixelSize*2, h/3 + pixelSize/2, w/2, pixelSize);
+        spriteCtx.fillRect(w*3/4 - pixelSize, h/3, pixelSize, pixelSize*3);
+    } else if (pickup.type === 'ammo') {
+        // Ammo box
+        spriteCtx.fillRect(w/4, h/3, w/2, h/2);
+        spriteCtx.strokeStyle = '#000';
+        spriteCtx.lineWidth = pixelSize/2;
+        spriteCtx.strokeRect(w/4, h/3, w/2, h/2);
+        spriteCtx.strokeRect(w/3, h/2 - pixelSize, w/3, pixelSize*2);
+    } else if (pickup.type === 'weapon') {
+        // Weapon icon with letter
+        spriteCtx.fillRect(w/4, h/3, w/2, h/3);
+        spriteCtx.fillStyle = '#000';
+        spriteCtx.font = `bold ${pixelSize*3}px monospace`;
+        spriteCtx.textAlign = 'center';
+        spriteCtx.textBaseline = 'middle';
+        spriteCtx.fillText(pickup.symbol || 'W', w/2, h/2);
+    }
+}
+
+function drawPixelEnemy(spriteCtx, w, h, enemy) {
+    const pixelSize = Math.max(1, Math.floor(Math.min(w, h) / 8));
+
+    spriteCtx.fillStyle = enemy.color;
+
+    // Body
+    spriteCtx.fillRect(w/4, h/3, w/2, h/2);
+
+    // Head
+    spriteCtx.fillRect(w/3, h/5, w/3, h/4);
+
+    // Eyes (always red)
+    spriteCtx.fillStyle = '#FF0000';
+    const eyeSize = pixelSize;
+    spriteCtx.fillRect(w/3 + pixelSize, h/5 + pixelSize, eyeSize, eyeSize);
+    spriteCtx.fillRect(w*2/3 - pixelSize*2, h/5 + pixelSize, eyeSize, eyeSize);
+
+    // Arms
+    spriteCtx.fillStyle = enemy.color;
+    spriteCtx.fillRect(w/6, h/3 + pixelSize, pixelSize, h/3);
+    spriteCtx.fillRect(w*5/6 - pixelSize, h/3 + pixelSize, pixelSize, h/3);
 }
 
 // ====================================
@@ -669,12 +736,21 @@ function loadLevel(levelNum) {
     player.x = currentLevelData.start.x;
     player.y = currentLevelData.start.y;
     player.angle = currentLevelData.start.angle;
-    player.health = 100;
-    player.armor = 0;
-    player.currentWeapon = 0;
-    player.weapons = [true, false, false, false, false, false];
-    player.ammo = [999, 0, 0, 0, 0, 0];
-    player.keys = { yellow: false, red: false, blue: false };
+
+    // Keep weapons and ammo between levels
+    if (levelNum === 1) {
+        player.health = 100;
+        player.armor = 0;
+        player.currentWeapon = 0;
+        player.weapons = [true, false, false, false, false, false];
+        player.ammo = [999, 0, 0, 0, 0, 0];
+        player.keys = { yellow: false, red: false, blue: false };
+    } else {
+        // Reset health to 100 but keep armor
+        player.health = 100;
+        player.keys = { yellow: false, red: false, blue: false };
+    }
+
     player.kills = 0;
     player.items = 0;
     player.secrets = 0;
@@ -694,7 +770,7 @@ function loadLevel(levelNum) {
         ...pickupTypes[p.type],
         x: p.x,
         y: p.y,
-        type: p.type,
+        pickupType: p.type,
         collected: false
     }));
 
@@ -764,7 +840,7 @@ function levelComplete() {
     gameTime += levelTime;
 
     document.getElementById('completed-level').textContent = currentLevelData.name;
-    document.getElementById('kill-count').textContent = player.kills + ' / ' + enemies.length;
+    document.getElementById('kill-count').textContent = player.kills + ' / ' + enemies.filter(e => e.alive).length;
     document.getElementById('item-count').textContent = player.items + ' / ' + pickups.length;
     document.getElementById('secret-count').textContent = player.secrets + ' / 0';
     document.getElementById('level-time').textContent = formatTime(levelTime);
@@ -799,19 +875,19 @@ function showMessage(text, duration = 3000) {
 
 function updateHUD() {
     // Health
-    document.getElementById('health-value').textContent = Math.max(0, player.health);
+    document.getElementById('health-value').textContent = Math.max(0, Math.floor(player.health));
     document.getElementById('health-fill').style.width = Math.max(0, player.health) + '%';
 
     // Armor
-    document.getElementById('armor-value').textContent = player.armor;
+    document.getElementById('armor-value').textContent = Math.floor(player.armor);
     document.getElementById('armor-fill').style.width = Math.min(100, player.armor) + '%';
 
     // Weapon and ammo
     const weapon = weapons[player.currentWeapon];
     document.getElementById('weapon-name').textContent = weapon.name;
-    document.getElementById('ammo-count').textContent = weapon.infinite ? '∞' : player.ammo[player.currentWeapon];
+    document.getElementById('ammo-count').textContent = weapon.infinite ? 'INF' : player.ammo[player.currentWeapon];
 
-    // Keys
+    // Keys - just show/hide colored boxes
     document.getElementById('yellow-key').classList.toggle('hidden', !player.keys.yellow);
     document.getElementById('red-key').classList.toggle('hidden', !player.keys.red);
     document.getElementById('blue-key').classList.toggle('hidden', !player.keys.blue);
@@ -819,9 +895,17 @@ function updateHUD() {
     // Level name
     document.getElementById('level-name').textContent = currentLevelData.name;
 
-    // Face
-    const face = player.health > 75 ? '😊' : player.health > 50 ? '😐' : player.health > 25 ? '😰' : '🤕';
-    document.getElementById('face-display').textContent = face;
+    // Face - use text symbols instead of emojis
+    const faceDisplay = document.getElementById('face-display');
+    if (player.health > 75) {
+        faceDisplay.textContent = ':)';
+    } else if (player.health > 50) {
+        faceDisplay.textContent = ':|';
+    } else if (player.health > 25) {
+        faceDisplay.textContent = ':/';
+    } else {
+        faceDisplay.textContent = 'X(';
+    }
 }
 
 // ====================================
@@ -907,10 +991,10 @@ function render() {
         // Wall color based on type
         let color;
         switch(hit.wallType) {
-            case 1: color = '#444444'; break; // Normal wall
-            case 2: color = '#FFD700'; break; // Door
-            case 3: color = '#FF0000'; break; // Locked door
-            case 9: color = '#00FF00'; break; // Exit
+            case 1: color = '#444444'; break;
+            case 2: color = '#FFD700'; break;
+            case 3: color = '#FF0000'; break;
+            case 9: color = '#00FF00'; break;
             default: color = '#666666';
         }
 
@@ -953,7 +1037,8 @@ function drawSprites() {
             size: enemy.size,
             color: enemy.color,
             invisible: enemy.invisible,
-            isEnemy: true
+            isEnemy: true,
+            data: enemy
         });
     });
 
@@ -970,7 +1055,8 @@ function drawSprites() {
             angle,
             size: pickup.size,
             color: pickup.color,
-            sprite: pickup.sprite
+            isPickup: true,
+            data: pickup
         });
     });
 
@@ -993,28 +1079,32 @@ function drawSprites() {
             // Brightness based on distance
             const brightness = Math.max(0.2, 1 - (sprite.distance / MAX_DEPTH));
 
-            if (sprite.sprite) {
-                // Draw pickup sprite
-                ctx.font = `${spriteHeight}px Arial`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(sprite.sprite, spriteX + spriteWidth / 2, spriteY + spriteHeight / 2);
+            if (sprite.isPickup) {
+                // Draw pickup using pixel art
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = spriteWidth;
+                tempCanvas.height = spriteHeight;
+                const tempCtx = tempCanvas.getContext('2d');
+
+                drawPixelPickup(tempCtx, spriteWidth, spriteHeight, sprite.data);
+
+                ctx.globalAlpha = brightness;
+                ctx.drawImage(tempCanvas, spriteX, spriteY);
+                ctx.globalAlpha = 1;
             } else {
-                // Draw enemy
+                // Draw enemy using pixel art
                 const alpha = sprite.invisible ? 0.3 : 1.0;
-                const r = parseInt(sprite.color.substr(1, 2), 16) * brightness;
-                const g = parseInt(sprite.color.substr(3, 2), 16) * brightness;
-                const b = parseInt(sprite.color.substr(5, 2), 16) * brightness;
 
-                ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
-                ctx.fillRect(spriteX, spriteY, spriteWidth, spriteHeight);
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = spriteWidth;
+                tempCanvas.height = spriteHeight;
+                const tempCtx = tempCanvas.getContext('2d');
 
-                // Draw eyes for enemies
-                if (sprite.isEnemy) {
-                    ctx.fillStyle = '#FF0000';
-                    ctx.fillRect(spriteX + spriteWidth * 0.3, spriteY + spriteHeight * 0.3, spriteWidth * 0.15, spriteHeight * 0.15);
-                    ctx.fillRect(spriteX + spriteWidth * 0.55, spriteY + spriteHeight * 0.3, spriteWidth * 0.15, spriteHeight * 0.15);
-                }
+                drawPixelEnemy(tempCtx, spriteWidth, spriteHeight, sprite.data);
+
+                ctx.globalAlpha = brightness * alpha;
+                ctx.drawImage(tempCanvas, spriteX, spriteY);
+                ctx.globalAlpha = 1;
             }
         }
     });
@@ -1130,7 +1220,6 @@ function checkWallCollision(x, y) {
     const map = currentLevelData.map;
     const margin = 0.2;
 
-    // Check four corners
     const corners = [
         [x - margin, y - margin],
         [x + margin, y - margin],
@@ -1148,7 +1237,6 @@ function checkWallCollision(x, y) {
 
         const cell = map[mapY][mapX];
         if (cell > 0 && cell !== 9) {
-            // Check doors
             const door = doors.find(d => d.x === mapX && d.y === mapY);
             if (!door || door.openAmount < 0.9) {
                 return true;
@@ -1160,7 +1248,6 @@ function checkWallCollision(x, y) {
 }
 
 function useDoor() {
-    // Find door in front of player
     const checkDist = 1.5;
     const checkX = player.x + Math.cos(player.angle) * checkDist;
     const checkY = player.y + Math.sin(player.angle) * checkDist;
@@ -1175,9 +1262,9 @@ function useDoor() {
         if (door.locked) {
             if (player.keys[door.key]) {
                 door.opening = true;
-                showMessage('Door opened with ' + door.key + ' key', 1000);
+                showMessage('Door opened', 1000);
             } else {
-                showMessage('You need the ' + door.key + ' key!', 2000);
+                showMessage('Need ' + door.key + ' key', 2000);
             }
         } else {
             door.opening = true;
@@ -1235,7 +1322,7 @@ function shoot() {
             }
         }
     } else {
-        // Projectile weapons (circuit breaker, tesla coil)
+        // Projectile weapons
         projectiles.push({
             x: player.x,
             y: player.y,
@@ -1269,7 +1356,6 @@ function castRayForEnemy(angle) {
 
         const angleDiff = Math.abs(enemyAngle - angle);
         if (angleDiff < 0.1 && distance < closestDist) {
-            // Check if wall is blocking
             const hit = castRay(angle);
             if (hit.depth > distance) {
                 closest = enemy;
@@ -1284,7 +1370,7 @@ function castRayForEnemy(angle) {
 function damageEnemy(enemy, damage) {
     enemy.health -= damage;
 
-    // Create blood/spark particles
+    // Create particles
     for (let i = 0; i < 10; i++) {
         particles.push({
             x: enemy.x,
@@ -1302,7 +1388,7 @@ function damageEnemy(enemy, damage) {
         enemy.alive = false;
         player.kills++;
 
-        // Create death particles
+        // Death particles
         for (let i = 0; i < 30; i++) {
             particles.push({
                 x: enemy.x,
@@ -1326,18 +1412,13 @@ function updateEnemies() {
         const dy = player.y - enemy.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // AI behavior
         if (distance < enemy.range) {
-            // In range - attack or chase
             enemy.shootTimer--;
 
             if (enemy.shootTimer <= 0 && distance < enemy.range) {
-                // Attack player
                 if (distance < 1.5) {
-                    // Melee attack
                     damagePlayer(enemy.damage);
                 } else {
-                    // Ranged attack
                     const angle = Math.atan2(dy, dx);
                     projectiles.push({
                         x: enemy.x,
@@ -1353,7 +1434,6 @@ function updateEnemies() {
                 enemy.shootTimer = enemy.fireRate;
             }
 
-            // Chase player if not too close
             if (distance > 2) {
                 const moveX = enemy.x + (dx / distance) * enemy.speed;
                 const moveY = enemy.y + (dy / distance) * enemy.speed;
@@ -1377,7 +1457,7 @@ function damagePlayer(damage) {
     player.health -= damage;
     updateHUD();
 
-    // Screen flash effect
+    // Screen flash
     ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
     ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
@@ -1390,14 +1470,12 @@ function updateProjectiles() {
         p.y += Math.sin(p.angle) * p.speed;
         p.life--;
 
-        // Check wall collision
         const mapX = Math.floor(p.x);
         const mapY = Math.floor(p.y);
         const cell = currentLevelData.map[mapY]?.[mapX];
 
         if (!cell || cell > 0) {
             if (p.explosive && p.area) {
-                // Explosion damage
                 enemies.forEach(enemy => {
                     if (!enemy.alive) return;
                     const dx = enemy.x - p.x;
@@ -1412,7 +1490,6 @@ function updateProjectiles() {
             continue;
         }
 
-        // Check enemy hits (for player projectiles)
         if (!p.fromEnemy) {
             for (const enemy of enemies) {
                 if (!enemy.alive) continue;
@@ -1428,7 +1505,6 @@ function updateProjectiles() {
                 }
             }
         } else {
-            // Enemy projectile hit player
             const dx = player.x - p.x;
             const dy = player.y - p.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
@@ -1450,7 +1526,7 @@ function updateParticles() {
         p.x += p.vx;
         p.y += p.vy;
         p.z += p.vz;
-        p.vz -= 0.01; // Gravity
+        p.vz -= 0.01;
         p.life--;
 
         if (p.life <= 0 || p.z < 0) {
@@ -1471,31 +1547,29 @@ function checkPickups() {
             pickup.collected = true;
             player.items++;
 
-            // Apply pickup effect
             if (pickup.health) {
                 player.health = Math.min(100, player.health + pickup.health);
-                showMessage('+ ' + pickup.health + ' Health', 1000);
+                showMessage('+' + pickup.health + ' Health', 1000);
             }
             if (pickup.armor) {
                 player.armor = Math.min(200, player.armor + pickup.armor);
-                showMessage('+ ' + pickup.armor + ' Armor', 1000);
+                showMessage('+' + pickup.armor + ' Armor', 1000);
             }
             if (pickup.key) {
                 player.keys[pickup.key] = true;
-                showMessage('Picked up ' + pickup.key + ' key', 2000);
+                showMessage('Got ' + pickup.key + ' key', 2000);
             }
             if (pickup.weapon !== undefined) {
                 if (!player.weapons[pickup.weapon]) {
                     player.weapons[pickup.weapon] = true;
                     player.currentWeapon = pickup.weapon;
-                    showMessage('New weapon: ' + weapons[pickup.weapon].name, 2000);
+                    showMessage('New: ' + weapons[pickup.weapon].name, 2000);
                 }
-                // Also give ammo
                 player.ammo[pickup.weapon] += 20;
             }
             if (pickup.ammo !== undefined) {
                 player.ammo[pickup.ammo] += pickup.amount;
-                showMessage('+ ' + pickup.amount + ' Ammo', 1000);
+                showMessage('+' + pickup.amount + ' Ammo', 1000);
             }
 
             updateHUD();
