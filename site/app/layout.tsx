@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   title: "Shaffer Construction",
   description: "Los Angeles electrical contractor specializing in EV charging installation",
   icons: {
-    icon: "/shaffercon-migration/images/shaffer-logo-mini.png",
+    icon: "/shaffercon/images/shaffer-logo-mini.png",
   },
   openGraph: {
     title: "Shaffer Construction",
     description: "Los Angeles electrical contractor specializing in EV charging installation",
     images: [
       {
-        url: "/shaffercon-migration/brand-assets/Shaffer-Construction-Logo-light-mode.png",
+        url: "/shaffercon/brand-assets/Shaffer-Construction-Logo-light-mode.png",
         width: 1200,
         height: 630,
         alt: "Shaffer Construction Logo",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shaffer Construction",
     description: "Los Angeles electrical contractor specializing in EV charging installation",
-    images: ["/shaffercon-migration/brand-assets/Shaffer-Construction-Logo-light-mode.png"],
+    images: ["/shaffercon/brand-assets/Shaffer-Construction-Logo-light-mode.png"],
   },
 };
 

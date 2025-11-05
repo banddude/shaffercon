@@ -5,7 +5,7 @@
 
 // Base path for GitHub Pages (only used in production)
 // In development, this will be empty string
-export const BASE_PATH = process.env.NODE_ENV === 'production' ? '/shaffercon-migration' : '';
+export const BASE_PATH = process.env.NODE_ENV === 'production' ? '/shaffercon' : '';
 
 // Helper function to prepend base path to any URL
 export const withBasePath = (path: string): string => {
