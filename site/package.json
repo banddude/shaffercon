@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^16.0.1",
     "@radix-ui/react-switch": "^1.2.6",
     "better-sqlite3": "^12.4.1",
     "lucide-react": "^0.552.0",

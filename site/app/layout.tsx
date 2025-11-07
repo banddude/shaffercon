@@ -3,6 +3,9 @@ import "./globals.css";
 import HeaderWrapper from "@/app/components/HeaderWrapper";
 import FooterWrapper from "@/app/components/FooterWrapper";
 import { theme } from "@/app/styles/theme";
+import { LocalBusinessSchema } from "@/app/components/StructuredData";
+import { Analytics } from "@/app/components/Analytics";
+import { SearchConsoleVerification } from "@/app/components/SearchConsoleVerification";
 
 export const metadata: Metadata = {
   title: "Shaffer Construction",
@@ -37,7 +40,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en-US" className="dark">
+      <head>
+        <LocalBusinessSchema />
+        <SearchConsoleVerification />
+      </head>
       <body
         className="flex flex-col min-h-screen transition-colors duration-300"
         style={{
@@ -48,6 +55,7 @@ export default function RootLayout({
         <HeaderWrapper />
         {children}
         <FooterWrapper />
+        <Analytics />
       </body>
     </html>
   );

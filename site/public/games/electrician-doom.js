@@ -1334,10 +1334,19 @@ function update(deltaTime) {
         newY += Math.sin(player.angle + Math.PI / 2) * moveSpeed;
     }
 
-    // Collision detection
+    // Sliding collision detection
     if (!checkWallCollision(newX, newY)) {
         player.x = newX;
         player.y = newY;
+    } else {
+        // Try sliding along X axis
+        if (!checkWallCollision(newX, player.y)) {
+            player.x = newX;
+        }
+        // Try sliding along Y axis
+        if (!checkWallCollision(player.x, newY)) {
+            player.y = newY;
+        }
     }
 
     // Check for exit

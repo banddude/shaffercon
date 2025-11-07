@@ -41,6 +41,9 @@ jobs:
         run: |
           cd site
           npm run build
+        env:
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+          NEXT_PUBLIC_GSC_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GSC_VERIFICATION }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -24,11 +24,6 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
   const isVideoOverlayPage = isHomePage || isCommercialEVPage;
   const showWhiteText = isVideoOverlayPage;
 
-  // Debug logging
-  if (typeof window !== 'undefined' && isCommercialEVPage) {
-    console.log('Commercial EV Page detected. Pathname:', pathname);
-  }
-
   useEffect(() => {
     const checkDarkMode = () => {
       const dark = document.documentElement.classList.contains('dark');

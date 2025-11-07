@@ -9,17 +9,21 @@ import {
 } from "@/app/components/UI/AppleStyle";
 import { useEffect, useState } from "react";
 import { withBasePath } from "@/app/config";
-import { Zap, Plug, Trophy, Crosshair } from "lucide-react";
+import { Zap, Plug, Trophy, Crosshair, Hash, Grid3x3 } from "lucide-react";
 
 export default function GamesPage() {
   const [leaderboards, setLeaderboards] = useState<{
     zappybird: Array<{ name: string; score: number }>;
     sparkybros: Array<{ name: string; score: number }>;
     doom: Array<{ name: string; level: number; kills: number; time: number; score: number }>;
+    hopscotch: Array<{ name: string; score: number }>;
+    classichopscotch: Array<{ name: string; score: number }>;
   }>({
     zappybird: [],
     sparkybros: [],
     doom: [],
+    hopscotch: [],
+    classichopscotch: [],
   });
 
   useEffect(() => {
@@ -33,11 +37,19 @@ export default function GamesPage() {
     const doomScores = JSON.parse(
       localStorage.getItem("doom-leaderboard") || "[]"
     );
+    const hopscotchScores = JSON.parse(
+      localStorage.getItem("hopscotch-leaderboard") || "[]"
+    );
+    const classicHopscotchScores = JSON.parse(
+      localStorage.getItem("classic-hopscotch-leaderboard") || "[]"
+    );
 
     setLeaderboards({
       zappybird: zappyBirdScores.slice(0, 3),
       sparkybros: sparkyBrosScores.slice(0, 3),
       doom: doomScores.slice(0, 3),
+      hopscotch: hopscotchScores.slice(0, 3),
+      classichopscotch: classicHopscotchScores.slice(0, 3),
     });
 
     // Listen for storage changes to update leaderboard in real-time
@@ -51,10 +63,18 @@ export default function GamesPage() {
       const dm = JSON.parse(
         localStorage.getItem("doom-leaderboard") || "[]"
       );
+      const hs = JSON.parse(
+        localStorage.getItem("hopscotch-leaderboard") || "[]"
+      );
+      const ch = JSON.parse(
+        localStorage.getItem("classic-hopscotch-leaderboard") || "[]"
+      );
       setLeaderboards({
         zappybird: zb.slice(0, 3),
         sparkybros: sb.slice(0, 3),
         doom: dm.slice(0, 3),
+        hopscotch: hs.slice(0, 3),
+        classichopscotch: ch.slice(0, 3),
       });
     };
 
@@ -81,6 +101,20 @@ export default function GamesPage() {
       href: withBasePath("games/sparky-bros.html"),
       icon: Plug,
       leaderboardKey: "sparkybros" as const,
+    },
+    {
+      title: "Sparky's Hopscotch",
+      description: "Help Sparky jump through numbered electrical boxes! Land on each box in order and reach new levels in this electrifying hopscotch adventure.",
+      href: withBasePath("games/sparky-hopscotch.html"),
+      icon: Hash,
+      leaderboardKey: "hopscotch" as const,
+    },
+    {
+      title: "Classic Hopscotch",
+      description: "Play the traditional hopscotch game with Sparky! Throw your marker, hop through the squares, and complete all 10 rounds to win!",
+      href: withBasePath("games/classic-hopscotch.html"),
+      icon: Grid3x3,
+      leaderboardKey: "classichopscotch" as const,
     },
     {
       title: "DΩΩM",
@@ -276,6 +310,106 @@ export default function GamesPage() {
               <div className="space-y-2">
                 {leaderboards.sparkybros.length > 0 ? (
                   leaderboards.sparkybros.map((entry, idx) => (
+                    <div
+                      key={idx}
+                      className="flex justify-between items-center p-2 rounded"
+                      style={{
+                        background: idx === 0 ? "rgba(255, 215, 0, 0.1)" : "transparent",
+                      }}
+                    >
+                      <span
+                        className="text-sm sm:text-base font-semibold"
+                        style={{ color: "var(--text)" }}
+                      >
+                        {idx + 1}. {entry.name}
+                      </span>
+                      <span
+                        className="text-sm sm:text-base font-bold"
+                        style={{ color: "var(--primary)" }}
+                      >
+                        {entry.score}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <p
+                    className="text-xs sm:text-sm text-center py-4"
+                    style={{ color: "var(--secondary)" }}
+                  >
+                    No scores yet. Be the first!
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Hopscotch Leaderboard */}
+            <div
+              className="p-4 sm:p-6 rounded-lg border"
+              style={{
+                background: "var(--background)",
+                borderColor: "var(--secondary)",
+              }}
+            >
+              <h3
+                className="text-base sm:text-xl font-bold mb-2 sm:mb-4 text-center flex items-center justify-center gap-2"
+                style={{ color: "var(--text)" }}
+              >
+                <Hash className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: "var(--primary)" }} strokeWidth={2} />
+                Sparky's Hopscotch
+              </h3>
+              <div className="space-y-2">
+                {leaderboards.hopscotch.length > 0 ? (
+                  leaderboards.hopscotch.map((entry, idx) => (
+                    <div
+                      key={idx}
+                      className="flex justify-between items-center p-2 rounded"
+                      style={{
+                        background: idx === 0 ? "rgba(255, 215, 0, 0.1)" : "transparent",
+                      }}
+                    >
+                      <span
+                        className="text-sm sm:text-base font-semibold"
+                        style={{ color: "var(--text)" }}
+                      >
+                        {idx + 1}. {entry.name}
+                      </span>
+                      <span
+                        className="text-sm sm:text-base font-bold"
+                        style={{ color: "var(--primary)" }}
+                      >
+                        {entry.score}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <p
+                    className="text-xs sm:text-sm text-center py-4"
+                    style={{ color: "var(--secondary)" }}
+                  >
+                    No scores yet. Be the first!
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Classic Hopscotch Leaderboard */}
+            <div
+              className="p-4 sm:p-6 rounded-lg border"
+              style={{
+                background: "var(--background)",
+                borderColor: "var(--secondary)",
+              }}
+            >
+              <h3
+                className="text-base sm:text-xl font-bold mb-2 sm:mb-4 text-center flex items-center justify-center gap-2"
+                style={{ color: "var(--text)" }}
+              >
+                <Grid3x3 className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: "var(--primary)" }} strokeWidth={2} />
+                Classic Hopscotch
+              </h3>
+              <div className="space-y-2">
+                {leaderboards.classichopscotch.length > 0 ? (
+                  leaderboards.classichopscotch.map((entry, idx) => (
                     <div
                       key={idx}
                       className="flex justify-between items-center p-2 rounded"

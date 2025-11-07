@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { SiteConfig } from "@/lib/db";
 import { Home, Phone, Mail, Clock, MapPin, FileCheck, Facebook, Instagram } from "lucide-react";
+import { trackPhoneClick, trackEmailClick } from "@/app/lib/analytics";
 
 interface FooterProps {
   siteConfig: SiteConfig;
@@ -52,13 +53,21 @@ export default function Footer({ siteConfig }: FooterProps) {
             <h4 className="text-sm sm:text-base font-bold mb-2 sm:mb-3">Contact</h4>
             <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
               <li>
-                <a href={`tel:${config.contact.phone}`} className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+                <a
+                  href={`tel:${config.contact.phone}`}
+                  className="flex items-center gap-2 hover:opacity-70 transition-opacity"
+                  onClick={() => trackPhoneClick(config.contact.phone, 'Footer')}
+                >
                   <Phone className="w-3 h-3" style={{ color: "var(--primary)" }} />
                   <span>{config.contact.phone}</span>
                 </a>
               </li>
               <li>
-                <a href={`mailto:${config.contact.email}`} className="flex items-center gap-2 hover:opacity-70 transition-opacity break-all">
+                <a
+                  href={`mailto:${config.contact.email}`}
+                  className="flex items-center gap-2 hover:opacity-70 transition-opacity break-all"
+                  onClick={() => trackEmailClick(config.contact.email, 'Footer')}
+                >
                   <Mail className="w-3 h-3 flex-shrink-0" style={{ color: "var(--primary)" }} />
                   <span>{config.contact.email}</span>
                 </a>

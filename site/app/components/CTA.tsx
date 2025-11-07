@@ -2,6 +2,7 @@
 
 import { AppleButton } from "@/app/components/UI/AppleStyle";
 import { ASSET_PATH } from "@/app/config";
+import { trackCTAClick } from "@/app/lib/analytics";
 
 interface CTAProps {
   heading?: string;
@@ -77,7 +78,12 @@ export default function CTA({
           >
             {text}
           </p>
-          <AppleButton href={buttonHref} variant="primary" size="lg">
+          <AppleButton
+            href={buttonHref}
+            variant="primary"
+            size="lg"
+            onClick={() => trackCTAClick(buttonText, 'CTA Section', buttonHref)}
+          >
             {buttonText}
           </AppleButton>
         </div>
