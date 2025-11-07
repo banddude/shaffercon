@@ -4,6 +4,18 @@ import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, Grid, GridItem } from "@/app/components/UI";
 import CTA from "@/app/components/CTA";
 import LinkCardGrid from "@/app/components/LinkCardGrid";
+import Breadcrumb from "@/app/components/Breadcrumb";
+
+// Helper function to decode HTML entities
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&#038;/g, '&')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'");
+}
 
 interface PageProps {
   params: Promise<{
@@ -53,24 +65,53 @@ async function getLocationPage(locationSlug: string) {
     ORDER BY display_order
   `).all(page.location_id) as Array<{ area_name: string; area_slug: string }>;
 
-  // Convert slug to location name (e.g., "santa-monica" -> "santa monica")
-  const locationName = locationSlug.replace(/-/g, ' ');
+  // Hardcoded list of all residential services
+  const residentialServices = [
+    { service_name: 'backup-generator-installation', service_type: 'residential' },
+    { service_name: 'breaker-panel-service-maintenance', service_type: 'residential' },
+    { service_name: 'ceiling-fan-fixture-installation', service_type: 'residential' },
+    { service_name: 'complete-electrical-rewiring', service_type: 'residential' },
+    { service_name: 'data-network-av-wiring', service_type: 'residential' },
+    { service_name: 'dedicated-equipment-circuits', service_type: 'residential' },
+    { service_name: 'electrical-code-compliance-corrections', service_type: 'residential' },
+    { service_name: 'electrical-panel-upgrades', service_type: 'residential' },
+    { service_name: 'electrical-safety-inspections', service_type: 'residential' },
+    { service_name: 'electrical-troubleshooting-repairs', service_type: 'residential' },
+    { service_name: 'energy-efficiency-upgrades', service_type: 'residential' },
+    { service_name: 'ev-charger-installation', service_type: 'residential' },
+    { service_name: 'exhaust-fan-ventilation-wiring', service_type: 'residential' },
+    { service_name: 'landscape-outdoor-lighting', service_type: 'residential' },
+    { service_name: 'lighting-installation-retrofitting', service_type: 'residential' },
+    { service_name: 'outlet-switch-dimmer-services', service_type: 'residential' },
+    { service_name: 'pool-hot-tub-spa-electrical', service_type: 'residential' },
+    { service_name: 'security-motion-lighting', service_type: 'residential' },
+    { service_name: 'smart-automation-systems', service_type: 'residential' },
+    { service_name: 'whole-building-surge-protection', service_type: 'residential' },
+  ];
 
-  // Get all residential services for this location
-  const residentialServices = db.prepare(`
-    SELECT service_name, service_type FROM service_pages
-    WHERE location = ? AND service_type = 'residential'
-    ORDER BY service_name
-    LIMIT 20
-  `).all(locationName) as Array<{ service_name: string; service_type: string }>;
-
-  // Get all commercial services for this location
-  const commercialServices = db.prepare(`
-    SELECT service_name, service_type FROM service_pages
-    WHERE location = ? AND service_type = 'commercial'
-    ORDER BY service_name
-    LIMIT 20
-  `).all(locationName) as Array<{ service_name: string; service_type: string }>;
+  // Hardcoded list of all commercial services
+  const commercialServices = [
+    { service_name: 'backup-generator-installation', service_type: 'commercial' },
+    { service_name: 'breaker-panel-service-maintenance', service_type: 'commercial' },
+    { service_name: 'ceiling-fan-fixture-installation', service_type: 'commercial' },
+    { service_name: 'complete-electrical-rewiring', service_type: 'commercial' },
+    { service_name: 'data-network-av-wiring', service_type: 'commercial' },
+    { service_name: 'dedicated-equipment-circuits', service_type: 'commercial' },
+    { service_name: 'electrical-code-compliance-corrections', service_type: 'commercial' },
+    { service_name: 'electrical-panel-upgrades', service_type: 'commercial' },
+    { service_name: 'electrical-safety-inspections', service_type: 'commercial' },
+    { service_name: 'electrical-troubleshooting-repairs', service_type: 'commercial' },
+    { service_name: 'energy-efficiency-upgrades', service_type: 'commercial' },
+    { service_name: 'ev-charger-installation', service_type: 'commercial' },
+    { service_name: 'exhaust-fan-ventilation-wiring', service_type: 'commercial' },
+    { service_name: 'landscape-outdoor-lighting', service_type: 'commercial' },
+    { service_name: 'lighting-installation-retrofitting', service_type: 'commercial' },
+    { service_name: 'outlet-switch-dimmer-services', service_type: 'commercial' },
+    { service_name: 'pool-hot-tub-spa-electrical', service_type: 'commercial' },
+    { service_name: 'security-motion-lighting', service_type: 'commercial' },
+    { service_name: 'smart-automation-systems', service_type: 'commercial' },
+    { service_name: 'whole-building-surge-protection', service_type: 'commercial' },
+  ];
 
   return {
     ...page,
@@ -92,14 +133,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const url = `${baseUrl}/service-areas/${location}`;
+  const title = page.meta_title || page.title;
+  const description = page.meta_description || page.tagline || '';
+
   return {
-    title: page.meta_title || page.title,
-    description: page.meta_description || '',
-    openGraph: page.og_image
-      ? {
-          images: [page.og_image],
-        }
-      : undefined,
+    title,
+    description,
+    alternates: {
+      canonical: page.canonical_url || url,
+    },
+    openGraph: {
+      title,
+      description,
+      url: page.canonical_url || url,
+      siteName: 'Shaffer Construction',
+      locale: 'en_US',
+      type: 'website',
+      images: page.og_image ? [page.og_image] : [`${baseUrl}/og-image.jpg`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: page.og_image ? [page.og_image] : [`${baseUrl}/og-image.jpg`],
+    },
   };
 }
 
@@ -117,6 +176,12 @@ export default async function LocationPage({ params }: PageProps) {
       {/* Hero Section */}
       <Section border="bottom">
         <Container>
+          <Breadcrumb
+            items={[
+              { label: "Service Areas", href: "/service-areas" },
+              { label: page.location_name }
+            ]}
+          />
           <PageTitle>{page.title}</PageTitle>
           {page.tagline && (
             <p className="text-base leading-relaxed mt-4">{page.tagline}</p>
@@ -145,10 +210,21 @@ export default async function LocationPage({ params }: PageProps) {
               <Paragraph>{page.residential_intro}</Paragraph>
             )}
             <LinkCardGrid
-              items={page.residentialServices.map((service: any) => ({
-                label: service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-                href: `/service-areas/${location}/residential-${service.service_name}`,
-              }))}
+              items={page.residentialServices.map((service: any) => {
+                // Map slugs to proper display names
+                const displayNames: { [key: string]: string } = {
+                  'electrical-troubleshooting-repairs': 'Electrical Troubleshooting & Repairs',
+                  'pool-hot-tub-spa-electrical': 'Pool, Hot Tub & Spa Electrical',
+                  'data-network-av-wiring': 'Data, Network & AV Wiring',
+                };
+
+                const defaultLabel = service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+                return {
+                  label: displayNames[service.service_name] || defaultLabel,
+                  href: `/service-areas/${location}/residential-${service.service_name}`,
+                };
+              })}
               columns={3}
             />
           </Container>
@@ -164,10 +240,21 @@ export default async function LocationPage({ params }: PageProps) {
               <Paragraph>{page.commercial_intro}</Paragraph>
             )}
             <LinkCardGrid
-              items={page.commercialServices.map((service: any) => ({
-                label: service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-                href: `/service-areas/${location}/commercial-${service.service_name}`,
-              }))}
+              items={page.commercialServices.map((service: any) => {
+                // Map slugs to proper display names
+                const displayNames: { [key: string]: string } = {
+                  'electrical-troubleshooting-repairs': 'Electrical Troubleshooting & Repairs',
+                  'pool-hot-tub-spa-electrical': 'Pool, Hot Tub & Spa Electrical',
+                  'data-network-av-wiring': 'Data, Network & AV Wiring',
+                };
+
+                const defaultLabel = service.service_name.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+                return {
+                  label: displayNames[service.service_name] || defaultLabel,
+                  href: `/service-areas/${location}/commercial-${service.service_name}`,
+                };
+              })}
               columns={3}
             />
           </Container>
@@ -179,11 +266,48 @@ export default async function LocationPage({ params }: PageProps) {
         <Section padding="md">
           <Container maxWidth="lg">
             <SectionHeading>Featured Services</SectionHeading>
-            <ul className="list-disc list-inside space-y-2">
-              {page.relatedServices.map((service: string, index: number) => (
-                <li key={index} className="text-base">{service}</li>
-              ))}
-            </ul>
+            <LinkCardGrid
+              items={page.relatedServices.map((service: string) => {
+                // Extract service type and name from format like "Residential Outlet Switch Dimmer Services"
+                const parts = service.split(' ');
+                const serviceType = parts[0].toLowerCase(); // "residential" or "commercial"
+
+                // Create a mapping of display names to actual slugs
+                const displayNameToSlug: { [key: string]: string } = {
+                  'Backup Generator Installation': 'backup-generator-installation',
+                  'Breaker Panel Service Maintenance': 'breaker-panel-service-maintenance',
+                  'Ceiling Fan Fixture Installation': 'ceiling-fan-fixture-installation',
+                  'Complete Electrical Rewiring': 'complete-electrical-rewiring',
+                  'Data Network Av Wiring': 'data-network-av-wiring',
+                  'Data Network AV Wiring': 'data-network-av-wiring',
+                  'Dedicated Equipment Circuits': 'dedicated-equipment-circuits',
+                  'Electrical Code Compliance Corrections': 'electrical-code-compliance-corrections',
+                  'Electrical Panel Upgrades': 'electrical-panel-upgrades',
+                  'Electrical Safety Inspections': 'electrical-safety-inspections',
+                  'Electrical Troubleshooting Repairs': 'electrical-troubleshooting-repairs',
+                  'Energy Efficiency Upgrades': 'energy-efficiency-upgrades',
+                  'Ev Charger Installation': 'ev-charger-installation',
+                  'EV Charger Installation': 'ev-charger-installation',
+                  'Exhaust Fan Ventilation Wiring': 'exhaust-fan-ventilation-wiring',
+                  'Landscape Outdoor Lighting': 'landscape-outdoor-lighting',
+                  'Lighting Installation Retrofitting': 'lighting-installation-retrofitting',
+                  'Outlet Switch Dimmer Services': 'outlet-switch-dimmer-services',
+                  'Pool Hot Tub Spa Electrical': 'pool-hot-tub-spa-electrical',
+                  'Security Motion Lighting': 'security-motion-lighting',
+                  'Smart Automation Systems': 'smart-automation-systems',
+                  'Whole Building Surge Protection': 'whole-building-surge-protection',
+                };
+
+                const displayName = parts.slice(1).join(' ');
+                const serviceName = displayNameToSlug[displayName] || parts.slice(1).join(' ').toLowerCase().replace(/\s+/g, '-');
+
+                return {
+                  label: service,
+                  href: `/service-areas/${location}/${serviceType}-${serviceName}`,
+                };
+              })}
+              columns={2}
+            />
           </Container>
         </Section>
       )}

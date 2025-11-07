@@ -3,6 +3,19 @@ import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, ContentBox } from "@/app/components/UI";
 import CTA from "@/app/components/CTA";
+import LinkCardGrid from "@/app/components/LinkCardGrid";
+import Breadcrumb from "@/app/components/Breadcrumb";
+
+// Helper function to decode HTML entities
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&#038;/g, '&')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'");
+}
 
 interface PageProps {
   params: Promise<{
@@ -20,7 +33,7 @@ export async function generateStaticParams() {
   `).all() as Array<{ location: string; service_type: string; service_name: string }>;
 
   return services.map(({ location, service_type, service_name }) => ({
-    location,
+    location: location.replace(/\s+/g, '-').toLowerCase(),
     service: `${service_type}-${service_name}`,
   }));
 }
@@ -30,6 +43,9 @@ async function getServicePage(location: string, service: string) {
   const [serviceType, ...serviceNameParts] = service.split('-');
   const serviceName = serviceNameParts.join('-');
 
+  // Convert location slug back to location name (e.g., "culver-city" -> "culver city")
+  const locationName = location.replace(/-/g, ' ');
+
   const db = getDb();
   const page = db.prepare(`
     SELECT p.id, p.slug, p.title, p.date, p.meta_title, p.meta_description, p.canonical_url, p.og_image,
@@ -38,7 +54,7 @@ async function getServicePage(location: string, service: string) {
     FROM pages_all p
     JOIN service_pages sp ON p.id = sp.page_id
     WHERE sp.location = ? AND sp.service_type = ? AND sp.service_name = ?
-  `).get(location, serviceType, serviceName) as any;
+  `).get(locationName, serviceType, serviceName) as any;
 
   if (!page) return null;
 
@@ -98,14 +114,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const url = `${baseUrl}/service-areas/${location}/${service}`;
+  const title = page.meta_title || page.title;
+  const description = page.meta_description || page.hero_intro || '';
+
   return {
-    title: page.meta_title || page.title,
-    description: page.meta_description || '',
-    openGraph: page.og_image
-      ? {
-          images: [page.og_image],
-        }
-      : undefined,
+    title,
+    description,
+    alternates: {
+      canonical: page.canonical_url || url,
+    },
+    openGraph: {
+      title,
+      description,
+      url: page.canonical_url || url,
+      siteName: 'Shaffer Construction',
+      locale: 'en_US',
+      type: 'website',
+      images: page.og_image ? [page.og_image] : [`${baseUrl}/og-image.jpg`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: page.og_image ? [page.og_image] : [`${baseUrl}/og-image.jpg`],
+    },
   };
 }
 
@@ -120,14 +154,30 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   const locationName = location.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
+  // Generate service display name for breadcrumb
+  const [serviceType, ...serviceNameParts] = service.split('-');
+  const serviceName = serviceNameParts.join('-');
+  const serviceDisplayName = serviceName
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+  const fullServiceName = `${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} ${serviceDisplayName}`;
+
   return (
     <main className="w-full">
       {/* Hero Section */}
       <Section border="bottom">
         <Container>
-          <PageTitle>{page.title}</PageTitle>
+          <Breadcrumb
+            items={[
+              { label: "Service Areas", href: "/service-areas" },
+              { label: locationName, href: `/service-areas/${location}` },
+              { label: fullServiceName }
+            ]}
+          />
+          <PageTitle>{decodeHtmlEntities(page.title)}</PageTitle>
           {page.hero_intro && (
-            <p className="text-base leading-relaxed mt-4" style={{ color: "var(--secondary)" }}>{page.hero_intro}</p>
+            <p className="text-base leading-relaxed mt-4" style={{ color: "var(--secondary)" }}>{decodeHtmlEntities(page.hero_intro)}</p>
           )}
         </Container>
       </Section>
@@ -140,8 +190,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <div className="grid md:grid-cols-2 gap-8">
               {page.benefits.map((benefit: any, index: number) => (
                 <ContentBox key={index} border padding="md">
-                  <h3 className="text-lg font-semibold mb-3" style={{ color: "var(--text)" }}>{benefit.heading}</h3>
-                  <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>{benefit.content}</p>
+                  <h3 className="text-lg font-semibold mb-3" style={{ color: "var(--text)" }}>{decodeHtmlEntities(benefit.heading)}</h3>
+                  <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>{decodeHtmlEntities(benefit.content)}</p>
                 </ContentBox>
               ))}
             </div>
@@ -154,11 +204,48 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         <Section padding="md">
           <Container maxWidth="lg">
             <SectionHeading>Our Services Include</SectionHeading>
-            <ul className="list-disc list-inside space-y-2">
-              {page.offerings.map((offering: string, index: number) => (
-                <li key={index} className="text-base" style={{ color: "var(--secondary)" }}>{offering}</li>
-              ))}
-            </ul>
+            <LinkCardGrid
+              items={page.offerings.map((offering: string) => {
+                // Parse service format: "Residential Data Network Av Wiring"
+                const parts = offering.split(' ');
+                const serviceType = parts[0].toLowerCase(); // "residential" or "commercial"
+
+                // Create a mapping of display names to actual slugs
+                const displayNameToSlug: { [key: string]: string } = {
+                  'Backup Generator Installation': 'backup-generator-installation',
+                  'Breaker Panel Service Maintenance': 'breaker-panel-service-maintenance',
+                  'Ceiling Fan Fixture Installation': 'ceiling-fan-fixture-installation',
+                  'Complete Electrical Rewiring': 'complete-electrical-rewiring',
+                  'Data Network Av Wiring': 'data-network-av-wiring',
+                  'Data Network AV Wiring': 'data-network-av-wiring',
+                  'Dedicated Equipment Circuits': 'dedicated-equipment-circuits',
+                  'Electrical Code Compliance Corrections': 'electrical-code-compliance-corrections',
+                  'Electrical Panel Upgrades': 'electrical-panel-upgrades',
+                  'Electrical Safety Inspections': 'electrical-safety-inspections',
+                  'Electrical Troubleshooting Repairs': 'electrical-troubleshooting-repairs',
+                  'Energy Efficiency Upgrades': 'energy-efficiency-upgrades',
+                  'Ev Charger Installation': 'ev-charger-installation',
+                  'EV Charger Installation': 'ev-charger-installation',
+                  'Exhaust Fan Ventilation Wiring': 'exhaust-fan-ventilation-wiring',
+                  'Landscape Outdoor Lighting': 'landscape-outdoor-lighting',
+                  'Lighting Installation Retrofitting': 'lighting-installation-retrofitting',
+                  'Outlet Switch Dimmer Services': 'outlet-switch-dimmer-services',
+                  'Pool Hot Tub Spa Electrical': 'pool-hot-tub-spa-electrical',
+                  'Security Motion Lighting': 'security-motion-lighting',
+                  'Smart Automation Systems': 'smart-automation-systems',
+                  'Whole Building Surge Protection': 'whole-building-surge-protection',
+                };
+
+                const displayName = parts.slice(1).join(' ');
+                const serviceName = displayNameToSlug[displayName] || parts.slice(1).join(' ').toLowerCase().replace(/\s+/g, '-');
+
+                return {
+                  label: decodeHtmlEntities(offering),
+                  href: `/service-areas/${location}/${serviceType}-${serviceName}`,
+                };
+              })}
+              columns={2}
+            />
           </Container>
         </Section>
       )}
@@ -167,7 +254,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       {page.closing_content && (
         <Section padding="md">
           <Container maxWidth="lg">
-            <Paragraph>{page.closing_content}</Paragraph>
+            <Paragraph>{decodeHtmlEntities(page.closing_content)}</Paragraph>
           </Container>
         </Section>
       )}
@@ -180,8 +267,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <div className="space-y-6">
               {page.faqs.map((faq: any, index: number) => (
                 <ContentBox key={index} border padding="md">
-                  <h3 className="text-lg font-semibold mb-3" style={{ color: "var(--text)" }}>{faq.question}</h3>
-                  <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>{faq.answer}</p>
+                  <h3 className="text-lg font-semibold mb-3" style={{ color: "var(--text)" }}>{decodeHtmlEntities(faq.question)}</h3>
+                  <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>{decodeHtmlEntities(faq.answer)}</p>
                 </ContentBox>
               ))}
             </div>
@@ -189,30 +276,19 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </Section>
       )}
 
-      {/* Related Services */}
-      {page.relatedServices && page.relatedServices.length > 0 && (
-        <Section padding="md">
-          <Container maxWidth="lg">
-            <SectionHeading>Related Services</SectionHeading>
-            <ul className="list-disc list-inside space-y-2">
-              {page.relatedServices.map((service: string, index: number) => (
-                <li key={index} className="text-base" style={{ color: "var(--secondary)" }}>{service}</li>
-              ))}
-            </ul>
-          </Container>
-        </Section>
-      )}
 
       {/* Nearby Areas */}
       {page.nearbyAreas && page.nearbyAreas.length > 0 && (
         <Section padding="md">
           <Container maxWidth="lg">
             <SectionHeading>We Also Serve</SectionHeading>
-            <ul className="list-disc list-inside space-y-2">
-              {page.nearbyAreas.map((area: string, index: number) => (
-                <li key={index} className="text-base" style={{ color: "var(--secondary)" }}>{area}</li>
-              ))}
-            </ul>
+            <LinkCardGrid
+              items={page.nearbyAreas.map((area: string) => ({
+                label: area,
+                href: `/service-areas/${area.toLowerCase().replace(/\s+/g, '-')}/${service}`,
+              }))}
+              columns={3}
+            />
           </Container>
         </Section>
       )}

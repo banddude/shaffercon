@@ -1,74 +1,51 @@
-import { notFound } from "next/navigation";
-import { getDb, getSiteConfig } from "@/lib/db";
 import type { Metadata } from "next";
+import { getSiteConfig } from "@/lib/db";
 import ContactForm from "@/app/components/ContactForm";
-import { Section, Container, PageTitle, Paragraph } from "@/app/components/UI";
-
-// Get contact page data
-async function getContactPage() {
-  const db = getDb();
-  const page = db.prepare(`
-    SELECT p.id, p.slug, p.title, p.date, p.meta_title, p.meta_description, p.canonical_url, p.og_image
-    FROM pages_all p
-    WHERE p.slug = 'contact-us'
-  `).get() as any;
-
-  if (!page) return null;
-
-  const sections = db.prepare(`
-    SELECT section_type, heading, content, image_url
-    FROM page_sections
-    WHERE page_id = ?
-    ORDER BY section_order
-  `).all(page.id) as Array<{
-    section_type: string;
-    heading: string;
-    content: string;
-    image_url?: string;
-  }>;
-
-  return {
-    ...page,
-    sections,
-  };
-}
+import { Section, Container, PageTitle } from "@/app/components/UI";
+import Breadcrumb from "@/app/components/Breadcrumb";
 
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getContactPage();
-
-  if (!page) {
-    return {
-      title: "Contact Us",
-    };
-  }
+  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const url = `${baseUrl}/contact-us`;
+  const title = "Contact Us - Los Angeles Electrical Contractor | Shaffer Construction";
+  const description = "Contact Shaffer Construction for expert EV charging and electrical installation services in Los Angeles County. Call (323) 642-8509 for a free estimate.";
 
   return {
-    title: page.meta_title || page.title,
-    description: page.meta_description || '',
-    openGraph: page.og_image
-      ? {
-          images: [page.og_image],
-        }
-      : undefined,
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'Shaffer Construction',
+      locale: 'en_US',
+      type: 'website',
+      images: [`${baseUrl}/og-image.jpg`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${baseUrl}/og-image.jpg`],
+    },
   };
 }
 
 // Page component
-export default async function ContactPage() {
-  const page = await getContactPage();
+export default function ContactPage() {
   const siteConfig = getSiteConfig();
-
-  if (!page) {
-    notFound();
-  }
 
   return (
     <main className="w-full">
       {/* Hero Section */}
       <Section border="bottom" padding="lg">
         <Container maxWidth="lg">
-          <PageTitle>{page.title}</PageTitle>
+          <Breadcrumb items={[{ label: "Contact Us" }]} />
+          <PageTitle>Contact Us</PageTitle>
         </Container>
       </Section>
 
