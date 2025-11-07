@@ -5,6 +5,8 @@ import { Section, Container, PageTitle, SectionHeading, Paragraph, ContentBox } 
 import CTA from "@/app/components/CTA";
 import LinkCardGrid from "@/app/components/LinkCardGrid";
 import Breadcrumb from "@/app/components/Breadcrumb";
+import { FAQPageSchema } from "@/app/components/schemas/FAQPageSchema";
+import { ServiceSchema } from "@/app/components/schemas/ServiceSchema";
 
 // Helper function to decode HTML entities
 function decodeHtmlEntities(text: string): string {
@@ -163,8 +165,28 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     .join(' ');
   const fullServiceName = `${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} ${serviceDisplayName}`;
 
+  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const pageUrl = `${baseUrl}/service-areas/${location}/${service}`;
+
   return (
     <main className="w-full">
+      {/* Service Schema */}
+      <ServiceSchema
+        serviceName={decodeHtmlEntities(page.title)}
+        description={decodeHtmlEntities(page.hero_intro || page.title)}
+        areaServed={locationName}
+        url={pageUrl}
+      />
+
+      {/* FAQ Schema */}
+      {page.faqs && page.faqs.length > 0 && (
+        <FAQPageSchema
+          faqs={page.faqs.map((faq: any) => ({
+            question: decodeHtmlEntities(faq.question),
+            answer: decodeHtmlEntities(faq.answer)
+          }))}
+        />
+      )}
       {/* Hero Section */}
       <Section border="bottom">
         <Container>

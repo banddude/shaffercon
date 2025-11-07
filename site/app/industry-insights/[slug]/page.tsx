@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import ReactMarkdown from "react-markdown";
 import { classNames } from "@/app/styles/theme";
 import { PageTitle } from "@/app/components/UI";
+import { ArticleSchema } from "@/app/components/schemas/ArticleSchema";
 
 interface PageProps {
   params: Promise<{
@@ -75,8 +76,18 @@ export default async function BlogPostPage({ params }: PageProps) {
     day: 'numeric',
   });
 
+  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const articleUrl = `${baseUrl}/industry-insights/${slug}`;
+
   return (
     <div className={classNames.container + " py-12"}>
+      <ArticleSchema
+        title={post.title}
+        description={post.meta_description || post.title}
+        datePublished={post.date}
+        image={post.og_image}
+        url={articleUrl}
+      />
       <article className="max-w-4xl mx-auto">
         {/* Post Header */}
         <header className="mb-8">
