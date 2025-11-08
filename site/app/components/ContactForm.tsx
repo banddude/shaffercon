@@ -287,14 +287,14 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
 
       {submitted && (
         <div
-          className="mt-6 p-4 rounded-lg"
+          className="mt-6 p-4 rounded-lg border"
           style={{
-            background: "var(--secondary)",
-            opacity: 0.1,
+            background: "var(--background)",
+            borderColor: "var(--primary)",
           }}
         >
-          <p className={classNames.body} style={{ color: "var(--text)" }}>
-            Thank you for your request! Your email client should open with the form data ready to send.
+          <p className="text-lg font-semibold" style={{ color: "var(--primary)" }}>
+            Thank you for your submission! We'll get back to you soon.
           </p>
         </div>
       )}
