@@ -2,11 +2,12 @@ import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Subheading, ContentBox, Button } from "@/app/components/UI";
-import { AppleHero } from "@/app/components/UI/AppleStyle";
+import { AppleHero, AppleButton, AppleCard, AppleGrid } from "@/app/components/UI/AppleStyle";
 import CTA from "@/app/components/CTA";
 import { ASSET_PATH } from "@/app/config";
 import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
 import Breadcrumb from "@/app/components/Breadcrumb";
+import { Phone, Zap, Award, MapPin, Clock, Battery, Wrench, Car, HeadphonesIcon } from "lucide-react";
 
 interface PageProps {
   params: Promise<{
@@ -34,45 +35,6 @@ export async function generateStaticParams() {
 async function getServiceLandingPage(slug: string) {
   if (!SERVICE_LANDING_SLUGS.includes(slug)) {
     return null;
-  }
-
-  // Hardcoded content for residential-ev-charger
-  if (slug === 'residential-ev-charger') {
-    return {
-      slug: 'residential-ev-charger',
-      title: 'Shaffer Construction: Your Trusted Partner in EV Charging',
-      page_title: 'Shaffer Construction: Your Trusted Partner in EV Charging',
-      hero_text: 'Shaffer Construction is proud to offer top-tier residential EV charger installation services across California. We specialize in Level 2 charger installations, perfect for homes, apartments, condos, townhouses, and any residential building.',
-      hero_image: null,
-      meta_title: 'Residential EV Charger Installation | Shaffer Construction',
-      meta_description: 'Professional residential EV charger installation services across California. Level 2 charging station installation for homes, apartments, and condos.',
-      sections: [
-        {
-          section_type: 'info_card',
-          heading: 'About Level 2 Chargers',
-          subheading: null,
-          content: 'Level 2 EV chargers use a higher voltage and amperage power source with a NEMA 6 50 receptacle. Most EV owners find they want a faster charge and upgrade to a Level 2 charging station shortly after buying their electric vehicle. A high-speed charging station at home is not just convenient, it\'s a game-changer.',
-          table_data: null,
-        },
-        {
-          section_type: 'table',
-          heading: null,
-          subheading: null,
-          content: null,
-          table_data: {
-            headers: ['Type', 'Power Rating', 'Range added'],
-            rows: [['Level 2', '3.3-10 kW/HR', '12-40 miles per hour']],
-          },
-        },
-        {
-          section_type: 'content',
-          heading: 'Why Choose Shaffer Construction for Your Residential EV Charger Installation?',
-          subheading: null,
-          content: 'No matter the size of your home, your budget, or your parking setup, we can help you find the right solution. Our team of highly trained, certified electricians is ready to provide you with top-notch service. In addition, we offer maintenance and service for your charger, regardless of whether you originally purchased it from us, to ensure it continues to operate at the highest standards.\n\nGet in touch with Shaffer Construction today and let us help you transition to a more sustainable, electric future.',
-          table_data: null,
-        },
-      ],
-    };
   }
 
   // Hardcoded content for commercial-electric-vehicle-chargers
@@ -155,7 +117,7 @@ async function getServiceLandingPage(slug: string) {
       title: 'Professional Electrical Load Study Services',
       page_title: 'Professional Electrical Load Study Services',
       hero_text: 'Make informed decisions about your electrical infrastructure with comprehensive load studies. Essential for EV charger installations, equipment additions, and capacity planning. We deliver professional documentation suitable for engineering review, permit applications, and utility coordination throughout California.',
-      hero_image: null,
+      hero_image: '/ev-charging.mp4',
       meta_title: 'Professional Electrical Load Study Services',
       meta_description: 'Make informed decisions about your electrical infrastructure with comprehensive load studies. Essential for EV charger installations, equipment additions, and capacity planning.',
       sections: [
@@ -234,7 +196,7 @@ async function getServiceLandingPage(slug: string) {
       landing_id: 0,
       page_title: 'LED Retrofit Services',
       hero_text: 'Transform your facility\'s lighting while dramatically reducing energy costs. Shaffer Construction provides comprehensive LED retrofit services for businesses statewide. With experience completing thousands of conversions across California, we deliver energy savings of 50-70% while improving light quality and reducing maintenance costs.',
-      hero_image: null,
+      hero_image: '/ev-charging.mp4',
       sections: [
         {
           section_type: 'info_card',
@@ -303,7 +265,7 @@ async function getServiceLandingPage(slug: string) {
       title: 'Statewide Facilities Maintenance Electrical Services',
       page_title: 'Statewide Facilities Maintenance Electrical Services',
       hero_text: 'Your single-source electrical maintenance partner across California. From emergency repairs to preventive maintenance programs, Shaffer Construction provides comprehensive electrical services for multi-location facilities. Our experienced teams deliver consistent quality whether you manage retail chains, warehouses, or commercial properties throughout the state.',
-      hero_image: null,
+      hero_image: '/ev-charging.mp4',
       meta_title: 'Statewide Facilities Maintenance Electrical Services',
       meta_description: 'Your single-source electrical maintenance partner across California. From emergency repairs to preventive maintenance programs, Shaffer Construction provides comprehensive electrical services for multi-location facilities.',
       sections: [
@@ -587,15 +549,53 @@ export default async function ServiceLandingPage({ params }: PageProps) {
             )}
           </>
         ) : (
-          <AppleHero
-            title={page.page_title || page.title}
-            subtitle={page.hero_text}
-            image={ASSET_PATH(page.hero_image)}
-          >
-            <div className="mb-6 flex justify-center">
-              <Breadcrumb items={[{ label: breadcrumbLabel }]} />
+          <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
+            {/* Video Background */}
+            <div className="absolute inset-0 z-0">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover"
+                aria-label={page.page_title || page.title}
+                style={{
+                  filter: "brightness(0.4)",
+                  objectPosition: "center",
+                }}
+              >
+                <source src={ASSET_PATH(page.hero_image)} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
+                Your browser does not support the video tag.
+              </video>
             </div>
-          </AppleHero>
+
+            {/* Overlay */}
+            <div className="absolute inset-0 z-1" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }} />
+
+            {/* Content */}
+            <div className="relative z-10 w-full px-6 sm:px-8 lg:px-12 py-12 sm:py-20 lg:py-28" style={{ paddingTop: "120px" }}>
+              <div className="max-w-4xl mx-auto">
+                <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-6" style={{ color: "#ffffff" }}>
+                  {page.page_title || page.title}
+                </h1>
+                {page.hero_text && (
+                  <p className="text-xl mb-8" style={{ color: "#d1d5db" }}>
+                    {page.hero_text}
+                  </p>
+                )}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <AppleButton href="tel:(323) 642-8509" variant="primary" size="lg">
+                    <Phone className="w-5 h-5 mr-2" />
+                    Call (323) 642-8509
+                  </AppleButton>
+                  <AppleButton href="/contact-us" variant="secondary" size="lg">
+                    Get Free Quote
+                  </AppleButton>
+                </div>
+              </div>
+            </div>
+          </section>
         )
       ) : (
         <Section border="bottom">
@@ -788,88 +788,171 @@ export default async function ServiceLandingPage({ params }: PageProps) {
       )}
 
       {/* Dynamic Sections */}
-      {page.sections && page.sections.map((section: any, index: number) => (
-        // Skip first four sections for commercial EV page as they're rendered specially
-        landing === 'commercial-electric-vehicle-chargers' && (index === 0 || index === 1 || index === 2 || index === 3) ? null :
-        <Section key={index} padding="md">
-          <Container maxWidth="lg">
-            {section.section_type === 'info_card' && (
-              <ContentBox border padding="md">
-                {section.heading && (
-                  <SectionHeading>{section.heading}</SectionHeading>
-                )}
-                {section.subheading && (
-                  <Subheading>{section.subheading}</Subheading>
-                )}
-                {section.content && (
-                  <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
-                    <div dangerouslySetInnerHTML={{ __html: section.content }} />
-                  </div>
-                )}
-              </ContentBox>
-            )}
+      {page.sections && (() => {
+        const sections = page.sections;
+        const renderedIndexes = new Set<number>();
 
-            {(section.section_type === 'content_block' || section.section_type === 'content') && (
-              <div>
-                {section.heading && (
-                  <SectionHeading>{section.heading}</SectionHeading>
-                )}
-                {section.subheading && (
-                  <Subheading>{section.subheading}</Subheading>
-                )}
-                {section.content && (
-                  <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
-                    <div dangerouslySetInnerHTML={{ __html: section.content }} />
-                  </div>
-                )}
-              </div>
-            )}
+        return sections.map((section: any, index: number) => {
+          // Skip if already rendered as part of a group
+          if (renderedIndexes.has(index)) return null;
 
-            {(section.section_type === 'comparison_table' || section.section_type === 'table') && section.table_data && (
-              <div>
-                {section.heading && (
-                  <SectionHeading>{section.heading}</SectionHeading>
-                )}
-                <div className="overflow-x-auto mt-6">
-                  <table className="min-w-full border rounded">
-                    <thead>
-                      <tr className="border-b">
-                        {section.table_data.headers.map((header: string, idx: number) => (
-                          <th key={idx} className="px-6 py-3 text-left text-sm font-semibold border-r last:border-r-0">
-                            {header}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {section.table_data.rows.map((row: string[], rowIdx: number) => (
-                        <tr key={rowIdx} className="border-b last:border-b-0">
-                          {row.map((cell: string, cellIdx: number) => (
-                            <td key={cellIdx} className="px-6 py-4 text-sm border-r last:border-r-0">
-                              {cell}
-                            </td>
-                          ))}
-                        </tr>
+          // Skip first four sections for commercial EV page as they're rendered specially
+          if (landing === 'commercial-electric-vehicle-chargers' && (index === 0 || index === 1 || index === 2 || index === 3)) {
+            return null;
+          }
+
+          // Check if this is the start of a group of consecutive info_cards
+          if (section.section_type === 'info_card') {
+            const infoCards = [section];
+            let nextIndex = index + 1;
+
+            while (nextIndex < sections.length && sections[nextIndex].section_type === 'info_card') {
+              infoCards.push(sections[nextIndex]);
+              renderedIndexes.add(nextIndex);
+              nextIndex++;
+            }
+
+            // If we have multiple info cards, render them as a grid
+            if (infoCards.length > 1) {
+              // Map icons to card headings
+              const iconMap: { [key: string]: JSX.Element } = {
+                // Facilities maintenance cards
+                'Emergency Electrical Repairs': <Zap className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+                'Preventive Maintenance Programs': <Award className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+                'Lighting Maintenance & Repairs': <Zap className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+                'Multi-Location Coverage': <MapPin className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+                // Residential EV charger cards
+                'Lightning-Fast Level 2 Charging': <Battery className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+                'Expert Installation & Panel Upgrades': <Wrench className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+                'Works With All Major EV Brands': <Car className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+                'Ongoing Maintenance & Support': <HeadphonesIcon className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+              };
+
+              return (
+                <Section key={index} padding="lg" background="gray">
+                  <Container maxWidth="xl">
+                    <AppleGrid columns={2} gap="lg">
+                      {infoCards.map((card: any, cardIdx: number) => (
+                        <AppleCard
+                          key={cardIdx}
+                          title={card.heading}
+                          description={card.content?.replace(/<[^>]*>/g, '') || ''}
+                          icon={iconMap[card.heading] || <Zap className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />}
+                        />
                       ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
+                    </AppleGrid>
+                  </Container>
+                </Section>
+              );
+            }
 
-            {section.section_type === 'list' && section.content && (
-              <div>
-                {section.heading && (
-                  <SectionHeading>{section.heading}</SectionHeading>
-                )}
-                <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
-                  <div dangerouslySetInnerHTML={{ __html: section.content }} />
-                </div>
-              </div>
-            )}
-          </Container>
-        </Section>
-      ))}
+            // Single info card - render normally
+            return (
+              <Section key={index} padding="md">
+                <Container maxWidth="lg">
+                  <ContentBox border padding="md">
+                    {section.heading && (
+                      <SectionHeading>{section.heading}</SectionHeading>
+                    )}
+                    {section.subheading && (
+                      <Subheading>{section.subheading}</Subheading>
+                    )}
+                    {section.content && (
+                      <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                        <div dangerouslySetInnerHTML={{ __html: section.content }} />
+                      </div>
+                    )}
+                  </ContentBox>
+                </Container>
+              </Section>
+            );
+          }
+
+          // Content block or content section
+          if (section.section_type === 'content_block' || section.section_type === 'content') {
+            return (
+              <Section key={index} padding="md">
+                <Container maxWidth="lg">
+                  <div>
+                    {section.heading && (
+                      <SectionHeading>{section.heading}</SectionHeading>
+                    )}
+                    {section.subheading && (
+                      <Subheading>{section.subheading}</Subheading>
+                    )}
+                    {section.content && (
+                      <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                        <div dangerouslySetInnerHTML={{ __html: section.content }} />
+                      </div>
+                    )}
+                  </div>
+                </Container>
+              </Section>
+            );
+          }
+
+          // Table section
+          if ((section.section_type === 'comparison_table' || section.section_type === 'table') && section.table_data) {
+            return (
+              <Section key={index} padding="md">
+                <Container maxWidth="lg">
+                  <div>
+                    {section.heading && (
+                      <SectionHeading>{section.heading}</SectionHeading>
+                    )}
+                    <div className="overflow-hidden rounded-lg border mt-6" style={{ borderColor: "var(--section-border)" }}>
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full">
+                          <thead>
+                            <tr className="border-b" style={{ borderColor: "var(--section-border)" }}>
+                              {section.table_data.headers.map((header: string, idx: number) => (
+                                <th key={idx} className="px-6 py-3 text-left text-sm font-semibold border-r last:border-r-0" style={{ color: "var(--text)", borderColor: "var(--section-border)" }}>
+                                  {header}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {section.table_data.rows.map((row: string[], rowIdx: number) => (
+                              <tr key={rowIdx} className="border-b last:border-b-0" style={{ borderColor: "var(--section-border)" }}>
+                                {row.map((cell: string, cellIdx: number) => (
+                                  <td key={cellIdx} className="px-6 py-4 text-sm border-r last:border-r-0" style={{ color: "var(--secondary)", borderColor: "var(--section-border)" }}>
+                                    {cell}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </Container>
+              </Section>
+            );
+          }
+
+          // List section
+          if (section.section_type === 'list' && section.content) {
+            return (
+              <Section key={index} padding="md">
+                <Container maxWidth="lg">
+                  <div>
+                    {section.heading && (
+                      <SectionHeading>{section.heading}</SectionHeading>
+                    )}
+                    <div className="prose prose-lg max-w-4xl" style={{ color: "var(--secondary)" }}>
+                      <div dangerouslySetInnerHTML={{ __html: section.content }} />
+                    </div>
+                  </div>
+                </Container>
+              </Section>
+            );
+          }
+
+          return null;
+        });
+      })()}
 
       {/* CTA Section */}
       <CTA

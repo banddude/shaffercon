@@ -346,15 +346,15 @@ All scripts are in `/scripts/` directory:
 
 ### 🔄 Layout & Typography Improvements (In Progress)
 
-**Completed:**
-- Increased PageTitle from `text-2xl/3xl` to `text-4xl/5xl` with `font-black`
-- Increased SectionHeading from `text-xl/2xl` to `text-3xl/4xl` with `font-bold`
-- Increased Subheading from `text-lg` to `text-xl/2xl` with `font-semibold`
-- Increased body text from `text-base` to `text-lg` for better readability
-- Improved spacing: Section padding from `py-8/12/16` to `py-12/20/28`
-- Container padding increased from `px-4` to `px-6`
-- ContentBox padding increased from `p-4/8/12` to `p-6/10/16`
-- Added `rounded-lg` to bordered content boxes
+**Typography Standards:**
+- **PageTitle**: `text-4xl sm:text-5xl` with `font-black` - Main page headings
+- **SectionHeading**: `text-2xl sm:text-3xl` with `font-bold` - Section headings (STANDARD)
+- **Subheading**: `text-xl sm:text-2xl` with `font-semibold` - Subsection headings
+- **Body text**: `text-lg` for better readability
+- **Section padding**: `py-12 sm:py-20 lg:py-28`
+- **Container padding**: `px-6 sm:px-8 lg:px-12`
+- **ContentBox padding**: `p-6 sm:p-10 lg:p-16`
+- **Border radius**: `rounded-lg` for bordered content boxes
 
 **Still To Do:**
 - Review all page templates and ensure content is logically organized

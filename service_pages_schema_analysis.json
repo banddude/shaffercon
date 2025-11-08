@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "analyzed_pages": 800,
+  "excluded_locations": [
+    "altadena",
+    "pacific palisades"
+  ],
+  "structure": {
+    "benefits": {
+      "description": "Benefits are feature highlights with a heading and detailed content explaining why customers should choose this service. They appear as card-style sections with icons.",
+      "typical_count_per_page": {
+        "min": 3,
+        "max": 4,
+        "mean": 4.0,
+        "median": 4.0
+      },
+      "mode_count": 4,
+      "heading": {
+        "description": "Short, punchy benefit title (e.g., 'Licensed & Certified Technicians', 'Fast Response Times')",
+        "character_length": {
+          "min": 13,
+          "max": 78,
+          "mean": 35.9,
+          "median": 31
+        }
+      },
+      "content": {
+        "description": "Detailed paragraph explaining the benefit, typically 2-4 sentences with specific details and value propositions",
+        "character_length": {
+          "min": 103,
+          "max": 826,
+          "mean": 364.2,
+          "median": 308
+        }
+      },
+      "example": {
+        "heading": "Built for Tomorrow's Connected Home",
+        "content": "We design networks ready for the next generation: Cat6a cabling supporting multi-gig internet, Wi-Fi 6E access points with PoE++ power, whole-home automation integration, and AV distribution to multiple zones..."
+      }
+    },
+    "offerings": {
+      "description": "Specific services or deliverables included in this service offering. Displayed as a bulleted checklist with checkmarks. Each offering is a complete sentence or phrase describing one specific item/service.",
+      "typical_count_per_page": {
+        "min": 5,
+        "max": 15,
+        "mean": 12.2,
+        "median": 12.0
+      },
+      "mode_count": 12,
+      "item_length": {
+        "description": "Each offering should be a complete, descriptive sentence (not just 2-3 words). Examples: 'Whole-home structured cabling design with centralized equipment rack', 'On-site load calculations per CEC/NEC Article 220'",
+        "character_length": {
+          "min": 14,
+          "max": 155,
+          "mean": 50.1,
+          "median": 41
+        }
+      },
+      "example": [
+        "Whole-home structured cabling design with centralized equipment rack and distributed access points",
+        "Cat6a home runs to offices, bedrooms, living areas, and detached structures for multi-gig performance",
+        "Fire-rebuild technology infrastructure coordination from framing through final inspection"
+      ],
+      "note": "Not all service pages have offerings lists. Some pages only have benefits sections. This is normal and acceptable."
+    },
+    "faqs": {
+      "description": "Frequently asked questions specific to this service and location. Questions should be customer-focused and answers should be detailed, helpful, and location-specific.",
+      "typical_count_per_page": {
+        "min": 2,
+        "max": 12,
+        "mean": 4.5,
+        "median": 4
+      },
+      "mode_count": 4,
+      "question": {
+        "description": "Customer question in natural language, often starting with 'How', 'What', 'Do I need', 'Can you', etc.",
+        "character_length": {
+          "min": 28,
+          "max": 184,
+          "mean": 93.8,
+          "median": 91.0
+        }
+      },
+      "answer": {
+        "description": "Detailed answer with specific information, often mentioning location-specific details, code requirements, timelines, or processes. Typically 3-5 sentences.",
+        "character_length": {
+          "min": 31,
+          "max": 1106,
+          "mean": 388.3,
+          "median": 375.5
+        }
+      },
+      "example": {
+        "question": "Do I need permits in Altadena for home network and AV wiring?",
+        "answer": "For existing homes, pure low-voltage data/AV cabling often doesn't require LA County permits. However, new electrical circuits for equipment racks, in-wall TV power, outdoor electrical for landscape AV, or any work involving structural penetrations will trigger permit requirements through the Altadena Building and Safety office..."
+      }
+    }
+  },
+  "distribution": {
+    "benefits_count_distribution": {
+      "4": 797,
+      "3": 1
+    },
+    "offerings_count_distribution": {
+      "12": 471,
+      "5": 39,
+      "11": 19,
+      "14": 62,
+      "13": 13,
+      "10": 47,
+      "15": 148,
+      "8": 1
+    },
+    "faqs_count_distribution": {
+      "4": 518,
+      "6": 108,
+      "10": 16,
+      "5": 125,
+      "3": 17,
+      "2": 2,
+      "12": 1
+    },
+    "pages_with_offerings": 800,
+    "pages_without_offerings": 0
+  }
+}

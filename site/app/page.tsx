@@ -11,7 +11,7 @@ import { Paragraph } from "@/app/components/UI";
 import { HomeStatsSection } from "@/app/components/HomeStatsSection";
 import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
 import CTA from "@/app/components/CTA";
-import { Zap, Home as HomeIcon, Lightbulb } from "lucide-react";
+import { Zap, Home as HomeIcon, Lightbulb, Leaf, CheckCircle, Settings, Cable, Battery, Shield, Car, ClipboardList } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = 'https://banddude.github.io/shaffercon';
@@ -43,6 +43,40 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Home() {
+  // Why Choose reasons
+  const whyChooseReasons = [
+    {
+      title: "Energy Efficiency Solutions",
+      description: "Maximize efficiency with cutting-edge EV technology, delivering cost-effective, eco-friendly energy solutions.",
+      icon: <Leaf className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+    },
+    {
+      title: "Electrical Health Check",
+      description: "Meticulous inspections ensure your EV infrastructure operates flawlessly for peak performance.",
+      icon: <CheckCircle className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+    },
+    {
+      title: "Customized Electrical Strategy",
+      description: "Tailored consultations define a strategic electrical roadmap aligned with your business objectives.",
+      icon: <ClipboardList className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+    },
+    {
+      title: "Professional Wiring Services",
+      description: "Precision wiring by expert contractors guarantees your power systems meet advanced EV technology demands.",
+      icon: <Cable className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+    },
+    {
+      title: "EV Charger Installation Expertise",
+      description: "Comprehensive installation services from planning to execution, ensuring optimal functionality.",
+      icon: <Car className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+    },
+    {
+      title: "Electrical System Assurance",
+      description: "Rigorous testing protocols confirm the reliability and efficiency of your EV systems.",
+      icon: <Shield className="w-12 h-12" style={{ color: "var(--primary)" }} strokeWidth={2} />,
+    },
+  ];
+
   // Get unique service types for features
   const serviceTypes = [
     {
@@ -90,26 +124,20 @@ export default function Home() {
         title="Why Choose Shaffer Construction?"
         padding="lg"
       >
-        <div className="max-w-4xl mx-auto">
-          <Paragraph className="text-center text-lg">
-            Energy Efficiency Solutions: Maximize efficiency with Shaffer Construction's cutting-edge EV technology, delivering cost-effective, eco-friendly energy solutions that lower daily operational costs.
-          </Paragraph>
-          <Paragraph className="text-center text-lg">
-            Electrical Health Check: Our meticulous inspections ensure your EV infrastructure operates flawlessly, safeguarding the integrity of your electrical frameworks for peak performance.
-          </Paragraph>
-          <Paragraph className="text-center text-lg">
-            Customized Electrical Strategy: Tailored consultations by Shaffer Construction define a strategic electrical roadmap, aligning with the unique objectives of your Los Angeles business.
-          </Paragraph>
-          <Paragraph className="text-center text-lg">
-            Professional Wiring Services: Precision wiring by expert Los Angeles Electrical Contractors guarantees that your power systems meet the demands of advanced EV technology.
-          </Paragraph>
-          <Paragraph className="text-center text-lg">
-            EV Charger Installation Expertise: From planning to execution, Shaffer Construction provides comprehensive installation services for an array of EV chargers, ensuring optimal functionality.
-          </Paragraph>
-          <Paragraph className="text-center text-lg">
-            Electrical System Assurance: Rigorous testing protocols confirm the reliability and efficiency of your EV systems, ensuring they perform to the highest standards expected by Los Angeles businesses.
-          </Paragraph>
-          <HomeStatsSection />
+        <div className="max-w-7xl mx-auto">
+          <AppleGrid columns={3} gap="lg">
+            {whyChooseReasons.map((reason, idx) => (
+              <AppleCard
+                key={idx}
+                title={reason.title}
+                description={reason.description}
+                icon={reason.icon}
+              />
+            ))}
+          </AppleGrid>
+          <div className="mt-16">
+            <HomeStatsSection />
+          </div>
         </div>
       </AppleSection>
 

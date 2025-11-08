@@ -267,10 +267,10 @@ export const theme = {
 
 // Typography size classes - single source of truth
 export const typographySizes = {
-  pageTitle: "text-2xl sm:text-3xl lg:text-4xl",
-  sectionHeading: "text-xl sm:text-2xl lg:text-3xl",
-  subheading: "text-lg sm:text-xl",
-  paragraph: "text-base sm:text-lg",
+  pageTitle: "text-4xl sm:text-5xl",
+  sectionHeading: "text-2xl sm:text-3xl",
+  subheading: "text-xl sm:text-2xl",
+  paragraph: "text-lg",
   small: "text-sm",
   caption: "text-xs",
 };

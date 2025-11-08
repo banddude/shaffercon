@@ -44,9 +44,10 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
 
   return (
     <div
-      className="rounded-lg shadow-md p-8"
+      className="rounded-2xl p-8"
       style={{
-        background: "var(--background)",
+        background: "var(--section-gray)",
+        border: "1px solid var(--section-border)",
       }}
     >
       {title && (
@@ -54,9 +55,11 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
           {title}
         </h2>
       )}
-      <p className={classNames.body + " mb-8"} style={{ color: "var(--secondary)" }}>
-        Fill out the form below and we'll get back to you as soon as possible.
-      </p>
+      {!title && (
+        <p className="text-lg mb-8 text-center" style={{ color: "var(--secondary)" }}>
+          Fill out the form below and we'll get back to you as soon as possible.
+        </p>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

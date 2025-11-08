@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export interface LinkCardItem {
   label: string;
@@ -24,24 +25,29 @@ export default function LinkCardGrid({
     4: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
   };
 
-  const gapClass = "gap-12";
+  const gapClass = "gap-6";
 
   return (
-    <div className={`grid ${columnClasses[columns]} ${gapClass} ${className}`}>
+    <div className={`grid ${columnClasses[columns]} ${gapClass} ${className} mt-8`}>
       {items.map(item => (
-        <Link key={item.href} href={item.href} className="block h-full">
+        <Link key={item.href} href={item.href} className="block h-full group">
           <div
-            className="h-full rounded-lg px-6 py-5 transition-transform duration-300 hover:-translate-y-0.5"
+            className="h-full rounded-lg p-3 transition-all duration-300 hover:translate-x-1 flex items-center justify-between"
             style={{
-              border: "1px solid var(--secondary)",
+              background: "var(--background)",
+              border: "1px solid var(--section-border)",
             }}
           >
             <h3
-              className="text-lg font-semibold leading-snug"
+              className="text-base font-medium leading-snug"
               style={{ color: "var(--text)" }}
             >
               {item.label}
             </h3>
+            <ArrowRight
+              className="w-5 h-5 flex-shrink-0 ml-3 transition-transform duration-300 group-hover:translate-x-1"
+              style={{ color: "var(--primary)" }}
+            />
           </div>
         </Link>
       ))}
