@@ -33,39 +33,24 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-
-    if (!token) {
-      // Fallback to mailto if no token
-      const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
-        `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
-      )}`;
-      window.location.href = mailtoLink;
-      return;
-    }
-
     try {
-      const response = await fetch('https://api.github.com/repos/banddude/shaffercon/dispatches', {
+      // Submit to Cloudflare Worker (GitHub token is secure on the server)
+      const response = await fetch('https://shaffercon-contact-form.mikejshaffer.workers.dev', {
         method: 'POST',
         headers: {
-          'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          event_type: 'contact-form-submission',
-          client_payload: {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            phone: formData.phone,
-            address: formData.address,
-            message: formData.message,
-          },
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          message: formData.message,
         }),
       });
 
-      if (response.ok || response.status === 204) {
+      if (response.ok) {
         setSubmitted(true);
         // Reset form
         setFormData({
