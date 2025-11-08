@@ -46,6 +46,10 @@ jobs:
           NEXT_PUBLIC_GSC_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GSC_VERIFICATION }}
           NEXT_PUBLIC_GITHUB_TOKEN: ${{ secrets.NEXT_PUBLIC_GITHUB_TOKEN }}
 
+      - name: Copy CNAME to output directory
+        run: |
+          cp site/public/CNAME site/out/CNAME
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
