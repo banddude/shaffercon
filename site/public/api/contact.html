@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Form Processor</title>
+</head>
+<body>
+  <script>
+    // This page receives form data via POST and triggers GitHub workflow
+    async function processContactForm() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const formData = {
+        firstName: urlParams.get('firstName'),
+        lastName: urlParams.get('lastName'),
+        email: urlParams.get('email'),
+        phone: urlParams.get('phone'),
+        address: urlParams.get('address'),
+        message: urlParams.get('message')
+      };
+
+      // For now, this just opens mailto as fallback
+      // You'll need to set up a serverless function or use a service like Formspree
+      const mailtoLink = `mailto:mike@shaffercon.com?subject=Service Request&body=${encodeURIComponent(
+        `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
+      )}`;
+
+      window.location.href = mailtoLink;
+    }
+
+    processContactForm();
+  </script>
+</body>
+</html>

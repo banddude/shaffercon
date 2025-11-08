@@ -1,0 +1,48 @@
+name: Contact Form Submission
+
+on:
+  repository_dispatch:
+    types: [contact-form-submission]
+
+jobs:
+  process-submission:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: leads
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create leads directory if needed
+        run: mkdir -p leads
+
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
+
+      - name: Save submission to JSON
+        run: |
+          FILENAME="leads/$(date -u +%Y-%m-%d_%H-%M-%S)_${{ github.event.client_payload.email }}.json"
+          cat > "$FILENAME" <<EOF
+          {
+            "timestamp": "${{ steps.timestamp.outputs.timestamp }}",
+            "firstName": "${{ github.event.client_payload.firstName }}",
+            "lastName": "${{ github.event.client_payload.lastName }}",
+            "email": "${{ github.event.client_payload.email }}",
+            "phone": "${{ github.event.client_payload.phone }}",
+            "address": "${{ github.event.client_payload.address }}",
+            "message": "${{ github.event.client_payload.message }}"
+          }
+          EOF
+
+      - name: Commit submission
+        run: |
+          git config user.name "Contact Form Bot"
+          git config user.email "noreply@shaffercon.com"
+          git add leads/
+          git commit -m "📬 New contact from ${{ github.event.client_payload.firstName }} ${{ github.event.client_payload.lastName }} (${{ github.event.client_payload.email }})"
+          git push origin leads
