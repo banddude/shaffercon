@@ -30,47 +30,26 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      // Trigger GitHub Action to save to repo
-      const response = await fetch('https://api.github.com/repos/banddude/shaffercon/dispatches', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-        },
-        body: JSON.stringify({
-          event_type: 'contact-form-submission',
-          client_payload: {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            phone: formData.phone,
-            address: formData.address,
-            message: formData.message,
-          },
-        }),
-      });
+    // Create pre-filled GitHub issue
+    const issueTitle = encodeURIComponent(`Contact: ${formData.firstName} ${formData.lastName}`);
+    const issueBody = encodeURIComponent(
+      `**Contact Form Submission**\n\n` +
+      `**Name:** ${formData.firstName} ${formData.lastName}\n` +
+      `**Email:** ${formData.email}\n` +
+      `**Phone:** ${formData.phone}\n` +
+      `**Address:** ${formData.address}\n\n` +
+      `**Message:**\n${formData.message}\n\n` +
+      `---\n*Submitted: ${new Date().toLocaleString()}*`
+    );
 
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        // Fallback to mailto if submission fails
-        const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
-          `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
-        )}`;
-        window.location.href = mailtoLink;
-      }
-    } catch (error) {
-      // Fallback to mailto on error
-      const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
-        `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
-      )}`;
-      window.location.href = mailtoLink;
-    }
+    const githubIssueUrl = `https://github.com/banddude/shaffercon/issues/new?title=${issueTitle}&body=${issueBody}&labels=contact-form`;
+
+    // Open GitHub issue in new tab
+    window.open(githubIssueUrl, '_blank');
+    setSubmitted(true);
   };
 
   return (
