@@ -30,16 +30,47 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Construct mailto link with form data
-    const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
-      `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
-    )}`;
+    try {
+      // Trigger GitHub Action to save to repo
+      const response = await fetch('https://api.github.com/repos/banddude/shaffercon/dispatches', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+        },
+        body: JSON.stringify({
+          event_type: 'contact-form-submission',
+          client_payload: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            message: formData.message,
+          },
+        }),
+      });
 
-    window.location.href = mailtoLink;
-    setSubmitted(true);
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        // Fallback to mailto if submission fails
+        const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
+          `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
+        )}`;
+        window.location.href = mailtoLink;
+      }
+    } catch (error) {
+      // Fallback to mailto on error
+      const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
+        `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
+      )}`;
+      window.location.href = mailtoLink;
+    }
   };
 
   return (
