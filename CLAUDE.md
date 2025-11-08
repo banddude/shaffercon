@@ -6,7 +6,7 @@
 1. **Edit Database**: Update content in `database/data/site.db` using SQL
 2. **Commit Changes**: `git add . && git commit -m "Your message"`
 3. **Push to GitHub**: `git push origin main`
-4. **Auto-Deploy**: GitHub Actions automatically builds and deploys to https://banddude.github.io/shaffercon/
+4. **Auto-Deploy**: GitHub Actions automatically builds and deploys to https://shaffercon.com
 
 ### Making Code Changes
 1. **Edit Files**: Modify Next.js components in `site/app/` or styles in `site/app/styles/`
@@ -15,46 +15,51 @@
 
 ### Important Notes
 - The site auto-deploys on every push to `main` branch (takes ~2 minutes)
+- Live site: https://shaffercon.com
 - Repository: https://github.com/banddude/shaffercon
 - Check deployment status: https://github.com/banddude/shaffercon/actions
+- DNS managed via Cloudflare (nameservers: boyd.ns.cloudflare.com, perla.ns.cloudflare.com)
 
 ---
 
-## ⚠️ CRITICAL: BASE PATH & STATIC FILES - READ FIRST
+## ⚠️ CRITICAL: ROUTING & STATIC FILES - READ FIRST
 
-**NEVER HARDCODE THE BASE PATH. ALWAYS USE THE CENTRALIZED CONFIG.**
+### Custom Domain Configuration (Updated November 2025)
 
-### Base Path Configuration
+The site now uses a **custom domain** (shaffercon.com) with **no base path**. All URLs are root-relative.
 
-The site uses a centralized base path configuration in `site/app/config.ts`:
-
+**Path Configuration in `site/app/config.ts`:**
 ```typescript
-// Base path for GitHub Pages (should match next.config.mjs basePath)
-export const BASE_PATH = '/shaffercon';
+// No base path needed for custom domain
+export const BASE_PATH = '';
 
-// Helper function to prepend base path to any URL
+// Helper function to ensure paths start with /
 export const withBasePath = (path: string): string => {
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-  return `${BASE_PATH}/${cleanPath}`;
+  return path.startsWith('/') ? path : `/${path}`;
 };
 ```
 
-**HOW TO USE BASE PATHS IN COMPONENTS:**
+**HOW TO USE PATHS IN COMPONENTS:**
 
-✅ **CORRECT - Use the centralized config:**
+✅ **CORRECT - Use Next.js Link for internal navigation:**
+```tsx
+import Link from "next/link";
+
+<Link href="/service-areas/hollywood">Hollywood Services</Link>
+<Link href="/contact-us">Contact Us</Link>
+```
+
+✅ **CORRECT - Use withBasePath for assets:**
 ```tsx
 import { withBasePath } from "@/app/config";
 
-// For any links or asset paths
-<a href={withBasePath("games/zappy-bird.html")}>
 <img src={withBasePath("images/logo.png")} />
 <video src={withBasePath("videos/hero.mp4")} />
 ```
 
-❌ **WRONG - NEVER hardcode the base path:**
+❌ **WRONG - Never use <a> tags for internal navigation:**
 ```tsx
-<a href="/shaffercon/games/zappy-bird.html">  // NO!
-<img src="/shaffercon/images/logo.png" />    // NO!
+<a href="/service-areas/hollywood">  // NO! Use Link component
 ```
 
 ### Static HTML Files in public/ Folder
@@ -85,10 +90,10 @@ public/
 
 ### Why This Matters
 
-1. **Base Path Flexibility**: Changing deployment location only requires updating one variable
-2. **Avoid Build Conflicts**: Static HTML files with route-conflicting names get overwritten
-3. **Maintainability**: Single source of truth for all paths
-4. **GitHub Pages**: All paths must include the repository name prefix
+1. **Custom Domain**: Site uses shaffercon.com with no base path needed
+2. **Internal Navigation**: Always use Next.js Link component for proper routing
+3. **Avoid Build Conflicts**: Static HTML files with route-conflicting names get overwritten
+4. **Maintainability**: Single source of truth for all paths
 
 ---
 
@@ -453,10 +458,48 @@ All routes use `generateStaticParams()` to pre-render pages at build time:
 
 ---
 
+## Contact Form & Infrastructure
+
+### Contact Form Architecture
+The contact form uses a **secure serverless architecture**:
+
+1. **Frontend** (`site/app/components/ContactForm.tsx`):
+   - Submits form data to Cloudflare Worker endpoint
+   - Fallback to mailto: if worker fails
+   - Success confirmation shown to user
+
+2. **Cloudflare Worker** (`cloudflare-workers/contact-form.js`):
+   - Endpoint: https://shaffercon-contact-form.mikejshaffer.workers.dev
+   - Future endpoint: https://api.shaffercon.com/contact (once DNS fully propagates)
+   - Securely stores GitHub token as environment secret
+   - Triggers GitHub repository_dispatch event
+
+3. **GitHub Actions** (`.github/workflows/contact-form.yml`):
+   - Listens for contact-form-submission events
+   - Saves submissions as JSON files to `leads` branch
+   - Uses `jq` for proper JSON escaping of special characters
+
+### DNS & Hosting Setup
+
+**Domain**: shaffercon.com (managed via GoDaddy)
+**DNS**: Cloudflare (nameservers: boyd.ns.cloudflare.com, perla.ns.cloudflare.com)
+**Hosting**: GitHub Pages with custom domain
+
+**Cloudflare DNS Records**:
+- 4x A records pointing to GitHub Pages IPs (185.199.108-111.153)
+- 1x CNAME for www → banddude.github.io
+- All records set to "DNS only" (not proxied)
+- MX records preserved for Gmail
+
+**GitHub Pages Configuration**:
+- Custom domain: shaffercon.com
+- CNAME file automatically copied to output during build
+- No base path (site lives at root of domain)
+
 ## Notes
 
 - Old JSON data remains in `parsed_content` for reference but is no longer used
 - All pages now generated directly from normalized database tables
 - The 20 service lists on location pages are generated dynamically from `service_pages`
 - Standard elements (phone number, CTA, value props) don't need storage as they're consistent
-- Site is fully static and ready for production deployment
+- Site deployed to production at https://shaffercon.com
