@@ -10,6 +10,10 @@ interface LocalBusinessSchemaProps {
   areaServed: string; // City name like "Santa Monica"
   serviceUrl: string; // Current page URL
   services?: string[]; // List of services offered
+  city?: string; // City name for address
+  zipCode?: string; // Zip code
+  latitude?: string; // Latitude coordinate
+  longitude?: string; // Longitude coordinate
 }
 
 export function LocalBusinessSchema({
@@ -17,6 +21,10 @@ export function LocalBusinessSchema({
   areaServed,
   serviceUrl,
   services = ["EV Charger Installation", "Electrical Services", "LED Retrofit"],
+  city,
+  zipCode,
+  latitude,
+  longitude,
 }: LocalBusinessSchemaProps) {
   const schema = {
     "@context": "https://schema.org",
@@ -27,20 +35,19 @@ export function LocalBusinessSchema({
     "telephone": "323-642-8509",
     "email": "hello@shaffercon.com",
     "priceRange": "$$",
-    "image": "https://banddude.github.io/shaffercon/og-image.jpg",
+    "image": "https://shaffercon.com/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Los Angeles",
+      "addressLocality": city || areaServed,
       "addressRegion": "CA",
-      "postalCode": "90012",
-      "streetAddress": "123 Main St",
+      "postalCode": zipCode || "90012",
       "addressCountry": "US"
     },
-    "geo": {
+    "geo": latitude && longitude ? {
       "@type": "GeoCoordinates",
-      "latitude": "34.0522",
-      "longitude": "-118.2437"
-    },
+      "latitude": latitude,
+      "longitude": longitude
+    } : undefined,
     "areaServed": [
       {
         "@type": "City",
@@ -81,10 +88,15 @@ export function LocalBusinessSchema({
     ]
   };
 
+  // Filter out undefined values from schema
+  const cleanSchema = JSON.parse(JSON.stringify(schema, (key, value) =>
+    value === undefined ? null : value
+  ));
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanSchema) }}
     />
   );
 }
