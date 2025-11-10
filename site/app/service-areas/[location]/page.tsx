@@ -48,7 +48,8 @@ async function getLocationPage(locationSlug: string) {
     SELECT p.id, p.slug, p.title, p.date, p.meta_title, p.meta_description, p.canonical_url, p.og_image,
            lp.id as location_id, lp.location_name, lp.location_slug, lp.tagline,
            lp.about_paragraph_1, lp.about_paragraph_2,
-           lp.residential_intro, lp.commercial_intro, lp.closing_cta
+           lp.residential_intro, lp.commercial_intro, lp.closing_cta,
+           lp.city, lp.zip_code, lp.latitude, lp.longitude
     FROM pages_all p
     JOIN location_pages lp ON p.id = lp.page_id
     WHERE lp.location_slug = ?
@@ -138,7 +139,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/service-areas/${location}`;
   const title = page.meta_title || page.title;
   const description = page.meta_description || page.tagline || '';
@@ -176,7 +177,7 @@ export default async function LocationPage({ params }: PageProps) {
     notFound();
   }
 
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const pageUrl = `${baseUrl}/service-areas/${location}`;
 
   // Get all service names for this location
@@ -192,6 +193,10 @@ export default async function LocationPage({ params }: PageProps) {
         areaServed={page.location_name}
         serviceUrl={pageUrl}
         services={allServices.slice(0, 10)} // Include top 10 services
+        city={page.city}
+        zipCode={page.zip_code}
+        latitude={page.latitude}
+        longitude={page.longitude}
       />
 
       {/* Breadcrumb Schema */}
