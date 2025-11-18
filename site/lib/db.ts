@@ -164,8 +164,30 @@ export function getMenuStructure(): MenuStructure {
   // Get top-level items (no parent)
   const topLevel = allItems.filter((item) => item.parent_id === null);
 
+  // Get all service area locations dynamically from location_pages table
+  const serviceAreaLocations = db.prepare(`
+    SELECT location_slug, location_name
+    FROM location_pages
+    ORDER BY location_name
+  `).all() as any[];
+
   // Build menu structure with children
   const primaryMenu: MenuItem[] = topLevel.map((item) => {
+    // For Service Areas, use dynamic locations from database
+    if (item.label === 'Service Areas') {
+      const children = serviceAreaLocations.map((location) => ({
+        label: location.location_name,
+        href: `/service-areas/${location.location_slug}`,
+      }));
+
+      return {
+        label: item.label,
+        href: item.href,
+        children,
+      };
+    }
+
+    // For other menu items, use children from menu_items table
     const children = allItems
       .filter((child) => child.parent_id === item.id)
       .map((child) => ({
