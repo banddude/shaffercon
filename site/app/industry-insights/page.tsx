@@ -1,28 +1,9 @@
-import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { classNames } from "@/app/styles/theme";
 import CTA from "@/app/components/CTA";
 import { Section, Container, PageTitle } from "@/app/components/UI";
-
-// Get all blog posts
-async function getAllPosts() {
-  const db = getDb();
-  const posts = db.prepare(`
-    SELECT id, slug, title, date, meta_description, og_image
-    FROM posts
-    ORDER BY date DESC
-  `).all() as Array<{
-    id: number;
-    slug: string;
-    title: string;
-    date: string;
-    meta_description: string | null;
-    og_image: string | null;
-  }>;
-
-  return posts;
-}
+import { getAllPosts } from "@/lib/blog";
 
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -34,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Page component
 export default async function IndustryInsightsPage() {
-  const posts = await getAllPosts();
+  const posts = getAllPosts();
 
   return (
     <main className="w-full">
@@ -61,15 +42,15 @@ export default async function IndustryInsightsPage() {
 
               return (
                 <Link
-                  key={post.id}
+                  key={post.slug}
                   href={`/industry-insights/${post.slug}`}
                   className={classNames.blogCard}
                 >
                   {/* Hero Image */}
-                  {post.og_image && (
+                  {post.ogImage && (
                     <div className={classNames.blogImageContainer}>
                       <img
-                        src={post.og_image}
+                        src={post.ogImage}
                         alt={post.title}
                         className={classNames.blogImage}
                       />
@@ -83,8 +64,8 @@ export default async function IndustryInsightsPage() {
                     <h2 className={`${classNames.blogTitle} ${classNames.blogTitleHover} overflow-hidden`} style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
                       {post.title}
                     </h2>
-                    {post.meta_description && (
-                      <p className={classNames.blogDescription} style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.meta_description}</p>
+                    {post.metaDescription && (
+                      <p className={classNames.blogDescription} style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.metaDescription}</p>
                     )}
                   </div>
                 </Link>
