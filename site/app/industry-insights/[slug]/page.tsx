@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
-import { getDb } from "@/lib/db";
 import type { Metadata } from "next";
-import ReactMarkdown from "react-markdown";
 import { classNames } from "@/app/styles/theme";
 import { PageTitle } from "@/app/components/UI";
 import { ArticleSchema } from "@/app/components/schemas/ArticleSchema";
 import { LocalBusinessSchema } from "@/app/components/schemas/LocalBusinessSchema";
+import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
 
 interface PageProps {
   params: Promise<{
@@ -15,29 +14,15 @@ interface PageProps {
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  const db = getDb();
-  const posts = db.prepare(`
-    SELECT slug FROM posts
-  `).all() as Array<{ slug: string }>;
-
-  return posts.map(({ slug }) => ({
+  const slugs = getAllPostSlugs();
+  return slugs.map((slug) => ({
     slug,
   }));
 }
 
 // Get blog post data
 async function getBlogPost(slug: string) {
-  const db = getDb();
-  const post = db.prepare(`
-    SELECT id, slug, title, date, markdown, meta_title, meta_description, canonical_url, og_image
-    FROM posts
-    WHERE slug = ?
-  `).get(slug) as any;
-
-  // The hero image is now embedded in the markdown as ![title](url)
-  // We don't need to handle it separately unless we want to extract it for meta tags
-
-  return post;
+  return getPostBySlug(slug);
 }
 
 // Generate metadata
@@ -51,32 +36,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/industry-insights/${slug}`;
-  const title = post.meta_title || post.title;
-  const description = post.meta_description || '';
+  const title = post.metaTitle || post.title;
+  const description = post.metaDescription || '';
 
   return {
     title,
     description,
     alternates: {
-      canonical: post.canonical_url || url,
+      canonical: post.canonicalUrl || url,
     },
     openGraph: {
       title,
       description,
-      url: post.canonical_url || url,
+      url: post.canonicalUrl || url,
       siteName: 'Shaffer Construction',
       locale: 'en_US',
       type: 'article',
       publishedTime: post.date,
-      images: post.og_image ? [post.og_image] : [`${baseUrl}/og-image.jpg`],
+      images: post.ogImage ? [post.ogImage] : [`${baseUrl}/og-image.jpg`],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: post.og_image ? [post.og_image] : [`${baseUrl}/og-image.jpg`],
+      images: post.ogImage ? [post.ogImage] : [`${baseUrl}/og-image.jpg`],
     },
   };
 }
@@ -96,16 +81,16 @@ export default async function BlogPostPage({ params }: PageProps) {
     day: 'numeric',
   });
 
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const articleUrl = `${baseUrl}/industry-insights/${slug}`;
 
   return (
     <div className={classNames.container + " py-12"}>
       <ArticleSchema
         title={post.title}
-        description={post.meta_description || post.title}
+        description={post.metaDescription || post.title}
         datePublished={post.date}
-        image={post.og_image}
+        image={post.ogImage}
         url={articleUrl}
       />
       <LocalBusinessSchema
@@ -122,9 +107,9 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
 
           {/* Hero Image */}
-          {post.og_image && (
+          {post.ogImage && (
             <img
-              src={post.og_image}
+              src={post.ogImage}
               alt={post.title}
               className="w-full h-auto rounded-lg"
               style={{ maxHeight: '500px', objectFit: 'cover' }}
@@ -132,64 +117,15 @@ export default async function BlogPostPage({ params }: PageProps) {
           )}
         </header>
 
-        {/* Post Content - Styled Markdown */}
+        {/* Post Content - HTML */}
         <div
           className="prose prose-lg max-w-none mb-12"
           style={{
             color: "var(--secondary)",
             lineHeight: '1.8',
           }}
-        >
-          <ReactMarkdown
-            components={{
-              h1: () => null, // Skip H1 since we show title in header
-              h2: ({ children }) => <h2 className="text-3xl font-bold mt-6 mb-2" style={{ color: "var(--text)" }}>{children}</h2>,
-              h3: ({ children }) => <h3 className="text-2xl font-semibold mt-5 mb-2" style={{ color: "var(--text)" }}>{children}</h3>,
-              h4: ({ children }) => <h4 className="text-lg font-semibold mt-4 mb-1" style={{ color: "var(--text)" }}>{children}</h4>,
-              h5: ({ children }) => <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: "var(--text)" }}>{children}</h5>,
-              h6: ({ children }) => <h6 className="text-sm font-semibold mt-2 mb-1" style={{ color: "var(--text)" }}>{children}</h6>,
-              p: ({ children }) => <p className="mb-3 text-lg" style={{ lineHeight: '1.6' }}>{children}</p>,
-              ul: ({ children }) => <ul className="mb-4 ml-5 space-y-1 list-disc">{children}</ul>,
-              ol: ({ children }) => <ol className="mb-4 ml-5 space-y-1 list-decimal">{children}</ol>,
-              li: ({ children }) => <li className="pl-1 text-lg" style={{}}>{children}</li>,
-              a: ({ children, href }) => (
-                <a
-                  href={href}
-                  className="underline hover:no-underline"
-                  style={{ color: "var(--primary)" }}
-                >
-                  {children}
-                </a>
-              ),
-              blockquote: ({ children }) => (
-                <blockquote
-                  className="border-l-4 pl-6 py-2 my-6 italic"
-                  style={{
-                    borderColor: "var(--primary)",
-                    background: "var(--background)",
-                  }}
-                >
-                  {children}
-                </blockquote>
-              ),
-              img: ({ src }) => {
-                // Skip the hero image since we show it in the header
-                if (src === post.og_image) return null;
-                // Render other images in the content
-                return (
-                  <img
-                    src={src}
-                    alt=""
-                    className="w-full h-auto rounded-lg my-8"
-                    style={{ maxHeight: '600px', objectFit: 'cover' }}
-                  />
-                );
-              },
-            }}
-          >
-            {post.markdown || ''}
-          </ReactMarkdown>
-        </div>
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
       </article>
     </div>
   );

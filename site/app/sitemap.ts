@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getDb } from '@/lib/db';
+import { getAllPosts } from '@/lib/blog';
 
 export const dynamic = 'force-static';
 
@@ -21,10 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     JOIN pages_all p ON lp.page_id = p.id
   `).all() as Array<{ location_slug: string; date: string | null }>;
 
-  // Get all blog posts
-  const posts = db.prepare(`
-    SELECT slug, date FROM posts
-  `).all() as Array<{ slug: string; date: string | null }>;
+  // Get all blog posts from JSON files
+  const posts = getAllPosts();
 
   const sitemap: MetadataRoute.Sitemap = [
     {
@@ -92,11 +91,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // Add blog posts
-  posts.forEach(({ slug, date }) => {
+  // Add blog posts from JSON files
+  posts.forEach((post) => {
     sitemap.push({
-      url: `${baseUrl}/industry-insights/${slug}`,
-      lastModified: date ? new Date(date) : new Date(),
+      url: `${baseUrl}/industry-insights/${post.slug}`,
+      lastModified: post.date ? new Date(post.date) : new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     });
