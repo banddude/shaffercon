@@ -38,9 +38,6 @@ Shaffer Construction provides professional electrical services for residential a
 
 ## Typical Customer Questions
 
-**How much does EV charger installation cost?**
-Residential Level 2 charger installation typically ranges $800-$3,000 depending on electrical panel capacity and distance from panel to charging location. Panel upgrades add $3,000-$5,000. Available rebates from Southern California Edison can offset up to $4,200, and federal tax credits provide up to $1,000.
-
 **Do I need to upgrade my electrical panel for an EV charger?**
 Approximately 20% of California homes require panel upgrades. We provide free load studies to assess your current capacity. Most modern 200-amp panels can support Level 2 charging without upgrades.
 
