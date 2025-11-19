@@ -23,13 +23,13 @@ export function LocalBusinessSchema({
   const schema = {
     "@context": "https://schema.org",
     "@type": "Electrician",
-    "@id": "https://banddude.github.io/shaffercon",
+    "@id": "https://shaffercon.com",
     name,
     description,
-    url: "https://banddude.github.io/shaffercon",
+    url: "https://shaffercon.com",
     telephone,
     priceRange,
-    image: "https://banddude.github.io/shaffercon/og-image.jpg",
+    image: "https://shaffercon.com/og-image.jpg",
     ...(address && {
       address: {
         "@type": "PostalAddress",
@@ -126,7 +126,7 @@ export function ServiceSchema({
       "@type": "Electrician",
       name: "Shaffer Construction",
       telephone: "323-642-8509",
-      url: "https://banddude.github.io/shaffercon",
+      url: "https://shaffercon.com",
     },
     areaServed: {
       "@type": "City",
@@ -151,7 +151,7 @@ export function BreadcrumbSchema({ items }: { items: Array<{ name: string; url: 
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `https://banddude.github.io/shaffercon${item.url}`,
+      item: `https://shaffercon.com${item.url}`,
     })),
   };
 

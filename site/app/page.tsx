@@ -15,7 +15,7 @@ import { WebSiteSchema } from "@/app/components/schemas/WebSiteSchema";
 import { Zap, Home as HomeIcon, Lightbulb, Leaf, CheckCircle, Settings, Cable, Battery, Shield, Car, ClipboardList } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const title = "Los Angeles Electrical Contractor - EV Charging & Electrical Installations";
   const description = "Leading Los Angeles electrical contractor specializing in EV charging solutions and professional electrical services for residential and commercial properties.";
 

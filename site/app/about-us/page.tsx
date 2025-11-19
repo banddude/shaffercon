@@ -8,7 +8,7 @@ import { Zap, Award, Users, Target } from "lucide-react";
 
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/about-us`;
   const title = "About Us - Los Angeles Electrical Contractor | Shaffer Construction";
   const description = "Learn about Shaffer Construction, Southern California's premier EV charging and electrical installation experts. Serving Los Angeles County with decades of experience.";

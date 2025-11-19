@@ -30,7 +30,7 @@ export function ServiceSchema({
       "@type": "Electrician",
       "name": "Shaffer Construction",
       "telephone": "323-642-8509",
-      "url": "https://banddude.github.io/shaffercon",
+      "url": "https://shaffercon.com",
       "priceRange": priceRange,
       "areaServed": {
         "@type": "City",

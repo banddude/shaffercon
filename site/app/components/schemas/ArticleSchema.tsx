@@ -34,15 +34,15 @@ export function ArticleSchema({
     "author": {
       "@type": "Organization",
       "name": authorName,
-      "url": "https://banddude.github.io/shaffercon"
+      "url": "https://shaffercon.com"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Shaffer Construction",
-      "url": "https://banddude.github.io/shaffercon",
+      "url": "https://shaffercon.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://banddude.github.io/shaffercon/og-image.jpg"
+        "url": "https://shaffercon.com/og-image.jpg"
       }
     },
     "mainEntityOfPage": {

@@ -63,13 +63,13 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://banddude.github.io/shaffercon"
+                "item": "https://shaffercon.com"
               },
               ...items.map((item, index) => ({
                 "@type": "ListItem",
                 "position": index + 2,
                 "name": item.label,
-                ...(item.href ? { "item": `https://banddude.github.io/shaffercon${item.href}` } : {})
+                ...(item.href ? { "item": `https://shaffercon.com${item.href}` } : {})
               }))
             ]
           })

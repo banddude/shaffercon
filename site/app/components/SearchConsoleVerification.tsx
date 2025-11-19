@@ -7,7 +7,7 @@
  *
  * To get your verification code:
  * 1. Go to https://search.google.com/search-console
- * 2. Add your property (https://banddude.github.io/shaffercon)
+ * 2. Add your property (https://shaffercon.com)
  * 3. Choose "HTML tag" verification method
  * 4. Copy just the content value (not the whole tag)
  * 5. Add it to .env.local

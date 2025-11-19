@@ -126,7 +126,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/service-areas/${location}/${service}`;
   const title = page.meta_title || page.title || "Electrical Services";
   const description = page.meta_description || page.hero_intro || "Professional electrical services";
@@ -175,7 +175,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     .join(' ');
   const fullServiceName = `${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} ${serviceDisplayName}`;
 
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const pageUrl = `${baseUrl}/service-areas/${location}/${service}`;
 
   // Get page title from database

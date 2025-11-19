@@ -4,7 +4,7 @@ export const dynamic = 'force-static';
 
 export async function GET() {
   const db = getDb();
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
 
   // Get all blog posts
   const posts = db.prepare(`

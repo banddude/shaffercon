@@ -28,7 +28,7 @@ async function getLocations(): Promise<ServiceLocation[]> {
 
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/service-areas`;
   const title = "Service Areas - Los Angeles County Electrical Services | Shaffer Construction";
   const description = "Professional electrical services across Los Angeles County and statewide multi-location facilities. Serving 22+ communities with expert EV charging installation, commercial and residential electrical work.";

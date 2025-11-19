@@ -378,7 +378,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const baseUrl = 'https://banddude.github.io/shaffercon';
+  const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/${landing}`;
   const ogImage = page.og_image || `${baseUrl}/og-image.jpg`;
 
