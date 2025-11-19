@@ -8,6 +8,8 @@ import CTA from "@/app/components/CTA";
 import { ASSET_PATH } from "@/app/config";
 import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
 import Breadcrumb from "@/app/components/Breadcrumb";
+import { ServiceLandingSchema } from "@/app/components/schemas/ServiceLandingSchema";
+import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import { Phone, Zap, Award, MapPin, Clock, Battery, Wrench, Car, HeadphonesIcon } from "lucide-react";
 
 interface PageProps {
@@ -428,6 +430,17 @@ export default async function ServiceLandingPage({ params }: PageProps) {
 
   return (
     <main className="w-full overflow-hidden">
+      <ServiceLandingSchema
+        name={page.page_title || page.title}
+        description={page.meta_description || page.hero_text || ''}
+        url={`https://shaffercon.com/${landing}`}
+      />
+      <BreadcrumbSchema
+        items={[
+          { label: "Home", href: "/" },
+          { label: breadcrumbLabel }
+        ]}
+      />
       {/* Hero Section */}
       {page.hero_image ? (
         landing === 'commercial-electric-vehicle-chargers' ? (

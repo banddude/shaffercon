@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CTA from "@/app/components/CTA";
 import { Section, Container, SectionHeading, Paragraph } from "@/app/components/UI";
 import { AppleButton, AppleCard, AppleGrid } from "@/app/components/UI/AppleStyle";
+import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import { ASSET_PATH } from "@/app/config";
 import { Zap, Award, Users, Target } from "lucide-react";
 
@@ -63,6 +64,12 @@ export default function AboutPage() {
 
   return (
     <main className="w-full">
+      <BreadcrumbSchema
+        items={[
+          { label: "Home", href: "/" },
+          { label: "About Us" }
+        ]}
+      />
       {/* Hero Video Section */}
       <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
         {/* Video Background */}

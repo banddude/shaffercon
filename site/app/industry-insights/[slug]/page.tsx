@@ -4,6 +4,7 @@ import { classNames } from "@/app/styles/theme";
 import { PageTitle } from "@/app/components/UI";
 import { ArticleSchema } from "@/app/components/schemas/ArticleSchema";
 import { LocalBusinessSchema } from "@/app/components/schemas/LocalBusinessSchema";
+import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
 
 interface PageProps {
@@ -97,6 +98,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         areaServed="Los Angeles"
         serviceUrl={articleUrl}
         services={["EV Charger Installation", "Electrical Services", "Load Study Services"]}
+      />
+      <BreadcrumbSchema
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Industry Insights", href: "/industry-insights" },
+          { label: post.title }
+        ]}
       />
       <article className="max-w-4xl mx-auto">
         {/* Post Header */}

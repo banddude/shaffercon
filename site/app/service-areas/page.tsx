@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ASSET_PATH } from "@/app/config";
 import { AppleButton } from "@/app/components/UI/AppleStyle";
 import { SectionHeading, Paragraph } from "@/app/components/UI";
+import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import CTA from "@/app/components/CTA";
 import ServiceAreasMapWrapper from "@/app/components/ServiceAreasMapWrapper";
 import { Phone, MapPin, Building2, Zap } from "lucide-react";
@@ -62,6 +63,12 @@ export default async function ServiceAreasPage() {
 
   return (
     <main className="w-full">
+      <BreadcrumbSchema
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Service Areas" }
+        ]}
+      />
       {/* Hero Video Section */}
       <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
         {/* Video Background */}

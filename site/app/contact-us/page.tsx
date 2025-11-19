@@ -3,6 +3,7 @@ import { getSiteConfig } from "@/lib/db";
 import ContactForm from "@/app/components/ContactForm";
 import { Section, Container, SectionHeading } from "@/app/components/UI";
 import { AppleButton } from "@/app/components/UI/AppleStyle";
+import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import { ASSET_PATH } from "@/app/config";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
@@ -43,6 +44,12 @@ export default function ContactPage() {
 
   return (
     <main className="w-full">
+      <BreadcrumbSchema
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Contact Us" }
+        ]}
+      />
       {/* Hero Video Section */}
       <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
         {/* Video Background */}

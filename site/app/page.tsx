@@ -11,6 +11,7 @@ import { Paragraph } from "@/app/components/UI";
 import { HomeStatsSection } from "@/app/components/HomeStatsSection";
 import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
 import CTA from "@/app/components/CTA";
+import { WebSiteSchema } from "@/app/components/schemas/WebSiteSchema";
 import { Zap, Home as HomeIcon, Lightbulb, Leaf, CheckCircle, Settings, Cable, Battery, Shield, Car, ClipboardList } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -101,6 +102,7 @@ export default function Home() {
 
   return (
     <main className="w-full overflow-hidden">
+      <WebSiteSchema />
       {/* Hero Section */}
       <AppleHero
         title="Los Angeles Electrical Contractor Specializing in EV Charging & Electrical Installations"
