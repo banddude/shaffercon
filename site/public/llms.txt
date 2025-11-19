@@ -1,0 +1,60 @@
+# Shaffer Construction, Inc.
+
+> Licensed C-10 electrical contractor specializing in EV charger installation, electrical panel upgrades, LED retrofit, and commercial electrical services throughout Los Angeles County and statewide California.
+
+Shaffer Construction provides professional electrical services for residential and commercial properties. We are experts in electric vehicle charging infrastructure, from single home installations to multi-location commercial rollouts.
+
+## Primary Services
+
+- [Commercial EV Chargers](https://shaffercon.com/commercial-electric-vehicle-chargers): Enterprise-grade Level 2 and DC fast charging solutions for business fleets, retail properties, and multi-location facilities across California
+- [Residential EV Chargers](https://shaffercon.com/residential-ev-charger): Home EV charging station installation with panel upgrades and load studies for Los Angeles homeowners
+- [Electrical Load Studies](https://shaffercon.com/electrical-load-studies): Professional electrical capacity analysis, 7-30 day monitoring, and engineering documentation for EV infrastructure planning
+- [LED Retrofit Services](https://shaffercon.com/led-retrofit-services): Energy-efficient lighting upgrades for commercial facilities with utility rebate assistance, 50-70% energy savings
+- [Statewide Facilities Maintenance](https://shaffercon.com/statewide-facilities-maintenance): 24/7 emergency electrical repairs and preventive maintenance programs for multi-location facilities across California
+
+## Service Coverage
+
+- [Service Areas](https://shaffercon.com/service-areas): 22+ communities across Los Angeles County including Santa Monica, Beverly Hills, Pasadena, Long Beach, Burbank, Glendale, and surrounding areas
+- Statewide California coverage for multi-location commercial projects
+
+## Educational Resources
+
+- [Industry Insights](https://shaffercon.com/industry-insights): 240+ blog articles covering EV charging trends, electrical infrastructure, panel upgrades, incentives, and best practices
+
+## Company Information
+
+- **License**: C-10 Electrical Contractor
+- **Phone**: (323) 642-8509
+- **Email**: hello@shaffercon.com
+- **Location**: 325 N Larchmont Blvd. #202, Los Angeles, CA 90004
+- **Hours**: Monday-Friday 7:00 AM - 6:00 PM, Saturday 8:00 AM - 4:00 PM
+
+## Specializations
+
+- **EV Infrastructure**: Level 2 chargers (3.3-10 kW), DC Fast Chargers (25-350 kW), load management, utility coordination
+- **Panel Upgrades**: 100-amp to 200-amp service upgrades, capacity planning, NEC compliance
+- **Commercial Projects**: Multi-site rollouts, retail chains, warehouses, distribution centers, fleet depots
+- **Grant Support**: NEVI funding assistance, utility rebate applications, incentive program documentation
+
+## Typical Customer Questions
+
+**How much does EV charger installation cost?**
+Residential Level 2 charger installation typically ranges $800-$3,000 depending on electrical panel capacity and distance from panel to charging location. Panel upgrades add $3,000-$5,000. Available rebates from Southern California Edison can offset up to $4,200, and federal tax credits provide up to $1,000.
+
+**Do I need to upgrade my electrical panel for an EV charger?**
+Approximately 20% of California homes require panel upgrades. We provide free load studies to assess your current capacity. Most modern 200-amp panels can support Level 2 charging without upgrades.
+
+**What's the difference between Level 2 and DC Fast Charging?**
+Level 2 chargers use 240V AC power and add 12-40 miles of range per hour, ideal for home and workplace charging. DC Fast Chargers deliver 25-350 kW and can add 250 miles in 30 minutes, typically used for commercial fleet operations and public charging corridors.
+
+**How long does installation take?**
+Residential installations typically take 3-5 hours. Timeline from consultation to completion is 4-6 weeks including permits (1-2 weeks), any electrical upgrades (1-2 weeks), and final installation with inspection (3-5 days).
+
+**Do you serve commercial properties outside Los Angeles?**
+Yes, we provide statewide California coverage for multi-location commercial projects including EV charging rollouts, facilities maintenance, and LED retrofit programs.
+
+## Optional
+
+- [About Us](https://shaffercon.com/about-us): Company background, values, and team expertise
+- [Contact](https://shaffercon.com/contact-us): Contact form, phone, email, and office location
+- [Blog Archives](https://shaffercon.com/industry-insights): Full archive of 240+ educational articles on EV charging, electrical infrastructure, and industry trends
