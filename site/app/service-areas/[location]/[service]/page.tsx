@@ -435,24 +435,57 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     Related Services in {locationName}
                   </SectionHeading>
                   <ul className="space-y-3">
-                    {page.relatedServices.map((serviceName: string, index: number) => (
-                      <li key={index}>
-                        <a
-                          href={`/service-areas/${location}/${serviceName.toLowerCase().replace(/\s+/g, '-')}`}
-                          className="flex items-center gap-3 p-4 rounded-lg transition-all hover:translate-x-1"
-                          style={{
-                            background: "var(--background)",
-                            border: "1px solid var(--section-border)",
-                            textDecoration: "none"
-                          }}
-                        >
-                          <Zap className="w-5 h-5 flex-shrink-0" style={{ color: "var(--primary)" }} />
-                          <span className="text-base font-medium" style={{ color: "var(--text)" }}>
-                            {serviceName}
-                          </span>
-                        </a>
-                      </li>
-                    ))}
+                    {page.relatedServices.map((serviceSlug: string, index: number) => {
+                      // Map slugs to proper display names with correct capitalization
+                      const displayNames: { [key: string]: string } = {
+                        'backup-generator-installation': 'Backup Generator Installation',
+                        'breaker-panel-service-maintenance': 'Breaker Panel Service Maintenance',
+                        'ceiling-fan-fixture-installation': 'Ceiling Fan Fixture Installation',
+                        'complete-electrical-rewiring': 'Complete Electrical Rewiring',
+                        'data-network-av-wiring': 'Data, Network & AV Wiring',
+                        'dedicated-equipment-circuits': 'Dedicated Equipment Circuits',
+                        'electrical-code-compliance-corrections': 'Electrical Code Compliance Corrections',
+                        'electrical-panel-upgrades': 'Electrical Panel Upgrades',
+                        'electrical-safety-inspections': 'Electrical Safety Inspections',
+                        'electrical-troubleshooting-repairs': 'Electrical Troubleshooting & Repairs',
+                        'energy-efficiency-upgrades': 'Energy Efficiency Upgrades',
+                        'ev-charger-installation': 'EV Charger Installation',
+                        'exhaust-fan-ventilation-wiring': 'Exhaust Fan Ventilation Wiring',
+                        'landscape-outdoor-lighting': 'Landscape Outdoor Lighting',
+                        'lighting-installation-retrofitting': 'Lighting Installation Retrofitting',
+                        'outlet-switch-dimmer-services': 'Outlet Switch Dimmer Services',
+                        'pool-hot-tub-spa-electrical': 'Pool, Hot Tub & Spa Electrical',
+                        'security-motion-lighting': 'Security Motion Lighting',
+                        'smart-automation-systems': 'Smart Automation Systems',
+                        'whole-building-surge-protection': 'Whole Building Surge Protection',
+                      };
+
+                      // Get display name or convert slug to title case as fallback
+                      const displayName = displayNames[serviceSlug] ||
+                        serviceSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+                      // Use the same service type as the current page
+                      const [currentServiceType] = service.split('-');
+
+                      return (
+                        <li key={index}>
+                          <a
+                            href={`/service-areas/${location}/${currentServiceType}-${serviceSlug}`}
+                            className="flex items-center gap-3 p-4 rounded-lg transition-all hover:translate-x-1"
+                            style={{
+                              background: "var(--background)",
+                              border: "1px solid var(--section-border)",
+                              textDecoration: "none"
+                            }}
+                          >
+                            <Zap className="w-5 h-5 flex-shrink-0" style={{ color: "var(--primary)" }} />
+                            <span className="text-base font-medium" style={{ color: "var(--text)" }}>
+                              {displayName}
+                            </span>
+                          </a>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
