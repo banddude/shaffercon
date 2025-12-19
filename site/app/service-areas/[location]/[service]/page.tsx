@@ -436,15 +436,13 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                   </SectionHeading>
                   <ul className="space-y-3">
                     {page.relatedServices.map((serviceSlug: string, index: number) => {
-                      // Convert slug to display name (e.g., "residential-ev-charger-installation" -> "EV Charger Installation")
-                      const serviceNameOnly = serviceSlug.replace(/^(residential|commercial)-/, '');
-                      const displayName = serviceNameOnly
+                      // Convert slug to display name (e.g., "residential-ev-charger-installation" -> "Residential EV Charger Installation")
+                      const displayName = serviceSlug
                         .split('-')
                         .map(w => {
                           // Handle special cases
                           if (w === 'ev') return 'EV';
                           if (w === 'av') return 'AV';
-                          if (w === 'hot') return 'Hot';
                           return w.charAt(0).toUpperCase() + w.slice(1);
                         })
                         .join(' ')
