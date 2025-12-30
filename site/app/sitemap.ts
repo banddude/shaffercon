@@ -27,25 +27,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const sitemap: MetadataRoute.Sitemap = [
     {
-      url: baseUrl,
+      url: `${baseUrl}/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/about-us`,
+      url: `${baseUrl}/about-us/`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/contact-us`,
+      url: `${baseUrl}/contact-us/`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/service-areas`,
+      url: `${baseUrl}/service-areas/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
@@ -63,7 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   landingPages.forEach(slug => {
     sitemap.push({
-      url: `${baseUrl}/${slug}`,
+      url: `${baseUrl}/${slug}/`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
@@ -73,7 +73,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Add location pages
   locationPages.forEach(({ location_slug, date }) => {
     sitemap.push({
-      url: `${baseUrl}/service-areas/${location_slug}`,
+      url: `${baseUrl}/service-areas/${location_slug}/`,
       lastModified: date ? new Date(date) : new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
@@ -84,7 +84,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   servicePages.forEach(({ location, service_type, service_name, date }) => {
     const locationSlug = location.replace(/\s+/g, '-').toLowerCase();
     sitemap.push({
-      url: `${baseUrl}/service-areas/${locationSlug}/${service_type}-${service_name}`,
+      url: `${baseUrl}/service-areas/${locationSlug}/${service_type}-${service_name}/`,
       lastModified: date ? new Date(date) : new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
@@ -94,7 +94,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Add blog posts from JSON files
   posts.forEach((post) => {
     sitemap.push({
-      url: `${baseUrl}/industry-insights/${post.slug}`,
+      url: `${baseUrl}/industry-insights/${post.slug}/`,
       lastModified: post.date ? new Date(post.date) : new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
