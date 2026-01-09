@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Shaffer Construction</title>
+  <script>
+    // 404 Redirect Mapping
+    // Generated from GSC 404 Report - January 9, 2026
+
+    const redirects = {
+      // Location pages at root -> /service-areas/
+      '/echo-park': '/service-areas/echo-park/',
+      '/atwater-village': '/service-areas/atwater-village/',
+      '/beverly-hills': '/service-areas/beverly-hills/',
+      '/culver-city': '/service-areas/culver-city/',
+      '/silver-lake': '/service-areas/silver-lake/',
+      '/sherman-oaks': '/service-areas/sherman-oaks/',
+      '/burbank': '/service-areas/burbank/',
+      '/santa-monica': '/service-areas/santa-monica/',
+      '/pasadena': '/service-areas/pasadena/',
+      '/glendale': '/service-areas/glendale/',
+      '/hollywood': '/service-areas/hollywood/',
+      '/west-hollywood': '/service-areas/west-hollywood/',
+      '/los-feliz': '/service-areas/los-feliz/',
+      '/highland-park': '/service-areas/highland-park/',
+      '/boyle-heights': '/service-areas/boyle-heights/',
+      '/inglewood': '/service-areas/inglewood/',
+      '/long-beach': '/service-areas/long-beach/',
+      '/santa-clarita': '/service-areas/santa-clarita/',
+      '/altadena': '/service-areas/altadena/',
+      '/torrance': '/service-areas/torrance/',
+      '/pacific-palisades': '/service-areas/pacific-palisades/',
+
+      // Service pages
+      '/breaker-panel-service-maintenance': '/contact-us',
+      '/contact': '/contact-us',
+      '/led-retrofit': '/led-retrofit-services/',
+
+      // Blog posts -> /industry-insights/
+      '/ev-charging-infrastructure-transformation-colorado-nevi-funding-tesla-ai-platform-record-supercharger-expansion-pennsylvania-certification-and-wireless-charging-growth': '/industry-insights/ev-charging-infrastructure-transformation-colorado-nevi-funding-tesla-ai-platform-record-supercharger-expansion-pennsylvania-certification-and-wireless-charging-growth/',
+      '/ev-charger-installation-guide-for-los-angeles-plan-permit-install-and-futureproof': '/industry-insights/ev-charger-installation-guide-for-los-angeles-plan-permit-install-and-futureproof/',
+      '/public-ev-charging-what-property-owners-and-developers-in-los-angeles-need-to-know': '/industry-insights/public-ev-charging-what-property-owners-and-developers-in-los-angeles-need-to-know/',
+      '/californias-ev-charging-boom-how-los-angeles-is-leading-the-electric-vehicle-infrastructure-revolution': '/industry-insights/californias-ev-charging-boom-how-los-angeles-is-leading-the-electric-vehicle-infrastructure-revolution/',
+      '/ev-charging-in-2025-what-homeowners-property-managers-and-businesses-need-to-know': '/industry-insights/ev-charging-in-2025-what-homeowners-property-managers-and-businesses-need-to-know/',
+      '/ev-charger-installation-infrastructure-how-to-decide-pay-for-and-plan-your-project': '/industry-insights/ev-charger-installation-infrastructure-how-to-decide-pay-for-and-plan-your-project/',
+      '/should-i-install-an-ev-charger-at-home-a-practical-guide-for-los-angeles-homeowners': '/industry-insights/should-i-install-an-ev-charger-at-home-a-practical-guide-for-los-angeles-homeowners/',
+      '/the-future-of-ev-charging-in-los-angeles-trends-incentives-and-essential-upgrades-for-property-owners': '/industry-insights/the-future-of-ev-charging-in-los-angeles-trends-incentives-and-essential-upgrades-for-property-owners/',
+      '/californias-ev-charging-buildout-what-los-angeles-building-owners-renters-and-fleets-should-know': '/industry-insights/californias-ev-charging-buildout-what-los-angeles-building-owners-renters-and-fleets-should-know/',
+      '/the-real-cost-of-ev-charging-in-los-angeles-why-investing-in-a-home-or-business-charger-is-the-smart-choice': '/industry-insights/the-real-cost-of-ev-charging-in-los-angeles-why-investing-in-a-home-or-business-charger-is-the-smart-choice/',
+      '/october-2025-ev-infrastructure-acceleration-record-charging-expansion-nevi-program-growth-tesla-v4-milestone-wireless-technology-breakthrough-and-california-leadership-transform-market-dynamics': '/industry-insights/october-2025-ev-infrastructure-acceleration-record-charging-expansion-nevi-program-growth-tesla-v4-milestone-wireless-technology-breakthrough-and-california-leadership-transform-market-dynamics/',
+      '/next-generation-ev-charging-megawatt-fast-charging-plug-charge-expansion-sodium-ion-batteries-and-wireless-charging-transform-los-angeles-infrastructure': '/industry-insights/next-generation-ev-charging-megawatt-fast-charging-plug-charge-expansion-sodium-ion-batteries-and-wireless-charging-transform-los-angeles-infrastructure/',
+      '/why-permitting-policy-and-smart-design-matter-for-faster-ev-charger-deployment-in-los-angeles': '/industry-insights/why-permitting-policy-and-smart-design-matter-for-faster-ev-charger-deployment-in-los-angeles/',
+      '/evgo-autocharge-5-million-sessions-rivian-network-expansion-california-2025-ev-charging-mandates-multifamily-requirements': '/industry-insights/evgo-autocharge-5-million-sessions-rivian-network-expansion-california-2025-ev-charging-mandates-multifamily-requirements/',
+      '/winter-electrical-tips-safeguarding-your-ev-chargers-more': '/industry-insights/winter-electrical-tips-safeguarding-your-ev-chargers-more/',
+      '/home-panel-upgrade-guide': '/industry-insights/home-panel-upgrade-guide/',
+      '/bathroom-electrical-safety-gfci-requirements': '/industry-insights/bathroom-electrical-safety-gfci-requirements/',
+      '/how-los-angeles-property-owners-can-install-ev-chargers-funding-financing-and-practical-steps': '/industry-insights/how-los-angeles-property-owners-can-install-ev-chargers-funding-financing-and-practical-steps/',
+    };
+
+    // Get current path
+    const path = window.location.pathname;
+
+    // Check if there's a redirect for this path
+    if (redirects[path]) {
+      // Redirect using JavaScript
+      window.location.replace(redirects[path]);
+    } else {
+      // Check for date-based blog URLs (/2023/01/28/post-slug)
+      const dateMatch = path.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/(.+)$/);
+      if (dateMatch) {
+        const postSlug = dateMatch[4];
+        window.location.replace('/industry-insights/' + postSlug + '/');
+      }
+    }
+  </script>
+  <meta http-equiv="refresh" content="0;url=/">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #0a0a0a;
+      color: #fff;
+    }
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 4rem;
+      margin: 0 0 1rem 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p {
+      font-size: 1.2rem;
+      color: #888;
+      margin: 0 0 2rem 0;
+    }
+    a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>404</h1>
+    <p>Redirecting you to the right page...</p>
+    <p>If you're not redirected, <a href="/">go home</a>.</p>
+  </div>
+</body>
+</html>
