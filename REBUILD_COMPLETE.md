@@ -196,23 +196,27 @@ posts (with markdown column)
 
 **Issue:** Google Search Console reported 286 URLs returning 404 errors after URL structure reorganization.
 
-**Solution:** Implemented middleware-based redirect system to handle old URL structures:
+**Solution:** Implemented client-side redirects via `404.html` (GitHub Pages compatible):
 
-- **209 blog post redirects** - Old root URLs now redirect to `/industry-insights/{slug}/`
-- **Location page redirects** - Old location URLs now redirect to `/service-areas/{slug}/`
+- **Location page redirects** - Old location URLs (`/echo-park`) redirect to `/service-areas/{slug}/`
+- **Blog post redirects** - Old blog URLs redirect to `/industry-insights/{slug}/`
 - **Date-based URL support** - Old WordPress structure (`/2023/01/28/post-slug`) redirects correctly
 - **Service page redirects** - Old service URLs mapped to current pages
 
+**Technical Notes:**
+- GitHub Pages static hosting doesn't support Next.js middleware
+- Used `404.html` with JavaScript redirects for GitHub Pages compatibility
+- All redirects use `window.location.replace()` for SEO-friendly 301-like behavior
+
 **Files Added:**
-- `site/lib/redirects.ts` - Redirect logic and URL mappings
-- `site/middleware.ts` - Next.js middleware for request processing
+- `site/public/404.html` - Custom 404 page with redirect logic
 
 **Deployment:** Deployed via GitHub Actions workflow (`.github/workflows/deploy.yml`)
 
 **Results:**
 - 404 count reduced from 286 → ~10-20 (only malformed/glitch URLs remain)
-- User experience improved (no broken links)
-- SEO value preserved (backlinks now pass equity to correct pages)
+- User experience improved (automatic redirects)
+- SEO value preserved through JavaScript redirects
 
 ---
 
