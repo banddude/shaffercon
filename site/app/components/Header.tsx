@@ -18,11 +18,12 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const [isDark, setIsDark] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   const isCommercialEVPage = pathname === '/commercial-electric-vehicle-chargers' || pathname === '/commercial-electric-vehicle-chargers/';
   const isVideoOverlayPage = isHomePage || isCommercialEVPage;
-  const showWhiteText = isVideoOverlayPage;
+  const showWhiteText = isVideoOverlayPage && !scrolled;
 
   useEffect(() => {
     const checkDarkMode = () => {
@@ -39,17 +40,24 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
   }, []);
 
   useEffect(() => {
+    if (!isVideoOverlayPage) return;
+    const handleScroll = () => setScrolled(window.scrollY > 0);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isVideoOverlayPage]);
+
+  useEffect(() => {
     // Close mobile menu when pathname changes
     setIsOpen(false);
   }, [pathname]);
 
   return (
     <header
-      className={isVideoOverlayPage ? "absolute top-0 left-0 right-0 z-50" : "sticky top-0 z-50"}
+      className={isVideoOverlayPage ? "fixed top-0 left-0 right-0 z-50" : "sticky top-0 z-50"}
       style={{
-        background: isVideoOverlayPage ? "transparent" : "transparent",
-        backdropFilter: isVideoOverlayPage ? "none" : "blur(20px)",
-        backgroundColor: isVideoOverlayPage ? "transparent" : "rgba(0, 0, 0, 0.3)",
+        backdropFilter: (!isVideoOverlayPage || scrolled) ? "blur(20px)" : "none",
+        backgroundColor: (!isVideoOverlayPage || scrolled) ? "rgba(0, 0, 0, 0.3)" : "transparent",
         borderBottom: "none",
       }}
     >
