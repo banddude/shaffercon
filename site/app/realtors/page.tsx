@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { ASSET_PATH } from "@/app/config";
 import CTA from "@/app/components/CTA";
 import { Section, Container, SectionHeading, Paragraph } from "@/app/components/UI";
-import { AppleButton, AppleCard, AppleGrid } from "@/app/components/UI/AppleStyle";
+import { AppleHero, AppleButton, AppleCard, AppleGrid } from "@/app/components/UI/AppleStyle";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import { Zap, Droplets, Home, Layers, PaintBucket, DoorOpen, CloudRain } from "lucide-react";
 
@@ -87,39 +88,21 @@ export default function RealtorsPage() {
       />
 
       {/* Hero Section */}
-      <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
-        {/* Dark overlay background */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{ backgroundColor: "var(--text)", opacity: 0.92 }}
-        />
-
-        {/* Content */}
-        <div
-          className="relative z-10 w-full px-6 sm:px-8 lg:px-12 py-12 sm:py-20 lg:py-28"
-          style={{ paddingTop: "120px" }}
-        >
-          <div className="max-w-4xl mx-auto">
-            <h1
-              className="text-4xl sm:text-5xl font-black tracking-tight mb-6"
-              style={{ color: "#ffffff" }}
-            >
-              Repair Estimates for Real Estate Agents
-            </h1>
-            <p className="text-xl mb-8" style={{ color: "#d1d5db" }}>
-              Honest numbers during escrow — no padding, no upselling.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <AppleButton href="/contact-us" variant="primary" size="lg">
-                Request an Estimate
-              </AppleButton>
-              <AppleButton href="tel:3236428509" variant="secondary" size="lg">
-                Call (323) 642-8509
-              </AppleButton>
-            </div>
-          </div>
+      <AppleHero
+        title="Repair Estimates for Real Estate Agents"
+        subtitle="Honest numbers during escrow — no padding, no upselling."
+        image={ASSET_PATH("/hero-background-optimized.mp4")}
+        imageAlt="Shaffer Construction repair estimates for real estate agents"
+      >
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <AppleButton href="/contact-us" variant="primary" size="lg">
+            Request an Estimate
+          </AppleButton>
+          <AppleButton href="tel:3236428509" variant="secondary" size="lg">
+            Call (323) 642-8509
+          </AppleButton>
         </div>
-      </section>
+      </AppleHero>
 
       {/* Who We Help Section */}
       <Section padding="lg">
