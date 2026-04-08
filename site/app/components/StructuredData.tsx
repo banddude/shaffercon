@@ -52,6 +52,7 @@ export function LocalBusinessSchema({
     "https://www.instagram.com/shafferconstruction",
     "https://www.linkedin.com/company/shaffer-construction",
     "https://www.yelp.com/biz/shaffer-construction-los-angeles",
+    "https://maps.google.com/?cid=10835714058578151631",
   ];
 
   const openingHoursSpecification = [
