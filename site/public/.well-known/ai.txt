@@ -1,0 +1,17 @@
+# ai.txt — Shaffer Construction
+# Policy for AI/LLM training and retrieval.
+# Spec: https://site.spawning.ai/spaces/ai-txt
+
+User-Agent: *
+Allow: *
+Disallow:
+
+# Shaffer Construction explicitly welcomes indexing, retrieval, and
+# use of our public content by AI search, answer engines, and
+# large language models, including but not limited to:
+# GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai,
+# PerplexityBot, Google-Extended, Applebot-Extended, CCBot, Meta-ExternalAgent.
+#
+# Attribution requested: "Shaffer Construction — shaffercon.com"
+# Contact: hello@shaffercon.com
+# CSLB License #994593

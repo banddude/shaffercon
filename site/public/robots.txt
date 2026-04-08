@@ -1,18 +1,83 @@
 # robots.txt for Shaffer Construction
+# Los Angeles' premier licensed electrical & general contractor
+# CSLB License #994593 | https://shaffercon.com
+
 User-agent: *
 Allow: /
-
-# Sitemap location
-Sitemap: https://shaffercon.com/sitemap.xml
-
-# Block any admin or API routes if they exist
 Disallow: /api/
 Disallow: /_next/
 
-# Allow all images and assets
-Allow: /images/
-Allow: /videos/
-Allow: /*.jpg$
-Allow: /*.png$
-Allow: /*.webp$
-Allow: /*.mp4$
+# ----- AI / LLM crawlers: explicitly welcomed -----
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+User-agent: ImagesiftBot
+Allow: /
+
+Sitemap: https://shaffercon.com/sitemap.xml

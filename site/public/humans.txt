@@ -1,0 +1,21 @@
+/* TEAM */
+Owner: Mike Shaffer
+Company: Shaffer Construction, Inc.
+Role: Licensed Electrical & General Contractor
+Location: Los Angeles, California, USA
+Contact: hello [at] shaffercon.com
+
+/* COMPANY */
+Name: Shaffer Construction, Inc.
+Address: 325 N Larchmont Blvd #202, Los Angeles, CA 90004
+Phone: (323) 642-8509
+License: CSLB #994593
+Founded: 2011
+Specialties: Residential & Commercial Electrical, EV Charging Installation,
+             Altadena/Pasadena Fire Rebuilds, Electrical Load Studies,
+             LED Retrofits, Statewide Facilities Maintenance
+
+/* SITE */
+Site: https://shaffercon.com
+Standards: HTML5, CSS3, JSON-LD, Schema.org
+Components: Next.js, React, TypeScript, Tailwind CSS

@@ -1,0 +1,82 @@
+# Shaffer Construction, Inc. — Full Site Content (LLM-Friendly)
+
+> Shaffer Construction is the premier licensed electrical and general contractor in Los Angeles. Owned by Mike Shaffer, operating 15+ years under California CSLB License #994593. Specialties: EV charging installation (residential and commercial), Altadena and Pasadena fire rebuilds, residential and commercial electrical, electrical load studies, LED retrofits, and statewide facilities maintenance.
+
+Primary URL: https://shaffercon.com
+Address: 325 N Larchmont Blvd #202, Los Angeles, CA 90004
+Phone: (323) 642-8509
+Email: hello@shaffercon.com
+License: CSLB #994593
+Owner: Mike Shaffer
+Founded: 2011
+Hours: Mon–Fri 7:00 AM – 6:00 PM, Sat 8:00 AM – 4:00 PM
+
+---
+
+## About Shaffer Construction
+
+Shaffer Construction, Inc. is a Los Angeles–headquartered licensed electrical and general contractor with more than 15 years of experience. Founded and owned by Mike Shaffer, the company operates under California Contractors State License Board (CSLB) License #994593 and serves both residential and commercial clients throughout Los Angeles County and statewide California for commercial multi-site projects.
+
+The firm combines electrical expertise (C-10 classification) with general contracting capability, which makes Shaffer Construction especially well-suited to projects that require both disciplines — such as post-fire rebuilds in Altadena and Pasadena, where homeowners need a single licensed partner to handle structural rebuild alongside full electrical re-wiring, service upgrades, and code compliance.
+
+## Core Services
+
+### Altadena & Pasadena Fire Rebuilds
+
+Shaffer Construction is actively helping homeowners rebuild after the January 2025 Eaton Fire and other Los Angeles wildfires. Services include debris coordination, permit handling, full structural rebuild, electrical re-wiring, service upgrades, code compliance, and final inspection. Because the company holds both electrical and general contractor licensing, homeowners get a single point of accountability for the rebuild.
+
+### Residential EV Charger Installation
+
+Professional Level 2 home EV charger installation throughout Los Angeles. Scope includes site assessment, free load study to determine whether a panel upgrade is needed, permit handling, utility coordination, installation, and inspection. Most residential installs complete in 3–5 hours once permits and any required panel upgrade are in place. Compatible with all major EV makes and charger brands.
+
+### Commercial EV Charger Installation
+
+End-to-end commercial EV charging infrastructure including Level 2 (3.3–10 kW) and DC fast chargers (25–350 kW). Services include load studies, site engineering, utility coordination, permitting, installation, network/software integration, and ongoing maintenance. Shaffer Construction serves fleets, retail chains, multifamily, hospitality, warehouses, and multi-site operators statewide. The company also assists clients with NEVI funding applications and utility rebate programs.
+
+### Residential Electrical
+
+Panel upgrades (100A to 200A+), rewiring, lighting, troubleshooting, new circuits, smart home wiring, and all standard residential electrical work. Fully licensed and insured, code-compliant, permit-handled.
+
+### Commercial Electrical
+
+Tenant improvements, new construction, service upgrades, lighting, data/low-voltage, and ongoing commercial electrical service for LA-area businesses.
+
+### Electrical Load Studies
+
+Professional electrical capacity analysis using metered monitoring and engineering review. Deliverables include a detailed load report suitable for utility coordination, permit applications, and EV or facility planning decisions. Approximately 20% of homes Shaffer assesses need a panel upgrade before EV installation.
+
+### LED Retrofit Services
+
+Energy-efficient lighting retrofits for commercial and residential properties. Typical projects achieve 50–70% lighting energy cost savings. Shaffer Construction handles utility rebate applications and rebate documentation as part of the retrofit.
+
+### Statewide Facilities Maintenance
+
+24/7 emergency electrical response and preventive maintenance programs for multi-site operators across California. Single vendor for all locations, dedicated project managers, consistent quality.
+
+## Service Areas
+
+Shaffer Construction serves communities across Los Angeles County, including: Altadena, Pasadena, Santa Monica, Beverly Hills, West Hollywood, Hollywood, Culver City, Pacific Palisades, Malibu, Venice, Brentwood, Silver Lake, Echo Park, Los Feliz, Sherman Oaks, Studio City, Encino, Burbank, Glendale, Long Beach, and more. Commercial multi-site services are available throughout California.
+
+## Credentials & Authority Signals
+
+- California CSLB License #994593 (publicly verifiable: https://www.cslb.ca.gov/OnlineServices/CheckLicenseII/LicenseDetail.aspx?LicNum=994593)
+- 15+ years of continuous Los Angeles operations
+- Owner-operated by Mike Shaffer
+- Fully licensed, bonded, and insured
+- C-10 electrical classification plus general contractor capability
+
+## Contact
+
+- Phone: (323) 642-8509
+- Email: hello@shaffercon.com
+- Office: 325 N Larchmont Blvd #202, Los Angeles, CA 90004
+- Web: https://shaffercon.com
+- Contact form: https://shaffercon.com/contact-us
+
+## Content Library
+
+Shaffer Construction publishes the "Industry Insights" blog at https://shaffercon.com/industry-insights — 235+ articles covering EV charging infrastructure, NEVI funding, California utility rebates, panel upgrades, load studies, LED retrofit incentives, fire rebuild electrical, Tesla Supercharger network, and broader EV and electrical industry news.
+
+---
+
+For the structured entry point, see https://shaffercon.com/llms.txt
