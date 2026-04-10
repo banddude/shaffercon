@@ -120,10 +120,10 @@ All games are built with:
 - Local storage for high scores
 
 ### Style Guide
-- **Colors:** Gold (#FFD700), Orange (#FF6600), Blue (#0080FF)
+- **Colors:** Primary Blue (#2b7fbd), Gold (#FFD700), Orange (#FF6600)
 - **Theme:** Electrician safety gear, electrical hazards, construction
-- **Font:** Courier New monospace
-- **Style:** Retro 8-bit pixel art aesthetic
+- **Fonts:** Courier New monospace, system sans-serif
+- **Style:** Polished retro arcade with parallax backgrounds, particle effects, and glow
 
 ### File Structure
 ```

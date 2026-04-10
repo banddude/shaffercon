@@ -13,37 +13,41 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
+            height: calc(60px + env(safe-area-inset-top, 0px));
+            padding-top: env(safe-area-inset-top, 0px);
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding-left: max(12px, env(safe-area-inset-left, 0px));
+            padding-right: max(12px, env(safe-area-inset-right, 0px));
             z-index: 1000;
             border-bottom: 2px solid #FFD700;
         }
         #game-nav a {
             color: #FFD700;
             text-decoration: none;
-            font-size: 16px;
+            font-size: clamp(11px, 3.2vw, 16px);
             font-weight: bold;
             transition: color 0.2s;
+            white-space: nowrap;
         }
         #game-nav a:hover {
             color: #FFA500;
         }
         #game-nav .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             align-items: center;
         }
         #game-nav .nav-logo {
-            font-size: 20px;
+            font-size: clamp(13px, 3.8vw, 20px);
             letter-spacing: 1px;
         }
         #game-container {
-            padding-top: 60px;
+            padding-top: calc(60px + env(safe-area-inset-top, 0px));
         }
     </style>
 </head>
@@ -51,67 +55,94 @@
     <nav id="game-nav">
         <a href="#" id="home-link" class="nav-logo">⚡ SHAFFER CONSTRUCTION</a>
         <div class="nav-links">
-            <a href="#" id="games-link">← Back to Games</a>
+            <a href="#" id="games-link">&#8592; Back to Games</a>
         </div>
     </nav>
     <script src="base-path-config.js"></script>
     <script>
-        // Set navigation links using centralized BASE_PATH
         document.getElementById('home-link').href = withBasePath('');
         document.getElementById('games-link').href = withBasePath('games');
     </script>
     <div id="game-container">
         <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+        <!-- START SCREEN -->
         <div id="start-screen" class="screen">
-            <h1>⚡ SPARKY BROS ⚡</h1>
+            <h1>SPARKY BROS</h1>
             <p class="subtitle">The Electrician's Adventure</p>
             <button id="start-btn" class="pixel-btn">START GAME</button>
             <div class="instructions">
-                <p><strong>CONTROLS:</strong></p>
-                <p>Touch Left/Right: Move</p>
-                <p>Touch Jump Button: Jump</p>
-                <p>Enter electrical panels to warp!</p>
-                <p>Collect wire nuts and avoid sparks!</p>
+                <p><strong>CONTROLS</strong></p>
+                <p><span class="key-hint">Arrow Keys</span> or <span class="key-hint">WASD</span> to move</p>
+                <p><span class="key-hint">Space</span> to jump (hold for higher)</p>
+                <p>Reach the conduit exit to clear each level!</p>
+                <p>Collect wire nuts and stomp enemies for points!</p>
             </div>
             <div id="mobile-controls">
                 <div class="d-pad">
-                    <button id="left-btn" class="control-btn">◄</button>
-                    <button id="right-btn" class="control-btn">►</button>
+                    <button id="left-btn" class="control-btn" aria-label="Move Left">&#9664;</button>
+                    <button id="right-btn" class="control-btn" aria-label="Move Right">&#9654;</button>
                 </div>
                 <div class="action-buttons">
-                    <button id="jump-btn" class="control-btn">JUMP</button>
+                    <button id="jump-btn" class="control-btn" aria-label="Jump">JUMP</button>
                 </div>
             </div>
         </div>
+
+        <!-- GAME OVER SCREEN -->
         <div id="game-over-screen" class="screen hidden">
-            <h2>SHOCKED OUT! ⚡</h2>
+            <h2>SHOCKED OUT!</h2>
             <p id="final-score">Score: 0</p>
+            <div id="leaderboard-display"></div>
             <button id="restart-btn" class="pixel-btn">TRY AGAIN</button>
         </div>
+
+        <!-- WIN SCREEN -->
         <div id="win-screen" class="screen hidden">
-            <h2>LEVEL COMPLETE! ⚡</h2>
+            <h2>LEVEL COMPLETE!</h2>
             <p id="win-score">Score: 0</p>
             <button id="next-level-btn" class="pixel-btn">NEXT LEVEL</button>
         </div>
+
+        <!-- GAME COMPLETE SCREEN -->
+        <div id="game-complete-screen" class="screen hidden">
+            <h2 style="color:#FFD700">ALL LEVELS CLEARED!</h2>
+            <p id="complete-score" style="font-size:28px;color:#FFD700;margin:12px 0;">Score: 0</p>
+            <p style="font-size:14px;color:#2b7fbd;margin-bottom:16px;">Master Electrician status achieved!</p>
+            <div id="complete-leaderboard-display"></div>
+            <button id="play-again-btn" class="pixel-btn">PLAY AGAIN</button>
+        </div>
+
+        <!-- NAME ENTRY SCREEN -->
         <div id="name-entry-screen" class="screen hidden">
-            <h2>🏆 NEW HIGH SCORE! 🏆</h2>
-            <p id="high-score-value" style="font-size: 32px; color: #FFD700; margin: 20px 0;">Score: 0</p>
-            <p style="font-size: 18px; margin-bottom: 20px;">Enter your name for the leaderboard:</p>
-            <input type="text" id="player-name-input" maxlength="20" placeholder="Your Name" style="font-family: 'Courier New', monospace; font-size: 24px; padding: 15px; width: 300px; max-width: 80%; text-align: center; border: 4px solid #FFD700; background: #000; color: #FFD700; margin-bottom: 20px;">
+            <h2>NEW HIGH SCORE!</h2>
+            <p id="high-score-value" style="font-size: 32px; color: #FFD700; margin: 16px 0;">Score: 0</p>
+            <p style="font-size: 16px; margin-bottom: 16px; color: #8899aa;">Enter your name for the leaderboard:</p>
+            <input type="text" id="player-name-input" maxlength="20" placeholder="Your Name">
             <button id="submit-name-btn" class="pixel-btn">SUBMIT</button>
         </div>
+
+        <!-- LEVEL TRANSITION -->
+        <div id="level-transition" class="hidden">
+            <span id="level-transition-text">LEVEL 1</span>
+            <span class="level-subtitle" id="level-transition-subtitle">Residential Wiring</span>
+        </div>
+
+        <!-- HUD -->
         <div id="hud">
             <div id="score">SCORE: 0</div>
-            <div id="lives">LIVES: ❤️❤️❤️</div>
+            <div id="lives">LIVES: 3</div>
             <div id="coins">NUTS: 0</div>
         </div>
+
+        <!-- MOBILE CONTROLS (in-game) -->
         <div id="mobile-controls-game">
             <div class="d-pad">
-                <button id="left-btn-game" class="control-btn">◄</button>
-                <button id="right-btn-game" class="control-btn">►</button>
+                <button id="left-btn-game" class="control-btn" aria-label="Move Left">&#9664;</button>
+                <button id="right-btn-game" class="control-btn" aria-label="Move Right">&#9654;</button>
             </div>
             <div class="action-buttons">
-                <button id="jump-btn-game" class="control-btn">JUMP</button>
+                <button id="jump-btn-game" class="control-btn" aria-label="Jump">JUMP</button>
             </div>
         </div>
     </div>

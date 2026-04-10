@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ZappyBird - Electrician Edition</title>
+    <title>ZappyBird - Electrician Edition | Shaffer Construction</title>
     <link rel="stylesheet" href="style.css">
     <style>
         #game-nav {
@@ -13,72 +13,96 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
+            height: calc(60px + env(safe-area-inset-top, 0px));
+            padding-top: env(safe-area-inset-top, 0px);
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding-left: max(12px, env(safe-area-inset-left, 0px));
+            padding-right: max(12px, env(safe-area-inset-right, 0px));
             z-index: 1000;
             border-bottom: 2px solid #FFD700;
         }
         #game-nav a {
             color: #FFD700;
             text-decoration: none;
-            font-size: 16px;
+            font-size: clamp(11px, 3.2vw, 16px);
             font-weight: bold;
             transition: color 0.2s;
+            white-space: nowrap;
         }
         #game-nav a:hover {
             color: #FFA500;
         }
         #game-nav .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             align-items: center;
         }
         #game-nav .nav-logo {
-            font-size: 20px;
+            font-size: clamp(13px, 3.8vw, 20px);
             letter-spacing: 1px;
         }
         #game-container {
-            padding-top: 60px;
+            padding-top: calc(60px + env(safe-area-inset-top, 0px));
         }
     </style>
 </head>
 <body>
     <nav id="game-nav">
-        <a href="#" id="home-link" class="nav-logo">⚡ SHAFFER CONSTRUCTION</a>
+        <a href="#" id="home-link" class="nav-logo">&#9889; SHAFFER CONSTRUCTION</a>
         <div class="nav-links">
-            <a href="#" id="games-link">← Back to Games</a>
+            <a href="#" id="games-link">&larr; Back to Games</a>
         </div>
     </nav>
     <script src="base-path-config.js"></script>
     <script>
-        // Set navigation links using centralized BASE_PATH
         document.getElementById('home-link').href = withBasePath('');
         document.getElementById('games-link').href = withBasePath('games');
     </script>
     <div id="game-container">
         <canvas id="gameCanvas" width="400" height="600"></canvas>
         <div id="start-screen" class="screen">
-            <h1>⚡ ZAPPYBIRD ⚡</h1>
-            <p class="subtitle">Navigate the electrical hazards!</p>
-            <button id="start-btn" class="pixel-btn">START GAME</button>
+            <div class="title-wrap">
+                <h1 id="title-text">ZAPPYBIRD</h1>
+                <div class="title-bolts">
+                    <span class="bolt bolt-left">&#9889;</span>
+                    <span class="bolt bolt-right">&#9889;</span>
+                </div>
+            </div>
+            <p class="subtitle">Electrician Edition</p>
+            <p class="tagline">Navigate the electrical hazards!</p>
+            <button id="start-btn" class="game-btn">START GAME</button>
             <div class="instructions">
-                <p>Tap or Click to flap</p>
-                <p>Avoid the exposed wires!</p>
+                <p>Tap, Click, or press Space to flap</p>
+                <p>Fly through the conduit gaps!</p>
+                <p>How far can you go?</p>
             </div>
         </div>
         <div id="game-over-screen" class="screen hidden">
-            <h2>SHOCKED! ⚡</h2>
-            <p id="final-score">Score: 0</p>
-            <p id="high-score">High Score: 0</p>
-            <button id="restart-btn" class="pixel-btn">TRY AGAIN</button>
+            <h2 id="gameover-title">SHOCKED!</h2>
+            <div class="stats-box">
+                <div class="stat-row">
+                    <span class="stat-label">Score</span>
+                    <span class="stat-value" id="final-score">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Best</span>
+                    <span class="stat-value" id="high-score">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Pipes Cleared</span>
+                    <span class="stat-value" id="pipes-cleared">0</span>
+                </div>
+            </div>
+            <div id="new-best" class="new-best hidden">NEW BEST!</div>
+            <button id="restart-btn" class="game-btn">TRY AGAIN</button>
         </div>
         <div id="hud">
-            <div id="score">Score: 0</div>
+            <div id="score-display">0</div>
         </div>
     </div>
     <script src="game.js"></script>

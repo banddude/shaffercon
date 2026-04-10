@@ -90,35 +90,35 @@ export default function GamesPage() {
   const games = [
     {
       title: "Zappy Bird",
-      description: "Navigate through electrical obstacles in this electrifying adventure! Tap to make Zappy fly and avoid the pipes.",
+      description: "Dodge electrical conduit through a parallax city skyline! Tap to flap as the sky shifts from dawn to night — how far can you fly?",
       href: withBasePath("games/zappy-bird.html"),
       icon: Zap,
       leaderboardKey: "zappybird" as const,
     },
     {
       title: "Sparky Bros",
-      description: "Join the Sparky Bros on their electrical engineering adventure! Jump and collect power-ups in this exciting platformer.",
+      description: "Classic platformer action — run, jump, and collect wire nuts across industrial zones. Stomp spark enemies and warp through conduit pipes!",
       href: withBasePath("games/sparky-bros.html"),
       icon: Plug,
       leaderboardKey: "sparkybros" as const,
     },
     {
       title: "Sparky's Hopscotch",
-      description: "Help Sparky jump through numbered electrical boxes! Land on each box in order and reach new levels in this electrifying hopscotch adventure.",
+      description: "Leap across numbered junction boxes in order! Each level stacks higher with trickier patterns. Keep your balance and climb the leaderboard.",
       href: withBasePath("games/sparky-hopscotch.html"),
       icon: Hash,
       leaderboardKey: "hopscotch" as const,
     },
     {
       title: "Classic Hopscotch",
-      description: "Play the traditional hopscotch game with Sparky! Throw your marker, hop through the squares, and complete all 10 rounds to win!",
+      description: "Toss your marker and hop the chalk court on the job site! Complete all 10 rounds without stepping on the lines to prove you've got the moves.",
       href: withBasePath("games/classic-hopscotch.html"),
       icon: Grid3x3,
       leaderboardKey: "classichopscotch" as const,
     },
     {
       title: "DΩΩM",
-      description: "Fight through 9 levels of electrical mayhem in this first-person shooter! Battle corrupted electrical entities and restore power to the city.",
+      description: "9 levels of first-person electrical warfare. Six weapons, seven enemy types, and one epic boss — fight through the power plant and restore the grid.",
       href: withBasePath("games/electrician-doom.html"),
       icon: Crosshair,
       leaderboardKey: "doom" as const,
@@ -126,7 +126,7 @@ export default function GamesPage() {
   ];
 
   return (
-    <main className="w-full min-h-screen flex items-center">
+    <main className="w-full min-h-[100dvh] flex items-center">
       <div className="w-full max-w-3xl mx-auto px-4 py-6 sm:py-16">
         <h1
           className="text-2xl sm:text-5xl font-black text-center mb-2 sm:mb-6"
@@ -138,15 +138,16 @@ export default function GamesPage() {
           className="text-sm sm:text-lg text-center mb-6 sm:mb-12 max-w-xl mx-auto"
           style={{ color: "var(--secondary)" }}
         >
-          Play our electrical themed games!
+          Electrician-themed arcade games — play on desktop or mobile!
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 mb-6 sm:mb-12">
           {games.map((game, idx) => {
             const gameLeaderboard = leaderboards[game.leaderboardKey];
+            const isLastOdd = idx === games.length - 1 && games.length % 2 !== 0;
             return (
               <div
                 key={idx}
-                className="rounded-lg border overflow-hidden"
+                className={`rounded-lg border overflow-hidden ${isLastOdd ? "sm:col-span-2 sm:max-w-lg sm:mx-auto" : ""}`}
                 style={{
                   background: "var(--background)",
                   borderColor: "var(--secondary)",
