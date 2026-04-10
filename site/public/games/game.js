@@ -83,7 +83,7 @@ const BASE_GAP       = 155;
 const MIN_GAP        = 110;
 const BASE_SPEED     = 140;    // px / s
 const MAX_SPEED      = 250;
-const GRACE_FRAMES   = 70;     // frames before first pipe (at 60fps ~ 1.2s)
+const GRACE_FRAMES   = 20;     // frames before first pipe
 const PIPE_INTERVAL  = 100;    // frames between spawns
 let pipeTimer        = 0;
 
