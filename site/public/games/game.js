@@ -908,7 +908,7 @@ function update(dt) {
 
     // ---- Pipes ----
     pipeTimer++;
-    if (pipeTimer > GRACE_FRAMES && (pipeTimer - GRACE_FRAMES) % PIPE_INTERVAL === 0) {
+    if (pipeTimer >= GRACE_FRAMES && (pipeTimer - GRACE_FRAMES) % PIPE_INTERVAL === 0) {
         spawnPipe();
     }
 
