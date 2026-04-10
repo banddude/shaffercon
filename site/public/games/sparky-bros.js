@@ -92,7 +92,7 @@ const player = {
     vx: 0, vy: 0,
     speed: 3.8, maxSpeed: 5.5,
     accel: 0.5, decel: 0.35,
-    jumpPower: 10.8,
+    jumpPower: 12.5,
     gravity: 0.52,
     onGround: false,
     dir: 1,
@@ -1198,7 +1198,18 @@ function update() {
             p.vy = 0;
             p.onGround = true;
         }
-        // Side/bottom collision for ground blocks to prevent going through
+        // Bottom collision (head bonk) - player jumping up into platform from below
+        const inset = 4;
+        if (p.vy < 0 &&
+            p.x + inset < plat.x + plat.width &&
+            p.x + p.width - inset > plat.x &&
+            p.y < plat.y + plat.height &&
+            p.y > plat.y &&
+            p.y - p.vy >= plat.y + plat.height) {
+            p.y = plat.y + plat.height;
+            p.vy = 0;
+        }
+        // Side collision for ground blocks to prevent going through
         if (plat.type === 'ground') {
             // Left side
             if (p.x + p.width > plat.x && p.x < plat.x &&
