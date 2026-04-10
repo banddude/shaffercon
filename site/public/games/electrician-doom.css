@@ -450,94 +450,174 @@ h3 {
     display: block;
 }
 
-/* Mobile Controls */
-#mobile-controls {
+/* Mobile Touch Zones */
+.touch-zone {
     position: fixed;
-    bottom: calc(90px + env(safe-area-inset-bottom, 0px));
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 0 16px;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    top: 0;
+    bottom: 0;
+    width: 50%;
     z-index: 60;
-    pointer-events: none;
+    pointer-events: auto;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
-#mobile-controls.hidden {
+.touch-zone.hidden {
     display: none;
 }
 
-#mobile-controls * {
-    pointer-events: auto;
+#touch-zone-left {
+    left: 0;
 }
 
-.move-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    opacity: 0.55;
+#touch-zone-right {
+    right: 0;
 }
 
-.horizontal-controls {
-    display: flex;
-    gap: 4px;
-}
-
-.action-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: center;
-    opacity: 0.55;
-}
-
-.control-btn {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1.5px solid rgba(255, 255, 255, 0.25);
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 18px;
-    font-weight: bold;
-    width: 52px;
-    height: 52px;
+/* Movement stick indicator */
+.move-stick-ring {
+    position: fixed;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    cursor: pointer;
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: all 0.08s;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 61;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.15s;
+    opacity: 0;
 }
 
-.control-btn:active {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: scale(0.92);
+.move-stick-ring.hidden {
+    display: none;
 }
 
-.shoot-btn {
-    background: rgba(255, 60, 60, 0.2);
-    border: 1.5px solid rgba(255, 80, 80, 0.4);
-    color: rgba(255, 255, 255, 0.9);
-    width: 64px;
-    height: 64px;
+.move-stick-ring.active {
+    opacity: 1;
+}
+
+.move-stick-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: transform 0.05s;
+}
+
+/* USE button - subtle pill */
+.touch-btn-use {
+    position: fixed;
+    bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 44px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Courier New', monospace;
     font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    z-index: 62;
+    pointer-events: auto;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.shoot-btn:active {
-    background: rgba(255, 60, 60, 0.5);
-    border-color: rgba(255, 100, 100, 0.7);
+.touch-btn-use.hidden {
+    display: none;
 }
 
-.use-btn {
-    font-size: 12px;
+.touch-btn-use:active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Weapon cycle button - subtle circle */
+.touch-btn-weapon {
+    position: fixed;
+    top: calc(80px + env(safe-area-inset-top, 0px));
+    right: max(14px, env(safe-area-inset-right, 0px));
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 215, 0, 0.6);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 62;
+    pointer-events: auto;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.touch-btn-weapon.hidden {
+    display: none;
+}
+
+.touch-btn-weapon:active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 215, 0, 0.35);
+}
+
+/* Mobile tutorial overlay */
+#mobile-tutorial {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    touch-action: none;
+}
+
+#mobile-tutorial.hidden {
+    display: none;
+}
+
+.tutorial-content {
+    text-align: center;
+    padding: 30px 40px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    background: rgba(10, 10, 20, 0.85);
+    max-width: 340px;
+}
+
+.tutorial-content p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 12px 0;
+    line-height: 1.5;
+}
+
+.tutorial-content strong {
+    color: #FFD700;
 }
 
 /* Message Display */
@@ -624,18 +704,6 @@ h3 {
         font-size: 24px;
     }
 
-    .control-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 16px;
-    }
-
-    .shoot-btn {
-        width: 70px;
-        height: 70px;
-        font-size: 14px;
-    }
-
     #minimap {
         width: 120px;
         height: 120px;
@@ -651,21 +719,10 @@ h3 {
         max-width: 98%;
     }
 
-    .control-btn {
-        width: 46px;
-        height: 46px;
-        font-size: 15px;
-    }
-
-    .shoot-btn {
-        width: 56px;
-        height: 56px;
-        font-size: 11px;
-    }
-
-    #mobile-controls {
-        bottom: calc(75px + env(safe-area-inset-bottom, 0px));
-        padding: 0 12px;
+    .touch-btn-use {
+        bottom: calc(85px + env(safe-area-inset-bottom, 0px));
+        width: 70px;
+        height: 40px;
     }
 }
 

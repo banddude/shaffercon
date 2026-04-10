@@ -38,6 +38,9 @@ const COL = {
     dark3:  '#0a0a1a',
 };
 
+// ---- Safe vibrate (navigator.vibrate is undefined on iOS Safari) ----
+function safeVibrate(pattern) { if (navigator.vibrate) navigator.vibrate(pattern); }
+
 // ---- State ----
 let state      = 'start';   // start | playing | dying | gameOver
 let score      = 0;
@@ -834,7 +837,7 @@ function die() {
     bird.deathVy = bird.vy;
     bird.deathRot = bird.rotation;
 
-    navigator.vibrate([100, 50, 100, 50, 200]);
+    safeVibrate([100, 50, 100, 50, 200]);
     spawnDeathExplosion(bird.x + bird.w / 2, bird.y + bird.h / 2);
     triggerShake(0.5, 8);
 
@@ -921,7 +924,7 @@ function update(dt) {
         if (!p.scored && p.x + PIPE_W < bird.x) {
             p.scored = true;
             score++;
-            navigator.vibrate(30);
+            safeVibrate(30);
             scoreHUD.textContent = score;
             // score bump animation
             scoreHUD.classList.add('bump');

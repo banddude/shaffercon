@@ -408,16 +408,12 @@
             <p class="instructions">
                 Help <strong>Sparky the Electrician</strong> jump through numbered junction boxes!<br><br>
                 <strong>Arrows / Buttons</strong> to move left &amp; right<br>
-                <strong>Space / Up</strong> to jump<br><br>
+                <strong>Space / Up</strong> to jump<br>
+                <strong>Touch:</strong> tap screen sides to move, center to jump<br><br>
                 Land on each box <strong>in order: 1, 2, 3...</strong><br>
                 Don't fall off the circuit!
             </p>
-            <button class="btn" onclick="startGame()">START GAME</button>
-            <div class="controls">
-                <button class="control-btn" onclick="void(0)">&#8592;</button>
-                <button class="control-btn" onclick="void(0)">&#8593;</button>
-                <button class="control-btn" onclick="void(0)">&#8594;</button>
-            </div>
+            <button class="btn" id="startBtn">START GAME</button>
             <div class="leaderboard" id="startLeaderboard"></div>
         </div>
 
@@ -425,8 +421,8 @@
             <div class="game-title" style="color:#ff4444; text-shadow: 0 0 30px rgba(255,68,68,0.5);">CIRCUIT BREAKER!</div>
             <div id="finalScore">0</div>
             <div id="finalLevel" style="color:#2b7fbd; font-size:18px; margin-bottom:16px;">Level 1</div>
-            <button class="btn" onclick="restartGame()">TRY AGAIN</button>
-            <button class="btn btn-secondary" onclick="location.reload()">MAIN MENU</button>
+            <button class="btn" id="restartBtn">TRY AGAIN</button>
+            <button class="btn btn-secondary" id="mainMenuBtn">MAIN MENU</button>
             <div class="leaderboard" id="gameOverLeaderboard"></div>
         </div>
 
@@ -435,14 +431,14 @@
             <div class="entry-score" id="entryScore">0</div>
             <div class="entry-label">Enter your name for the leaderboard:</div>
             <input type="text" id="nameInput" maxlength="20" placeholder="Your Name">
-            <button class="btn" id="submitNameBtn" onclick="submitName()">SUBMIT</button>
+            <button class="btn" id="submitNameBtn">SUBMIT</button>
         </div>
 
         <div id="levelCompleteScreen">
             <div class="level-complete-title">&#9889; LEVEL COMPLETE! &#9889;</div>
             <div class="level-bonus" id="levelBonus">+100 BONUS</div>
             <div style="color:#2b7fbd; font-size:20px; margin:8px 0;" id="nextLevelLabel">Next: Level 2</div>
-            <button class="btn" id="nextLevelBtn" onclick="nextLevel()">NEXT LEVEL</button>
+            <button class="btn" id="nextLevelBtn">NEXT LEVEL</button>
         </div>
     </div>
 
@@ -450,10 +446,17 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Detect mobile
-        const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry/i.test(navigator.userAgent) || window.innerWidth < 600;
-        if (isMobile) {
+        // Detect mobile / touch device
+        const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry/i.test(navigator.userAgent)
+            || window.innerWidth < 600
+            || ('ontouchstart' in window)
+            || (navigator.maxTouchPoints > 0);
+
+        function showMobileControls() {
             document.getElementById('mobileControls').style.display = 'flex';
+        }
+        if (isMobile) {
+            showMobileControls();
         }
 
         function resizeCanvas() {
@@ -549,6 +552,94 @@
                 }
             });
         }
+
+        // ---- BUTTON HELPERS (touch + click for all UI buttons) ----
+
+        function addButtonHandler(id, handler) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            let touched = false;
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                touched = true;
+                handler();
+            }, { passive: false });
+            btn.addEventListener('click', (e) => {
+                if (touched) { touched = false; return; }
+                handler();
+            });
+        }
+
+        addButtonHandler('startBtn', () => startGame());
+        addButtonHandler('restartBtn', () => restartGame());
+        addButtonHandler('mainMenuBtn', () => location.reload());
+        addButtonHandler('submitNameBtn', () => submitName());
+        addButtonHandler('nextLevelBtn', () => nextLevel());
+
+        // ---- CANVAS TOUCH CONTROLS (tap left/right halves to move, swipe up to jump) ----
+
+        let canvasTouchId = null;
+        let canvasTouchStartX = 0;
+        let canvasTouchStartY = 0;
+
+        canvas.addEventListener('touchstart', (e) => {
+            if (!gameRunning) return;
+            e.preventDefault();
+            const touch = e.changedTouches[0];
+            canvasTouchId = touch.identifier;
+            canvasTouchStartX = touch.clientX;
+            canvasTouchStartY = touch.clientY;
+
+            const rect = canvas.getBoundingClientRect();
+            const touchX = touch.clientX - rect.left;
+            const midX = rect.width / 2;
+
+            // Tap left or right half to move
+            if (touchX < midX * 0.6) {
+                keys['ArrowLeft'] = true;
+                keys['ArrowRight'] = false;
+            } else if (touchX > midX * 1.4) {
+                keys['ArrowRight'] = true;
+                keys['ArrowLeft'] = false;
+            } else {
+                // Tap center = jump
+                if (player.onGround) {
+                    player.vy = jumpPower;
+                    player.jumping = true;
+                    player.onGround = false;
+                }
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (!gameRunning) return;
+            e.preventDefault();
+            const touch = Array.from(e.changedTouches).find(t => t.identifier === canvasTouchId);
+            if (!touch) return;
+
+            const dy = canvasTouchStartY - touch.clientY;
+            // Swipe up to jump
+            if (dy > 30 && player.onGround) {
+                player.vy = jumpPower;
+                player.jumping = true;
+                player.onGround = false;
+                canvasTouchStartY = touch.clientY; // reset so it doesn't double-trigger
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', (e) => {
+            if (!gameRunning) return;
+            e.preventDefault();
+            keys['ArrowLeft'] = false;
+            keys['ArrowRight'] = false;
+            canvasTouchId = null;
+        }, { passive: false });
+
+        canvas.addEventListener('touchcancel', (e) => {
+            keys['ArrowLeft'] = false;
+            keys['ArrowRight'] = false;
+            canvasTouchId = null;
+        }, { passive: false });
 
         // ---- DRAWING HELPERS ----
 
@@ -1126,7 +1217,7 @@
                         box.completed = true;
                         currentTarget++;
                         score += 10 * level;
-                        navigator.vibrate(30);
+                        navigator.vibrate && navigator.vibrate(30);
 
                         createLandingParticles(box.x + box.width / 2, box.y);
                         triggerFlash('#2b7fbd');
@@ -1141,7 +1232,7 @@
                             // Level complete!
                             const bonus = 50 * level;
                             score += bonus;
-                            navigator.vibrate([50, 30, 50, 30, 100]);
+                            navigator.vibrate && navigator.vibrate([50, 30, 50, 30, 100]);
                             createCompletionParticles(canvas.width / 2, player.y - cameraY);
                             triggerFlash('#FFD700');
                             triggerShake(8);
@@ -1271,6 +1362,7 @@
 
         function startGame() {
             document.getElementById('startScreen').style.display = 'none';
+            if (isMobile) showMobileControls();
             gameRunning = true;
             score = 0;
             level = 1;
@@ -1290,7 +1382,7 @@
 
         function gameOver() {
             gameRunning = false;
-            navigator.vibrate([100, 50, 100, 50, 200]);
+            navigator.vibrate && navigator.vibrate([100, 50, 100, 50, 200]);
             triggerShake(10);
             triggerFlash('#ff4444');
 
@@ -1321,6 +1413,7 @@
 
         function restartGame() {
             document.getElementById('gameOverScreen').style.display = 'none';
+            if (isMobile) showMobileControls();
 
             score = 0;
             level = 1;
@@ -1348,6 +1441,10 @@
 
         // Show leaderboard on start
         renderLeaderboard('startLeaderboard');
+
+        // Draw initial frame so canvas isn't blank behind start screen
+        initLevel();
+        draw();
     </script>
 </body>
 </html>

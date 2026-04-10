@@ -313,12 +313,11 @@
             justify-content: center;
             gap: 16px;
             z-index: 20;
-            pointer-events: none;
         }
 
         .mobile-controls .control-btn {
-            pointer-events: all;
-            opacity: 0.7;
+            pointer-events: auto;
+            opacity: 0.85;
         }
 
         .leaderboard {
@@ -432,9 +431,9 @@
         </div>
 
         <div class="mobile-controls" id="mobileControls" style="display:none;">
-            <button class="control-btn" id="leftBtn">&#8592;</button>
-            <button class="control-btn" id="jumpBtn">&#8593;</button>
-            <button class="control-btn" id="rightBtn">&#8594;</button>
+            <button class="control-btn" id="leftBtn" type="button">&#8592;</button>
+            <button class="control-btn" id="jumpBtn" type="button">&#8593;</button>
+            <button class="control-btn" id="rightBtn" type="button">&#8594;</button>
         </div>
 
         <div id="tutorialOverlay" class="tutorial-overlay">
@@ -442,7 +441,7 @@
                 <h3>How to Play</h3>
                 <p>Loading...</p>
             </div>
-            <button class="btn" id="tutorialBtn" onclick="advanceTutorial()">NEXT</button>
+            <button class="btn" id="tutorialBtn" type="button">NEXT</button>
         </div>
 
         <div id="startScreen">
@@ -457,13 +456,11 @@
                 <span class="step-num">5.</span> Return to <strong>START</strong> to complete the round<br>
                 <span class="step-num">6.</span> Complete all <strong>10 rounds</strong> to win!
             </p>
-            <button class="btn" onclick="showTutorial()">HOW TO PLAY</button>
-            <button class="btn" onclick="startGame()">START GAME</button>
-            <div class="controls">
-                <button class="control-btn" onclick="void(0)">&#8592;</button>
-                <button class="control-btn" onclick="void(0)">&#8593;</button>
-                <button class="control-btn" onclick="void(0)">&#8594;</button>
-            </div>
+            <button class="btn" id="tutorialStartBtn">HOW TO PLAY</button>
+            <button class="btn" id="startGameBtn">START GAME</button>
+            <p class="instructions" id="controlHint" style="margin-top:10px; color:#4ade80; font-size:13px;">
+                <strong>Controls:</strong> Arrow keys or on-screen buttons to move &amp; jump
+            </p>
             <div class="leaderboard" id="startLeaderboard"></div>
         </div>
 
@@ -472,15 +469,15 @@
             <div class="entry-score" id="entryScore">0</div>
             <div class="entry-label">Enter your name for the leaderboard:</div>
             <input type="text" id="nameInput" maxlength="20" placeholder="Your Name">
-            <button class="btn" id="submitNameBtn" onclick="submitName()">SUBMIT</button>
+            <button class="btn" id="submitNameBtn" type="button">SUBMIT</button>
         </div>
 
         <div id="gameOverScreen">
             <div class="game-title" id="endTitle" style="font-size:36px;">Game Over!</div>
             <div id="finalScore">0</div>
             <div id="finalRound" style="color:#2b7fbd; font-size:16px; margin-bottom:12px;">Round 1/10</div>
-            <button class="btn" onclick="restartGame()">PLAY AGAIN</button>
-            <button class="btn btn-secondary" onclick="location.reload()">MAIN MENU</button>
+            <button class="btn" id="playAgainBtn" type="button">PLAY AGAIN</button>
+            <button class="btn btn-secondary" id="mainMenuBtn" type="button">MAIN MENU</button>
             <div class="leaderboard" id="gameOverLeaderboard"></div>
         </div>
     </div>
@@ -489,10 +486,10 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry/i.test(navigator.userAgent) || window.innerWidth < 600;
-        if (isMobile) {
-            document.getElementById('mobileControls').style.display = 'flex';
-        }
+        const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry/i.test(navigator.userAgent) || ('ontouchstart' in window) || window.innerWidth < 600;
+
+        // Always show on-screen controls during gameplay (shown/hidden via startGame/gameOver)
+        // They start hidden and are revealed when game starts
 
         function resizeCanvas() {
             canvas.width = canvas.offsetWidth;
@@ -553,12 +550,31 @@
             keys[e.code] = false;
         });
 
+        // Helper: bind both click and touch to a button action (for UI buttons)
+        function bindButtonAction(id, action) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            let touchFired = false;
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                touchFired = true;
+                action(e);
+            }, { passive: false });
+            btn.addEventListener('click', (e) => {
+                if (touchFired) { touchFired = false; return; }
+                e.preventDefault();
+                action(e);
+            });
+        }
+
+        // Setup directional control buttons (held down while pressed)
         function setupTouchBtn(id, keyCode) {
             const btn = document.getElementById(id);
             if (!btn) return;
-            btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[keyCode] = true; }, { passive: false });
-            btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[keyCode] = false; }, { passive: false });
-            btn.addEventListener('touchcancel', (e) => { e.preventDefault(); keys[keyCode] = false; }, { passive: false });
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); keys[keyCode] = true; }, { passive: false });
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); keys[keyCode] = false; }, { passive: false });
+            btn.addEventListener('touchcancel', (e) => { e.preventDefault(); e.stopPropagation(); keys[keyCode] = false; }, { passive: false });
             btn.addEventListener('mousedown', (e) => { e.preventDefault(); keys[keyCode] = true; });
             btn.addEventListener('mouseup', (e) => { e.preventDefault(); keys[keyCode] = false; });
             btn.addEventListener('mouseleave', () => { keys[keyCode] = false; });
@@ -566,10 +582,12 @@
         setupTouchBtn('leftBtn', 'ArrowLeft');
         setupTouchBtn('rightBtn', 'ArrowRight');
 
+        // Jump button - special handling (trigger jump on press)
         const jumpBtn = document.getElementById('jumpBtn');
         if (jumpBtn) {
             jumpBtn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 if (gameRunning && player.onGround) { player.vy = jumpPower; player.onGround = false; }
             }, { passive: false });
             jumpBtn.addEventListener('mousedown', (e) => {
@@ -577,6 +595,14 @@
                 if (gameRunning && player.onGround) { player.vy = jumpPower; player.onGround = false; }
             });
         }
+
+        // Bind all UI buttons with both click and touch support
+        bindButtonAction('startGameBtn', () => startGame());
+        bindButtonAction('tutorialStartBtn', () => showTutorial());
+        bindButtonAction('tutorialBtn', () => advanceTutorial());
+        bindButtonAction('submitNameBtn', () => submitName());
+        bindButtonAction('playAgainBtn', () => restartGame());
+        bindButtonAction('mainMenuBtn', () => location.reload());
 
         // ---- TUTORIAL ----
         let tutorialStep = 0;
@@ -1209,7 +1235,7 @@
                 createParticles(marker.x, marker.y + 10, '#FF6600', 15);
                 triggerFlash('#FF6600');
                 triggerShake(3);
-                navigator.vibrate(30);
+                if (navigator.vibrate) navigator.vibrate(30);
                 gamePhase = 'HOP_UP';
                 visitedSquares.clear();
                 score += 10;
@@ -1228,7 +1254,7 @@
                 if (square.number > 0 && !visitedSquares.has(square.number)) {
                     visitedSquares.add(square.number);
                     createParticles(square.x + square.width / 2, square.y, '#2b7fbd', 10);
-                    navigator.vibrate(30);
+                    if (navigator.vibrate) navigator.vibrate(30);
                     score += 10;
                     updateUI();
                 }
@@ -1253,7 +1279,7 @@
                     createParticles(marker.x, marker.y, '#FFD700', 20);
                     triggerFlash('#FFD700');
                     triggerShake(3);
-                    navigator.vibrate(30);
+                    if (navigator.vibrate) navigator.vibrate(30);
                     marker = null;
                     score += 50;
                     updateUI();
@@ -1275,7 +1301,7 @@
         function roundComplete() {
             score += 100;
             currentRound++;
-            navigator.vibrate([50, 30, 50, 30, 100]);
+            if (navigator.vibrate) navigator.vibrate([50, 30, 50, 30, 100]);
             createCelebration(canvas.width / 2, canvas.height / 2);
             triggerFlash('#FFD700');
             triggerShake(5);
@@ -1403,6 +1429,7 @@
 
         function startGame() {
             document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('mobileControls').style.display = 'flex';
             gameRunning = true;
             score = 0;
             currentRound = 1;
@@ -1420,13 +1447,14 @@
 
         function gameOver(won) {
             gameRunning = false;
+            document.getElementById('mobileControls').style.display = 'none';
 
             if (won) {
-                navigator.vibrate([50, 30, 50, 30, 100]);
+                if (navigator.vibrate) navigator.vibrate([50, 30, 50, 30, 100]);
                 createCelebration(canvas.width / 2, canvas.height / 3);
                 triggerFlash('#FFD700');
             } else {
-                navigator.vibrate([100, 50, 100, 50, 200]);
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
                 triggerFlash('#ff4444');
                 triggerShake(8);
             }
@@ -1463,6 +1491,7 @@
 
         function restartGame() {
             document.getElementById('gameOverScreen').style.display = 'none';
+            document.getElementById('mobileControls').style.display = 'flex';
             score = 0;
             currentRound = 1;
             targetSquare = 1;
@@ -1484,6 +1513,15 @@
             gameRunning = true;
             ensureLoop();
         }
+
+        // Prevent default touch behaviors on the game container (no scroll/zoom)
+        document.getElementById('gameContainer').addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+
+        // Draw the initial frame so the start screen shows the game behind it
+        initSquares();
+        draw();
 
         // Show leaderboard on start
         renderLeaderboard('startLeaderboard');

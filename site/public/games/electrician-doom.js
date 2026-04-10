@@ -757,7 +757,14 @@ const gameOverScreen = document.getElementById('game-over-screen');
 const victoryScreen = document.getElementById('victory-screen');
 const nameEntryScreen = document.getElementById('name-entry-screen');
 const hud = document.getElementById('hud');
-const mobileControls = document.getElementById('mobile-controls');
+const touchZoneLeft = document.getElementById('touch-zone-left');
+const touchZoneRight = document.getElementById('touch-zone-right');
+const moveStickRing = document.getElementById('move-stick-ring');
+const moveStickDot = document.getElementById('move-stick-dot');
+const btnUseTouch = document.getElementById('btn-use-touch');
+const btnWeaponTouch = document.getElementById('btn-weapon-touch');
+const weaponIconText = document.getElementById('weapon-icon-text');
+const mobileTutorial = document.getElementById('mobile-tutorial');
 const messageDisplay = document.getElementById('message-display');
 const playerNameInput = document.getElementById('player-name-input');
 const damageOverlay = document.getElementById('damage-overlay');
@@ -849,26 +856,209 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
-// Mobile controls
-if ('ontouchstart' in window) {
-    mobileControls.classList.remove('hidden');
+// Mobile dual-zone touch controls
+const isTouchDevice = 'ontouchstart' in window;
+let leftTouch = null;   // { id, startX, startY, currentX, currentY }
+let rightTouch = null;  // { id, startX, startY, currentX, currentY, startTime }
+const DEAD_ZONE = 15;
+const MOVE_SENSITIVITY = 0.06;
+const LOOK_SENSITIVITY = 0.004;
 
-    const setupButton = (id, action) => {
-        const btn = document.getElementById(id);
-        if (!btn) return;
-        btn.addEventListener('touchstart', (e) => { e.preventDefault(); action(true); }, { passive: false });
-        btn.addEventListener('touchend', (e) => { e.preventDefault(); action(false); }, { passive: false });
-        btn.addEventListener('touchcancel', (e) => { e.preventDefault(); action(false); }, { passive: false });
+function showMobileControls() {
+    touchZoneLeft.classList.remove('hidden');
+    touchZoneRight.classList.remove('hidden');
+    moveStickRing.classList.remove('hidden');
+    btnUseTouch.classList.remove('hidden');
+    btnWeaponTouch.classList.remove('hidden');
+    updateWeaponButton();
+}
+
+function hideMobileControls() {
+    touchZoneLeft.classList.add('hidden');
+    touchZoneRight.classList.add('hidden');
+    moveStickRing.classList.add('hidden');
+    moveStickRing.classList.remove('active');
+    btnUseTouch.classList.add('hidden');
+    btnWeaponTouch.classList.add('hidden');
+    clearTouchState();
+}
+
+function clearTouchState() {
+    leftTouch = null;
+    rightTouch = null;
+    keys['w'] = false;
+    keys['s'] = false;
+    keys['a'] = false;
+    keys['d'] = false;
+}
+
+function updateWeaponButton() {
+    if (weaponIconText) {
+        weaponIconText.textContent = (player.currentWeapon + 1).toString();
+    }
+}
+
+function showTutorialIfNeeded() {
+    if (localStorage.getItem('doom-mobile-tutorial-seen')) return;
+    mobileTutorial.classList.remove('hidden');
+    const dismiss = () => {
+        mobileTutorial.classList.add('hidden');
+        localStorage.setItem('doom-mobile-tutorial-seen', '1');
     };
+    mobileTutorial.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        dismiss();
+    }, { passive: false, once: true });
+    setTimeout(dismiss, 3000);
+}
 
-    setupButton('btn-forward', (down) => keys['w'] = down);
-    setupButton('btn-backward', (down) => keys['s'] = down);
-    setupButton('btn-left', (down) => keys['arrowleft'] = down);
-    setupButton('btn-right', (down) => keys['arrowright'] = down);
-    setupButton('btn-strafe-left', (down) => keys['a'] = down);
-    setupButton('btn-strafe-right', (down) => keys['d'] = down);
-    setupButton('btn-shoot', (down) => keys[' '] = down);
-    setupButton('btn-use', (down) => keys['e'] = down);
+if (isTouchDevice) {
+    // --- LEFT ZONE: Movement ---
+    touchZoneLeft.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (gameState !== 'playing') return;
+        const t = e.changedTouches[0];
+        leftTouch = { id: t.identifier, startX: t.clientX, startY: t.clientY, currentX: t.clientX, currentY: t.clientY };
+        moveStickRing.style.left = t.clientX + 'px';
+        moveStickRing.style.top = t.clientY + 'px';
+        moveStickRing.classList.add('active');
+        moveStickDot.style.transform = 'translate(0, 0)';
+    }, { passive: false });
+
+    touchZoneLeft.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!leftTouch) return;
+        for (let i = 0; i < e.changedTouches.length; i++) {
+            const t = e.changedTouches[i];
+            if (t.identifier === leftTouch.id) {
+                leftTouch.currentX = t.clientX;
+                leftTouch.currentY = t.clientY;
+                const dx = leftTouch.currentX - leftTouch.startX;
+                const dy = leftTouch.currentY - leftTouch.startY;
+                // Clamp dot inside ring
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const maxDist = 30;
+                const clampedDist = Math.min(dist, maxDist);
+                const angle = Math.atan2(dy, dx);
+                const dotX = clampedDist * Math.cos(angle);
+                const dotY = clampedDist * Math.sin(angle);
+                moveStickDot.style.transform = `translate(${dotX}px, ${dotY}px)`;
+                // Map to movement keys
+                keys['d'] = dx > DEAD_ZONE;
+                keys['a'] = dx < -DEAD_ZONE;
+                keys['w'] = dy < -DEAD_ZONE;
+                keys['s'] = dy > DEAD_ZONE;
+                break;
+            }
+        }
+    }, { passive: false });
+
+    const endLeftTouch = (e) => {
+        e.preventDefault();
+        if (!leftTouch) return;
+        for (let i = 0; i < e.changedTouches.length; i++) {
+            if (e.changedTouches[i].identifier === leftTouch.id) {
+                leftTouch = null;
+                keys['w'] = false;
+                keys['s'] = false;
+                keys['a'] = false;
+                keys['d'] = false;
+                moveStickRing.classList.remove('active');
+                moveStickDot.style.transform = 'translate(0, 0)';
+                break;
+            }
+        }
+    };
+    touchZoneLeft.addEventListener('touchend', endLeftTouch, { passive: false });
+    touchZoneLeft.addEventListener('touchcancel', endLeftTouch, { passive: false });
+
+    // --- RIGHT ZONE: Look + Shoot ---
+    touchZoneRight.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (gameState !== 'playing') return;
+        const t = e.changedTouches[0];
+        rightTouch = { id: t.identifier, startX: t.clientX, startY: t.clientY, currentX: t.clientX, currentY: t.clientY, startTime: Date.now(), lastX: t.clientX };
+    }, { passive: false });
+
+    touchZoneRight.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!rightTouch) return;
+        for (let i = 0; i < e.changedTouches.length; i++) {
+            const t = e.changedTouches[i];
+            if (t.identifier === rightTouch.id) {
+                const deltaX = t.clientX - rightTouch.lastX;
+                rightTouch.lastX = t.clientX;
+                rightTouch.currentX = t.clientX;
+                rightTouch.currentY = t.clientY;
+                player.angle += deltaX * LOOK_SENSITIVITY;
+                break;
+            }
+        }
+    }, { passive: false });
+
+    const endRightTouch = (e) => {
+        e.preventDefault();
+        if (!rightTouch) return;
+        for (let i = 0; i < e.changedTouches.length; i++) {
+            if (e.changedTouches[i].identifier === rightTouch.id) {
+                const elapsed = Date.now() - rightTouch.startTime;
+                const totalDx = Math.abs(rightTouch.currentX - rightTouch.startX);
+                const totalDy = Math.abs(rightTouch.currentY - rightTouch.startY);
+                // Tap to shoot: short duration and minimal movement
+                if (elapsed < 200 && totalDx < 15 && totalDy < 15) {
+                    if (weaponCooldown <= 0 && gameState === 'playing') {
+                        shoot();
+                        weaponCooldown = weapons[player.currentWeapon].fireRate;
+                    }
+                }
+                rightTouch = null;
+                break;
+            }
+        }
+    };
+    touchZoneRight.addEventListener('touchend', endRightTouch, { passive: false });
+    touchZoneRight.addEventListener('touchcancel', endRightTouch, { passive: false });
+
+    // --- USE button ---
+    btnUseTouch.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (gameState === 'playing') {
+            keys['e'] = true;
+        }
+    }, { passive: false });
+    btnUseTouch.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        keys['e'] = false;
+    }, { passive: false });
+    btnUseTouch.addEventListener('touchcancel', (e) => {
+        e.preventDefault();
+        keys['e'] = false;
+    }, { passive: false });
+
+    // --- Weapon cycle button ---
+    btnWeaponTouch.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (gameState !== 'playing') return;
+        // Cycle to next available weapon
+        let next = player.currentWeapon;
+        for (let i = 1; i <= weapons.length; i++) {
+            const idx = (player.currentWeapon + i) % weapons.length;
+            if (player.weapons[idx]) {
+                next = idx;
+                break;
+            }
+        }
+        player.currentWeapon = next;
+        updateHUD();
+        updateWeaponButton();
+    }, { passive: false });
+
+    // Prevent canvas default touch behavior on mobile
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); }, { passive: false });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
 }
 
 // ====================================
@@ -960,6 +1150,12 @@ function loadLevel(levelNum) {
     hud.classList.remove('hidden');
     if (showMinimap) minimapCanvas.classList.add('visible');
 
+    // Show mobile touch controls if on touch device
+    if (isTouchDevice) {
+        showMobileControls();
+        if (currentLevel === 1) showTutorialIfNeeded();
+    }
+
     updateHUD();
     showMessage(currentLevelData.name);
     requestAnimationFrame(gameLoop);
@@ -985,6 +1181,7 @@ function showMainMenu() {
     minimapCanvas.classList.remove('visible');
     gameOverScreen.classList.add('hidden');
     startScreen.classList.remove('hidden');
+    if (isTouchDevice) hideMobileControls();
     if (document.pointerLockElement) document.exitPointerLock();
 }
 
@@ -992,6 +1189,7 @@ function showVictory() {
     gameState = 'victory';
     hud.classList.add('hidden');
     minimapCanvas.classList.remove('visible');
+    if (isTouchDevice) hideMobileControls();
     if (document.pointerLockElement) document.exitPointerLock();
 
     if (isTopScore(currentLevel, totalKills, gameTime)) {
@@ -1025,6 +1223,7 @@ function submitName() {
 
 function levelComplete() {
     gameState = 'levelComplete';
+    if (isTouchDevice) hideMobileControls();
     navigator.vibrate([50, 30, 50, 30, 100]);
     if (document.pointerLockElement) document.exitPointerLock();
 
@@ -1048,6 +1247,7 @@ function levelComplete() {
 
 function gameOver() {
     gameState = 'gameOver';
+    if (isTouchDevice) hideMobileControls();
     navigator.vibrate([100, 50, 100, 50, 200]);
     if (document.pointerLockElement) document.exitPointerLock();
 
@@ -1090,6 +1290,8 @@ function updateHUD() {
     document.getElementById('blue-key').classList.toggle('active', player.keys.blue);
 
     document.getElementById('level-name').textContent = currentLevelData.name;
+
+    if (isTouchDevice) updateWeaponButton();
 
     const faceDisplay = document.getElementById('face-display');
     if (player.health > 75) faceDisplay.textContent = ':)';

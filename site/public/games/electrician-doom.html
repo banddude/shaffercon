@@ -93,7 +93,7 @@
                 <p><strong>1-6</strong> - Switch Weapons</p>
                 <p><strong>E</strong> - Use/Open Doors</p>
                 <p><strong>M</strong> - Toggle Minimap</p>
-                <p><strong>Mobile:</strong> Use on-screen controls</p>
+                <p><strong>Mobile:</strong> Left side drag = move, right side drag = look, right tap = shoot</p>
             </div>
             <div class="story">
                 <h3>THE STORY:</h3>
@@ -212,21 +212,23 @@
         <!-- Minimap -->
         <canvas id="minimap" width="180" height="180"></canvas>
 
-        <!-- Mobile Controls -->
-        <div id="mobile-controls" class="hidden">
-            <div class="move-controls">
-                <button id="btn-forward" class="control-btn">▲</button>
-                <div class="horizontal-controls">
-                    <button id="btn-left" class="control-btn">◄</button>
-                    <button id="btn-backward" class="control-btn">▼</button>
-                    <button id="btn-right" class="control-btn">►</button>
-                </div>
-            </div>
-            <div class="action-controls">
-                <button id="btn-shoot" class="control-btn shoot-btn">FIRE</button>
-                <button id="btn-use" class="control-btn">USE</button>
-                <button id="btn-strafe-left" class="control-btn">⟵</button>
-                <button id="btn-strafe-right" class="control-btn">⟶</button>
+        <!-- Mobile Touch Zones -->
+        <div id="touch-zone-left" class="touch-zone hidden"></div>
+        <div id="touch-zone-right" class="touch-zone hidden"></div>
+        <div id="move-stick-ring" class="move-stick-ring hidden">
+            <div id="move-stick-dot" class="move-stick-dot"></div>
+        </div>
+        <button id="btn-use-touch" class="touch-btn-use hidden">USE</button>
+        <div id="btn-weapon-touch" class="touch-btn-weapon hidden">
+            <span id="weapon-icon-text">1</span>
+        </div>
+
+        <!-- Mobile Tutorial Overlay -->
+        <div id="mobile-tutorial" class="hidden">
+            <div class="tutorial-content">
+                <p>Drag <strong>left side</strong> to move</p>
+                <p>Drag <strong>right side</strong> to look</p>
+                <p>Tap <strong>right side</strong> to shoot</p>
             </div>
         </div>
 

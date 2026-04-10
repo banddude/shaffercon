@@ -74,6 +74,10 @@ function escapeHTML(str) {
     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function safeVibrate(pattern) {
+    if (navigator.vibrate) navigator.vibrate(pattern);
+}
+
 function renderLeaderboardHTML() {
     const lb = getLeaderboard();
     if (lb.length === 0) return '';
@@ -727,6 +731,7 @@ function drawPowerUp(pu) {
 //  PARTICLES
 // =============================================================
 function createSparks(x, y, color, count = 8) {
+    if (particles.length > 200) return;
     for (let i = 0; i < count; i++) {
         particles.push({
             x, y,
@@ -742,6 +747,7 @@ function createSparks(x, y, color, count = 8) {
 }
 
 function createFireworks(x, y) {
+    if (particles.length > 200) return;
     const colors = ['#FFD700', '#FF6600', '#2b7fbd', '#fff', '#ff4444'];
     for (let i = 0; i < 30; i++) {
         const angle = (Math.PI * 2 / 30) * i;
@@ -760,6 +766,7 @@ function createFireworks(x, y) {
 }
 
 function createStompEffect(x, y) {
+    if (particles.length > 200) return;
     for (let i = 0; i < 12; i++) {
         particles.push({
             x, y,
@@ -840,9 +847,9 @@ function loadLevel(level) {
         addNut(gw * 2.5, 345);
 
         // Enemies
-        enemies.push(makeEnemy(gw * 0.7, 520, 2, 'spark'));
-        enemies.push(makeEnemy(gw * 1.6, 520, -1.8, 'spark'));
-        enemies.push(makeEnemy(gw * 2.3, 520, 2.2, 'spark'));
+        enemies.push(makeEnemy(gw * 0.7, 550, 2, 'spark'));
+        enemies.push(makeEnemy(gw * 1.6, 550, -1.8, 'spark'));
+        enemies.push(makeEnemy(gw * 2.3, 550, 2.2, 'spark'));
 
         // Speed power-up
         powerUps.push({ x: gw * 1.15, y: 330, width: 20, height: 20, type: 'speed', collected: false });
@@ -885,13 +892,13 @@ function loadLevel(level) {
         addNut(gw * 3.15, 415);
 
         // Enemies - more varied
-        enemies.push(makeEnemy(gw * 0.4, 520, 2, 'spark'));
-        enemies.push(makeEnemy(gw * 1.0, 520, -2.5, 'spark'));
-        enemies.push(makeEnemy(gw * 1.7, 520, 2, 'spark'));
-        enemies.push(makeEnemy(gw * 2.4, 520, -2.2, 'circuit'));
-        enemies.push(makeEnemy(gw * 3.0, 520, 1.8, 'spark'));
-        enemies.push(makeEnemy(gw * 1.3, 290, 1.5, 'spark'));
-        enemies.push(makeEnemy(gw * 2.9, 310, -1.5, 'spark'));
+        enemies.push(makeEnemy(gw * 0.4, 550, 2, 'spark'));
+        enemies.push(makeEnemy(gw * 1.0, 550, -2.5, 'spark'));
+        enemies.push(makeEnemy(gw * 1.7, 550, 2, 'spark'));
+        enemies.push(makeEnemy(gw * 2.4, 550, -2.2, 'circuit'));
+        enemies.push(makeEnemy(gw * 3.0, 550, 1.8, 'spark'));
+        enemies.push(makeEnemy(gw * 1.3, 320, 1.5, 'spark'));
+        enemies.push(makeEnemy(gw * 2.9, 340, -1.5, 'spark'));
 
         // Power-ups
         powerUps.push({ x: gw * 0.55, y: 340, width: 20, height: 20, type: 'speed', collected: false });
@@ -941,15 +948,15 @@ function loadLevel(level) {
         addNut(gw * 3.5, 365); addNut(gw * 3.75, 425);
 
         // Enemies - the works
-        enemies.push(makeEnemy(gw * 0.3, 520, 2.5, 'spark'));
-        enemies.push(makeEnemy(gw * 0.8, 520, -2, 'spark'));
-        enemies.push(makeEnemy(gw * 1.3, 520, 2.5, 'circuit'));
-        enemies.push(makeEnemy(gw * 1.6, 340, 1.5, 'spark'));
-        enemies.push(makeEnemy(gw * 2.0, 520, -2.5, 'spark'));
-        enemies.push(makeEnemy(gw * 2.5, 520, 2, 'circuit'));
-        enemies.push(makeEnemy(gw * 2.95, 320, -1.8, 'spark'));
-        enemies.push(makeEnemy(gw * 3.2, 520, 3, 'spark'));
-        enemies.push(makeEnemy(gw * 3.5, 520, -2.5, 'spark'));
+        enemies.push(makeEnemy(gw * 0.3, 550, 2.5, 'spark'));
+        enemies.push(makeEnemy(gw * 0.8, 550, -2, 'spark'));
+        enemies.push(makeEnemy(gw * 1.3, 550, 2.5, 'circuit'));
+        enemies.push(makeEnemy(gw * 1.6, 370, 1.5, 'spark'));
+        enemies.push(makeEnemy(gw * 2.0, 550, -2.5, 'spark'));
+        enemies.push(makeEnemy(gw * 2.5, 550, 2, 'circuit'));
+        enemies.push(makeEnemy(gw * 2.95, 350, -1.8, 'spark'));
+        enemies.push(makeEnemy(gw * 3.2, 550, 3, 'spark'));
+        enemies.push(makeEnemy(gw * 3.5, 550, -2.5, 'spark'));
 
         // Power-ups
         powerUps.push({ x: gw * 1.15, y: 290, width: 20, height: 20, type: 'speed', collected: false });
@@ -964,6 +971,8 @@ function loadLevel(level) {
     player.y = 480;
     player.vx = 0;
     player.vy = 0;
+    speedBoost = false;
+    speedBoostTimer = 0;
     player.onGround = false;
     player.alive = true;
     player.squash = 1;
@@ -1171,8 +1180,8 @@ function update() {
     jumpJustPressed = false;
 
     // Variable jump height - cut jump short if button released
-    if (!jumpPressed && p.vy < -3) {
-        p.vy *= 0.65; // cut velocity
+    if (!jumpPressed && p.vy < -3 && !p.jumpCut) {
+        p.vy *= 0.5;
         p.jumpCut = true;
     }
 
@@ -1182,14 +1191,38 @@ function update() {
 
     // -- Move & collide --
     p.wasOnGround = p.onGround;
+    const collInset = 4;
+
+    // --- X movement & side collision (ground blocks only) ---
     p.x += p.vx;
+    for (const plat of platforms) {
+        if (plat.type !== 'ground') continue;
+        if (p.x + p.width > plat.x && p.x < plat.x + plat.width &&
+            p.y + p.height > plat.y + 4 && p.y < plat.y + plat.height) {
+            if (p.vx >= 0) {
+                p.x = plat.x - p.width;
+            } else {
+                p.x = plat.x + plat.width;
+            }
+            p.vx = 0;
+        }
+    }
+
+    // --- Y movement & platform collision ---
+    const prevY = p.y;
     p.y += p.vy;
     p.onGround = false;
 
-    // Platform collisions
     for (const plat of platforms) {
-        // Top collision (landing)
-        if (checkPlatformCollision(p, plat)) {
+        const hOverlap = p.x + collInset < plat.x + plat.width &&
+                          p.x + p.width - collInset > plat.x;
+        if (!hOverlap) continue;
+
+        const prevBottom = prevY + p.height;
+        const currBottom = p.y + p.height;
+
+        // Landing: was above platform surface, now at or below, falling
+        if (p.vy >= 0 && prevBottom <= plat.y + 2 && currBottom >= plat.y) {
             p.y = plat.y - p.height;
             if (p.vy > 5) {
                 p.squash = 0.8;
@@ -1198,31 +1231,12 @@ function update() {
             p.vy = 0;
             p.onGround = true;
         }
-        // Bottom collision (head bonk) - player jumping up into platform from below
-        const inset = 4;
-        if (p.vy < 0 &&
-            p.x + inset < plat.x + plat.width &&
-            p.x + p.width - inset > plat.x &&
-            p.y < plat.y + plat.height &&
-            p.y > plat.y &&
-            p.y - p.vy >= plat.y + plat.height) {
+
+        // Head bonk: was below platform bottom, now head inside, rising
+        if (p.vy < 0 && prevY >= plat.y + plat.height - 2 &&
+            p.y < plat.y + plat.height && currBottom > plat.y + plat.height) {
             p.y = plat.y + plat.height;
             p.vy = 0;
-        }
-        // Side collision for ground blocks to prevent going through
-        if (plat.type === 'ground') {
-            // Left side
-            if (p.x + p.width > plat.x && p.x < plat.x &&
-                p.y + p.height > plat.y + 4 && p.y < plat.y + plat.height) {
-                p.x = plat.x - p.width;
-                p.vx = 0;
-            }
-            // Right side
-            if (p.x < plat.x + plat.width && p.x + p.width > plat.x + plat.width &&
-                p.y + p.height > plat.y + 4 && p.y < plat.y + plat.height) {
-                p.x = plat.x + plat.width;
-                p.vx = 0;
-            }
         }
     }
 
@@ -1252,7 +1266,7 @@ function update() {
             nut.collected = true;
             coins++;
             score += 100;
-            navigator.vibrate(30);
+            safeVibrate(30);
             updateHUD();
             createSparks(nut.x + nut.width / 2, nut.y + nut.height / 2, '#FFD700', 12);
         }
@@ -1302,24 +1316,23 @@ function update() {
                 enemy.y + enemy.height >= plat.y - 2 && enemy.y + enemy.height <= plat.y + 10) {
                 onAnyPlatform = true;
                 // Edge detection - reverse at platform edges
-                if (enemy.x <= plat.x) { enemy.velocityX = Math.abs(enemy.velocityX); }
-                if (enemy.x + enemy.width >= plat.x + plat.width) { enemy.velocityX = -Math.abs(enemy.velocityX); }
+                if (enemy.x <= plat.x + 4) { enemy.velocityX = Math.abs(enemy.velocityX); }
+                if (enemy.x + enemy.width >= plat.x + plat.width - 4) { enemy.velocityX = -Math.abs(enemy.velocityX); }
             }
         }
 
         // Collision with player
-        if (!invincible && checkCollision(p, enemy)) {
-            // Stomp check: player falling onto enemy from above
+        if (checkCollision(p, enemy)) {
             if (p.vy > 0 && p.y + p.height < enemy.y + enemy.height * 0.6) {
-                // Stomp!
+                // Stomp works even during invincibility
                 enemy.dead = true;
                 enemy.deadTimer = 0;
-                p.vy = -8; // bounce off
+                p.vy = -8;
                 score += 200;
-                navigator.vibrate(50);
+                safeVibrate(50);
                 updateHUD();
                 createStompEffect(enemy.x + enemy.width / 2, enemy.y);
-            } else {
+            } else if (!invincible && p.alive) {
                 loseLife();
             }
         }
@@ -1356,7 +1369,7 @@ function update() {
 // =============================================================
 function loseLife() {
     lives--;
-    navigator.vibrate([100, 50, 100, 50, 200]);
+    safeVibrate([100, 50, 100, 50, 200]);
     updateHUD();
     createSparks(player.x + player.width / 2, player.y + player.height / 2, '#FF4444', 20);
     player.alive = false;
@@ -1383,7 +1396,7 @@ function gameOver() {
 function winLevel() {
     gameState = 'win';
     score += 1000;
-    navigator.vibrate([50, 30, 50, 30, 100]);
+    safeVibrate([50, 30, 50, 30, 100]);
     updateHUD();
     winScoreDisplay.textContent = `Score: ${score}`;
 
