@@ -64,6 +64,11 @@
         document.getElementById('home-link').href = withBasePath('');
         document.getElementById('games-link').href = withBasePath('games');
     </script>
+    <div id="rotate-hint">
+        <div class="rotate-icon">📱↻</div>
+        <p>Rotate your device to landscape for the best experience</p>
+        <button onclick="this.parentElement.style.display='none'" class="rotate-dismiss">Play Anyway</button>
+    </div>
     <div id="game-container">
         <canvas id="gameCanvas" width="960" height="600"></canvas>
 

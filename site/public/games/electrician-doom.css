@@ -453,14 +453,15 @@ h3 {
 /* Mobile Controls */
 #mobile-controls {
     position: fixed;
-    bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(90px + env(safe-area-inset-bottom, 0px));
     left: 0;
     right: 0;
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    padding-left: max(20px, env(safe-area-inset-left, 0px));
-    padding-right: max(20px, env(safe-area-inset-right, 0px));
+    align-items: flex-end;
+    padding: 0 16px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
     z-index: 60;
     pointer-events: none;
 }
@@ -476,50 +477,67 @@ h3 {
 .move-controls {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
+    opacity: 0.55;
 }
 
 .horizontal-controls {
     display: flex;
-    gap: 5px;
+    gap: 4px;
 }
 
 .action-controls {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
+    align-items: center;
+    opacity: 0.55;
 }
 
 .control-btn {
-    background: rgba(255, 215, 0, 0.6);
-    border: 3px solid #FFD700;
-    color: #000;
-    font-size: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
     font-weight: bold;
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
     cursor: pointer;
-    font-family: 'Courier New', monospace;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    transition: all 0.1s;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: all 0.08s;
     touch-action: none;
     user-select: none;
     -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .control-btn:active {
-    background: #FFA500;
-    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(0.92);
 }
 
 .shoot-btn {
-    background: rgba(255, 0, 0, 0.6);
-    border-color: #FF0000;
-    color: #FFF;
-    width: 80px;
-    height: 80px;
-    font-size: 16px;
+    background: rgba(255, 60, 60, 0.2);
+    border: 1.5px solid rgba(255, 80, 80, 0.4);
+    color: rgba(255, 255, 255, 0.9);
+    width: 64px;
+    height: 64px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.shoot-btn:active {
+    background: rgba(255, 60, 60, 0.5);
+    border-color: rgba(255, 100, 100, 0.7);
+}
+
+.use-btn {
+    font-size: 12px;
 }
 
 /* Message Display */
@@ -634,20 +652,75 @@ h3 {
     }
 
     .control-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 14px;
+        width: 46px;
+        height: 46px;
+        font-size: 15px;
     }
 
     .shoot-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 12px;
+        width: 56px;
+        height: 56px;
+        font-size: 11px;
     }
 
     #mobile-controls {
-        bottom: calc(80px + env(safe-area-inset-bottom, 0px));
-        padding: 12px;
+        bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+        padding: 0 12px;
+    }
+}
+
+/* Landscape rotation hint for mobile portrait */
+#rotate-hint {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: #FFD700;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    padding: 40px;
+}
+
+#rotate-hint .rotate-icon {
+    font-size: 64px;
+}
+
+#rotate-hint p {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 280px;
+}
+
+.rotate-dismiss {
+    background: transparent;
+    border: 1.5px solid rgba(255, 215, 0, 0.5);
+    color: rgba(255, 215, 0, 0.7);
+    padding: 10px 24px;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.rotate-dismiss:active {
+    background: rgba(255, 215, 0, 0.15);
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+    #rotate-hint {
+        display: flex;
+    }
+}
+
+@media (orientation: landscape) {
+    #rotate-hint {
+        display: none !important;
     }
 }
 

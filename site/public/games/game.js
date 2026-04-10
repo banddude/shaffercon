@@ -66,8 +66,8 @@ function isTopScore(s) {
 const bird = {
     x: 80, y: 250, w: 38, h: 28,
     vy: 0,
-    gravity: 1400,       // px / s^2
-    jumpV: -340,         // px / s
+    gravity: 1000,       // px / s^2  (was 1400 - more forgiving)
+    jumpV: -420,         // px / s    (was -340 - stronger flap)
     rotation: 0,         // degrees
     flapPhase: 0,        // arm animation
     trail: [],           // recent positions for trail
@@ -83,8 +83,8 @@ const BASE_GAP       = 155;
 const MIN_GAP        = 110;
 const BASE_SPEED     = 140;    // px / s
 const MAX_SPEED      = 250;
-const GRACE_FRAMES   = 160;    // frames before first pipe (at 60fps ~ 2.6s)
-const PIPE_INTERVAL  = 105;    // frames between spawns
+const GRACE_FRAMES   = 70;     // frames before first pipe (at 60fps ~ 1.2s)
+const PIPE_INTERVAL  = 100;    // frames between spawns
 let pipeTimer        = 0;
 
 function currentSpeed() {
@@ -834,6 +834,7 @@ function die() {
     bird.deathVy = bird.vy;
     bird.deathRot = bird.rotation;
 
+    navigator.vibrate([100, 50, 100, 50, 200]);
     spawnDeathExplosion(bird.x + bird.w / 2, bird.y + bird.h / 2);
     triggerShake(0.5, 8);
 
@@ -920,6 +921,7 @@ function update(dt) {
         if (!p.scored && p.x + PIPE_W < bird.x) {
             p.scored = true;
             score++;
+            navigator.vibrate(30);
             scoreHUD.textContent = score;
             // score bump animation
             scoreHUD.classList.add('bump');
