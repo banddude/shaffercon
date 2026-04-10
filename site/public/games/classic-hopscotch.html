@@ -142,8 +142,67 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        #gameOverScreen {
+        #gameOverScreen, #nameEntryScreen {
             display: none;
+        }
+
+        #nameEntryScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 26, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 110;
+            padding: 20px;
+        }
+
+        #nameEntryScreen .game-title {
+            color: #FFD700;
+            font-size: 32px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+
+        #nameEntryScreen .entry-score {
+            color: #2b7fbd;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        #nameEntryScreen .entry-label {
+            color: #8899aa;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        #nameInput {
+            font-size: 20px;
+            padding: 12px 18px;
+            width: 260px;
+            max-width: 80%;
+            text-align: center;
+            border: 2px solid #FFD700;
+            background: rgba(43, 127, 189, 0.15);
+            color: #FFD700;
+            border-radius: 10px;
+            outline: none;
+            margin-bottom: 14px;
+            font-weight: bold;
+        }
+
+        #nameInput:focus {
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            border-color: #FFD700;
+        }
+
+        #nameInput::placeholder {
+            color: rgba(255, 215, 0, 0.4);
         }
 
         .game-title {
@@ -408,6 +467,14 @@
             <div class="leaderboard" id="startLeaderboard"></div>
         </div>
 
+        <div id="nameEntryScreen">
+            <div class="game-title" id="entryTitle">NEW HIGH SCORE!</div>
+            <div class="entry-score" id="entryScore">0</div>
+            <div class="entry-label">Enter your name for the leaderboard:</div>
+            <input type="text" id="nameInput" maxlength="20" placeholder="Your Name">
+            <button class="btn" id="submitNameBtn" onclick="submitName()">SUBMIT</button>
+        </div>
+
         <div id="gameOverScreen">
             <div class="game-title" id="endTitle" style="font-size:36px;">Game Over!</div>
             <div id="finalScore">0</div>
@@ -447,6 +514,7 @@
         let marker = null;
         let screenShake = 0;
         let flashAlpha = 0;
+        let gameOverWon = false;
         let flashColor = '#FFD700';
         let celebrationTimer = 0;
 
@@ -1141,6 +1209,7 @@
                 createParticles(marker.x, marker.y + 10, '#FF6600', 15);
                 triggerFlash('#FF6600');
                 triggerShake(3);
+                navigator.vibrate(30);
                 gamePhase = 'HOP_UP';
                 visitedSquares.clear();
                 score += 10;
@@ -1159,6 +1228,7 @@
                 if (square.number > 0 && !visitedSquares.has(square.number)) {
                     visitedSquares.add(square.number);
                     createParticles(square.x + square.width / 2, square.y, '#2b7fbd', 10);
+                    navigator.vibrate(30);
                     score += 10;
                     updateUI();
                 }
@@ -1183,6 +1253,7 @@
                     createParticles(marker.x, marker.y, '#FFD700', 20);
                     triggerFlash('#FFD700');
                     triggerShake(3);
+                    navigator.vibrate(30);
                     marker = null;
                     score += 50;
                     updateUI();
@@ -1204,6 +1275,7 @@
         function roundComplete() {
             score += 100;
             currentRound++;
+            navigator.vibrate([50, 30, 50, 30, 100]);
             createCelebration(canvas.width / 2, canvas.height / 2);
             triggerFlash('#FFD700');
             triggerShake(5);
@@ -1350,30 +1422,44 @@
             gameRunning = false;
 
             if (won) {
+                navigator.vibrate([50, 30, 50, 30, 100]);
                 createCelebration(canvas.width / 2, canvas.height / 3);
                 triggerFlash('#FFD700');
             } else {
+                navigator.vibrate([100, 50, 100, 50, 200]);
                 triggerFlash('#ff4444');
                 triggerShake(8);
             }
 
+            gameOverWon = won;
             setTimeout(() => {
                 document.getElementById('endTitle').textContent = won ? '\u26A1 YOU WIN! \u26A1' : 'CIRCUIT OVERLOAD!';
                 document.getElementById('endTitle').style.color = won ? '#FFD700' : '#ff4444';
                 document.getElementById('endTitle').style.textShadow = won ? '0 0 30px rgba(255,215,0,0.5)' : '0 0 30px rgba(255,68,68,0.5)';
                 document.getElementById('finalScore').textContent = score;
                 document.getElementById('finalRound').textContent = `Round ${Math.min(currentRound, 10)}/10`;
-                document.getElementById('gameOverScreen').style.display = 'flex';
-
-                renderLeaderboard('gameOverLeaderboard');
-
-                const name = prompt((won ? "Congratulations! " : "Game Over! ") + "Enter your name:", "Player");
-                if (name) {
-                    saveScore(name, score);
-                    renderLeaderboard('gameOverLeaderboard');
-                }
+                document.getElementById('entryTitle').textContent = won ? 'CONGRATULATIONS!' : 'GAME OVER!';
+                document.getElementById('entryScore').textContent = score;
+                document.getElementById('nameEntryScreen').style.display = 'flex';
+                const inp = document.getElementById('nameInput');
+                inp.value = '';
+                setTimeout(() => inp.focus(), 100);
             }, won ? 800 : 400);
         }
+
+        function submitName() {
+            const name = document.getElementById('nameInput').value.trim();
+            document.getElementById('nameEntryScreen').style.display = 'none';
+            if (name) {
+                saveScore(name, score);
+            }
+            document.getElementById('gameOverScreen').style.display = 'flex';
+            renderLeaderboard('gameOverLeaderboard');
+        }
+
+        document.getElementById('nameInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') submitName();
+        });
 
         function restartGame() {
             document.getElementById('gameOverScreen').style.display = 'none';

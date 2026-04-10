@@ -1241,6 +1241,7 @@ function update() {
             nut.collected = true;
             coins++;
             score += 100;
+            navigator.vibrate(30);
             updateHUD();
             createSparks(nut.x + nut.width / 2, nut.y + nut.height / 2, '#FFD700', 12);
         }
@@ -1304,6 +1305,7 @@ function update() {
                 enemy.deadTimer = 0;
                 p.vy = -8; // bounce off
                 score += 200;
+                navigator.vibrate(50);
                 updateHUD();
                 createStompEffect(enemy.x + enemy.width / 2, enemy.y);
             } else {
@@ -1343,6 +1345,7 @@ function update() {
 // =============================================================
 function loseLife() {
     lives--;
+    navigator.vibrate([100, 50, 100, 50, 200]);
     updateHUD();
     createSparks(player.x + player.width / 2, player.y + player.height / 2, '#FF4444', 20);
     player.alive = false;
@@ -1369,6 +1372,7 @@ function gameOver() {
 function winLevel() {
     gameState = 'win';
     score += 1000;
+    navigator.vibrate([50, 30, 50, 30, 100]);
     updateHUD();
     winScoreDisplay.textContent = `Score: ${score}`;
 

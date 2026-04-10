@@ -133,8 +133,66 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        #gameOverScreen, #levelCompleteScreen {
+        #gameOverScreen, #levelCompleteScreen, #nameEntryScreen {
             display: none;
+        }
+
+        #nameEntryScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 26, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 110;
+        }
+
+        #nameEntryScreen .game-title {
+            color: #FFD700;
+            font-size: 36px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        #nameEntryScreen .entry-score {
+            color: #2b7fbd;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        #nameEntryScreen .entry-label {
+            color: #8899aa;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        #nameInput {
+            font-size: 22px;
+            padding: 12px 20px;
+            width: 260px;
+            max-width: 80%;
+            text-align: center;
+            border: 2px solid #FFD700;
+            background: rgba(43, 127, 189, 0.15);
+            color: #FFD700;
+            border-radius: 10px;
+            outline: none;
+            margin-bottom: 16px;
+            font-weight: bold;
+        }
+
+        #nameInput:focus {
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            border-color: #FFD700;
+        }
+
+        #nameInput::placeholder {
+            color: rgba(255, 215, 0, 0.4);
         }
 
         .game-title {
@@ -370,6 +428,14 @@
             <button class="btn" onclick="restartGame()">TRY AGAIN</button>
             <button class="btn btn-secondary" onclick="location.reload()">MAIN MENU</button>
             <div class="leaderboard" id="gameOverLeaderboard"></div>
+        </div>
+
+        <div id="nameEntryScreen">
+            <div class="game-title">NEW HIGH SCORE!</div>
+            <div class="entry-score" id="entryScore">0</div>
+            <div class="entry-label">Enter your name for the leaderboard:</div>
+            <input type="text" id="nameInput" maxlength="20" placeholder="Your Name">
+            <button class="btn" id="submitNameBtn" onclick="submitName()">SUBMIT</button>
         </div>
 
         <div id="levelCompleteScreen">
@@ -1060,6 +1126,7 @@
                         box.completed = true;
                         currentTarget++;
                         score += 10 * level;
+                        navigator.vibrate(30);
 
                         createLandingParticles(box.x + box.width / 2, box.y);
                         triggerFlash('#2b7fbd');
@@ -1074,6 +1141,7 @@
                             // Level complete!
                             const bonus = 50 * level;
                             score += bonus;
+                            navigator.vibrate([50, 30, 50, 30, 100]);
                             createCompletionParticles(canvas.width / 2, player.y - cameraY);
                             triggerFlash('#FFD700');
                             triggerShake(8);
@@ -1222,23 +1290,34 @@
 
         function gameOver() {
             gameRunning = false;
+            navigator.vibrate([100, 50, 100, 50, 200]);
             triggerShake(10);
             triggerFlash('#ff4444');
 
             setTimeout(() => {
                 document.getElementById('finalScore').textContent = score;
                 document.getElementById('finalLevel').textContent = `Level ${level}`;
-                document.getElementById('gameOverScreen').style.display = 'flex';
-
-                renderLeaderboard('gameOverLeaderboard');
-
-                const name = prompt("Game Over! Enter your name for the leaderboard:", "Player");
-                if (name) {
-                    saveScore(name, score);
-                    renderLeaderboard('gameOverLeaderboard');
-                }
+                document.getElementById('entryScore').textContent = score;
+                document.getElementById('nameEntryScreen').style.display = 'flex';
+                const inp = document.getElementById('nameInput');
+                inp.value = '';
+                setTimeout(() => inp.focus(), 100);
             }, 400);
         }
+
+        function submitName() {
+            const name = document.getElementById('nameInput').value.trim();
+            document.getElementById('nameEntryScreen').style.display = 'none';
+            if (name) {
+                saveScore(name, score);
+            }
+            document.getElementById('gameOverScreen').style.display = 'flex';
+            renderLeaderboard('gameOverLeaderboard');
+        }
+
+        document.getElementById('nameInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') submitName();
+        });
 
         function restartGame() {
             document.getElementById('gameOverScreen').style.display = 'none';

@@ -1025,6 +1025,7 @@ function submitName() {
 
 function levelComplete() {
     gameState = 'levelComplete';
+    navigator.vibrate([50, 30, 50, 30, 100]);
     if (document.pointerLockElement) document.exitPointerLock();
 
     const levelTime = Math.floor((Date.now() - levelStartTime) / 1000);
@@ -1047,6 +1048,7 @@ function levelComplete() {
 
 function gameOver() {
     gameState = 'gameOver';
+    navigator.vibrate([100, 50, 100, 50, 200]);
     if (document.pointerLockElement) document.exitPointerLock();
 
     document.getElementById('final-level').textContent = currentLevelData.name;
@@ -2017,6 +2019,7 @@ function shoot() {
     // Fire animation
     weaponFireAnim = 6;
     muzzleFlashIntensity = 1.0;
+    navigator.vibrate(15);
 
     // Muzzle particles
     for (let i = 0; i < 8; i++) {
@@ -2135,6 +2138,7 @@ function damageEnemy(enemy, damage) {
         enemy.alive = false;
         enemy.deathTimer = 30;
         player.kills++;
+        navigator.vibrate(50);
 
         // Death explosion particles
         for (let i = 0; i < 40; i++) {
@@ -2246,6 +2250,7 @@ function damagePlayer(damage) {
 
     player.health -= damage;
     player.damageFlash = 1.0;
+    navigator.vibrate(80);
     updateHUD();
 }
 
