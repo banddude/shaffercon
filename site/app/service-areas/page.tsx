@@ -186,7 +186,7 @@ export default async function ServiceAreasPage() {
               {locations.map(location => (
                 <Link
                   key={location.location_slug}
-                  href={`/service-areas/${location.location_slug}`}
+                  href={`/service-areas/${location.location_slug}/`}
                   className="block p-6 rounded-lg transition-all hover:translate-y-[-4px] group"
                   style={{
                     background: "var(--background)",

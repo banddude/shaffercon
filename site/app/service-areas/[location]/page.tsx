@@ -330,7 +330,7 @@ export default async function LocationPage({ params }: PageProps) {
 
                 return {
                   label: displayNames[service.service_name] || defaultLabel,
-                  href: `/service-areas/${location}/residential-${service.service_name}`,
+                  href: `/service-areas/${location}/residential-${service.service_name}/`,
                 };
               })}
               columns={4}
@@ -360,7 +360,7 @@ export default async function LocationPage({ params }: PageProps) {
 
                 return {
                   label: displayNames[service.service_name] || defaultLabel,
-                  href: `/service-areas/${location}/commercial-${service.service_name}`,
+                  href: `/service-areas/${location}/commercial-${service.service_name}/`,
                 };
               })}
               columns={4}
@@ -419,7 +419,7 @@ export default async function LocationPage({ params }: PageProps) {
                       return (
                         <li key={index}>
                           <a
-                            href={`/service-areas/${location}/${serviceType}-${serviceName}`}
+                            href={`/service-areas/${location}/${serviceType}-${serviceName}/`}
                             className="flex items-center gap-3 p-4 rounded-lg transition-all hover:translate-x-1"
                             style={{
                               background: "var(--background)",
@@ -449,7 +449,7 @@ export default async function LocationPage({ params }: PageProps) {
                     {page.nearbyAreas.map((area: any, index: number) => (
                       <li key={index}>
                         <a
-                          href={`/service-areas/${area.area_slug}`}
+                          href={`/service-areas/${area.area_slug}/`}
                           className="flex items-center gap-3 p-4 rounded-lg transition-all hover:translate-x-1"
                           style={{
                             background: "var(--background)",

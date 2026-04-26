@@ -197,7 +197,7 @@ export default function ServiceAreasMap({ locations }: ServiceAreasMapProps) {
                     {location.location_name}
                   </h3>
                   <Link
-                    href={`/service-areas/${location.location_slug}`}
+                    href={`/service-areas/${location.location_slug}/`}
                     className="text-base font-semibold inline-flex items-center"
                     style={{ color: "var(--primary)" }}
                   >
