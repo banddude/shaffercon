@@ -146,6 +146,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     })
     .join(' ')
     .replace('Data Network Av', 'Data, Network & AV')
+    .replace('Data Network AV', 'Data, Network & AV')
     .replace('Pool Hot Tub Spa', 'Pool, Hot Tub & Spa')
     .replace('Troubleshooting Repairs', 'Troubleshooting & Repairs');
   const computedTitle = `${stype.charAt(0).toUpperCase() + stype.slice(1)} ${sdispName} in ${locationDisplay}`;
@@ -204,6 +205,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     })
     .join(' ')
     .replace('Data Network Av', 'Data, Network & AV')
+    .replace('Data Network AV', 'Data, Network & AV')
     .replace('Pool Hot Tub Spa', 'Pool, Hot Tub & Spa')
     .replace('Troubleshooting Repairs', 'Troubleshooting & Repairs');
   const fullServiceName = `${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} ${serviceDisplayName}`;
@@ -469,6 +471,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                         })
                         .join(' ')
                         .replace('Data Network Av', 'Data, Network & AV')
+    .replace('Data Network AV', 'Data, Network & AV')
                         .replace('Pool Hot Tub Spa', 'Pool, Hot Tub & Spa')
                         .replace('Troubleshooting Repairs', 'Troubleshooting & Repairs');
 
