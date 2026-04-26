@@ -10,6 +10,7 @@ Usage:
   python3 gen_closing.py                      # all 563
 """
 import argparse
+import os
 import sqlite3
 import subprocess
 import sys
@@ -144,12 +145,17 @@ def gen_one(prompt, max_retries=4):
     last_error = None
     for attempt in range(max_retries):
         try:
+            env = os.environ.copy()
+            env["ANTHROPIC_MODEL"] = "GLM-5.1"
+            env["ANTHROPIC_BASE_URL"] = "https://api.z.ai/api/anthropic"
+            env["ANTHROPIC_AUTH_TOKEN"] = "24b70302723d4fc981c4eedb182dd16b.jgi2CvMtPzHHZ0II"
             result = subprocess.run(
-                ["claude", "-p", "--model", "claude-haiku-4-5-20251001"],
+                ["claude", "--dangerously-skip-permissions", "-p"],
                 input=prompt,
                 capture_output=True,
                 text=True,
-                timeout=180,
+                timeout=240,
+                env=env,
             )
             if result.returncode == 0 and result.stdout.strip():
                 return result.stdout.strip()
