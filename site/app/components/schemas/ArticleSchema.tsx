@@ -2,7 +2,11 @@
  * Article Schema (JSON-LD) for blog posts
  *
  * Provides structured data for search engines to understand blog content.
- * Helps with rich snippets and better indexing.
+ * Helps with rich snippets, AI overviews, and Google Discover eligibility.
+ *
+ * Author is modeled as a Person (Mike Shaffer, owner) with E-E-A-T signals
+ * — credentials, employer, and a link to the about page where Google
+ * (and humans) can verify expertise. Publisher is the Organization.
  */
 
 interface ArticleSchemaProps {
@@ -20,7 +24,7 @@ export function ArticleSchema({
   description,
   datePublished,
   dateModified,
-  authorName = "Shaffer Construction",
+  authorName = "Mike Shaffer",
   image,
   url,
 }: ArticleSchemaProps) {
@@ -32,24 +36,54 @@ export function ArticleSchema({
     "datePublished": datePublished,
     "dateModified": dateModified || datePublished,
     "author": {
-      "@type": "Organization",
+      "@type": "Person",
       "name": authorName,
-      "url": "https://shaffercon.com"
+      "url": "https://shaffercon.com/about-us/",
+      "jobTitle": "Owner & Licensed Contractor",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Shaffer Construction, Inc.",
+        "url": "https://shaffercon.com",
+      },
+      "knowsAbout": [
+        "Electrical Contracting",
+        "EV Charger Installation",
+        "Electrical Code Compliance",
+        "Commercial Electrical Systems",
+        "Residential Electrical Work",
+        "Fire Damage Rebuild",
+        "Electrical Load Studies",
+        "LED Lighting Retrofits",
+      ],
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "license",
+          "name": "California Contractors State License Board (CSLB) License #994593 — A (General Engineering), B (General Building), C-10 (Electrical)",
+          "recognizedBy": {
+            "@type": "GovernmentOrganization",
+            "name": "California Contractors State License Board",
+            "url": "https://www.cslb.ca.gov/",
+          },
+        },
+      ],
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Shaffer Construction",
+      "name": "Shaffer Construction, Inc.",
       "url": "https://shaffercon.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://shaffercon.com/og-image.jpg"
-      }
+        "url": "https://shaffercon.com/shaffercon-logo.png",
+        "width": 512,
+        "height": 512,
+      },
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": url
+      "@id": url,
     },
-    ...(image ? { "image": image } : {})
+    ...(image ? { "image": image } : {}),
   };
 
   return (
