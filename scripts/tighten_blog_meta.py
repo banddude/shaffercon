@@ -114,7 +114,7 @@ def main():
             d = json.loads(f.read_text())
         except: continue
         # Title check (limit in JSON)
-        if len(d.get('title', '')) > TITLE_MAX_JSON:
+        if len(d.get('metaTitle', d.get('title', ''))) > TITLE_MAX_JSON:
             title_to_fix.append(f)
         # Description check
         if len(d.get('metaDescription', '')) > DESC_MAX + 5:
@@ -128,7 +128,8 @@ def main():
     for i, f in enumerate(title_to_fix, 1):
         try:
             d = json.loads(f.read_text())
-            old = d['title']
+            # Page renders metaTitle if set, falls back to title
+            old = d.get('metaTitle') or d.get('title', '')
             text = re.sub(r'<[^>]+>', ' ', d.get('content', ''))
             text = re.sub(r'\s+', ' ', text).strip()
 
@@ -136,7 +137,8 @@ def main():
             if len(new) > 70:
                 # Hard truncate
                 new = new[:67].rsplit(' ', 1)[0] + '...'
-            d['title'] = new
+            # Write to metaTitle so we don't clobber the H1 / canonical title
+            d['metaTitle'] = new
             with open(f, 'w') as fp:
                 json.dump(d, fp, indent=2, ensure_ascii=False)
             print(f"[T {i:>3}/{len(title_to_fix)}] ({len(old)}->{len(new)}) {new}", flush=True)
