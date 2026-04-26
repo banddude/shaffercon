@@ -264,7 +264,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 <Phone className="w-5 h-5 mr-2" />
                 Call (323) 642-8509
               </AppleButton>
-              <AppleButton href="/contact-us" variant="secondary" size="lg">
+              <AppleButton href="/contact-us/" variant="secondary" size="lg">
                 Get Free Quote
               </AppleButton>
             </div>

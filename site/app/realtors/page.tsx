@@ -95,7 +95,7 @@ export default function RealtorsPage() {
         imageAlt="Shaffer Construction repair estimates for real estate agents"
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <AppleButton href="/contact-us" variant="primary" size="lg">
+          <AppleButton href="/contact-us/" variant="primary" size="lg">
             Request an Estimate
           </AppleButton>
           <AppleButton href="tel:3236428509" variant="secondary" size="lg">

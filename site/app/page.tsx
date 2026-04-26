@@ -112,10 +112,10 @@ export default function Home() {
         showLogo={true}
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <AppleButton href="/contact-us" variant="primary" size="lg">
+          <AppleButton href="/contact-us/" variant="primary" size="lg">
             Get a Free Quote
           </AppleButton>
-          <AppleButton href="/service-areas" variant="secondary" size="lg">
+          <AppleButton href="/service-areas/" variant="secondary" size="lg">
             View Our Services
           </AppleButton>
         </div>

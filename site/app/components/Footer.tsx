@@ -28,19 +28,19 @@ export default function Footer({ siteConfig }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link href="/about-us" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+                <Link href="/about-us/" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
                   <FileCheck className="w-3 h-3" style={{ color: "var(--primary)" }} />
                   <span>About Us</span>
                 </Link>
               </li>
               <li>
-                <Link href="/industry-insights" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+                <Link href="/industry-insights/" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
                   <FileCheck className="w-3 h-3" style={{ color: "var(--primary)" }} />
                   <span>Industry Insights</span>
                 </Link>
               </li>
               <li>
-                <Link href="/contact-us" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+                <Link href="/contact-us/" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
                   <Mail className="w-3 h-3" style={{ color: "var(--primary)" }} />
                   <span>Contact</span>
                 </Link>

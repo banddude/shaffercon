@@ -105,10 +105,10 @@ export default function AboutPage() {
               Electricians Servicing Los Angeles County
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <AppleButton href="/contact-us" variant="primary" size="lg">
+              <AppleButton href="/contact-us/" variant="primary" size="lg">
                 Get Free Quote
               </AppleButton>
-              <AppleButton href="/service-areas" variant="secondary" size="lg">
+              <AppleButton href="/service-areas/" variant="secondary" size="lg">
                 View Services
               </AppleButton>
             </div>

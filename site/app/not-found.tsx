@@ -32,7 +32,7 @@ export default function NotFound() {
                   <p className="text-base mb-4" style={{ color: "var(--secondary)" }}>
                     Browse our electrical services across Los Angeles
                   </p>
-                  <AppleButton href="/service-areas" variant="secondary" size="md">
+                  <AppleButton href="/service-areas/" variant="secondary" size="md">
                     View Service Areas
                   </AppleButton>
                 </div>
@@ -42,7 +42,7 @@ export default function NotFound() {
                   <p className="text-base mb-4" style={{ color: "var(--secondary)" }}>
                     Learn about our EV charger installation services
                   </p>
-                  <AppleButton href="/commercial-electric-vehicle-chargers" variant="secondary" size="md">
+                  <AppleButton href="/commercial-electric-vehicle-chargers/" variant="secondary" size="md">
                     Commercial EV
                   </AppleButton>
                 </div>
@@ -52,7 +52,7 @@ export default function NotFound() {
                   <p className="text-base mb-4" style={{ color: "var(--secondary)" }}>
                     Read our latest articles and electrical tips
                   </p>
-                  <AppleButton href="/industry-insights" variant="secondary" size="md">
+                  <AppleButton href="/industry-insights/" variant="secondary" size="md">
                     Visit Blog
                   </AppleButton>
                 </div>
@@ -62,7 +62,7 @@ export default function NotFound() {
                   <p className="text-base mb-4" style={{ color: "var(--secondary)" }}>
                     Contact us for a free consultation
                   </p>
-                  <AppleButton href="/contact-us" variant="secondary" size="md">
+                  <AppleButton href="/contact-us/" variant="secondary" size="md">
                     Contact Us
                   </AppleButton>
                 </div>

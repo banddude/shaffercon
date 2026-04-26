@@ -108,7 +108,7 @@ export default async function ServiceAreasPage() {
                 <Phone className="w-5 h-5 mr-2" />
                 Call (323) 642-8509
               </AppleButton>
-              <AppleButton href="/contact-us" variant="secondary" size="lg">
+              <AppleButton href="/contact-us/" variant="secondary" size="lg">
                 Get Free Quote
               </AppleButton>
             </div>
@@ -235,7 +235,7 @@ export default async function ServiceAreasPage() {
                   We serve additional areas throughout Los Angeles County and statewide
                 </p>
                 <a
-                  href="/contact-us"
+                  href="/contact-us/"
                   className="mt-4 text-base font-semibold inline-flex items-center"
                   style={{ color: "var(--primary)" }}
                 >
