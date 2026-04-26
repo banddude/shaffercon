@@ -139,6 +139,44 @@ All bulk operations preceded by a backup. Stored at:
 - Get directory listings (Yelp, BBB, Houzz, Angi)
 - Collect real customer reviews to enable proper aggregateRating schema
 
+
+
+---
+
+## Updates after first deploy
+
+### Hero video posters (Perf wins on every page)
+Added poster images to all 11 hero `<video>` tags. Before: hero rendered as
+black until video metadata loaded (~3-4s on mobile). After: 12-150 KB WebP
+poster shows instantly while video loads.
+
+**Lighthouse impact (service detail page, mobile):**
+- Performance: 83 → **92** (+9)
+- LCP: 4.4s → **3.3s** (–25%)
+- Speed Index: 3.5s → **1.3s** (–63%)
+
+All Lighthouse categories now 🟢 green on every page tested.
+
+### Removed fabricated review schema
+Deleted hardcoded `aggregateRating: { ratingValue: '4.9', reviewCount: '150' }`
+from both `StructuredData.tsx` (homepage) and `LocalBusinessSchema.tsx`
+(per-city pages). Was a placeholder with no actual reviews to back it
+up — Google's structured data guidelines explicitly prohibit fabricated
+review counts. Removing eliminates a manual-action risk. Real review
+data can be added back later when collected.
+
+### Em-dash regression caught and fixed
+GLM was reintroducing em-dashes because `gen_hero.py` literally said
+"DO use em-dashes for emphasis." Inverted the rule, plus added explicit
+"DO NOT use em-dashes" rules to `gen_closing.py` and
+`tighten_blog_meta.py`. Re-swept the 18 regressions. Verified: **zero
+em-dashes anywhere on the site, and future generation cannot
+reintroduce them.**
+
+### Closing content batch: COMPLETE
+880/880 service pages now have GLM-generated closing_content. All
+auto-deployed.
+
 ---
 
 ## Bottom line
