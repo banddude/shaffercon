@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/shaffercon/images/shaffer-logo-mini.png",
-    apple: "/shaffercon/images/shaffer-logo-mini.png",
+    icon: "/images/shaffer-logo-mini.png",
+    apple: "/images/shaffer-logo-mini.png",
   },
   openGraph: {
     title: "Shaffer Construction | Licensed Los Angeles Electrical & General Contractor",
@@ -114,7 +114,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
         {/* RSS Feed */}
-        <link rel="alternate" type="application/rss+xml" title="Shaffer Construction - Industry Insights" href="/shaffercon/rss.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Shaffer Construction - Industry Insights" href="/rss.xml" />
 
         <LocalBusinessSchema />
         <SearchConsoleVerification />
