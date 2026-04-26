@@ -21,7 +21,9 @@ export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
     "@type": "ListItem",
     "position": index + 1,
     "name": item.label,
-    ...(item.href ? { "item": `${baseUrl}${item.href}` } : {})
+    ...(item.href ? {
+      "item": `${baseUrl}${item.href.endsWith('/') ? item.href : item.href + '/'}`
+    } : {})
   }));
 
   const schema = {

@@ -4,11 +4,13 @@ import { classNames } from "@/app/styles/theme";
 import CTA from "@/app/components/CTA";
 import { Section, Container, PageTitle } from "@/app/components/UI";
 import { getAllPosts } from "@/lib/blog";
+import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Industry Insights | Shaffer Construction, Inc.",
+    title: "Industry Insights — Electrical & EV Charging in LA",
+    alternates: { canonical: "https://shaffercon.com/industry-insights/" },
     description: "Stay informed with the latest news, trends, and insights in electrical services, EV charging, and construction industry from Shaffer Construction.",
   };
 }
@@ -19,6 +21,10 @@ export default async function IndustryInsightsPage() {
 
   return (
     <main className="w-full">
+      <BreadcrumbSchema items={[
+        { label: "Home", href: "/" },
+        { label: "Industry Insights" }
+      ]} />
       {/* Hero Section */}
       <Section border="bottom" padding="lg">
         <Container maxWidth="lg">
