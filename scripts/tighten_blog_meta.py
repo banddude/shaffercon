@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Tighten long blog post titles (>60 chars effective) and long meta descriptions
-(>160 chars). Uses Haiku.
+(>160 chars). Uses GLM-5.1 (Z.AI) via Anthropic-compatible API.
 
 Reads blog post JSON files, rewrites overlong title/metaDescription fields
 with a tight, click-worthy version, writes back. Skips files that are
@@ -13,6 +13,7 @@ Title budget: 38 chars in JSON → Total 60 chars after layout.tsx appends
 Description budget: 160 chars hard limit, target 140-155.
 """
 import json
+import os
 import re
 import subprocess
 import sys
@@ -31,9 +32,14 @@ def call_haiku(prompt, retries=4):
     for attempt in range(retries):
         try:
             t0 = time.time()
+            env = os.environ.copy()
+            env["ANTHROPIC_MODEL"] = "GLM-5.1"
+            env["ANTHROPIC_BASE_URL"] = "https://api.z.ai/api/anthropic"
+            env["ANTHROPIC_AUTH_TOKEN"] = "24b70302723d4fc981c4eedb182dd16b.jgi2CvMtPzHHZ0II"
             result = subprocess.run(
-                ["claude", "-p", "--model", "claude-haiku-4-5-20251001"],
-                input=prompt, capture_output=True, text=True, timeout=120
+                ["claude", "--dangerously-skip-permissions", "-p"],
+                input=prompt, capture_output=True, text=True, timeout=180,
+                env=env
             )
             elapsed = time.time() - t0
             if result.returncode == 0 and result.stdout.strip():

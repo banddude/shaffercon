@@ -5,6 +5,7 @@ Heroes are the OPENING text — first thing visitors see, sets the tone,
 mirrors the H1, hooks the reader. Different prompt from closing_content.
 """
 import argparse
+import os
 import sqlite3
 import subprocess
 import sys
@@ -69,9 +70,14 @@ def gen_one(prompt, retries=4):
     last = None
     for attempt in range(retries):
         try:
+            env = os.environ.copy()
+            env["ANTHROPIC_MODEL"] = "GLM-5.1"
+            env["ANTHROPIC_BASE_URL"] = "https://api.z.ai/api/anthropic"
+            env["ANTHROPIC_AUTH_TOKEN"] = "24b70302723d4fc981c4eedb182dd16b.jgi2CvMtPzHHZ0II"
             r = subprocess.run(
-                ["claude", "-p", "--model", "claude-haiku-4-5-20251001"],
-                input=prompt, capture_output=True, text=True, timeout=120
+                ["claude", "--dangerously-skip-permissions", "-p"],
+                input=prompt, capture_output=True, text=True, timeout=180,
+                env=env
             )
             if r.returncode == 0 and r.stdout.strip():
                 return r.stdout.strip()
