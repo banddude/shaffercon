@@ -68,7 +68,9 @@ REQUIREMENTS:
 - No clickbait. No 'breakthrough', 'revolution', 'transformation' hype words.
 - Title-Case
 - DO NOT add 'Shaffer Construction' or '|' separator (template appends those)
-- Output ONLY the new title, no quotes/explanation/preamble"""
+- DO NOT use em-dashes (—) anywhere. Use commas, colons, periods, or parentheses instead.
+
+Output ONLY the new title, no quotes/explanation/preamble"""
     out, _ = call_haiku(prompt)
     title = out.strip().strip('"').strip("'").strip()
     # Strip if Haiku ignored instruction and added " | Shaffer..."

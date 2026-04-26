@@ -61,7 +61,7 @@ HARD RULES
 - DO NOT use generic openings: "When it comes to...", "At Shaffer Construction...", "Are you looking for...", "Welcome to...".
 - DO NOT claim Mike Shaffer personally walks every project or does every job — false. Crews do the work.
 - DO NOT use the phone number, email, or "Free quote" CTAs in this hero — those go in the closing section.
-- DO use em-dashes for emphasis. Contractions are fine.
+- DO NOT use em-dashes (—) ANYWHERE. Use commas, colons, periods, or parentheses instead. They are an AI-generated content tell. Contractions are fine.
 - 450-650 chars total — no more.
 - Output ONLY the paragraph. No headers/markdown/quotes/labels."""
 
