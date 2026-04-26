@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface SlowMotionVideoProps {
   src: string;
@@ -11,6 +11,17 @@ interface SlowMotionVideoProps {
   className?: string;
 }
 
+/**
+ * SlowMotionVideo — lazy-loads via IntersectionObserver so below-the-fold
+ * background videos don't pay the cost of preloading full MP4 bytes on
+ * initial page render. Big SEO win for Core Web Vitals (LCP, TBT).
+ *
+ * Behavior:
+ *  - Initial render: <video> tag with NO <source> → 0 bytes downloaded.
+ *  - When the element comes within 200px of the viewport, the <source> is
+ *    mounted and `load()` + `play()` are called.
+ *  - One-shot: stops observing after first activation.
+ */
 export function SlowMotionVideo({
   src,
   ariaLabel,
@@ -20,12 +31,47 @@ export function SlowMotionVideo({
   className = "w-full h-full object-cover",
 }: SlowMotionVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = playbackRate;
+    const el = videoRef.current;
+    if (!el) return;
+
+    // Older browsers without IntersectionObserver: just load immediately
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      return;
     }
-  }, [playbackRate]);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShouldLoad(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin: "200px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !shouldLoad) return;
+    v.playbackRate = playbackRate;
+    // After src is mounted, force a load + play
+    v.load();
+    const playPromise = v.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        // Autoplay blocked (rare on muted videos) — silently ignore
+      });
+    }
+  }, [shouldLoad, playbackRate]);
 
   return (
     <video
@@ -34,7 +80,7 @@ export function SlowMotionVideo({
       loop
       muted
       playsInline
-      preload="auto"
+      preload="none"
       className={className}
       aria-label={ariaLabel || "Background video"}
       style={{
@@ -42,7 +88,9 @@ export function SlowMotionVideo({
         objectPosition: "top",
       }}
     >
-      <source src={src} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
+      {shouldLoad && (
+        <source src={src} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
+      )}
       Your browser does not support the video tag.
     </video>
   );

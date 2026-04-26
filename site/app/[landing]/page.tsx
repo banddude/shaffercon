@@ -571,7 +571,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="metadata"
                 className="w-full h-full object-cover"
                 aria-label={page.page_title || page.title}
                 style={{

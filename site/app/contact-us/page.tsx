@@ -59,7 +59,7 @@ export default function ContactPage() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             className="w-full h-full object-cover"
             aria-label="Contact Shaffer Construction for electrical services"
             style={{

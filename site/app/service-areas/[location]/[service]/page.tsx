@@ -234,7 +234,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             className="w-full h-full object-cover"
             aria-label="Professional electrical service installation"
             style={{

@@ -47,7 +47,7 @@ export function AppleHero({
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               className="w-full h-full object-cover"
               aria-label={imageAlt || title}
               style={{

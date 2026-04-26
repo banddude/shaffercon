@@ -78,7 +78,7 @@ export default async function ServiceAreasPage() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             className="w-full h-full object-cover"
             aria-label="Professional electrical services across Los Angeles"
             style={{
