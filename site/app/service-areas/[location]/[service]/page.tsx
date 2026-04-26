@@ -129,11 +129,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/service-areas/${location}/${service}`;
-  const title = page.meta_title || page.title || "Electrical Services";
+
+  // Build proper display name (handle EV/AV/LED/GFCI/AFCI abbreviations)
+  const locationDisplay = location.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const [stype, ...snameParts] = service.split('-');
+  const sdispName = snameParts
+    .join('-')
+    .split('-')
+    .map(w => {
+      if (w === 'ev') return 'EV';
+      if (w === 'av') return 'AV';
+      if (w === 'led') return 'LED';
+      if (w === 'gfci') return 'GFCI';
+      if (w === 'afci') return 'AFCI';
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    })
+    .join(' ')
+    .replace('Data Network Av', 'Data, Network & AV')
+    .replace('Pool Hot Tub Spa', 'Pool, Hot Tub & Spa')
+    .replace('Troubleshooting Repairs', 'Troubleshooting & Repairs');
+  const computedTitle = `${stype.charAt(0).toUpperCase() + stype.slice(1)} ${sdispName} in ${locationDisplay}`;
+
+  const title = page.meta_title || computedTitle;
   const description = page.meta_description || page.hero_intro || "Professional electrical services";
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: {
       canonical: page.canonical_url || url,

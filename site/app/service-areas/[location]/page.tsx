@@ -146,7 +146,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = page.meta_description || page.tagline || '';
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: {
       canonical: page.canonical_url || url,
