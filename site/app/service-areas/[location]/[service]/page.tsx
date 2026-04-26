@@ -171,8 +171,19 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const serviceName = serviceNameParts.join('-');
   const serviceDisplayName = serviceName
     .split('-')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+    .map(w => {
+      // Handle common abbreviations
+      if (w === 'ev') return 'EV';
+      if (w === 'av') return 'AV';
+      if (w === 'led') return 'LED';
+      if (w === 'gfci') return 'GFCI';
+      if (w === 'afci') return 'AFCI';
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    })
+    .join(' ')
+    .replace('Data Network Av', 'Data, Network & AV')
+    .replace('Pool Hot Tub Spa', 'Pool, Hot Tub & Spa')
+    .replace('Troubleshooting Repairs', 'Troubleshooting & Repairs');
   const fullServiceName = `${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} ${serviceDisplayName}`;
 
   const baseUrl = 'https://shaffercon.com';
