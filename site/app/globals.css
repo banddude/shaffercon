@@ -183,18 +183,36 @@
   /* Hide iOS Safari's native play button overlay on background videos.
    * iOS shows a "tap to play" button when autoplay fails (Low Power Mode,
    * slow connect, etc). For decorative background videos we'd rather show
-   * the still frame than a clickable play button that does nothing useful. */
+   * the still frame than a clickable play button that does nothing useful.
+   *
+   * Note: HeroVideo component now also swaps to <img> when autoplay fails,
+   * so this CSS is the second line of defense. */
   video::-webkit-media-controls-start-playback-button {
     display: none !important;
     -webkit-appearance: none !important;
+    appearance: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
   video::-webkit-media-controls {
     display: none !important;
+    -webkit-appearance: none !important;
   }
   video::-webkit-media-controls-overlay-play-button {
     display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
   video::-webkit-media-controls-panel {
+    display: none !important;
+  }
+  video::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
+  /* Some iOS versions show a separate "presentation" button during AirPlay /
+   * picture-in-picture availability checks. */
+  video::-webkit-media-controls-fullscreen-button,
+  video::-webkit-media-controls-picture-in-picture-button {
     display: none !important;
   }
 }

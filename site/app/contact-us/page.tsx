@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { HeroVideo } from "@/app/components/HeroVideo";
 import { getSiteConfig } from "@/lib/db";
 import ContactForm from "@/app/components/ContactForm";
 import { Section, Container, SectionHeading } from "@/app/components/UI";
@@ -54,23 +55,11 @@ export default function ContactPage() {
       <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
+          <HeroVideo
+            src={ASSET_PATH("/ev-charging.mp4")}
             poster={ASSET_PATH("/images/posters/ev-charging.webp")}
-            className="w-full h-full object-cover"
-            aria-label="Contact Shaffer Construction for electrical services"
-            style={{
-              filter: "brightness(0.4)",
-              objectPosition: "center",
-            }}
-          >
-            <source src={ASSET_PATH("/ev-charging.mp4")} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-            Your browser does not support the video tag.
-          </video>
+            ariaLabel="Contact Shaffer Construction for electrical services"
+          />
         </div>
 
         {/* Overlay */}

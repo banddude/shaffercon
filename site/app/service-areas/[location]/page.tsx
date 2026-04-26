@@ -5,6 +5,7 @@ import { Section, Container, PageTitle, SectionHeading, Paragraph, Grid, GridIte
 import { ASSET_PATH } from "@/app/config";
 import { AppleButton } from "@/app/components/UI/AppleStyle";
 import CTA from "@/app/components/CTA";
+import { HeroVideo } from "@/app/components/HeroVideo";
 import LinkCardGrid from "@/app/components/LinkCardGrid";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { LocalBusinessSchema } from "@/app/components/schemas/LocalBusinessSchema";
@@ -211,23 +212,11 @@ export default async function LocationPage({ params }: PageProps) {
       <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
+          <HeroVideo
+            src={ASSET_PATH("/ev-charging.mp4")}
             poster={ASSET_PATH("/images/posters/ev-charging.webp")}
-            className="w-full h-full object-cover"
-            aria-label="Professional electrical services"
-            style={{
-              filter: "brightness(0.4)",
-              objectPosition: "center",
-            }}
-          >
-            <source src={ASSET_PATH("/ev-charging.mp4")} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-            Your browser does not support the video tag.
-          </video>
+            ariaLabel="Professional electrical services"
+          />
         </div>
 
         {/* Overlay */}

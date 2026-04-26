@@ -7,6 +7,7 @@ import { AppleHero, AppleButton, AppleCard, AppleGrid } from "@/app/components/U
 import CTA from "@/app/components/CTA";
 import { ASSET_PATH } from "@/app/config";
 import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
+import { HeroVideo } from "@/app/components/HeroVideo";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { ServiceLandingSchema } from "@/app/components/schemas/ServiceLandingSchema";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
@@ -567,23 +568,11 @@ export default async function ServiceLandingPage({ params }: PageProps) {
           <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
             {/* Video Background */}
             <div className="absolute inset-0 z-0">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
+              <HeroVideo
+                src={ASSET_PATH(page.hero_image)}
                 poster={ASSET_PATH(`/images/posters/${page.hero_image.replace(/^\//, '').replace(/\.mp4$/, '.webp')}`)}
-                className="w-full h-full object-cover"
-                aria-label={page.page_title || page.title}
-                style={{
-                  filter: "brightness(0.4)",
-                  objectPosition: "center",
-                }}
-              >
-                <source src={ASSET_PATH(page.hero_image)} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-                Your browser does not support the video tag.
-              </video>
+                ariaLabel={page.page_title || page.title}
+              />
             </div>
 
             {/* Overlay */}

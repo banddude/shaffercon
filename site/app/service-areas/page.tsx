@@ -6,6 +6,7 @@ import { AppleButton } from "@/app/components/UI/AppleStyle";
 import { SectionHeading, Paragraph } from "@/app/components/UI";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import CTA from "@/app/components/CTA";
+import { HeroVideo } from "@/app/components/HeroVideo";
 import ServiceAreasMapWrapper from "@/app/components/ServiceAreasMapWrapper";
 import { Phone, MapPin, Building2, Zap } from "lucide-react";
 
@@ -73,23 +74,11 @@ export default async function ServiceAreasPage() {
       <section className="relative w-full overflow-hidden" style={{ minHeight: "60vh" }}>
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
+          <HeroVideo
+            src={ASSET_PATH("/ev-charging.mp4")}
             poster={ASSET_PATH("/images/posters/ev-charging.webp")}
-            className="w-full h-full object-cover"
-            aria-label="Professional electrical services across Los Angeles"
-            style={{
-              filter: "brightness(0.4)",
-              objectPosition: "center",
-            }}
-          >
-            <source src={ASSET_PATH("/ev-charging.mp4")} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-            Your browser does not support the video tag.
-          </video>
+            ariaLabel="Professional electrical services across Los Angeles"
+          />
         </div>
 
         {/* Overlay */}

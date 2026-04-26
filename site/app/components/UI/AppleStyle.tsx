@@ -3,6 +3,7 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { theme, typographySizes } from "@/app/styles/theme";
+import { HeroVideo } from "@/app/components/HeroVideo";
 import { ASSET_PATH } from "@/app/config";
 
 /**
@@ -44,23 +45,16 @@ export function AppleHero({
       {image && (
         <div className="absolute inset-0 z-0">
           {isVideo ? (
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              poster={poster}
+            <HeroVideo
+              src={image}
+              poster={poster || ""}
+              ariaLabel={imageAlt || title}
               className="w-full h-full object-cover"
-              aria-label={imageAlt || title}
               style={{
                 objectFit: imageFit,
                 filter: "brightness(0.7)",
               }}
-            >
-              <source src={image} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-              Your browser does not support the video tag.
-            </video>
+            />
           ) : isGif ? (
             <img
               src={image}
