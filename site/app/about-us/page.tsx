@@ -10,7 +10,7 @@ import { Zap, Award, Users, Target } from "lucide-react";
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/about-us`;
-  const title = "About Us - Los Angeles Electrical Contractor | Shaffer Construction";
+  const title = "About Us - Los Angeles Electrical Contractor";
   const description = "Shaffer Construction: licensed LA electrical & general contractor. CSLB #994593. 25+ years, 1,000+ projects, owner-operated. Free quote: (323) 642-8509.";
 
   return {

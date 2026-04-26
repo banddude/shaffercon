@@ -49,8 +49,8 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Commercial EV Charger Installation',
       hero_text: "Connect with California's premier commercial electric vehicle charger installation experts. Serving businesses statewide with single-site and multi-location rollouts. At Shaffer Construction, we offer comprehensive EV charging solutions from initial load studies through installation and maintenance. Our experienced team specializes in large-scale deployments for retail chains, warehouses, fleet operations, and commercial properties throughout California.",
       hero_image: '/commercial-ev-hero.mp4',
-      meta_title: 'Commercial EV Charger Installation',
-      meta_description: "Connect with California's premier commercial electric vehicle charger installation experts. Serving businesses statewide with single-site and multi-location rollouts.",
+      meta_title: 'Commercial EV Charger Installation Los Angeles',
+      meta_description: "California commercial EV charger installation: Level 2 & DC fast charging for fleets, retail, multifamily. Licensed since 2000. Free quote: (323) 642-8509.",
       canonical_url: null,
       og_image: null,
       sections: [
@@ -121,8 +121,8 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Professional Electrical Load Study Services',
       hero_text: 'Make informed decisions about your electrical infrastructure with comprehensive load studies. Essential for EV charger installations, equipment additions, and capacity planning. We deliver professional documentation suitable for engineering review, permit applications, and utility coordination throughout California.',
       hero_image: '/ev-charging.mp4',
-      meta_title: 'Professional Electrical Load Study Services',
-      meta_description: 'Make informed decisions about your electrical infrastructure with comprehensive load studies. Essential for EV charger installations, equipment additions, and capacity planning.',
+      meta_title: 'Electrical Load Studies Los Angeles — Stamped Reports',
+      meta_description: 'LA stamped electrical load studies for EV charging, panel upgrades, tenant improvements. In-house engineering, fast turnaround. Free quote: (323) 642-8509.',
       sections: [
         {
           section_type: 'info_card',
@@ -192,8 +192,8 @@ async function getServiceLandingPage(slug: string) {
       slug: 'led-retrofit-services',
       title: 'LED Retrofit Services',
       date: null,
-      meta_title: 'LED Retrofit Services',
-      meta_description: 'Transform your facility\'s lighting while dramatically reducing energy costs. Shaffer Construction provides comprehensive LED retrofit services for businesses statewide.',
+      meta_title: 'LED Retrofit Services Los Angeles — Commercial Lighting',
+      meta_description: 'LA commercial LED retrofits with 50–70% energy savings. SCE, LADWP, SoCalGas rebate paperwork handled in-house. Free quote: (323) 642-8509.',
       canonical_url: null,
       og_image: null,
       landing_id: 0,
@@ -269,8 +269,8 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Statewide Facilities Maintenance Electrical Services',
       hero_text: 'Your single-source electrical maintenance partner across California. From emergency repairs to preventive maintenance programs, Shaffer Construction provides comprehensive electrical services for multi-location facilities. Our experienced teams deliver consistent quality whether you manage retail chains, warehouses, or commercial properties throughout the state.',
       hero_image: '/ev-charging.mp4',
-      meta_title: 'Statewide Facilities Maintenance Electrical Services',
-      meta_description: 'Your single-source electrical maintenance partner across California. From emergency repairs to preventive maintenance programs, Shaffer Construction provides comprehensive electrical services for multi-location facilities.',
+      meta_title: 'Statewide California Facilities Maintenance Electrical',
+      meta_description: 'Multi-site California facilities electrical: 24/7 emergency, preventive maintenance, single licensed contractor. 25+ years. Free quote: (323) 642-8509.',
       sections: [
         {
           section_type: 'info_card',

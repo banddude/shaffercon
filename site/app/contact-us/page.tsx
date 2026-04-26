@@ -11,7 +11,7 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/contact-us`;
-  const title = "Contact Us - Los Angeles Electrical Contractor | Shaffer Construction";
+  const title = "Contact Us - Los Angeles Electrical Contractor";
   const description = "Contact Shaffer Construction for expert EV charging and electrical installation services in Los Angeles County. Call (323) 642-8509 for a free estimate.";
 
   return {

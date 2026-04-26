@@ -30,7 +30,7 @@ async function getLocations(): Promise<ServiceLocation[]> {
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/service-areas`;
-  const title = "Service Areas - Los Angeles County Electrical Services | Shaffer Construction";
+  const title = "Service Areas - Los Angeles County Electrical Services";
   const description = "Licensed electrician serving 22+ LA County communities: EV charging, panel upgrades, commercial & residential electrical. Free quote: (323) 642-8509.";
 
   return {
