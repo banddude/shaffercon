@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description:
     "Shaffer Construction is the premier licensed electrical and general contractor in Los Angeles. 15+ years, CSLB #994593. EV charging installation, Altadena & Pasadena fire rebuilds, residential & commercial electrical, load studies, LED retrofits, and statewide facilities service. Call (323) 642-8509.",
   applicationName: "Shaffer Construction",
-  authors: [{ name: "Mike Shaffer", url: "https://shaffercon.com/about-us" }],
+  authors: [{ name: "Mike Shaffer", url: "https://shaffercon.com/about-us/" }],
   creator: "Mike Shaffer",
   publisher: "Shaffer Construction, Inc.",
   keywords: [
