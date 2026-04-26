@@ -23,7 +23,7 @@ from pathlib import Path
 CONTENT_DIR = Path('/Users/mikeshaffer/AIVA/shaffercon/content/industry-insights')
 
 # Target lengths
-TITLE_MAX_JSON = 50  # so total < 75 after brand suffix
+TITLE_MAX_JSON = 60  # Google truncates around 60 mobile, 70 desktop. Aim for ≤60 raw.
 DESC_MAX = 155
 
 def call_haiku(prompt, retries=4):
