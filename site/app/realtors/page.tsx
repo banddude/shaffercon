@@ -90,7 +90,7 @@ export default function RealtorsPage() {
       {/* Hero Section */}
       <AppleHero
         title="Repair Estimates for Real Estate Agents"
-        subtitle="Honest numbers during escrow — no padding, no upselling."
+        subtitle="Honest numbers during escrow. No padding, no upselling."
         image={ASSET_PATH("/hero-background-optimized.mp4")}
         imageAlt="Shaffer Construction repair estimates for real estate agents"
       >
@@ -113,7 +113,7 @@ export default function RealtorsPage() {
               Whether you&apos;re representing a buyer who wants a realistic repair credit or a seller getting hit with an inflated ask, we can help you get to an honest number before the deal falls apart.
             </Paragraph>
             <Paragraph className="text-lg">
-              We&apos;re licensed electricians and general contractors based in East LA and Silver Lake. We do repair estimates during escrow — a straightforward walkthrough of the property, written up clearly so you and your clients know what things actually cost to fix. No padding, no upselling.
+              We&apos;re licensed electricians and general contractors based in East LA and Silver Lake. We do repair estimates during escrow: a straightforward walkthrough of the property, written up clearly so you and your clients know what things actually cost to fix. No padding, no upselling.
             </Paragraph>
             <Paragraph className="text-lg">
               We handle electrical directly and coordinate with trusted subs for everything else. Fast turnaround so you&apos;re not holding up your close.

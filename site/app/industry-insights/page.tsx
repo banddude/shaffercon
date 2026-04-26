@@ -9,7 +9,7 @@ import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Industry Insights — Electrical & EV Charging in LA",
+    title: "Industry Insights, Electrical & EV Charging in LA",
     alternates: { canonical: "https://shaffercon.com/industry-insights/" },
     description: "Stay informed with the latest news, trends, and insights in electrical services, EV charging, and construction industry from Shaffer Construction.",
   };

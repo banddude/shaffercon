@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     canonical: "https://shaffercon.com",
     types: {
       "application/rss+xml": [
-        { url: "/rss.xml", title: "Shaffer Construction — Industry Insights" },
+        { url: "/rss.xml", title: "Shaffer Construction: Industry Insights" },
       ],
     },
   },
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
         url: "https://shaffercon.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Shaffer Construction — Licensed Los Angeles Electrical & General Contractor",
+        alt: "Shaffer Construction: Licensed Los Angeles Electrical & General Contractor",
       },
     ],
     type: "website",

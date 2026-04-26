@@ -90,14 +90,14 @@ export default function GamesPage() {
   const games = [
     {
       title: "Zappy Bird",
-      description: "Dodge electrical conduit through a parallax city skyline! Tap to flap as the sky shifts from dawn to night — how far can you fly?",
+      description: "Dodge electrical conduit through a parallax city skyline! Tap to flap as the sky shifts from dawn to night: how far can you fly?",
       href: withBasePath("games/zappy-bird.html"),
       icon: Zap,
       leaderboardKey: "zappybird" as const,
     },
     {
       title: "Sparky Bros",
-      description: "Classic platformer action — run, jump, and collect wire nuts across industrial zones. Stomp spark enemies and warp through conduit pipes!",
+      description: "Classic platformer action: run, jump, and collect wire nuts across industrial zones. Stomp spark enemies and warp through conduit pipes!",
       href: withBasePath("games/sparky-bros.html"),
       icon: Plug,
       leaderboardKey: "sparkybros" as const,
@@ -118,7 +118,7 @@ export default function GamesPage() {
     },
     {
       title: "DΩΩM",
-      description: "9 levels of first-person electrical warfare. Six weapons, seven enemy types, and one epic boss — fight through the power plant and restore the grid.",
+      description: "9 levels of first-person electrical warfare. Six weapons, seven enemy types, and one epic boss: fight through the power plant and restore the grid.",
       href: withBasePath("games/electrician-doom.html"),
       icon: Crosshair,
       leaderboardKey: "doom" as const,
@@ -138,7 +138,7 @@ export default function GamesPage() {
           className="text-sm sm:text-lg text-center mb-6 sm:mb-12 max-w-xl mx-auto"
           style={{ color: "var(--secondary)" }}
         >
-          Electrician-themed arcade games — play on desktop or mobile!
+          Electrician-themed arcade games, play on desktop or mobile!
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 mb-6 sm:mb-12">
           {games.map((game, idx) => {

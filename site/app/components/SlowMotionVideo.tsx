@@ -12,7 +12,7 @@ interface SlowMotionVideoProps {
 }
 
 /**
- * SlowMotionVideo — lazy-loads via IntersectionObserver so below-the-fold
+ * SlowMotionVideo, lazy-loads via IntersectionObserver so below-the-fold
  * background videos don't pay the cost of preloading full MP4 bytes on
  * initial page render. Big SEO win for Core Web Vitals (LCP, TBT).
  *
@@ -68,7 +68,7 @@ export function SlowMotionVideo({
     const playPromise = v.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {
-        // Autoplay blocked (rare on muted videos) — silently ignore
+        // Autoplay blocked (rare on muted videos): silently ignore
       });
     }
   }, [shouldLoad, playbackRate]);

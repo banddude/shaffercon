@@ -121,7 +121,7 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Professional Electrical Load Study Services',
       hero_text: 'Make informed decisions about your electrical infrastructure with comprehensive load studies. Essential for EV charger installations, equipment additions, and capacity planning. We deliver professional documentation suitable for engineering review, permit applications, and utility coordination throughout California.',
       hero_image: '/ev-charging.mp4',
-      meta_title: 'Electrical Load Studies Los Angeles — Stamped Reports',
+      meta_title: 'Electrical Load Studies Los Angeles, Stamped Reports',
       meta_description: 'LA stamped electrical load studies for EV charging, panel upgrades, tenant improvements. In-house engineering, fast turnaround. Free quote: (323) 642-8509.',
       sections: [
         {
@@ -192,7 +192,7 @@ async function getServiceLandingPage(slug: string) {
       slug: 'led-retrofit-services',
       title: 'LED Retrofit Services',
       date: null,
-      meta_title: 'LED Retrofit Services Los Angeles — Commercial Lighting',
+      meta_title: 'LED Retrofit Services Los Angeles, Commercial Lighting',
       meta_description: 'LA commercial LED retrofits with 50–70% energy savings. SCE, LADWP, SoCalGas rebate paperwork handled in-house. Free quote: (323) 642-8509.',
       canonical_url: null,
       og_image: null,

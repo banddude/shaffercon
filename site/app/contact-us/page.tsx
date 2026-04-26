@@ -156,21 +156,21 @@ export default function ContactPage() {
               What to Expect When You Reach Out
             </h2>
             <p className="text-lg mb-4" style={{ color: "var(--secondary)" }}>
-              Shaffer Construction is a Los Angeles licensed electrical and general contractor — California CSLB License #994593, with A General Engineering, B General Building, and C-10 Electrical classifications under one license. We&apos;ve been serving the LA area for 25+ years across more than 1,000 projects.
+              Shaffer Construction is a Los Angeles licensed electrical and general contractor: California CSLB License #994593, with A General Engineering, B General Building, and C-10 Electrical classifications under one license. We&apos;ve been serving the LA area for 25+ years across more than 1,000 projects.
             </p>
             <p className="text-lg mb-4" style={{ color: "var(--secondary)" }}>
-              When you call <a href={`tel:${siteConfig.contact.phone}`} style={{ color: "var(--primary)" }}>{siteConfig.contact.phone}</a> during business hours, you&apos;ll talk to our office team — not a national call center. We&apos;ll ask a few quick questions about your project (residential or commercial, what kind of work, your address) and get back to you with a free quote, usually same-day.
+              When you call <a href={`tel:${siteConfig.contact.phone}`} style={{ color: "var(--primary)" }}>{siteConfig.contact.phone}</a> during business hours, you&apos;ll talk to our office team, not a national call center. We&apos;ll ask a few quick questions about your project (residential or commercial, what kind of work, your address) and get back to you with a free quote, usually same-day.
             </p>
             <h3 className="text-2xl font-bold mt-8 mb-4" style={{ color: "var(--text)" }}>
               Active Service Lines
             </h3>
             <ul className="text-lg list-disc pl-6 space-y-2" style={{ color: "var(--secondary)" }}>
-              <li><strong>Eaton Fire and Palisades Fire rebuilds</strong> — active rebuild work in Altadena, Pasadena, and Pacific Palisades. Triple license means electrical AND structural under one contractor, which speeds up insurance and permitting.</li>
-              <li><strong>EV charger installation</strong> — Tesla Wall Connector, ChargePoint, Wallbox, and others. Most residential installs done in 3–5 hours. Commercial multi-stall and DC fast charging too.</li>
-              <li><strong>Panel upgrades</strong> — 100A → 200A → 400A residential, plus commercial service upgrades. We handle LADWP and SCE coordination directly.</li>
-              <li><strong>Electrical load studies</strong> — stamped engineering reports for permit submittal, produced in-house.</li>
-              <li><strong>LED retrofits and energy efficiency</strong> — with SCE, LADWP, and SoCalGas rebate paperwork handled for you.</li>
-              <li><strong>Statewide facilities maintenance</strong> — single licensed contractor, 24/7 emergency response, multi-site California operators.</li>
+              <li><strong>Eaton Fire and Palisades Fire rebuilds</strong>: active rebuild work in Altadena, Pasadena, and Pacific Palisades. Triple license means electrical AND structural under one contractor, which speeds up insurance and permitting.</li>
+              <li><strong>EV charger installation</strong>: Tesla Wall Connector, ChargePoint, Wallbox, and others. Most residential installs done in 3–5 hours. Commercial multi-stall and DC fast charging too.</li>
+              <li><strong>Panel upgrades</strong>, 100A → 200A → 400A residential, plus commercial service upgrades. We handle LADWP and SCE coordination directly.</li>
+              <li><strong>Electrical load studies</strong>, stamped engineering reports for permit submittal, produced in-house.</li>
+              <li><strong>LED retrofits and energy efficiency</strong>: with SCE, LADWP, and SoCalGas rebate paperwork handled for you.</li>
+              <li><strong>Statewide facilities maintenance</strong>: single licensed contractor, 24/7 emergency response, multi-site California operators.</li>
             </ul>
             <h3 className="text-2xl font-bold mt-8 mb-4" style={{ color: "var(--text)" }}>
               Service Areas
