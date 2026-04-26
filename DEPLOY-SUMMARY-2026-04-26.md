@@ -165,6 +165,48 @@ up — Google's structured data guidelines explicitly prohibit fabricated
 review counts. Removing eliminates a manual-action risk. Real review
 data can be added back later when collected.
 
+### iOS hero play-button fix (the real one)
+
+Previous CSS-only attempts only hid the standard pseudo-elements. iOS
+sometimes renders additional UI we couldn't reach. NEW APPROACH:
+**HeroVideo component** that detects autoplay failure and replaces the
+entire `<video>` element with an `<img>` of the poster. iOS literally
+has no `<video>` element to attach play UI to.
+
+- New `HeroVideo` component (`site/app/components/HeroVideo.tsx`)
+- Replaced native `<video>` heroes on every page that has one:
+  homepage, realtors, service-areas index, all 22 location landings,
+  all 880 service detail pages, about-us, contact-us, all 8
+  service-landing pages, AppleHero component
+- All hero videos now use `preload="auto"` (was `metadata`)
+  for better autoplay reliability
+- `disablePictureInPicture` and `disableRemotePlayback` set to prevent
+  AirPlay overlay flicker
+- CSS belt-and-suspenders strengthened: 7 `::-webkit-media-controls-*`
+  pseudo-elements hidden, including `-enclosure`, `-fullscreen-button`,
+  and `-picture-in-picture-button`
+
+### Functional bug fixes
+
+**`tel:` links broken across the site.** Phone number was stored as
+"(323) 642-8509" with parens and a space, which is invalid per RFC
+3966. Some Android dialers and click-to-call platforms refused to
+parse it.
+- New `telHref()` helper in `app/config.ts` strips formatting and
+  prepends +1 country code → `tel:+13236428509`
+- All literal tel: links replaced with the valid format
+- All dynamic tel: links (Header, Footer, CTAButton, contact page)
+  switched to use the helper
+- The displayed phone stays human-readable; only the href changed.
+
+**Cloudflare email obfuscation killed.** Cloudflare's "Email Address
+Obfuscation" Scrape Shield feature was wrapping every `mailto:` link
+into `/cdn-cgi/l/email-protection?...` which only works when JS
+runs. Search engines and JS-disabled users couldn't click the email.
+- Disabled via Cloudflare API
+- Verified: zero `/cdn-cgi/l/email-protection` occurrences across
+  homepage, contact page, location pages, about page
+
 ### Em-dash regression caught and fixed
 GLM was reintroducing em-dashes because `gen_hero.py` literally said
 "DO use em-dashes for emphasis." Inverted the rule, plus added explicit
