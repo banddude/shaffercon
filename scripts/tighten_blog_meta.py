@@ -96,6 +96,7 @@ REQUIREMENTS:
 - Hook + key fact + implicit CTA
 - Mention LA/Los Angeles if relevant to topic
 - No 'Read more', 'Learn more', or other generic phrases
+- DO NOT use em-dashes (—) anywhere. Use commas, colons, or periods instead.
 - Output ONLY the new description, no quotes/explanation/preamble"""
     out, _ = call_haiku(prompt)
     desc = out.strip().strip('"').strip("'").strip()

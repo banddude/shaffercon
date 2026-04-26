@@ -15,7 +15,7 @@ interface HeroVideoProps {
  * Hero video that gracefully falls back to a poster <img> if autoplay
  * is blocked. iOS Safari shows a "tap to play" overlay button when
  * autoplay fails (Low Power Mode, low battery, certain cellular conditions).
- * That button is decorative noise on a hero — nothing to play. To kill
+ * That button is decorative noise on a hero, nothing to play. To kill
  * it for good, when autoplay fails we replace the entire <video> element
  * with an <img> of the poster. iOS has no video element to attach UI to.
  *
@@ -106,7 +106,7 @@ export function HeroVideo({
       // disablePictureInPicture is iOS+desktop-friendly
       disablePictureInPicture
       // disableremoteplayback prevents AirPlay overlay
-      // @ts-ignore — valid HTML attribute, TypeScript types lag
+      // @ts-ignore, valid HTML attribute, TypeScript types lag
       disableRemotePlayback
       controls={false}
     >

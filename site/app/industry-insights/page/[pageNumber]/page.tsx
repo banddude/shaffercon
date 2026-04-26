@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { pageNumber } = await params;
   const n = parseInt(pageNumber, 10);
   return {
-    title: `Industry Insights — Page ${n}`,
+    title: `Industry Insights, Page ${n}`,
     alternates: {
       canonical: `https://shaffercon.com/industry-insights/page/${n}/`,
     },
-    description: `Page ${n} of Shaffer Construction's industry insights — electrical services, EV charging, and construction industry news.`,
+    description: `Page ${n} of Shaffer Construction's industry insights: electrical services, EV charging, and construction industry news.`,
     // Don't index page 2+; they're for crawl/UX, not landing pages
     robots: {
       index: false,
@@ -70,7 +70,7 @@ export default async function IndustryInsightsPaginatedPage({ params }: PageProp
       {/* Hero Section */}
       <Section border="bottom" padding="lg">
         <Container maxWidth="lg">
-          <PageTitle>Industry Insights — Page {n}</PageTitle>
+          <PageTitle>Industry Insights, Page {n}</PageTitle>
           <p className="text-lg mt-4">
             Page {n} of {totalPages}. Browse all of Shaffer Construction's articles on electrical services, EV charging, and construction industry news.
           </p>

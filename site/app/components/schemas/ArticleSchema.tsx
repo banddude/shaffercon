@@ -5,7 +5,7 @@
  * Helps with rich snippets, AI overviews, and Google Discover eligibility.
  *
  * Author is modeled as a Person (Mike Shaffer, owner) with E-E-A-T signals
- * — credentials, employer, and a link to the about page where Google
+ *: credentials, employer, and a link to the about page where Google
  * (and humans) can verify expertise. Publisher is the Organization.
  */
 
@@ -59,7 +59,7 @@ export function ArticleSchema({
         {
           "@type": "EducationalOccupationalCredential",
           "credentialCategory": "license",
-          "name": "California Contractors State License Board (CSLB) License #994593 — A (General Engineering), B (General Building), C-10 (Electrical)",
+          "name": "California Contractors State License Board (CSLB) License #994593: A (General Engineering), B (General Building), C-10 (Electrical)",
           "recognizedBy": {
             "@type": "GovernmentOrganization",
             "name": "California Contractors State License Board",
