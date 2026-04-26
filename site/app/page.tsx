@@ -108,6 +108,7 @@ export default function Home() {
         title="Los Angeles Electrical Contractor Specializing in EV Charging & Electrical Installations"
         subtitle=""
         image={ASSET_PATH("/hero-background-optimized.mp4")}
+        poster={ASSET_PATH("/images/posters/hero-background-optimized.webp")}
         imageAlt="Electrical contractor installing EV charging station in Los Angeles"
         showLogo={true}
       >
@@ -149,6 +150,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <SlowMotionVideo
             src={ASSET_PATH("/ev-charging.mp4")}
+            poster={ASSET_PATH("/images/posters/ev-charging.webp")}
             ariaLabel="Electric vehicle charging at modern charging station"
             playbackRate={0.8}
             brightness={0.4}
@@ -210,6 +212,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <SlowMotionVideo
             src={ASSET_PATH("/commercial-ev-hero.mp4")}
+            poster={ASSET_PATH("/images/posters/commercial-ev-hero.webp")}
             ariaLabel="Commercial EV charging infrastructure installation in progress"
             playbackRate={0.8}
             brightness={0.4}

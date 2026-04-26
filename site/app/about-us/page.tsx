@@ -80,6 +80,7 @@ export default function AboutPage() {
             muted
             playsInline
             preload="metadata"
+            poster={ASSET_PATH("/images/posters/ev-charging.webp")}
             className="w-full h-full object-cover"
             aria-label="Professional electrical services in Los Angeles"
             style={{

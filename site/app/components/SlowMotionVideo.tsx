@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 interface SlowMotionVideoProps {
   src: string;
+  poster?: string;
   ariaLabel?: string;
   playbackRate?: number;
   brightness?: number;
@@ -24,6 +25,7 @@ interface SlowMotionVideoProps {
  */
 export function SlowMotionVideo({
   src,
+  poster,
   ariaLabel,
   playbackRate = 0.8,
   brightness = 0.4,
@@ -81,6 +83,7 @@ export function SlowMotionVideo({
       muted
       playsInline
       preload="none"
+      poster={poster}
       className={className}
       aria-label={ariaLabel || "Background video"}
       style={{

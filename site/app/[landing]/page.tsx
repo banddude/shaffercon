@@ -457,6 +457,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
               <div className="absolute inset-0">
                 <SlowMotionVideo
                   src={ASSET_PATH("/commercial-ev-arial.mp4")}
+                  poster={ASSET_PATH("/images/posters/commercial-ev-arial.webp")}
                   playbackRate={0.8}
                   brightness={0.4}
                   saturation={0.3}
@@ -572,6 +573,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                 muted
                 playsInline
                 preload="metadata"
+                poster={ASSET_PATH(`/images/posters/${page.hero_image.replace(/^\//, '').replace(/\.mp4$/, '.webp')}`)}
                 className="w-full h-full object-cover"
                 aria-label={page.page_title || page.title}
                 style={{
@@ -636,6 +638,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
           <div className="absolute inset-0">
             <SlowMotionVideo
               src={ASSET_PATH("/ev-charging.mp4")}
+              poster={ASSET_PATH("/images/posters/ev-charging.webp")}
               playbackRate={1.0}
               brightness={0.4}
             />

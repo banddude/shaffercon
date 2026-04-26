@@ -151,11 +151,6 @@ export function LocalBusinessSchema({
         url: "https://www.cslb.ca.gov/",
       },
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "150",
-    },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Electrical & General Contracting Services",

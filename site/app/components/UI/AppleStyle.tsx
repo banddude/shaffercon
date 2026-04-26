@@ -13,6 +13,7 @@ interface AppleHeroProps {
   title: string;
   subtitle?: string;
   image?: string;
+  poster?: string;
   imageAlt?: string;
   imageFit?: "cover" | "contain";
   children?: ReactNode;
@@ -23,6 +24,7 @@ export function AppleHero({
   title,
   subtitle,
   image,
+  poster,
   imageAlt,
   imageFit = "cover",
   children,
@@ -48,6 +50,7 @@ export function AppleHero({
               muted
               playsInline
               preload="auto"
+              poster={poster}
               className="w-full h-full object-cover"
               aria-label={imageAlt || title}
               style={{

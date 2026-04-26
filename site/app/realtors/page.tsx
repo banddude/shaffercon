@@ -92,6 +92,7 @@ export default function RealtorsPage() {
         title="Repair Estimates for Real Estate Agents"
         subtitle="Honest numbers during escrow. No padding, no upselling."
         image={ASSET_PATH("/hero-background-optimized.mp4")}
+        poster={ASSET_PATH("/images/posters/hero-background-optimized.webp")}
         imageAlt="Shaffer Construction repair estimates for real estate agents"
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

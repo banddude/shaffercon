@@ -217,6 +217,7 @@ export default async function LocationPage({ params }: PageProps) {
             muted
             playsInline
             preload="metadata"
+            poster={ASSET_PATH("/images/posters/ev-charging.webp")}
             className="w-full h-full object-cover"
             aria-label="Professional electrical services"
             style={{
