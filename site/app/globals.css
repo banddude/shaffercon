@@ -179,4 +179,22 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Hide iOS Safari's native play button overlay on background videos.
+   * iOS shows a "tap to play" button when autoplay fails (Low Power Mode,
+   * slow connect, etc). For decorative background videos we'd rather show
+   * the still frame than a clickable play button that does nothing useful. */
+  video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+  }
+  video::-webkit-media-controls {
+    display: none !important;
+  }
+  video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+  }
+  video::-webkit-media-controls-panel {
+    display: none !important;
+  }
 }
