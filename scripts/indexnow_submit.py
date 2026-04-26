@@ -42,7 +42,11 @@ def submit(urls):
 
 
 def get_all_sitemap_urls():
-    r = urllib.request.urlopen(f"https://{HOST}/sitemap.xml", timeout=15)
+    req = urllib.request.Request(
+        f"https://{HOST}/sitemap.xml",
+        headers={"User-Agent": "ShafferconIndexNow/1.0"},
+    )
+    r = urllib.request.urlopen(req, timeout=15)
     ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
     return [el.text for el in ET.fromstring(r.read()).iter(f"{ns}loc")]
 
