@@ -45,7 +45,7 @@ export default function ServiceAreaLinks({ location }: ServiceAreaLinksProps) {
           <ul className="list-disc pl-6 space-y-2">
             {residential.map((service, index) => (
               <li key={index}>
-                <Link href={`/service-areas/${location}/residential-${service.service_name}`} className={classNames.link}>
+                <Link href={`/service-areas/${location}/residential-${service.service_name}/`} className={classNames.link}>
                   {formatServiceName(service.service_name)}
                 </Link>
               </li>
@@ -62,7 +62,7 @@ export default function ServiceAreaLinks({ location }: ServiceAreaLinksProps) {
           <ul className="list-disc pl-6 space-y-2">
             {commercial.map((service, index) => (
               <li key={index}>
-                <Link href={`/service-areas/${location}/commercial-${service.service_name}`} className={classNames.link}>
+                <Link href={`/service-areas/${location}/commercial-${service.service_name}/`} className={classNames.link}>
                   {formatServiceName(service.service_name)}
                 </Link>
               </li>

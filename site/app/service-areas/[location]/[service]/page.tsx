@@ -255,7 +255,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       <BreadcrumbSchema
         items={[
           { label: "Service Areas", href: "/service-areas" },
-          { label: locationName, href: `/service-areas/${location}` },
+          { label: locationName, href: `/service-areas/${location}/` },
           { label: fullServiceName }
         ]}
       />
@@ -478,7 +478,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                       return (
                         <li key={index}>
                           <a
-                            href={`/service-areas/${location}/${serviceSlug}`}
+                            href={`/service-areas/${location}/${serviceSlug}/`}
                             className="flex items-center gap-3 p-4 rounded-lg transition-all hover:translate-x-1"
                             style={{
                               background: "var(--background)",
@@ -508,7 +508,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     {page.nearbyAreas.map((area: string, index: number) => (
                       <li key={index}>
                         <a
-                          href={`/service-areas/${area.toLowerCase().replace(/\s+/g, '-')}/${service}`}
+                          href={`/service-areas/${area.toLowerCase().replace(/\s+/g, '-')}/${service}/`}
                           className="flex items-center gap-3 p-4 rounded-lg transition-all hover:translate-x-1"
                           style={{
                             background: "var(--background)",

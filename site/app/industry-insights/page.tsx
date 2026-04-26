@@ -53,7 +53,7 @@ export default async function IndustryInsightsPage() {
               return (
                 <Link
                   key={post.slug}
-                  href={`/industry-insights/${post.slug}`}
+                  href={`/industry-insights/${post.slug}/`}
                   className={classNames.blogCard}
                 >
                   {/* Hero Image */}

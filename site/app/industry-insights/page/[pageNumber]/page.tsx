@@ -91,7 +91,7 @@ export default async function IndustryInsightsPaginatedPage({ params }: PageProp
               return (
                 <Link
                   key={post.slug}
-                  href={`/industry-insights/${post.slug}`}
+                  href={`/industry-insights/${post.slug}/`}
                   className={classNames.blogCard}
                 >
                   {post.ogImage && (
