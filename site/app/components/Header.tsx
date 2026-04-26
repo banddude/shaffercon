@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { classNames, theme } from "@/app/styles/theme";
 import CTAButton from "@/app/components/CTAButton";
-import { ASSET_PATH } from "@/app/config";
+import { ASSET_PATH, telHref } from "@/app/config";
 import type { MenuStructure, SiteConfig } from "@/lib/db";
 
 interface HeaderProps {
@@ -187,7 +187,7 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
           >
             <div className="flex items-center justify-between px-3 py-2">
               <a
-                href={`tel:${menuData.phone}`}
+                href={telHref(menuData.phone)}
                 className="font-medium transition-colors whitespace-nowrap"
                 style={{
                   color: "var(--primary)",

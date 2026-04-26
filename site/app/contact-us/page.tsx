@@ -5,7 +5,7 @@ import ContactForm from "@/app/components/ContactForm";
 import { Section, Container, SectionHeading } from "@/app/components/UI";
 import { AppleButton } from "@/app/components/UI/AppleStyle";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
-import { ASSET_PATH } from "@/app/config";
+import { ASSET_PATH, telHref } from "@/app/config";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 // Generate metadata
@@ -75,7 +75,7 @@ export default function ContactPage() {
               Ready to start your electrical project? Contact us for a free consultation and estimate.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <AppleButton href="tel:(323) 642-8509" variant="primary" size="lg">
+              <AppleButton href="tel:+13236428509" variant="primary" size="lg">
                 <Phone className="w-5 h-5 mr-2" />
                 Call (323) 642-8509
               </AppleButton>
@@ -96,7 +96,7 @@ export default function ContactPage() {
             <div className="p-6 rounded-2xl text-center" style={{ background: "var(--background)", border: "1px solid var(--section-border)" }}>
               <Phone className="w-12 h-12 mx-auto mb-4" style={{ color: "var(--primary)" }} />
               <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text)" }}>Phone</h3>
-              <a href={`tel:${siteConfig.contact.phone}`} className="text-lg" style={{ color: "var(--secondary)" }}>
+              <a href={telHref(siteConfig.contact.phone)} className="text-lg" style={{ color: "var(--secondary)" }}>
                 {siteConfig.contact.phone}
               </a>
             </div>
@@ -149,7 +149,7 @@ export default function ContactPage() {
               Shaffer Construction is a Los Angeles licensed electrical and general contractor: California CSLB License #994593, with A General Engineering, B General Building, and C-10 Electrical classifications under one license. We&apos;ve been serving the LA area for 25+ years across more than 1,000 projects.
             </p>
             <p className="text-lg mb-4" style={{ color: "var(--secondary)" }}>
-              When you call <a href={`tel:${siteConfig.contact.phone}`} style={{ color: "var(--primary)" }}>{siteConfig.contact.phone}</a> during business hours, you&apos;ll talk to our office team, not a national call center. We&apos;ll ask a few quick questions about your project (residential or commercial, what kind of work, your address) and get back to you with a free quote, usually same-day.
+              When you call <a href={telHref(siteConfig.contact.phone)} style={{ color: "var(--primary)" }}>{siteConfig.contact.phone}</a> during business hours, you&apos;ll talk to our office team, not a national call center. We&apos;ll ask a few quick questions about your project (residential or commercial, what kind of work, your address) and get back to you with a free quote, usually same-day.
             </p>
             <h3 className="text-2xl font-bold mt-8 mb-4" style={{ color: "var(--text)" }}>
               Active Service Lines

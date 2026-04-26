@@ -94,7 +94,7 @@ export default async function ServiceAreasPage() {
               Professional electrical services across Los Angeles County and statewide multi-location facilities
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <AppleButton href="tel:(323) 642-8509" variant="primary" size="lg">
+              <AppleButton href="tel:+13236428509" variant="primary" size="lg">
                 <Phone className="w-5 h-5 mr-2" />
                 Call (323) 642-8509
               </AppleButton>

@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { telHref } from "@/app/config";
 
 interface CTAButtonProps {
   phone: string;
@@ -12,7 +13,7 @@ export default function CTAButton({ phone }: CTAButtonProps) {
 
   return (
     <a
-      href={`tel:${phone}`}
+      href={telHref(phone)}
       className="px-4 py-2 font-medium whitespace-nowrap transition-colors"
       style={{
         color: "var(--primary)",

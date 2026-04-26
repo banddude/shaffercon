@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { telHref } from "@/app/config";
 import type { SiteConfig } from "@/lib/db";
 import { Home, Phone, Mail, Clock, MapPin, FileCheck, Facebook, Instagram } from "lucide-react";
 import { trackPhoneClick, trackEmailClick } from "@/app/lib/analytics";
@@ -54,7 +55,7 @@ export default function Footer({ siteConfig }: FooterProps) {
             <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
               <li>
                 <a
-                  href={`tel:${config.contact.phone}`}
+                  href={telHref(config.contact.phone)}
                   className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1.5"
                   onClick={() => trackPhoneClick(config.contact.phone, 'Footer')}
                 >
