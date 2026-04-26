@@ -145,7 +145,7 @@ def gen_one(prompt, max_retries=4):
     for attempt in range(max_retries):
         try:
             result = subprocess.run(
-                ["claude", "-p"],
+                ["claude", "-p", "--model", "claude-haiku-4-5-20251001"],
                 input=prompt,
                 capture_output=True,
                 text=True,

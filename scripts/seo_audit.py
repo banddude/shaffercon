@@ -98,9 +98,14 @@ def audit_page(url):
         findings["robots"] = robots
         findings["noindex"] = "noindex" in robots.lower()
 
-        # H1
-        m = re.search(r"<h1[^>]*>([^<]+)</h1>", html, re.I)
-        findings["h1"] = (m.group(1).strip() if m else "")
+        # H1 (handle Next.js <!-- --> hydration markers + nested tags)
+        m = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.I | re.DOTALL)
+        if m:
+            h1_text = re.sub(r"<!--.*?-->", "", m.group(1))
+            h1_text = re.sub(r"<[^>]+>", "", h1_text).strip()
+            findings["h1"] = h1_text
+        else:
+            findings["h1"] = ""
 
         # Visible text word count (rough)
         text = re.sub(r"<script[^>]*>[\s\S]*?</script>", "", html, flags=re.I)
