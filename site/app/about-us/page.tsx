@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = 'https://shaffercon.com';
   const url = `${baseUrl}/about-us`;
   const title = "About Us - Los Angeles Electrical Contractor | Shaffer Construction";
-  const description = "Learn about Shaffer Construction, Southern California's premier EV charging and electrical installation experts. Serving Los Angeles County with decades of experience.";
+  const description = "Shaffer Construction: licensed LA electrical & general contractor. CSLB #994593. 25+ years, 1,000+ projects, owner-operated. Free quote: (323) 642-8509.";
 
   return {
     title,

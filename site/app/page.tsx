@@ -17,7 +17,7 @@ import { Zap, Home as HomeIcon, Lightbulb, Leaf, CheckCircle, Settings, Cable, B
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = 'https://shaffercon.com';
   const title = "Los Angeles Electrical Contractor - EV Charging & Electrical Installations";
-  const description = "Leading Los Angeles electrical contractor specializing in EV charging solutions and professional electrical services for residential and commercial properties.";
+  const description = "LA electrical contractor: EV chargers, panel upgrades, residential & commercial electrical, fire rebuilds. 25+ years, 1,000+ projects. Free quote: (323) 642-8509.";
 
   return {
     title,

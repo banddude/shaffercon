@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const url = `${baseUrl}/realtors`;
   const title = "Repair Estimates for Real Estate Agents | Shaffer Construction";
   const description =
-    "Licensed electricians and general contractors offering repair estimates during escrow. Honest numbers for buyers and sellers in East LA and Silver Lake.";
+    "Licensed LA electricians for escrow repair estimates. Honest numbers, fast turnaround for realtors and clients. Free quote: (323) 642-8509.";
 
   return {
     title,
