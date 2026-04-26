@@ -18,9 +18,18 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
     phone: "",
     address: "",
     message: "",
+    // Honeypot field — humans never see this, bots fill it. If it's not
+    // empty when the form submits, we reject. Named generically to look
+    // like a real field bots want to autofill.
+    website: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
+
+  // Track when the form rendered. Bot tools typically submit within
+  // milliseconds of page load; humans take seconds. Submissions under
+  // 3 seconds are treated as suspicious.
+  const [renderedAt] = useState<number>(() => Date.now());
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -32,6 +41,21 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Honeypot check: only bots fill this hidden field
+    if (formData.website) {
+      // Pretend we succeeded so the bot moves on.
+      setSubmitted(true);
+      return;
+    }
+
+    // Time check: real humans take more than 3 seconds to fill out a form
+    const elapsed = Date.now() - renderedAt;
+    if (elapsed < 3000) {
+      // Suspicious — pretend success but don't actually submit
+      setSubmitted(true);
+      return;
+    }
 
     try {
       // Submit to Cloudflare Worker (GitHub token is secure on the server)
@@ -61,6 +85,7 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
           phone: "",
           address: "",
           message: "",
+          website: "",
         });
       } else {
         throw new Error('Failed to submit');
@@ -94,6 +119,20 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Honeypot — hidden from humans, autofilled by bots. tabindex=-1
+            and aria-hidden keep accessible tools from interacting with it. */}
+        <div style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }} aria-hidden="true">
+          <label htmlFor="website">Website (leave blank)</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="firstName" className="block text-sm font-semibold mb-2" style={{ color: "var(--text)" }}>
