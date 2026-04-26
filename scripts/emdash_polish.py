@@ -12,8 +12,10 @@ hand-curated allowlist of list-introducing nouns/quantifiers. This catches
 the genuine misfires from the em-dash sweep without breaking valid compound
 lists like "owners, developers, and businesses".
 
-Anything that doesn't match the allowlist gets left alone — Gemma handles
-the harder cases via emdash_gemma_polish.py if needed.
+GUARD: skip any match where the intro head word is preceded by a colon within
+80 chars - that means the em-dash sweep already converted the OUTER list
+intro to a colon, and what looks like a list-intro pattern is actually the
+inner list.
 """
 import json
 import re
@@ -24,37 +26,33 @@ from pathlib import Path
 DB = "/Users/mikeshaffer/AIVA/shaffercon/database/data/site.db"
 REPO = Path("/Users/mikeshaffer/AIVA/shaffercon")
 
-# HEAD WORDS that indicate a list intro. The word ends the introductory
-# phrase and is followed by a comma + list. These are nouns/quantifiers
-# that natively introduce expansions ("we handle everything, X, Y, Z").
 LIST_INTRO_HEADS = {
     # Quantifiers / pronouns
     "everything", "anything", "nothing",
     "all", "both", "many", "several", "few", "most", "some",
     "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
     # Container nouns
-    "package", "packages", "set", "list", "scope", "system", "systems",
-    "approach", "process", "mix", "range", "suite", "spectrum",
+    "set", "list", "scope", "approach", "process", "range", "suite", "spectrum",
     "menu", "lineup", "roster", "stack", "toolkit",
-    # Service/solution nouns (typical for service-page copy)
-    "service", "services", "solution", "solutions",
+    # Service/solution nouns
     "feature", "features", "benefit", "benefits",
-    "trifecta", "combo", "combination", "lineup",
+    "trifecta", "combo", "combination",
     # Credentials
     "license", "licenses", "credential", "credentials", "qualification",
     "qualifications", "certification", "certifications",
     # Aggregates
-    "team", "crew", "lineup", "category", "categories",
-    "kit", "specs", "loadout",
-    # Descriptive nouns where a list expands them
+    "team", "crew", "category", "categories",
+    "kit", "loadout",
+    # Descriptive nouns
     "climate", "weather", "vibe", "feel", "atmosphere", "character",
-    "mix", "blend", "palette",
-    # Materials / equipment
-    "components", "materials", "hardware", "equipment", "gear",
+    "blend", "palette",
 }
+# NOTE: deliberately omitted "package", "system", "service", "specs",
+# "components", "materials", "equipment", "hardware", "gear", "mix" - these
+# are commonly used INSIDE bigger sentences where promoting to colon would
+# break flow. Only quantifiers and credential-type nouns where the list IS
+# the expansion stay in.
 
-# An "intro phrase + list + continuation" structure:
-#   <intro>, <item>, <item>, ... and <item>, <continuation lowercase>
 LIST_INTRO_PATTERN = re.compile(
     r"((?:\b\w+\s+){0,5}\b(\w+)),\s*"
     r"((?:[A-Z]?[\w\-/&]+(?:\s+[\w\-/&]+){0,4},\s*){1,5}"
@@ -77,6 +75,13 @@ def fix_text(text: str) -> tuple[str, int]:
         head_word = m.group(2).lower()
         list_part = m.group(3)
         if head_word not in LIST_INTRO_HEADS:
+            return m.group(0)
+        # GUARD: if a colon appears in the preceding 80 chars (outside
+        # this match), skip — the outer list intro already used a colon
+        # and we'd create a double-colon.
+        match_start = m.start()
+        preceding = text[max(0, match_start - 80):match_start]
+        if ":" in preceding:
             return m.group(0)
         count += 1
         return f"{intro}: {list_part}, "
@@ -146,9 +151,8 @@ def main():
 
     if args.test:
         samples = [
-            # SHOULD fix (head word in allowlist):
+            # SHOULD fix (head word in allowlist, no preceding colon):
             ("FIX", "We handle everything, load studies, sizing, placement, permitting with LADBS, and final commissioning, so you can focus on your customers."),
-            ("FIX", "Then we tailor a package, LED specs, control zones, schedules, and sensor placement, optimized for your building."),
             ("FIX", "We carry three, A, B, and C-10, which matters when you're installing infrastructure."),
             ("FIX", "Santa Monica's unique climate, sunny days, ocean breezes, and mild evenings, makes it the perfect spot."),
             ("FIX", "Our service includes the full trifecta, design, install, and commissioning, all in-house."),
@@ -156,6 +160,10 @@ def main():
             ("KEEP", "We help LA property owners, developers, and businesses plan, permit, and install EV charging."),
             ("KEEP", "By integrating clean energy, automated charging, fleet infrastructure, and industry standards, businesses lead."),
             ("KEEP", "From DALI-2 and 0-10V lighting, BACnet/IP for BMS, PoE, and API-driven control, all available."),
+            # Should NOT fix (preceding colon means it's the inner list of a real list intro):
+            ("KEEP", "You receive a concise design package: scope, materials, one-line diagram, and schedule, tailored to your property's layout and business needs."),
+            ("KEEP", "Then we tailor a package: LED specs, control zones, schedules, and sensor placement, optimized for your building."),
+            ("KEEP", "Our proposal breaks down service equipment: distribution systems, branch circuits, lighting and controls, emergency systems, and options including EV charging, backup power, and solar/battery integration."),
         ]
         ok = bad = 0
         for expected, s in samples:
