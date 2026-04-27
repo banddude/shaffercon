@@ -65,26 +65,30 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
         <div className="flex justify-between lg:justify-center items-center" style={{ height: "80px" }}>
           {/* Logo on mobile/tablet */}
           <Link href="/" className="lg:hidden flex-shrink-0">
-            <Image
-              src={ASSET_PATH("/images/shaffer-logo-mini.png")}
-              alt="Shaffer Construction"
-              width={40}
-              height={40}
-              className="h-auto"
-            />
+            <div className="bg-white/95 rounded-full p-1 shadow-md">
+              <Image
+                src={ASSET_PATH("/images/shaffer-logo-mini.png")}
+                alt="Shaffer Construction"
+                width={36}
+                height={36}
+                className="h-auto block"
+              />
+            </div>
           </Link>
 
           {/* Desktop Navigation and Phone */}
           <div className="hidden lg:flex items-center space-x-0">
             {/* Logo (always visible) */}
             <Link href="/" className="flex-shrink-0 mr-4">
-              <Image
-                src={ASSET_PATH("/images/shaffer-logo-mini.png")}
-                alt="Shaffer Construction"
-                width={40}
-                height={40}
-                className="h-auto"
-              />
+              <div className="bg-white/95 rounded-full p-1 shadow-md">
+                <Image
+                  src={ASSET_PATH("/images/shaffer-logo-mini.png")}
+                  alt="Shaffer Construction"
+                  width={36}
+                  height={36}
+                  className="h-auto block"
+                />
+              </div>
             </Link>
             <nav className="flex items-center space-x-0 whitespace-nowrap">
               {menuData.primaryMenu.map((item) => (
