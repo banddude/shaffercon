@@ -65,12 +65,12 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
         <div className="flex justify-between lg:justify-center items-center" style={{ height: "80px" }}>
           {/* Logo on mobile/tablet */}
           <Link href="/" className="lg:hidden flex-shrink-0">
-            <div className="bg-white/95 rounded-full p-1 shadow-md">
+            <div className="bg-white rounded-full p-2 shadow-md">
               <Image
                 src={ASSET_PATH("/images/shaffer-logo-mini.png")}
                 alt="Shaffer Construction"
-                width={36}
-                height={36}
+                width={32}
+                height={32}
                 className="h-auto block"
               />
             </div>
@@ -80,12 +80,12 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
           <div className="hidden lg:flex items-center space-x-0">
             {/* Logo (always visible) */}
             <Link href="/" className="flex-shrink-0 mr-4">
-              <div className="bg-white/95 rounded-full p-1 shadow-md">
+              <div className="bg-white rounded-full p-2 shadow-md">
                 <Image
                   src={ASSET_PATH("/images/shaffer-logo-mini.png")}
                   alt="Shaffer Construction"
-                  width={36}
-                  height={36}
+                  width={32}
+                  height={32}
                   className="h-auto block"
                 />
               </div>
