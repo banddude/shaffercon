@@ -1,0 +1,314 @@
+{
+  "generatedAt": "2026-04-27T20:11:22.401Z",
+  "generatedFromHost": "mike.local",
+  "summary": {
+    "moduleCount": 62,
+    "docsTracked": 28,
+    "staleDocs": 0,
+    "dirtyRepos": 1,
+    "latestMemoryNote": "2026-04-27.md"
+  },
+  "northStar": {
+    "platform": "officeadmin.io",
+    "runtime": "AIVA owns orchestration and shared runtime state",
+    "memory": "MemPalace owns long term graph memory",
+    "workspace": "mikeshaffer owns durable work memory and entity docs",
+    "note": "This page is generated from files and code the local build can actually see."
+  },
+  "authorityMap": [
+    {
+      "domain": "Identity",
+      "authority": "Apple Contacts",
+      "mirror": "mikeshaffer entity links, identity bridge",
+      "notes": "Contacts anchors people and orgs, entity folders hold work state."
+    },
+    {
+      "domain": "Live email",
+      "authority": "Gmail",
+      "mirror": "Stalwart archive and exports",
+      "notes": "Archive is not the live source of truth."
+    },
+    {
+      "domain": "Team docs",
+      "authority": "Google Drive, current state",
+      "mirror": "cold archive on AIVA storage",
+      "notes": "Current recommendation is keep live collaboration there until intentional migration."
+    },
+    {
+      "domain": "Durable work memory",
+      "authority": "mikeshaffer repo",
+      "mirror": "GitHub history and backups",
+      "notes": "Bids, notes, summaries, drafts, entity work records belong here."
+    },
+    {
+      "domain": "Long term recall",
+      "authority": "MemPalace",
+      "mirror": "docs and extracted notes reference it",
+      "notes": "AIVA wraps and queries it, OpenClaw feeds it through sessions."
+    }
+  ],
+  "roots": [
+    {
+      "name": ".aiva",
+      "purpose": "module system, generated CLIs, shared runtime state",
+      "locationLabel": ".aiva",
+      "present": true,
+      "kind": "directory",
+      "size": "576 B"
+    },
+    {
+      "name": "mikeshaffer",
+      "purpose": "durable workspace, entities, docs, notes, bids",
+      "locationLabel": "mikeshaffer",
+      "present": true,
+      "kind": "directory",
+      "size": "1.6 KB"
+    },
+    {
+      "name": ".mempalace",
+      "purpose": "knowledge graph and vector memory",
+      "locationLabel": ".mempalace",
+      "present": false,
+      "kind": "missing",
+      "size": null
+    },
+    {
+      "name": ".openclaw",
+      "purpose": "chat runtime, sessions, cron, plugin ecosystem",
+      "locationLabel": ".openclaw",
+      "present": false,
+      "kind": "missing",
+      "size": null
+    },
+    {
+      "name": "Stalwart Archive",
+      "purpose": "mail archive mirror",
+      "locationLabel": "stalwart",
+      "present": false,
+      "kind": "missing",
+      "size": null
+    },
+    {
+      "name": "External Archive",
+      "purpose": "cold archive and media storage",
+      "locationLabel": "MIKES HD",
+      "present": false,
+      "kind": "missing",
+      "size": null
+    }
+  ],
+  "repos": [
+    {
+      "name": "AIVA Runtime",
+      "role": "shared runtime host code and state surfaces",
+      "present": true,
+      "branch": "main",
+      "dirty": false,
+      "modifiedCount": 0,
+      "untrackedCount": 0,
+      "lastCommitDate": "2026-04-25"
+    },
+    {
+      "name": "MikeShaffer",
+      "role": "durable work memory, entities, notes, bids, drafts",
+      "present": true,
+      "branch": "main",
+      "dirty": false,
+      "modifiedCount": 0,
+      "untrackedCount": 0,
+      "lastCommitDate": "2026-04-27"
+    },
+    {
+      "name": "Shaffercon Site",
+      "role": "public web frontend currently hosting this dashboard route",
+      "present": true,
+      "branch": "main",
+      "dirty": true,
+      "modifiedCount": 2,
+      "untrackedCount": 16,
+      "lastCommitDate": "2025-12-19"
+    }
+  ],
+  "archives": [
+    {
+      "name": "Google Drive Archive",
+      "role": "cold archive for Google Workspace Drive content",
+      "locationLabel": "gws-drive-archive",
+      "present": false,
+      "size": null
+    },
+    {
+      "name": "Gmail Takeout",
+      "role": "point in time Gmail backup",
+      "locationLabel": "gmail-takeout-2025-11",
+      "present": false,
+      "size": null
+    },
+    {
+      "name": "Mail Archive Test",
+      "role": "email archive experimentation surface",
+      "locationLabel": "mail-archive-test",
+      "present": false,
+      "size": null
+    },
+    {
+      "name": "Stalwart Mail Mirror",
+      "role": "live mirrored mail archive",
+      "locationLabel": "stalwart",
+      "present": false,
+      "size": null
+    }
+  ],
+  "docs": [
+    {
+      "title": "AGENTS",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "AKAUNTING",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "AUTH",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "BUSINESS",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "CONVENTIONS",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "DOCTRINE",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "DREAMING",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "HOW-TO",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "INDEX",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "MACHINES",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "MCP-SERVER",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    },
+    {
+      "title": "MEMORY-SYSTEM",
+      "status": "work-in-progress",
+      "confidence": "HIGH",
+      "lastVerified": "2026-04-19",
+      "ageDays": 8
+    }
+  ],
+  "recentNotes": [
+    {
+      "name": "2026-04-27.md",
+      "modifiedAt": "2026-04-27T17:05:10.679Z"
+    },
+    {
+      "name": "2026-04-26.md",
+      "modifiedAt": "2026-04-26T14:38:47.256Z"
+    },
+    {
+      "name": "2026-04-25.md",
+      "modifiedAt": "2026-04-25T14:41:53.427Z"
+    },
+    {
+      "name": ".convo-cleanup-applied-log.md",
+      "modifiedAt": "2026-04-25T02:36:23.011Z"
+    },
+    {
+      "name": "HAIKU-CONVO-CLEANUP-WORKLOG.md",
+      "modifiedAt": "2026-04-25T02:36:23.011Z"
+    },
+    {
+      "name": "CONVO-CLEANUP-REVIEW.md",
+      "modifiedAt": "2026-04-24T23:46:15.368Z"
+    },
+    {
+      "name": "HAIKU-CONVO-CLEANUP-BRIEF.md",
+      "modifiedAt": "2026-04-24T23:46:15.368Z"
+    },
+    {
+      "name": "2026-04-24.md",
+      "modifiedAt": "2026-04-24T23:46:15.367Z"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "label": "System Overview",
+      "locationLabel": "SYSTEM-OVERVIEW.md",
+      "present": true
+    },
+    {
+      "label": "Memory Map",
+      "locationLabel": "MEMORY-MAP.md",
+      "present": true
+    },
+    {
+      "label": "Data Sources",
+      "locationLabel": "DATA-SOURCES.md",
+      "present": true
+    },
+    {
+      "label": "System Requirements",
+      "locationLabel": "SYSTEM_REQUIREMENTS.md",
+      "present": true
+    },
+    {
+      "label": "Entity Model Spec",
+      "locationLabel": "ENTITY_MODEL_SPEC.md",
+      "present": true
+    },
+    {
+      "label": "Memory Folder",
+      "locationLabel": "memory",
+      "present": true
+    }
+  ]
+}
