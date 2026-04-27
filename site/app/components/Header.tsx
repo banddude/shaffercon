@@ -68,8 +68,8 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
             <Image
               src={ASSET_PATH("/images/shaffer-logo-mini.png")}
               alt="Shaffer Construction"
-              width={40}
-              height={40}
+              width={27}
+              height={27}
               className="h-auto"
             />
           </Link>
@@ -81,8 +81,8 @@ export default function Header({ menuData, siteConfig }: HeaderProps) {
               <Image
                 src={ASSET_PATH("/images/shaffer-logo-mini.png")}
                 alt="Shaffer Construction"
-                width={40}
-                height={40}
+                width={27}
+                height={27}
                 className="h-auto"
               />
             </Link>
