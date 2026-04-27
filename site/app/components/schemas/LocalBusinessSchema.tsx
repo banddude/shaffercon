@@ -80,7 +80,14 @@ export function LocalBusinessSchema({
         "opens": "08:00",
         "closes": "17:00"
       }
-    ]
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "6",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
   };
 
   // Filter out undefined values from schema
