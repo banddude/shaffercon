@@ -33,7 +33,7 @@ export default function CTA({
         <div
           className="w-full h-full cta-bg-image"
           style={{
-            backgroundImage: `url(${ASSET_PATH("/brand-assets/img_2649.jpg")})`,
+            backgroundImage: `url(${ASSET_PATH("/brand-assets/img_2649.webp")})`,
             backgroundSize: "cover",
             backgroundPosition: "center center",
             filter: "brightness(0.4)",
