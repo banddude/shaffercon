@@ -59,14 +59,8 @@ export function LocalBusinessSchema({
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "07:00",
-      closes: "18:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Saturday",
       opens: "08:00",
-      closes: "16:00",
+      closes: "17:00",
     },
   ];
 
@@ -213,8 +207,8 @@ export function LocalBusinessSchema({
     },
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "6",
+      ratingValue: "4.85",
+      reviewCount: "25",
       bestRating: "5",
       worstRating: "1",
     },
