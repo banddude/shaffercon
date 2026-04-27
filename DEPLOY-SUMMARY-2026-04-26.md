@@ -223,3 +223,117 @@ auto-deployed.
 
 ## Bottom line
 Every single critical SEO/structural issue from the GSC export has been addressed. All four Lighthouse categories now green. Content quality on rendered pages is genuinely excellent — local landmarks, technical depth, no AI-tell em-dashes, no clichés. Once Google re-crawls (we requested priority indexing on top pages), the indexability picture should improve dramatically.
+
+---
+
+## Session 2 (2026-04-26 evening — comprehensive sweep)
+
+**Goal:** "Is there anything else we can/need to do?" — full sweep of remaining
+SEO/function items.
+
+### Title length crisis fixed
+
+- Avg title 78ch → 55ch
+- ≥70ch went from **1,116 (89%) → 85 (7%)**
+- Fixed 314 blog posts with double "| Shaffer Construction" suffix
+- Set proper SEO titles for 22 location pages
+- Used `title.absolute` on service detail + location + blog pages to drop
+  the 23-char brand suffix that ate cutoff space (Google adds brand on
+  its own in SERPs)
+- Fixed "Ev"/"Av" → "EV"/"AV" capitalization in service titles
+
+### Internal link audit (zero state)
+
+Crawled all 1,250 sitemap pages, extracted every internal href, tested each.
+
+| Metric | Before | After |
+|---|---|---|
+| 200 OK | 1,254 | 1,254 |
+| 301/302 redirects | 919 | **0** |
+| 404 dead | 2 | **0** |
+
+Fixed 6 source-code href templates that were missing trailing slashes
+(service-areas pages, ServiceAreaLinks, blog index, blog pagination,
+service detail). Then mopped up 25 remaining redirect-causing links in
+blog content (outdated slugs `/ev-charger-installation`, `/led-lighting-installation`,
+`/electrical-services` going through 301s; one wrong-slug blog link;
+trailing slashes on `/industry-insights/...`).
+
+Every internal link now resolves directly to a live page in one hop.
+
+### Cloudflare cache rules
+
+Created entrypoint cache_rules ruleset (Free plan compatible):
+- `/_next/static/*` → 1 year cache (immutable hashed assets)
+- All `.webp/.avif/.jpg/.jpeg/.png/.svg/.gif` → 30 days
+- All `.mp4/.webm/.woff2/.woff/.ttf/.otf/.ico` → 30 days
+- HTML stays at 600s (10 min) for fast updates
+
+Lighthouse "Use efficient cache lifetimes" warning fully resolved.
+
+### www → apex redirect
+
+319 of 339 blog posts had broken `www.shaffercon.com` links — the www
+CNAME was unproxied through Cloudflare and GitHub Pages doesn't accept
+www. requests. Fixed both:
+
+1. Content fix: replaced `www.shaffercon.com` → `shaffercon.com` in all
+   319 affected blog post JSON files.
+2. Infrastructure: enabled Cloudflare proxying on the www CNAME and
+   added a redirect ruleset that 301s `www.shaffercon.com/*` →
+   `shaffercon.com/*` (path and query preserved).
+
+### Trailing slashes everywhere
+
+- `layout.tsx` authors URL: missing trailing slash on every page
+- 1,166 hrefs across 247 blog post content fields
+- 6 source-code href templates in 3 files
+- 7 more in 4 more files (service detail, ServiceAreaLinks, blog index, pagination)
+
+### OG image fixes
+
+Audited all 90 unique OG images. 38 were too small or wrong aspect
+(portraits 960x1280, icons 180x180, headshots, logos used as OG).
+Affected 72 of 339 blog posts. Replaced across rotation of 8 known-good
+1200+w landscape EV charger photos.
+
+### GLM-tighten complete
+
+119 long titles + 25 long descriptions tightened against GLM-5.1.
+All blog posts now have rendered titles ≤60ch in mobile SERPs.
+
+### Homepage perf optimization
+
+Lighthouse mobile homepage Perf was 84 (LCP 4.4s). Diagnosed and fixed:
+
+- **hero-background-optimized.mp4: 3.9 MB → 1.5 MB** (60% reduction)
+  Re-encoded at 960x540 / CRF 28 / no audio. Hero shown with
+  brightness:0.4 filter so resolution drop is invisible.
+- **/brand-assets/img_2649.jpg: 307 KB → 134 KB** (56% reduction)
+  Converted to WebP at quality 80; updated CTA.tsx.
+- **shaffer-logo-mini.png: 171×180 → 54×54** (5.2 KB → 2.1 KB)
+- Re-compressed all hero poster WebPs at quality 70.
+
+Total page weight on homepage cut by ~2.5 MB.
+
+### Image alt text audit
+
+Sampled 50 random pages, 222 images checked:
+- 0 missing alt
+- 0 empty alt=""
+- 100 logo refs (legitimate)
+- 122 descriptive alt text
+- 0 generic alt issues
+
+### External link security
+
+All `target="_blank"` external links already have `rel="noopener noreferrer"`.
+
+### Verified clean
+
+- All 118 dead-URL Cloudflare bulk redirects working
+- robots.txt allows everything important + AI crawlers
+- 404 page returns proper 404 status code (not 200)
+- Schema validated across 9 page types: 0 invalid
+- Lighthouse mobile: SEO 100, A11y 96, BP 100 across all tested pages
+
