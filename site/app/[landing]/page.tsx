@@ -50,8 +50,8 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Commercial EV Charger Installation',
       hero_text: "Connect with California's premier commercial electric vehicle charger installation experts. Serving businesses statewide with single-site and multi-location rollouts. At Shaffer Construction, we offer comprehensive EV charging solutions from initial load studies through installation and maintenance. Our experienced team specializes in large-scale deployments for retail chains, warehouses, fleet operations, and commercial properties throughout California.",
       hero_image: '/commercial-ev-hero.mp4',
-      meta_title: 'Commercial EV Charger Installation Los Angeles',
-      meta_description: "California commercial EV charger installation: Level 2 & DC fast charging for fleets, retail, multifamily. Licensed since 2000. Free quote: (323) 642-8509.",
+      meta_title: 'Commercial EV Charger Installation Los Angeles, Fleet & Multifamily',
+      meta_description: 'Commercial EV charger installation in Los Angeles for fleets, retail, multifamily, and workplaces. Load studies, permits, Level 2 and DC fast charging.',
       canonical_url: null,
       og_image: null,
       sections: [
@@ -122,8 +122,8 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Professional Electrical Load Study Services',
       hero_text: 'Make informed decisions about your electrical infrastructure with comprehensive load studies. Essential for EV charger installations, equipment additions, and capacity planning. We deliver professional documentation suitable for engineering review, permit applications, and utility coordination throughout California.',
       hero_image: '/ev-charging.mp4',
-      meta_title: 'Electrical Load Studies Los Angeles, Stamped Reports',
-      meta_description: 'LA stamped electrical load studies for EV charging, panel upgrades, tenant improvements. In-house engineering, fast turnaround. Free quote: (323) 642-8509.',
+      meta_title: 'Electrical Load Study Los Angeles, EV & Panel Reports',
+      meta_description: 'Electrical load studies in Los Angeles for EV chargers, panel upgrades, tenant improvements, and utility coordination. Reports for permits and planning.',
       sections: [
         {
           section_type: 'info_card',
