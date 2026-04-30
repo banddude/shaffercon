@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
 
     steps:
       - name: Checkout repository
@@ -52,3 +53,33 @@ jobs:
           git add leads/
           git commit -m "📬 New contact from ${{ github.event.client_payload.firstName }} ${{ github.event.client_payload.lastName }} (${{ github.event.client_payload.email }})"
           git push origin leads
+
+      - name: Open lead notification issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const p = context.payload.client_payload;
+            const title = `📬 Lead: ${p.firstName} ${p.lastName} (${p.email})`;
+            const body = [
+              `@banddude new contact form submission.`,
+              ``,
+              `**Name:** ${p.firstName} ${p.lastName}`,
+              `**Email:** ${p.email}`,
+              `**Phone:** ${p.phone || '(not provided)'}`,
+              `**Address:** ${p.address || '(not provided)'}`,
+              ``,
+              `**Message:**`,
+              ``,
+              '```',
+              p.message || '(no message)',
+              '```',
+              ``,
+              `Close this issue once you've replied to the lead.`,
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['lead'],
+            });
