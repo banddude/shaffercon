@@ -1,4 +1,33 @@
-# Cloudflare Worker Setup for Contact Form
+# Cloudflare Workers
+
+This directory contains the Cloudflare Workers used by shaffercon.com.
+
+## SEO Redirect Worker
+
+`shaffercon-seo-redirects.js` handles old WordPress and deleted service URLs that still appear in Google Search Console. It returns real `301` redirects for known legacy paths and passes every other request through to GitHub Pages unchanged.
+
+Current routes:
+
+```text
+shaffercon.com/*
+www.shaffercon.com/*
+```
+
+Deploy with the Cloudflare account credentials in Keychain:
+
+```bash
+CLOUDFLARE_EMAIL=$(security find-generic-password -s CLOUDFLARE_EMAIL -w 2>/dev/null || printf 'mikejshaffer@gmail.com')
+CLOUDFLARE_API_KEY=$(security find-generic-password -s CLOUDFLARE_API_KEY -w 2>/dev/null)
+ACCOUNT=8e83fee9ba5b2bf423d5ffddaaee74c6
+
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/workers/scripts/shaffercon-seo-redirects" \
+  -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+  -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+  -H "Content-Type: application/javascript" \
+  --data-binary @cloudflare-workers/shaffercon-seo-redirects.js
+```
+
+## Contact Form Worker
 
 This worker securely handles contact form submissions by keeping the GitHub token server-side.
 
