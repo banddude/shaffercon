@@ -60,6 +60,18 @@ jobs:
           script: |
             const p = context.payload.client_payload;
             const title = `📬 Lead: ${p.firstName} ${p.lastName} (${p.email})`;
+            const label = 'lead';
+            try {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: label,
+                color: '0e8a16',
+                description: 'Contact form lead that needs a reply',
+              });
+            } catch (error) {
+              if (error.status !== 422) throw error;
+            }
             const body = [
               `@banddude new contact form submission.`,
               ``,
@@ -76,10 +88,15 @@ jobs:
               ``,
               `Close this issue once you've replied to the lead.`,
             ].join('\n');
-            await github.rest.issues.create({
+            const issue = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title,
               body,
-              labels: ['lead'],
+              labels: [label],
+              assignees: ['banddude'],
             });
+            await core.summary
+              .addHeading('Lead notification issue created')
+              .addLink(issue.data.html_url, issue.data.html_url)
+              .write();
