@@ -50,7 +50,7 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Commercial EV Charger Installation Los Angeles',
       hero_text: "Commercial EV charging projects need more than a charger on a wall. Shaffer Construction plans, permits, and installs Level 2 and DC fast charging systems for Los Angeles fleets, multifamily properties, retail centers, workplaces, warehouses, and commercial parking facilities. We start with the electrical load study, coordinate the permit path, install the charging infrastructure, and support the site after commissioning.",
       hero_image: '/commercial-ev-hero.mp4',
-      meta_title: 'Commercial EV Charger Installation Los Angeles, Fleet & Multifamily',
+      meta_title: 'Commercial EV Charger Installation Los Angeles',
       meta_description: 'Commercial EV charger installation in Los Angeles for fleets, retail, multifamily, and workplaces. Load studies, permits, Level 2 and DC fast charging.',
       canonical_url: null,
       og_image: null,
@@ -122,7 +122,7 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Electrical Load Study Los Angeles',
       hero_text: 'Before you add EV chargers, upgrade a panel, build out a tenant space, or request more utility capacity, confirm what your electrical system can actually support. Shaffer Construction performs electrical load studies for Los Angeles commercial properties, multifamily buildings, and EV charging projects, with documentation for permits, utility coordination, and project planning.',
       hero_image: '/ev-charging.mp4',
-      meta_title: 'Electrical Load Study Los Angeles, EV & Panel Reports',
+      meta_title: 'Electrical Load Study Los Angeles',
       meta_description: 'Electrical load studies in Los Angeles for EV chargers, panel upgrades, tenant improvements, and utility coordination. Reports for permits and planning.',
       sections: [
         {
@@ -193,8 +193,8 @@ async function getServiceLandingPage(slug: string) {
       slug: 'led-retrofit-services',
       title: 'LED Retrofit Services',
       date: null,
-      meta_title: 'LED Retrofit Services Los Angeles, Commercial Lighting',
-      meta_description: 'LA commercial LED retrofits with 50–70% energy savings. SCE, LADWP, SoCalGas rebate paperwork handled in-house. Free quote: (323) 642-8509.',
+      meta_title: 'LED Retrofit Services Los Angeles',
+      meta_description: 'Commercial LED retrofits in Los Angeles and statewide. Reduce lighting energy use, improve fixtures, and handle rebate paperwork.',
       canonical_url: null,
       og_image: null,
       landing_id: 0,
@@ -270,8 +270,8 @@ async function getServiceLandingPage(slug: string) {
       page_title: 'Statewide Facilities Maintenance Electrical Services',
       hero_text: 'Your single-source electrical maintenance partner across California. From emergency repairs to preventive maintenance programs, Shaffer Construction provides comprehensive electrical services for multi-location facilities. Our experienced teams deliver consistent quality whether you manage retail chains, warehouses, or commercial properties throughout the state.',
       hero_image: '/ev-charging.mp4',
-      meta_title: 'Statewide California Facilities Maintenance Electrical',
-      meta_description: 'Multi-site California facilities electrical: 24/7 emergency, preventive maintenance, single licensed contractor. 25+ years. Free quote: (323) 642-8509.',
+      meta_title: 'Facilities Electrical Maintenance California',
+      meta_description: 'Multi-site electrical maintenance across California for retail, warehouse, commercial, and facility portfolios. Emergency and scheduled service.',
       sections: [
         {
           section_type: 'info_card',
@@ -384,7 +384,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = page.og_image || `${baseUrl}/og-image.jpg`;
 
   return {
-    title: page.meta_title || page.title,
+    title: { absolute: page.meta_title || page.title },
     description: page.meta_description || '',
     alternates: {
       canonical: url,

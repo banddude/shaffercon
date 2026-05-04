@@ -22,12 +22,12 @@ Source: generated from the current Shaffer Construction database and industry in
 
 ## Primary Service Pages
 
-* [Commercial EV Charger Installation Los Angeles](https://shaffercon.com/commercial-electric-vehicle-chargers/): Commercial EV charger installation in Los Angeles for fleets, retail, multifamily, and workplaces. Load studies, permits, Level 2 and DC fast charging.
-* [Home EV Charger Installation Los Angeles](https://shaffercon.com/residential-ev-charger/): Level 2 home EV charger installation in Los Angeles. Panel checks, permits, clean garage wiring, Tesla and universal chargers, licensed electricians.
-* [Electrical Load Study Los Angeles](https://shaffercon.com/electrical-load-studies/): Electrical load studies in Los Angeles for EV chargers, panel upgrades, tenant improvements, and utility coordination. Reports for permits and planning.
-* [LED Retrofit Services](https://shaffercon.com/led-retrofit-services/): LA commercial LED retrofits with 50–70% energy savings. SCE, LADWP, SoCalGas rebate paperwork handled in-house. Free quote: (323) 642-8509.
-* [Statewide Facilities Maintenance Electrical Services](https://shaffercon.com/statewide-facilities-maintenance/): Multi-site California facilities electrical maintenance. 24/7 emergency response, single licensed contractor, 25+ years. Free quote: (323) 642-8509.
-* [Commercial Electrical Services](https://shaffercon.com/commercial-service/): Get expert commercial electrical services in Los Angeles, including EV charger installation and repairs. Reliable support for your business. Free quote!
+* [Commercial EV Charger Installation Los Angeles](https://shaffercon.com/commercial-electric-vehicle-chargers/): Commercial EV charger installation in Los Angeles for fleets, retail, multifamily, workplaces, permits, load studies, Level 2, and DC fast charging.
+* [Home EV Charger Installation Los Angeles](https://shaffercon.com/residential-ev-charger/): Level 2 home EV charger installation in Los Angeles with panel checks, permits, clean wiring, Tesla chargers, and universal chargers.
+* [Electrical Load Study Los Angeles](https://shaffercon.com/electrical-load-studies/): Electrical load studies in Los Angeles for EV chargers, panel upgrades, tenant improvements, permits, utilities, and capacity planning.
+* [LED Retrofit Services](https://shaffercon.com/led-retrofit-services/): Commercial LED retrofits in Los Angeles and statewide. Reduce lighting energy use, improve fixtures, and handle rebate paperwork.
+* [Statewide Facilities Maintenance Electrical Services](https://shaffercon.com/statewide-facilities-maintenance/): Multi-site electrical maintenance across California for retail, warehouse, commercial, and facility portfolios. Emergency and scheduled service.
+* [Commercial Electrical Services](https://shaffercon.com/commercial-service/): Commercial electrical service in Los Angeles for repairs, panels, tenant improvements, lighting, EV chargers, and code corrections.
 
 ## High Value Supporting Guides
 
@@ -37,7 +37,7 @@ Source: generated from the current Shaffer Construction database and industry in
 * [Planning Your EV Charger Installation](https://shaffercon.com/industry-insights/ev-charger-installation-infrastructure-how-to-decide-pay-for-and-plan-your-project/): Planning an EV charger in Los Angeles? Real costs, permitting shortcuts, charger types, and funding for homes, businesses, and multifamily properties.
 * [EV Charger Installation Costs in Los Angeles](https://shaffercon.com/industry-insights/planning-ev-charger-infrastructure-installation-in-los-angeles-costs-options-and-what-to-expect/): LA EV charger installation costs depend on charger level, site infrastructure, and permits. Here's what Los Angeles property owners actually pay.
 * [2025 EV Charging Guide: LA Property Owners](https://shaffercon.com/industry-insights/ev-charging-infrastructure-in-2025-what-property-owners-in-los-angeles-need-to-know/): EV charging transforms LA properties in 2025. Discover new technology options, business models, and what property owners need to know.
-* [Electrical Panel Upgrades in Los Angeles](https://shaffercon.com/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/): Frequent breaker trips? Your LA home's panel may need upgrading for modern demands like EV chargers. Expert installation by Shaffer Construction.
+* [Electrical Panel Upgrades in Los Angeles](https://shaffercon.com/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/): Frequent breaker trips or adding an EV charger? Learn LA panel upgrade costs, permits, LADWP steps, and when to replace outdated equipment.
 
 ## Service Area Pages
 
