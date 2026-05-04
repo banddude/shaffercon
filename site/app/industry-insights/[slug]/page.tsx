@@ -39,6 +39,11 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
       body: "Shaffer Construction handles panel replacements, subpanels, service upgrades, load calculations, permits, utility coordination, and final inspection.",
       href: "/service-areas/hollywood/residential-electrical-panel-upgrades/",
       label: "View panel upgrade service",
+      links: [
+        { href: "/electrical-load-studies/", label: "Electrical load studies" },
+        { href: "/residential-ev-charger/", label: "Home EV charger installation" },
+        { href: "/contact-us/", label: "Request a panel quote" },
+      ],
     };
   }
 
@@ -48,6 +53,11 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
       body: "We help Los Angeles homeowners, property managers, and businesses get electrical work permitted, corrected, inspected, and completed safely.",
       href: "/contact-us/",
       label: "Get permit help",
+      links: [
+        { href: "/commercial-service/", label: "Commercial electrical service" },
+        { href: "/electrical-load-studies/", label: "Load study reports" },
+        { href: "/service-areas/", label: "Local service areas" },
+      ],
     };
   }
 
@@ -57,6 +67,11 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
       body: "Shaffer Construction installs recessed lighting, commercial lighting upgrades, LED retrofits, controls, and code compliant wiring across Los Angeles.",
       href: "/led-retrofit-services/",
       label: "View lighting services",
+      links: [
+        { href: "/commercial-service/", label: "Commercial electrician" },
+        { href: "/statewide-facilities-maintenance/", label: "Facilities maintenance" },
+        { href: "/contact-us/", label: "Request a lighting quote" },
+      ],
     };
   }
 
@@ -66,6 +81,11 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
       body: "We plan, permit, and install residential and commercial EV charging systems with panel checks, load studies, and inspection support.",
       href: "/commercial-electric-vehicle-chargers/",
       label: "View EV charging services",
+      links: [
+        { href: "/residential-ev-charger/", label: "Home EV chargers" },
+        { href: "/electrical-load-studies/", label: "EV load studies" },
+        { href: "/contact-us/", label: "Request an EV quote" },
+      ],
     };
   }
 
@@ -74,6 +94,11 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
     body: "Shaffer Construction provides licensed residential and commercial electrical service, from troubleshooting and upgrades to permitted installation work.",
     href: "/contact-us/",
     label: "Request a quote",
+    links: [
+      { href: "/commercial-service/", label: "Commercial electrician" },
+      { href: "/residential-ev-charger/", label: "Home EV chargers" },
+      { href: "/service-areas/", label: "Service areas" },
+    ],
   };
 }
 
@@ -122,6 +147,26 @@ function PostCTABox({
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
+      {cta.links.length > 0 && (
+        <div
+          className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-sm"
+          style={{ color: "var(--secondary)" }}
+        >
+          <span className="font-semibold" style={{ color: "var(--text)" }}>
+            Related services:
+          </span>
+          {cta.links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="underline-offset-4 hover:underline"
+              style={{ color: "var(--primary)" }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </aside>
   );
 }
