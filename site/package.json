@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node ./scripts/generate-officeadmin-snapshot.mjs && next build",
+    "build": "node ./scripts/generate-llms.mjs && node ./scripts/generate-officeadmin-snapshot.mjs && next build",
+    "generate-llms": "node ./scripts/generate-llms.mjs",
     "start": "next start",
     "lint": "next lint"
   },

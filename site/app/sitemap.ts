@@ -55,6 +55,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Add service landing pages
   const landingPages = [
     'commercial-electric-vehicle-chargers',
+    'commercial-service',
     'electrical-load-studies',
     'led-retrofit-services',
     'residential-ev-charger',
