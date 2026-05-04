@@ -77,6 +77,55 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
   };
 }
 
+function PostCTABox({
+  cta,
+  compact = false,
+}: {
+  cta: NonNullable<ReturnType<typeof getPostCTA>>;
+  compact?: boolean;
+}) {
+  return (
+    <aside
+      className={`rounded-lg ${compact ? "p-5 sm:p-6 mb-8" : "p-6 sm:p-8 mb-12"}`}
+      style={{
+        background: "var(--section-gray)",
+        border: "1px solid var(--section-border)",
+      }}
+    >
+      <h2 className={`${compact ? "text-xl" : "text-2xl"} font-bold mb-3`} style={{ color: "var(--text)" }}>
+        {cta.heading}
+      </h2>
+      <p className={`${compact ? "text-base" : "text-lg"} leading-relaxed mb-6`} style={{ color: "var(--secondary)" }}>
+        {cta.body}
+      </p>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <a
+          href="tel:+13236428509"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition-opacity"
+          style={{
+            borderColor: "var(--primary)",
+            color: "var(--primary)",
+          }}
+        >
+          <Phone className="h-4 w-4" />
+          Call (323) 642-8509
+        </a>
+        <Link
+          href={cta.href}
+          className="inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition-opacity"
+          style={{
+            borderColor: "var(--section-border)",
+            color: "var(--text)",
+          }}
+        >
+          {cta.label}
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </aside>
+  );
+}
+
 // Generate metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -177,6 +226,8 @@ export default async function BlogPostPage({ params }: PageProps) {
           )}
         </header>
 
+        {cta && <PostCTABox cta={cta} compact />}
+
         {/* Post Content - HTML */}
         <div
           className="prose prose-lg max-w-none mb-12"
@@ -187,46 +238,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
-        {cta && (
-          <aside
-            className="rounded-lg p-6 sm:p-8 mb-12"
-            style={{
-              background: "var(--section-gray)",
-              border: "1px solid var(--section-border)",
-            }}
-          >
-            <h2 className="text-2xl font-bold mb-3" style={{ color: "var(--text)" }}>
-              {cta.heading}
-            </h2>
-            <p className="text-lg leading-relaxed mb-6" style={{ color: "var(--secondary)" }}>
-              {cta.body}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href="tel:+13236428509"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition-opacity"
-                style={{
-                  borderColor: "var(--primary)",
-                  color: "var(--primary)",
-                }}
-              >
-                <Phone className="h-4 w-4" />
-                Call (323) 642-8509
-              </a>
-              <Link
-                href={cta.href}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition-opacity"
-                style={{
-                  borderColor: "var(--section-border)",
-                  color: "var(--text)",
-                }}
-              >
-                {cta.label}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </aside>
-        )}
+        {cta && <PostCTABox cta={cta} />}
       </article>
     </div>
   );
