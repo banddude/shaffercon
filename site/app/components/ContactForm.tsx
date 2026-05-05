@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { classNames } from "@/app/styles/theme";
+import { trackFormSubmit, trackGenerateLead } from "@/app/lib/analytics";
 import type { SiteConfig } from "@/lib/db";
 
 interface ContactFormProps {
@@ -76,6 +77,8 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
       });
 
       if (response.ok) {
+        trackFormSubmit("Contact form", window.location.pathname);
+        trackGenerateLead("contact_form", window.location.pathname);
         setSubmitted(true);
         // Reset form
         setFormData({

@@ -5,6 +5,7 @@ import FooterWrapper from "@/app/components/FooterWrapper";
 import { theme } from "@/app/styles/theme";
 import { LocalBusinessSchema } from "@/app/components/StructuredData";
 import { Analytics } from "@/app/components/Analytics";
+import { AnalyticsEvents } from "@/app/components/AnalyticsEvents";
 import { SearchConsoleVerification } from "@/app/components/SearchConsoleVerification";
 
 export const viewport: Viewport = {
@@ -130,6 +131,7 @@ export default function RootLayout({
         {children}
         <FooterWrapper />
         <Analytics />
+        <AnalyticsEvents />
       </body>
     </html>
   );

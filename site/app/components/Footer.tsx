@@ -4,7 +4,6 @@ import Link from "next/link";
 import { telHref } from "@/app/config";
 import type { SiteConfig } from "@/lib/db";
 import { Home, Phone, Mail, Clock, MapPin, FileCheck, Facebook, Instagram } from "lucide-react";
-import { trackPhoneClick, trackEmailClick } from "@/app/lib/analytics";
 
 interface FooterProps {
   siteConfig: SiteConfig;
@@ -57,7 +56,6 @@ export default function Footer({ siteConfig }: FooterProps) {
                 <a
                   href={telHref(config.contact.phone)}
                   className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1.5"
-                  onClick={() => trackPhoneClick(config.contact.phone, 'Footer')}
                 >
                   <Phone className="w-3 h-3" style={{ color: "var(--primary)" }} />
                   <span>{config.contact.phone}</span>
@@ -67,7 +65,6 @@ export default function Footer({ siteConfig }: FooterProps) {
                 <a
                   href={`mailto:${config.contact.email}`}
                   className="flex items-center gap-2 hover:opacity-70 transition-opacity break-all py-1.5"
-                  onClick={() => trackEmailClick(config.contact.email, 'Footer')}
                 >
                   <Mail className="w-3 h-3 flex-shrink-0" style={{ color: "var(--primary)" }} />
                   <span>{config.contact.email}</span>

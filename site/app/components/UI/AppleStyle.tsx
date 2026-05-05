@@ -449,7 +449,7 @@ export function AppleButton({
 
   if (href) {
     return (
-      <Link href={href} className={baseClasses} style={getStyles()}>
+      <Link href={href} onClick={onClick} className={baseClasses} style={getStyles()}>
         {children}
       </Link>
     );
