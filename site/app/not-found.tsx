@@ -163,7 +163,7 @@ export default function NotFound() {
           return "/led-retrofit-services/";
         }
 
-        if (/(ev|charger|charging|electric-vehicle)/.test(slug)) {
+        if (/(^|-)ev($|-)|(^|-)evs($|-)|charger|charging|electric-vehicle|electric-vehicles/.test(slug)) {
           return "/commercial-electric-vehicle-chargers/";
         }
 
