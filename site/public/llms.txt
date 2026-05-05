@@ -70,7 +70,7 @@ Source: generated from the current Shaffer Construction database and industry in
 * Three license classifications under one contractor, C-10 Electrical, A General Engineering, and B General Building.
 * Direct owner accountability from Mike Shaffer.
 * Los Angeles based office on Larchmont Boulevard.
-* 880 neighborhood service pages, 22 location landing pages, and 347 industry insight articles.
+* 880 neighborhood service pages, 22 location landing pages, and 348 industry insight articles.
 * Public sitemap: https://shaffercon.com/sitemap.xml
 * Comprehensive LLM index: https://shaffercon.com/llms-full.txt
 

@@ -182,6 +182,13 @@ async function getServiceLandingPage(slug: string) {
           content: 'Comprehensive Load Study Services\n\n• EV Infrastructure: Capacity for Level 2 chargers, DC fast chargers, and phased charging rollouts\n• Panel Upgrades: Confirm whether existing equipment can support new loads or needs replacement\n• Tenant Improvements: Document available capacity before new HVAC, kitchen, lighting, or equipment loads\n• Utility Coordination: Provide electrical data for LADWP, SCE, and service planning conversations\n• Code Compliance: Review NEC capacity requirements and identify overload risks\n• Budget Planning: Give owners a practical path before they commit to charger hardware or construction scope\n\nTo start, send the site address, photos of the main electrical gear, the planned new loads, and any charger or equipment cutsheets you already have. We can usually tell you the next step before a full design package is created.',
           table_data: null,
         },
+        {
+          section_type: 'content',
+          heading: 'Load Study Planning Guides',
+          subheading: '',
+          content: '<p>Planning cost, permits, EV charger capacity, or a panel upgrade before you call? Start with our <a href="/industry-insights/electrical-load-study-cost-los-angeles/">electrical load study cost guide</a>, then review <a href="/industry-insights/electrical-load-studies-what-they-are-los-angeles/">when a Los Angeles property needs a load study</a>, <a href="/industry-insights/a-closer-look-at-our-load-study-services-and-why-your-ev-business-needs-them/">EV charger load studies for businesses</a>, and <a href="/industry-insights/exploring-shaffer-constructions-load-study-services-in-la/">load studies for EV chargers and panel upgrades</a>.</p><p>These guides help owners decide whether the next step is monitoring, load management, a panel upgrade, a service increase, or a construction estimate. If you already have photos, plans, charger cutsheets, or utility notes, send them with the site address so we can price the right scope.</p>',
+          table_data: null,
+        },
       ],
     };
   }
