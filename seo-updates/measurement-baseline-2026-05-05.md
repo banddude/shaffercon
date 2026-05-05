@@ -10,9 +10,10 @@
 
 ## Current Key Event Status
 
-1. GA4 currently has only `purchase` marked as a key event.
+1. GA4 originally had only `purchase` marked as a key event.
 2. The service account has read access to GA4 Admin and Data APIs.
-3. The service account does not have GA4 edit scope authorization, so new key events must be marked in GA4 Admin or through an account with Analytics edit access.
+3. The service account also has direct GA4 edit access when not impersonating a Workspace user.
+4. Workspace domain wide delegation for `mike@shaffercon.com` rejected the `analytics.edit` scope, but direct service account access succeeded.
 
 ## Last 28 Day Event Baseline
 
@@ -40,9 +41,9 @@ GA4 reported no events for:
 4. Added successful contact form tracking.
 5. Added GA4 recommended `generate_lead` events for phone clicks, email clicks, and successful form submissions.
 
-## GA4 Admin Action Still Needed
+## GA4 Key Events
 
-Mark these event names as key events in GA4:
+These event names were created as GA4 key events on May 5, 2026:
 
 1. `generate_lead`.
 2. `form_submit`.
