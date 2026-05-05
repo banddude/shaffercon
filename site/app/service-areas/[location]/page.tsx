@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
+import { filterPriorityServices } from "@/lib/seo-priority";
 import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, Grid, GridItem } from "@/app/components/UI";
 import { ASSET_PATH } from "@/app/config";
@@ -124,8 +125,8 @@ async function getLocationPage(locationSlug: string) {
     ...page,
     relatedServices: relatedServices.map(s => s.service_name),
     nearbyAreas,
-    residentialServices,
-    commercialServices,
+    residentialServices: filterPriorityServices(residentialServices),
+    commercialServices: filterPriorityServices(commercialServices),
   };
 }
 
@@ -313,7 +314,7 @@ export default async function LocationPage({ params }: PageProps) {
       {page.residentialServices && page.residentialServices.length > 0 && (
         <section className="py-12 sm:py-20 lg:py-28 px-6 sm:px-8 lg:px-12">
           <div className="max-w-7xl mx-auto">
-            <SectionHeading className="text-center mb-8">Residential Electrical Services</SectionHeading>
+            <SectionHeading className="text-center mb-8">Most Requested Residential Electrical Services</SectionHeading>
             {page.residential_intro && (
               <Paragraph className="text-center text-lg mb-8 max-w-3xl mx-auto">{page.residential_intro}</Paragraph>
             )}
@@ -343,7 +344,7 @@ export default async function LocationPage({ params }: PageProps) {
       {page.commercialServices && page.commercialServices.length > 0 && (
         <section className="py-12 sm:py-20 lg:py-28 px-6 sm:px-8 lg:px-12" style={{ background: "var(--section-gray)" }}>
           <div className="max-w-7xl mx-auto">
-            <SectionHeading className="text-center mb-8">Commercial Electrical Services</SectionHeading>
+            <SectionHeading className="text-center mb-8">Most Requested Commercial Electrical Services</SectionHeading>
             {page.commercial_intro && (
               <Paragraph className="text-center text-lg mb-8 max-w-3xl mx-auto">{page.commercial_intro}</Paragraph>
             )}
