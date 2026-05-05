@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
+import { isPriorityService } from "@/lib/seo-priority";
 import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, ContentBox } from "@/app/components/UI";
 import { ASSET_PATH } from "@/app/config";
@@ -30,6 +31,224 @@ interface PageProps {
     location: string;
     service: string;
   }>;
+}
+
+interface PriorityServiceDetail {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  points: Array<{
+    title: string;
+    text: string;
+  }>;
+}
+
+function getPriorityServiceDetail(
+  serviceType: string,
+  serviceName: string,
+  locationName: string,
+  serviceDisplayName: string
+): PriorityServiceDetail | null {
+  if (!isPriorityService(serviceType, serviceName)) {
+    return null;
+  }
+
+  const audience = serviceType === "commercial" ? "businesses and property teams" : "homeowners";
+  const localContext = `in ${locationName}`;
+
+  const details: Record<string, Omit<PriorityServiceDetail, "heading">> = {
+    "ev-charger-installation": {
+      eyebrow: "EV charging scope",
+      body: `A good EV charger installation ${localContext} starts with load capacity, charger placement, conduit routing, breaker sizing, and inspection requirements. We plan the electrical path before installation so the charger is reliable, serviceable, and ready for daily use.`,
+      points: [
+        {
+          title: "Load and panel review",
+          text: `We check available capacity, panel condition, feeder limits, and whether the project needs a load study or panel upgrade before quoting the final path.`,
+        },
+        {
+          title: "Charger location planning",
+          text: `We plan wall mounted chargers, pedestals, parking clearances, conduit runs, and weather exposure so the finished installation fits the property.`,
+        },
+        {
+          title: "Permits and inspection",
+          text: `We prepare the electrical scope for permit review, installation, labeling, and inspection so the work is documented correctly.`,
+        },
+      ],
+    },
+    "electrical-panel-upgrades": {
+      eyebrow: "Panel upgrade planning",
+      body: `Panel upgrade work ${localContext} depends on load calculations, service capacity, meter equipment, utility requirements, and inspection timing. We look at the whole electrical system before replacing equipment.`,
+      points: [
+        {
+          title: "Service capacity",
+          text: `We review existing loads, future EV or HVAC needs, available service size, and whether utility coordination is needed before work starts.`,
+        },
+        {
+          title: "Equipment layout",
+          text: `We check panel clearances, grounding, bonding, labeling, breaker compatibility, and the best location for safe long term access.`,
+        },
+        {
+          title: "Inspection path",
+          text: `We plan the permit, shutdown window, utility release if needed, and final inspection so the upgrade does not turn into a drawn out project.`,
+        },
+      ],
+    },
+    "electrical-safety-inspections": {
+      eyebrow: "Safety inspection scope",
+      body: `Electrical safety inspections ${localContext} should identify real hazards, not just produce a generic checklist. We look for overloaded circuits, unsafe panels, poor grounding, damaged wiring, improper devices, and code issues that can affect insurance, sale, occupancy, or tenant safety.`,
+      points: [
+        {
+          title: "Panel and breaker review",
+          text: `We check labeling, breaker fit, heat signs, corrosion, grounding, bonding, and known problem equipment where access allows.`,
+        },
+        {
+          title: "Circuit and device checks",
+          text: `We review GFCI and AFCI protection, exposed wiring, junction boxes, outdoor equipment, lighting, and common failure points.`,
+        },
+        {
+          title: "Clear repair path",
+          text: `We separate urgent safety items from recommended improvements so you can make practical decisions about the next step.`,
+        },
+      ],
+    },
+    "electrical-code-compliance-corrections": {
+      eyebrow: "Code correction planning",
+      body: `Code correction work ${localContext} needs a clear path from violation, inspection note, or property report to completed repair. We translate the issue into buildable electrical work and help close out the correction cleanly.`,
+      points: [
+        {
+          title: "Correction review",
+          text: `We review inspection notes, photos, panel schedules, and site conditions so the repair addresses the actual issue.`,
+        },
+        {
+          title: "Compliant repair scope",
+          text: `We plan wiring, boxes, protection, labeling, grounding, clearances, and device changes around the relevant code requirement.`,
+        },
+        {
+          title: "Inspection support",
+          text: `We help prepare the work for reinspection with practical documentation and a finished installation that is easy to verify.`,
+        },
+      ],
+    },
+    "lighting-installation-retrofitting": {
+      eyebrow: "Lighting upgrade scope",
+      body: `Lighting installation and retrofit work ${localContext} should improve visibility, maintenance, energy use, and control. We plan fixture selection, switching, dimming, access, and wiring before installation so the finished lighting works the way the space is used.`,
+      points: [
+        {
+          title: "Fixture and control plan",
+          text: `We review light levels, fixture spacing, dimming needs, switching zones, sensors, and operating hours before installation.`,
+        },
+        {
+          title: "Wiring and access",
+          text: `We plan attic, ceiling, exterior, or tenant space access so the wiring route is practical and clean.`,
+        },
+        {
+          title: "Efficiency and maintenance",
+          text: `We consider LED output, service life, driver access, replacement parts, and energy savings for the property.`,
+        },
+      ],
+    },
+    "breaker-panel-service-maintenance": {
+      eyebrow: "Panel maintenance scope",
+      body: `Breaker panel service ${localContext} is about finding weak connections, aging breakers, poor labeling, nuisance trips, heat marks, corrosion, and capacity issues before they become failures. We approach panel work as both troubleshooting and prevention.`,
+      points: [
+        {
+          title: "Panel condition",
+          text: `We review breaker fit, labeling, conductor condition, visible heat damage, grounding, bonding, and enclosure condition where access allows.`,
+        },
+        {
+          title: "Load and circuit behavior",
+          text: `We trace nuisance trips, overloaded circuits, equipment loads, and signs that the panel is no longer serving the property well.`,
+        },
+        {
+          title: "Repair or upgrade path",
+          text: `We identify when maintenance is enough and when replacement, new circuits, or a larger panel should be considered.`,
+        },
+      ],
+    },
+    "dedicated-equipment-circuits": {
+      eyebrow: "Dedicated circuit planning",
+      body: `Dedicated equipment circuits ${localContext} need correct amperage, conductor sizing, breaker selection, disconnects, routing, and equipment location. We build the circuit around the actual equipment requirements instead of guessing from the appliance name.`,
+      points: [
+        {
+          title: "Equipment requirements",
+          text: `We review nameplates, manufacturer instructions, amperage, voltage, plug type, disconnect needs, and startup loads.`,
+        },
+        {
+          title: "Circuit route",
+          text: `We plan the route through walls, ceiling, exterior areas, conduit, or crawl spaces so the finished work is durable and accessible.`,
+        },
+        {
+          title: "Panel capacity",
+          text: `We confirm available breaker space and capacity before installation, especially when the circuit supports EV, HVAC, kitchen, shop, or commercial equipment.`,
+        },
+      ],
+    },
+    "electrical-troubleshooting-repairs": {
+      eyebrow: "Troubleshooting process",
+      body: `Electrical troubleshooting ${localContext} is most useful when it isolates the source of the problem, explains the risk, and gives a practical repair path. We trace symptoms back to circuits, devices, panels, wiring, or equipment instead of only replacing visible parts.`,
+      points: [
+        {
+          title: "Symptom review",
+          text: `We start with outages, flickering lights, nuisance trips, hot devices, burning smells, dead outlets, or equipment issues and narrow the likely circuit.`,
+        },
+        {
+          title: "Targeted testing",
+          text: `We test safely at accessible devices, panels, breakers, junctions, and equipment to find the actual fault.`,
+        },
+        {
+          title: "Repair priority",
+          text: `We explain what needs immediate repair, what can be monitored, and what should be upgraded to prevent repeated failures.`,
+        },
+      ],
+    },
+    "energy-efficiency-upgrades": {
+      eyebrow: "Efficiency upgrade scope",
+      body: `Energy efficiency upgrades ${localContext} should reduce operating cost without creating maintenance issues. We focus on lighting, controls, equipment circuits, panel condition, and practical electrical upgrades for ${audience}.`,
+      points: [
+        {
+          title: "Usage review",
+          text: `We look at lighting schedules, common loads, tenant usage, equipment operation, and where electrical changes can make a measurable difference.`,
+        },
+        {
+          title: "Controls and upgrades",
+          text: `We plan LEDs, occupancy sensors, timers, dimming, exterior controls, and circuit improvements around how the property is used.`,
+        },
+        {
+          title: "Long term maintenance",
+          text: `We consider replacement access, driver locations, labeling, and fixture standardization so the upgrade remains easy to maintain.`,
+        },
+      ],
+    },
+    "backup-generator-installation": {
+      eyebrow: "Generator installation scope",
+      body: `Backup generator installation ${localContext} requires load planning, transfer equipment, location requirements, fuel coordination, grounding, and inspection. We plan the electrical side around the loads that actually need to stay on.`,
+      points: [
+        {
+          title: "Critical load planning",
+          text: `We identify which circuits or equipment need backup power, then size the electrical scope around realistic startup and running loads.`,
+        },
+        {
+          title: "Transfer equipment",
+          text: `We plan manual or automatic transfer equipment, panel connections, labeling, and safe separation from utility power.`,
+        },
+        {
+          title: "Site coordination",
+          text: `We review generator placement, electrical routing, clearances, fuel coordination, noise concerns, and inspection requirements.`,
+        },
+      ],
+    },
+  };
+
+  const detail = details[serviceName];
+
+  if (!detail) {
+    return null;
+  }
+
+  return {
+    ...detail,
+    heading: `${serviceDisplayName} planning in ${locationName}`,
+  };
 }
 
 // Generate static params for all service detail pages
@@ -223,6 +442,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   `).get(page.page_id) as any;
 
   const pageTitle = pageData?.title || fullServiceName;
+  const priorityDetail = getPriorityServiceDetail(serviceType, serviceName, locationName, serviceDisplayName);
 
   return (
     <main className="w-full">
@@ -323,6 +543,47 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
         </Container>
       </Section>
+
+      {/* Priority service detail */}
+      {priorityDetail && (
+        <section className="py-12 sm:py-20 lg:py-28 px-6 sm:px-8 lg:px-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-3xl mx-auto text-center mb-10">
+              <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: "var(--primary)" }}>
+                {priorityDetail.eyebrow}
+              </p>
+              <SectionHeading className="mb-5">{priorityDetail.heading}</SectionHeading>
+              <Paragraph className="text-lg">
+                {priorityDetail.body}
+              </Paragraph>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {priorityDetail.points.map((point, index) => {
+                const Icon = index === 0 ? Shield : index === 1 ? Wrench : CheckCircle;
+
+                return (
+                  <div
+                    key={point.title}
+                    className="rounded-lg p-6"
+                    style={{
+                      background: "var(--section-gray)",
+                      border: "1px solid var(--section-border)",
+                    }}
+                  >
+                    <Icon className="w-8 h-8 mb-4" style={{ color: "var(--primary)" }} />
+                    <h2 className="text-xl font-semibold mb-3" style={{ color: "var(--text)" }}>
+                      {point.title}
+                    </h2>
+                    <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>
+                      {point.text}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Project Gallery */}
       <section className="py-12 sm:py-20 lg:py-28 px-6 sm:px-8 lg:px-12" style={{ background: "var(--section-gray)" }}>
