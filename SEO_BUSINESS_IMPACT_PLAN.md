@@ -1,6 +1,6 @@
 # Shaffer Construction SEO Business Impact Plan
 
-Last updated: May 4, 2026
+Last updated: May 5, 2026
 
 ## Goal
 
@@ -139,3 +139,13 @@ Definition of done for each page:
 6. Internal links point to related money pages.
 7. Schema is present when the page has eligible content.
 8. Page passes build and audit checks.
+
+## Carried Forward From Archived Transcript
+
+These are the remaining useful ideas from the old working conversation file. The transcript itself was deleted after this list was captured.
+
+1. Finish reviewing old Search Console remembered URLs that are not current sitemap URLs, then redirect only the ones with real value.
+2. Build a focused load studies content cluster with strong titles, meta descriptions, and internal links back to `/electrical-load-studies/`.
+3. Continue making EV pages less generic, especially `/commercial-electric-vehicle-chargers/`, `/residential-ev-charger/`, and local EV service pages.
+4. Audit Service schema on the main money landing pages, especially load studies, commercial EV charging, residential EV charging, commercial service, LED retrofit, and facilities maintenance.
+5. Keep spam filtering on the contact form as a lead quality task, but do not treat it as an SEO priority.
