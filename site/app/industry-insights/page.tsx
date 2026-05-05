@@ -5,6 +5,7 @@ import CTA from "@/app/components/CTA";
 import { Section, Container, PageTitle } from "@/app/components/UI";
 import { getAllPosts } from "@/lib/blog";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
+import { ArrowRight } from "lucide-react";
 
 const POSTS_PER_PAGE = 24;
 
@@ -33,7 +34,7 @@ export default async function IndustryInsightsPage() {
       <Section border="bottom" padding="lg">
         <Container maxWidth="lg">
           <PageTitle>Industry Insights</PageTitle>
-          <p className="text-lg mt-4">
+          <p className="text-lg mt-4" style={{ color: "var(--secondary)" }}>
             Stay informed with the latest news, trends, and insights in electrical services, EV charging, and the construction industry.
           </p>
         </Container>
@@ -55,6 +56,10 @@ export default async function IndustryInsightsPage() {
                   key={post.slug}
                   href={`/industry-insights/${post.slug}/`}
                   className={classNames.blogCard}
+                  style={{
+                    background: "var(--background)",
+                    border: "1px solid var(--section-border)",
+                  }}
                 >
                   {/* Hero Image */}
                   {post.ogImage && (
@@ -70,14 +75,14 @@ export default async function IndustryInsightsPage() {
                   )}
 
                   <div className={classNames.blogCardContent}>
-                    <div className={classNames.blogMeta}>
+                    <div className={classNames.blogMeta} style={{ color: "var(--secondary)" }}>
                       <time>{postDate}</time>
                     </div>
-                    <h2 className={`${classNames.blogTitle} ${classNames.blogTitleHover} overflow-hidden`} style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
+                    <h2 className={`${classNames.blogTitle} ${classNames.blogTitleHover} overflow-hidden`} style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', color: "var(--text)" }}>
                       {post.title}
                     </h2>
                     {post.metaDescription && (
-                      <p className={classNames.blogDescription} style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.metaDescription}</p>
+                      <p className={classNames.blogDescription} style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', color: "var(--secondary)" }}>{post.metaDescription}</p>
                     )}
                   </div>
                 </Link>
@@ -94,11 +99,14 @@ export default async function IndustryInsightsPage() {
                 className="ml-4 px-4 py-2 rounded-full font-semibold transition-colors"
                 style={{
                   background: "var(--primary)",
-                  color: "#ffffff",
+                  color: "var(--background)",
                   border: "2px solid var(--background)",
                 }}
               >
-                Next →
+                <span className="inline-flex items-center gap-2">
+                  Next
+                  <ArrowRight className="h-4 w-4" />
+                </span>
               </Link>
             </nav>
           )}

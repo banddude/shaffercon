@@ -172,6 +172,123 @@
     font-weight: 600;
   }
 
+  .industry-article {
+    color: var(--secondary);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+  }
+
+  @media (min-width: 640px) {
+    .industry-article {
+      font-size: 1.125rem;
+    }
+  }
+
+  .industry-article > * + * {
+    margin-top: 1.25rem;
+  }
+
+  .industry-article h2 {
+    color: var(--text);
+    font-size: 1.875rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--section-border);
+  }
+
+  .industry-article h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .industry-article h3 {
+    color: var(--text);
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 2rem;
+  }
+
+  .industry-article h4 {
+    color: var(--text);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-top: 1.75rem;
+  }
+
+  .industry-article p {
+    margin-top: 1.125rem;
+  }
+
+  .industry-article strong,
+  .industry-article b {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .industry-article a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .industry-article ul,
+  .industry-article ol {
+    margin-top: 1.125rem;
+    margin-left: 1.5rem;
+  }
+
+  .industry-article li {
+    margin-top: 0.65rem;
+    padding-left: 0.25rem;
+  }
+
+  .industry-article ul li {
+    list-style: disc;
+  }
+
+  .industry-article ol li {
+    list-style: decimal;
+  }
+
+  .industry-article blockquote {
+    border-left: 4px solid var(--primary);
+    color: var(--secondary);
+    margin: 2rem 0;
+    padding-left: 1.25rem;
+  }
+
+  .industry-article img {
+    border-radius: 0.5rem;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .industry-article table {
+    border-collapse: collapse;
+    display: block;
+    margin: 2rem 0;
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .industry-article th,
+  .industry-article td {
+    border: 1px solid var(--section-border);
+    padding: 0.85rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .industry-article th {
+    color: var(--text);
+    font-weight: 700;
+  }
+
   /* Utility classes */
   .line-clamp-3 {
     display: -webkit-box;

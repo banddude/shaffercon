@@ -323,7 +323,7 @@ export const classNames = {
   blogCardContent: "p-5 flex-grow flex flex-col",
   blogMeta: "text-xs mb-2",
   blogTitle: "text-base font-bold mb-2",
-  blogTitleHover: "hover:text-blue-600 transition",
+  blogTitleHover: "transition-colors",
   blogDescription: "text-sm",
 
   ctaSection: "p-8 rounded-lg text-center mt-12",

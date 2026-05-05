@@ -7,7 +7,7 @@ import { ArticleSchema } from "@/app/components/schemas/ArticleSchema";
 import { LocalBusinessSchema } from "@/app/components/schemas/LocalBusinessSchema";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Phone } from "lucide-react";
 
 interface PageProps {
   params: Promise<{
@@ -105,13 +105,15 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
 function PostCTABox({
   cta,
   compact = false,
+  className = "",
 }: {
   cta: NonNullable<ReturnType<typeof getPostCTA>>;
   compact?: boolean;
+  className?: string;
 }) {
   return (
     <aside
-      className={`rounded-lg ${compact ? "p-5 sm:p-6 mb-8" : "p-6 sm:p-8 mb-12"}`}
+      className={`rounded-lg ${compact ? "p-5 sm:p-6" : "p-6 sm:p-8"} ${className || (compact ? "mb-8" : "mb-12")}`}
       style={{
         background: "var(--section-gray)",
         border: "1px solid var(--section-border)",
@@ -149,7 +151,7 @@ function PostCTABox({
       </div>
       {cta.links.length > 0 && (
         <div
-          className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-sm"
+          className={`mt-6 text-sm ${compact ? "flex flex-col gap-2" : "flex flex-wrap gap-x-4 gap-y-2"}`}
           style={{ color: "var(--secondary)" }}
         >
           <span className="font-semibold" style={{ color: "var(--text)" }}>
@@ -232,7 +234,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const cta = getPostCTA(post);
 
   return (
-    <div className={classNames.container + " py-12"}>
+    <div className={classNames.container + " py-10 sm:py-12 lg:py-16"}>
       <ArticleSchema
         title={post.title}
         description={post.metaDescription || post.title}
@@ -252,38 +254,59 @@ export default async function BlogPostPage({ params }: PageProps) {
           { label: post.title }
         ]}
       />
-      <article className="max-w-4xl mx-auto">
-        {/* Post Header */}
-        <header className="mb-8">
+      <article className="max-w-6xl mx-auto">
+        <header className="mb-10">
+          <Link
+            href="/industry-insights/"
+            className="inline-flex items-center gap-2 text-sm font-semibold mb-6 underline-offset-4 hover:underline"
+            style={{ color: "var(--primary)" }}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Industry Insights
+          </Link>
           <PageTitle>{post.title}</PageTitle>
-          <div className="text-sm mb-6" style={{ color: "var(--secondary)" }}>
+          <div className="mt-5 mb-7 inline-flex items-center gap-2 text-sm" style={{ color: "var(--secondary)" }}>
+            <CalendarDays className="h-4 w-4" />
             <time dateTime={post.date}>{postDate}</time>
           </div>
 
-          {/* Hero Image */}
           {post.ogImage && (
-            <img
-              src={post.ogImage}
-              alt={post.title}
-              className="w-full h-auto rounded-lg"
-              style={{ maxHeight: '500px', objectFit: 'cover' }}
-            />
+            <figure
+              className="overflow-hidden rounded-lg"
+              style={{ border: "1px solid var(--section-border)" }}
+            >
+              <img
+                src={post.ogImage}
+                alt={post.title}
+                className="w-full h-auto"
+                style={{ maxHeight: '520px', objectFit: 'cover' }}
+              />
+            </figure>
           )}
         </header>
 
-        {cta && <PostCTABox cta={cta} compact />}
+        <div className="lg:hidden">
+          {cta && <PostCTABox cta={cta} compact />}
+        </div>
 
-        {/* Post Content - HTML */}
-        <div
-          className="prose prose-lg max-w-none mb-12"
-          style={{
-            color: "var(--secondary)",
-            lineHeight: '1.8',
-          }}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10 xl:gap-12">
+          <div className="min-w-0">
+            <div
+              className="industry-article mb-12"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
 
-        {cta && <PostCTABox cta={cta} />}
+            {cta && <PostCTABox cta={cta} />}
+          </div>
+
+          {cta && (
+            <aside className="hidden lg:block">
+              <div className="sticky top-28">
+                <PostCTABox cta={cta} compact className="mb-0" />
+              </div>
+            </aside>
+          )}
+        </div>
       </article>
     </div>
   );
