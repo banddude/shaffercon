@@ -51,3 +51,15 @@ These event names were created as GA4 key events on May 5, 2026:
 4. `email_click`.
 
 Primary business reporting should use `generate_lead`. The other key events are useful for debugging lead source by method.
+
+## Smoke Test, May 5, 2026
+
+1. Live production JavaScript contained `phone_click`, `email_click`, `cta_click`, `form_submit`, and `generate_lead`.
+2. The Cloudflare contact form worker accepted a test submission and returned `200`.
+3. GA4 Admin confirmed `generate_lead`, `form_submit`, `phone_click`, and `email_click` are active key events.
+4. GA4 realtime API returned successfully.
+5. Local DNS maps Google Analytics collection domains to `0.0.0.0`, so direct local collection calls failed until bypassed with an explicit Google Analytics IP.
+6. Bypassed GA4 collection calls returned `204` for all five test events.
+7. Immediate realtime reporting still showed only `page_view` and `session_start` inside the short test window.
+
+Conclusion, tracking is deployed and key events are configured. The remaining confirmation is to review standard GA4 reports after real visitor events or after GA4 processes the smoke events.

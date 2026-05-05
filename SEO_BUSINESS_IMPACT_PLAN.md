@@ -146,6 +146,6 @@ These are the remaining useful ideas from the old working conversation file. The
 
 1. Finish reviewing old Search Console remembered URLs that are not current sitemap URLs, then redirect only the ones with real value.
 2. Completed May 5, 2026, started the focused load studies content cluster with a buyer intent cost article and internal links from `/electrical-load-studies/`.
-3. Continue making EV pages less generic, especially `/commercial-electric-vehicle-chargers/`, `/residential-ev-charger/`, and local EV service pages.
+3. Completed May 5, 2026, started the commercial EV charging content cluster with a buyer intent cost article and internal links from `/commercial-electric-vehicle-chargers/`.
 4. Completed May 5, 2026, improved Service schema on the main money landing pages, load studies, commercial EV charging, residential EV charging, commercial service, LED retrofit, and facilities maintenance.
 5. Keep spam filtering on the contact form as a lead quality task, but do not treat it as an SEO priority.

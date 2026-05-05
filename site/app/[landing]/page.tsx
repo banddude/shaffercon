@@ -110,6 +110,13 @@ async function getServiceLandingPage(slug: string) {
           content: 'To prepare a useful estimate, send the site address, the number of chargers planned, charger model if selected, photos of the main electrical gear, the proposed charger location, and any site plan or single line drawing you already have. If the project is early stage, we can start with a load study and a site walk before final equipment is selected.\n\nCall Shaffer Construction at 323-642-8509 for commercial EV charger installation in Los Angeles, or send the project details through the contact form. We will help identify the electrical constraints, permit path, and practical next step before you spend money on the wrong charger layout.',
           table_data: null,
         },
+        {
+          section_type: 'content',
+          heading: 'Commercial EV Planning Guides',
+          subheading: null,
+          content: '<p>Planning budget, permits, load capacity, or charger selection before you call? Start with our <a href="/industry-insights/commercial-ev-charger-installation-cost-los-angeles/">commercial EV charger installation cost guide</a>, then review the <a href="/industry-insights/ev-charger-installation-guide-for-los-angeles-plan-permit-install-and-futureproof/">Los Angeles EV charger planning guide</a>, the <a href="/industry-insights/electrical-load-study-cost-los-angeles/">electrical load study cost guide</a>, and <a href="/industry-insights/electrical-load-studies-what-they-are-los-angeles/">when a property needs a load study</a>.</p><p>These guides help owners decide whether the next step is a site walk, monitoring, load management, a panel upgrade, utility coordination, or a construction estimate. If you already have a site address, charger count, photos of the main electrical gear, charger cutsheets, or a parking layout, send those details so we can price the right scope.</p>',
+          table_data: null,
+        },
       ],
     };
   }
