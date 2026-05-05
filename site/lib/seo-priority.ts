@@ -41,3 +41,7 @@ export function isPriorityService(serviceType: string, serviceName: string): boo
 export function filterPriorityServices<T extends ServiceLike>(services: T[]): T[] {
   return services.filter((service) => isPriorityService(service.service_type, service.service_name));
 }
+
+export function getServiceSitemapPriority(serviceType: string, serviceName: string): number {
+  return isPriorityService(serviceType, serviceName) ? 0.65 : 0.35;
+}

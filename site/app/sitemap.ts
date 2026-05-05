@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getDb } from '@/lib/db';
 import { getAllPosts } from '@/lib/blog';
-import { isPriorityService } from '@/lib/seo-priority';
+import { getServiceSitemapPriority } from '@/lib/seo-priority';
 
 export const dynamic = 'force-static';
 
@@ -83,17 +83,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
 
   // Add service detail pages
-  servicePages
-    .filter(({ service_type, service_name }) => isPriorityService(service_type, service_name))
-    .forEach(({ location, service_type, service_name, date }) => {
-      const locationSlug = location.replace(/\s+/g, '-').toLowerCase();
-      sitemap.push({
-        url: `${baseUrl}/service-areas/${locationSlug}/${service_type}-${service_name}/`,
-        lastModified: date ? new Date(date) : new Date(),
-        changeFrequency: 'monthly',
-        priority: 0.6,
-      });
+  servicePages.forEach(({ location, service_type, service_name, date }) => {
+    const locationSlug = location.replace(/\s+/g, '-').toLowerCase();
+    sitemap.push({
+      url: `${baseUrl}/service-areas/${locationSlug}/${service_type}-${service_name}/`,
+      lastModified: date ? new Date(date) : new Date(),
+      changeFrequency: 'monthly',
+      priority: getServiceSitemapPriority(service_type, service_name),
     });
+  });
 
   // Add blog posts from JSON files
   posts.forEach((post) => {
