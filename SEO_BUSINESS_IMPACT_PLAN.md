@@ -150,3 +150,4 @@ These are the remaining useful ideas from the old working conversation file. The
 4. Completed May 5, 2026, improved Service schema on the main money landing pages, load studies, commercial EV charging, residential EV charging, commercial service, LED retrofit, and facilities maintenance.
 5. Keep spam filtering on the contact form as a lead quality task, but do not treat it as an SEO priority.
 6. Completed May 5, 2026, refreshed Search Console opportunity scoring for February 2 through May 2 and rewrote the top opportunity page, the Los Angeles subpanel installation guide.
+7. Completed May 6, 2026, rewrote the second Search Console opportunity page, the LADBS electrical permit guide, around permit application, panel upgrade permit, inspection, and contractor hiring intent.

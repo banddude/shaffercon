@@ -9,6 +9,9 @@ Data range: February 2, 2026 through May 2, 2026.
 1. Selected `/industry-insights/subpanel-installation-guide-when-why-you-need-one/` as the first rewrite because it ranked first by score, had 3,088 impressions, 0.39 percent CTR, and average position 9.10.
 2. Search Console query evidence included subpanel electrician, commercial electrical subpanel installation, commercial subpanel installations, sub panel installation near me, and bus bar connection searches in Los Angeles.
 3. Updated the article title, meta title, meta description, opening section, hiring intent copy, and internal links to panel upgrade planning, LADBS permits, residential EV charger installation, commercial electrical service, and contact.
+4. Selected `/industry-insights/ladbs-electrical-permit-process-step-by-step-guide/` as the second rewrite because it had 19,736 impressions, 0.36 percent CTR, and average position 7.29.
+5. Search Console query evidence included LADBS permit, LADBS electrical permit application, electrical panel upgrade permit Los Angeles, electrical permit electrician, and electrical permit Los Angeles.
+6. Updated the article title, meta title, meta description, opening section, hiring intent copy, and internal links to panel upgrades, EV charger services, load studies, commercial service, and contact. Removed weak competitor style external links.
 
 ## Top Page Opportunities
 
