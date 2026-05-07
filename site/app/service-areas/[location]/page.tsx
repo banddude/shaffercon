@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
+import { getLocalSeoFacts } from "@/lib/local-seo";
 import { filterPriorityServices } from "@/lib/seo-priority";
 import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, Grid, GridItem } from "@/app/components/UI";
@@ -8,6 +9,7 @@ import { AppleButton } from "@/app/components/UI/AppleStyle";
 import CTA from "@/app/components/CTA";
 import { HeroVideo } from "@/app/components/HeroVideo";
 import LinkCardGrid from "@/app/components/LinkCardGrid";
+import LocalProofSection from "@/app/components/LocalProofSection";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { LocalBusinessSchema } from "@/app/components/schemas/LocalBusinessSchema";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
@@ -125,6 +127,7 @@ async function getLocationPage(locationSlug: string) {
     ...page,
     relatedServices: relatedServices.map(s => s.service_name),
     nearbyAreas,
+    localSeoFacts: getLocalSeoFacts(db, page.location_slug, page.location_name),
     residentialServices: filterPriorityServices(residentialServices),
     commercialServices: filterPriorityServices(commercialServices),
   };
@@ -199,6 +202,8 @@ export default async function LocationPage({ params }: PageProps) {
         zipCode={page.zip_code}
         latitude={page.latitude}
         longitude={page.longitude}
+        utilityName={page.localSeoFacts.utilityName}
+        permitOffice={page.localSeoFacts.permitOffice}
       />
 
       {/* Breadcrumb Schema */}
@@ -282,6 +287,13 @@ export default async function LocationPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      <LocalProofSection
+        locationName={page.location_name}
+        locationSlug={page.location_slug}
+        facts={page.localSeoFacts}
+        nearbyAreas={page.nearbyAreas}
+      />
 
       {/* Project Gallery */}
       <section className="py-12 sm:py-20 lg:py-28 px-6 sm:px-8 lg:px-12" style={{ background: "var(--section-gray)" }}>

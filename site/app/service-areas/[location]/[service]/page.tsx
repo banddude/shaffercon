@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import { isPriorityService } from "@/lib/seo-priority";
+import { getLocalSeoFacts } from "@/lib/local-seo";
 import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, ContentBox } from "@/app/components/UI";
 import { ASSET_PATH } from "@/app/config";
@@ -8,6 +9,7 @@ import { AppleButton } from "@/app/components/UI/AppleStyle";
 import CTA from "@/app/components/CTA";
 import { HeroVideo } from "@/app/components/HeroVideo";
 import LinkCardGrid from "@/app/components/LinkCardGrid";
+import LocalProofSection from "@/app/components/LocalProofSection";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { FAQPageSchema } from "@/app/components/schemas/FAQPageSchema";
 import { ServiceSchema } from "@/app/components/schemas/ServiceSchema";
@@ -277,9 +279,11 @@ async function getServicePage(location: string, service: string) {
 
   // Get basic page data including hero_intro and closing_content
   const page = db.prepare(`
-    SELECT sp.*, pa.slug, pa.meta_title, pa.meta_description, pa.canonical_url
+    SELECT sp.*, pa.slug, pa.meta_title, pa.meta_description, pa.canonical_url,
+           lp.location_slug, lp.location_name, lp.city, lp.zip_code, lp.latitude, lp.longitude
     FROM service_pages sp
     LEFT JOIN pages_all pa ON sp.page_id = pa.id
+    LEFT JOIN location_pages lp ON LOWER(lp.location_name) = LOWER(sp.location)
     WHERE sp.location = ? AND sp.service_type = ? AND sp.service_name = ?
   `).get(locationDb, serviceType, serviceName) as any;
 
@@ -327,6 +331,11 @@ async function getServicePage(location: string, service: string) {
 
   return {
     ...page,
+    localSeoFacts: getLocalSeoFacts(
+      db,
+      page.location_slug || location,
+      page.location_name || locationDb.split(" ").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" "),
+    ),
     benefits: benefits.map((b: any) => ({ heading: b.heading, content: b.content })),
     offerings: offerings.map((o: any) => o.offering),
     faqs: faqs.map((f: any) => ({ question: f.question, answer: f.answer })),
@@ -451,6 +460,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         areaServed={locationName}
         serviceUrl={pageUrl}
         services={[decodeHtmlEntities(pageTitle)]}
+        city={page.city}
+        zipCode={page.zip_code}
+        latitude={page.latitude}
+        longitude={page.longitude}
+        utilityName={page.localSeoFacts.utilityName}
+        permitOffice={page.localSeoFacts.permitOffice}
       />
 
       {/* Service Schema */}
@@ -543,6 +558,16 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
         </Container>
       </Section>
+
+      <LocalProofSection
+        locationName={locationName}
+        locationSlug={page.location_slug || location}
+        facts={page.localSeoFacts}
+        nearbyAreas={page.nearbyAreas}
+        serviceType={serviceType}
+        serviceName={serviceName}
+        serviceDisplayName={serviceDisplayName}
+      />
 
       {/* Priority service detail */}
       {priorityDetail && (

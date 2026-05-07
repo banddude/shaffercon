@@ -27,19 +27,29 @@ export function ServiceSchema({
     "name": serviceName,
     "description": description,
     "provider": {
-      "@type": "Electrician",
+      "@type": ["LocalBusiness", "Electrician", "GeneralContractor"],
+      "@id": "https://shaffercon.com/#localbusiness",
       "name": "Shaffer Construction",
-      "telephone": "323-642-8509",
+      "telephone": "+1-323-642-8509",
+      "email": "hello@shaffercon.com",
       "url": "https://shaffercon.com",
       "priceRange": priceRange,
-      "areaServed": {
-        "@type": "City",
-        "name": areaServed
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "325 N Larchmont Blvd #202",
+        "addressLocality": "Los Angeles",
+        "addressRegion": "CA",
+        "postalCode": "90004",
+        "addressCountry": "US"
       }
     },
     "areaServed": {
       "@type": "City",
-      "name": areaServed
+      "name": areaServed,
+      "containedInPlace": {
+        "@type": "State",
+        "name": "California"
+      }
     },
     "url": url
   };
