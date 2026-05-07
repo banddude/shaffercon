@@ -7,6 +7,7 @@
     "build": "node ./scripts/generate-llms.mjs && next build",
     "generate-llms": "node ./scripts/generate-llms.mjs",
     "audit:local-seo": "node ./scripts/local-seo-audit.mjs",
+    "audit:gsc-opportunities": "cd .. && python3 scripts/gsc_business_opportunities.py seo-updates/gsc-export-2026-05-05 --output-csv seo-updates/search-console-opportunities-latest.csv --output-md seo-updates/search-console-opportunities-latest.md --links-csv seo-updates/search-console-internal-links-latest.csv --links-md seo-updates/search-console-internal-links-latest.md",
     "start": "next start",
     "lint": "next lint"
   },
