@@ -1,0 +1,10 @@
+name = "shaffercon-seo-redirects"
+main = "index.js"
+compatibility_date = "2024-01-01"
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "shaffercon.com/*", zone_name = "shaffercon.com" },
+  { pattern = "www.shaffercon.com/*", zone_name = "shaffercon.com" }
+]
