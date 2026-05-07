@@ -35,7 +35,7 @@ Targets come from Search Console opportunity scoring. Sources are selected from 
 | 6 | `/industry-insights/subpanel-installation-guide-when-why-you-need-one/` | `/industry-insights/recessed-lighting-installation-guide/` | commercial electrical subpanel installation | 82.293 |
 | 6 | `/industry-insights/subpanel-installation-guide-when-why-you-need-one/` | `/industry-insights/kitchen-electrical-requirements-outlet-placement-guide/` | commercial electrical subpanel installation | 81.257 |
 | 6 | `/industry-insights/subpanel-installation-guide-when-why-you-need-one/` | `/industry-insights/passing-electrical-inspection-common-failures-fixes/` | commercial electrical subpanel installation | 71.542 |
-| 6 | `/industry-insights/subpanel-installation-guide-when-why-you-need-one/` | `/industry-insights/electrical-safety-inspection-checklist-los-angeles/` | commercial electrical subpanel installation | 69.267 |
+| 6 | `/industry-insights/subpanel-installation-guide-when-why-you-need-one/` | `/industry-insights/california-title-24-electrical-requirements-renovations/` | commercial electrical subpanel installation | 69.322 |
 | 7 | `/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/` | `/industry-insights/kitchen-electrical-requirements-outlet-placement-guide/` | upgrade electrical panel | 60.942 |
 | 7 | `/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/` | `/industry-insights/passing-electrical-inspection-common-failures-fixes/` | upgrade electrical panel | 59.618 |
 | 7 | `/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/` | `/industry-insights/ladbs-electrical-permit-process-step-by-step-guide/` | upgrade electrical panel | 52.994 |
@@ -55,7 +55,7 @@ Targets come from Search Console opportunity scoring. Sources are selected from 
 | 13 | `/service-areas/long-beach/commercial-backup-generator-installation/` | `/industry-insights/retail-store-electrical-planning-design-guide/` | backup generator sales long beach ca | 34.449 |
 | 13 | `/service-areas/long-beach/commercial-backup-generator-installation/` | `/industry-insights/kitchen-electrical-requirements-outlet-placement-guide/` | backup generator sales long beach ca | 33.857 |
 | 13 | `/service-areas/long-beach/commercial-backup-generator-installation/` | `/industry-insights/office-electrical-upgrades-modern-workplaces/` | backup generator sales long beach ca | 31.658 |
-| 13 | `/service-areas/long-beach/commercial-backup-generator-installation/` | `/industry-insights/understanding-your-los-angeles-electrical-bill/` | backup generator sales long beach ca | 30.319 |
+| 13 | `/service-areas/long-beach/commercial-backup-generator-installation/` | `/industry-insights/california-title-24-electrical-requirements-renovations/` | backup generator sales long beach ca | 31.510 |
 | 14 | `/industry-insights/federal-pacific-zinsco-panels-replacement-los-angeles/` | `/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/` | zinsco panel replacement cost | 87.680 |
 | 14 | `/industry-insights/federal-pacific-zinsco-panels-replacement-los-angeles/` | `/industry-insights/dedicated-circuits-when-why-home-appliances-need-them/` | zinsco panel replacement cost | 74.698 |
 | 14 | `/industry-insights/federal-pacific-zinsco-panels-replacement-los-angeles/` | `/industry-insights/kitchen-electrical-requirements-outlet-placement-guide/` | zinsco panel replacement cost | 74.485 |
@@ -66,10 +66,10 @@ Targets come from Search Console opportunity scoring. Sources are selected from 
 | 15 | `/industry-insights/ultimate-guide-home-ev-charger-installation-los-angeles/` | `/industry-insights/california-title-24-electrical-requirements-renovations/` | ev charger requirement new home los angeles | 69.322 |
 | 15 | `/industry-insights/ultimate-guide-home-ev-charger-installation-los-angeles/` | `/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/` | ev charger requirement new home los angeles | 68.891 |
 | 15 | `/industry-insights/ultimate-guide-home-ev-charger-installation-los-angeles/` | `/industry-insights/ladbs-electrical-permit-process-step-by-step-guide/` | ev charger requirement new home los angeles | 66.243 |
-| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/bathroom-electrical-safety-gfci-requirements/` | electrical load study | 134.791 |
-| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/` | electrical load study | 131.519 |
-| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/california-title-24-electrical-requirements-renovations/` | electrical load study | 126.041 |
-| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/ladbs-electrical-permit-process-step-by-step-guide/` | electrical load study | 125.861 |
+| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/` | electrical load study | 137.782 |
+| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/california-title-24-electrical-requirements-renovations/` | electrical load study | 132.343 |
+| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/bathroom-electrical-safety-gfci-requirements/` | electrical load study | 129.175 |
+| 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/kitchen-electrical-requirements-outlet-placement-guide/` | electrical load study | 128.656 |
 | 16 | `/industry-insights/electrical-load-studies-what-they-are-los-angeles/` | `/industry-insights/nec-2026-qualified-installer-requirement-charging-reliability-86-percent-commercial-roi-3-5-year-payback/` | electrical load study | 125.018 |
 | 17 | `/` | `/industry-insights/nec-2026-qualified-installer-requirement-charging-reliability-86-percent-commercial-roi-3-5-year-payback/` | ev charging station contractors los angeles | 29.766 |
 | 17 | `/` | `/industry-insights/tesla-worlds-largest-supercharger-los-angeles-curbside-charging-expansion-volkswagen-network-access-dynamic-pricing-long-beach-ev-infrastructure/` | ev charging station contractors los angeles | 28.277 |
@@ -83,6 +83,6 @@ Targets come from Search Console opportunity scoring. Sources are selected from 
 | 18 | `/industry-insights/electric-vehicles-mitsubishi-chargers/` | `/industry-insights/california-2026-building-code-ev-charging-requirements-home-real-estate-trend-32-new-models/` | mitsubishi charger installation | 65.954 |
 | 19 | `/electrical-load-studies/` | `/industry-insights/nec-2026-qualified-installer-requirement-charging-reliability-86-percent-commercial-roi-3-5-year-payback/` | electrical load compliance consultant | 83.346 |
 | 19 | `/electrical-load-studies/` | `/industry-insights/ladbs-electrical-permit-process-step-by-step-guide/` | electrical load compliance consultant | 79.491 |
+| 19 | `/electrical-load-studies/` | `/industry-insights/california-title-24-electrical-requirements-renovations/` | electrical load compliance consultant | 75.624 |
+| 19 | `/electrical-load-studies/` | `/industry-insights/kitchen-electrical-requirements-outlet-placement-guide/` | electrical load compliance consultant | 74.485 |
 | 19 | `/electrical-load-studies/` | `/industry-insights/subpanel-installation-guide-when-why-you-need-one/` | electrical load compliance consultant | 72.987 |
-| 19 | `/electrical-load-studies/` | `/industry-insights/california-2026-building-code-ev-charging-requirements-home-real-estate-trend-32-new-models/` | electrical load compliance consultant | 72.550 |
-| 19 | `/electrical-load-studies/` | `/industry-insights/kitchen-electrical-requirements-outlet-placement-guide/` | electrical load compliance consultant | 67.714 |

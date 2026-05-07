@@ -11,7 +11,7 @@ import { HeroVideo } from "@/app/components/HeroVideo";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { ServiceLandingSchema } from "@/app/components/schemas/ServiceLandingSchema";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
-import { Phone, Zap, Award, MapPin, Clock, Battery, Wrench, Car, HeadphonesIcon } from "lucide-react";
+import { Phone, Zap, Award, MapPin, Clock, Battery, Wrench, Car, HeadphonesIcon, ClipboardCheck, FileText } from "lucide-react";
 
 interface PageProps {
   params: Promise<{
@@ -127,10 +127,10 @@ async function getServiceLandingPage(slug: string) {
       slug: 'electrical-load-studies',
       title: 'Electrical Load Study Los Angeles',
       page_title: 'Electrical Load Study Los Angeles',
-      hero_text: 'Before you add EV chargers, upgrade a panel, build out a tenant space, or request more utility capacity, confirm what your electrical system can actually support. Shaffer Construction performs electrical load studies for Los Angeles commercial properties, multifamily buildings, and EV charging projects, with documentation for permits, utility coordination, and project planning.',
+      hero_text: 'Need to confirm electrical capacity before EV chargers, a panel upgrade, tenant improvement, or LADBS permit submittal? Shaffer Construction performs Los Angeles electrical load studies for commercial buildings, multifamily properties, and EV charging projects, with documentation for utility planning, permit review, budgeting, and safe design.',
       hero_image: '/ev-charging.mp4',
       meta_title: 'Electrical Load Study Los Angeles',
-      meta_description: 'Electrical load studies in Los Angeles for EV chargers, panel upgrades, tenant improvements, and utility coordination. Reports for permits and planning.',
+      meta_description: 'Los Angeles electrical load studies for EV chargers, panel upgrades, tenant improvements, permits, utility capacity, and commercial building reports.',
       sections: [
         {
           section_type: 'info_card',
@@ -187,6 +187,13 @@ async function getServiceLandingPage(slug: string) {
           heading: 'Comprehensive Load Study Services',
           subheading: '',
           content: 'Comprehensive Load Study Services\n\n• EV Infrastructure: Capacity for Level 2 chargers, DC fast chargers, and phased charging rollouts\n• Panel Upgrades: Confirm whether existing equipment can support new loads or needs replacement\n• Tenant Improvements: Document available capacity before new HVAC, kitchen, lighting, or equipment loads\n• Utility Coordination: Provide electrical data for LADWP, SCE, and service planning conversations\n• Code Compliance: Review NEC capacity requirements and identify overload risks\n• Budget Planning: Give owners a practical path before they commit to charger hardware or construction scope\n\nTo start, send the site address, photos of the main electrical gear, the planned new loads, and any charger or equipment cutsheets you already have. We can usually tell you the next step before a full design package is created.',
+          table_data: null,
+        },
+        {
+          section_type: 'content',
+          heading: 'Electrical Load Study Reports for Permits, EV Chargers, and Commercial Building Capacity',
+          subheading: '',
+          content: 'Most load study customers need one clear answer before they spend money on equipment, drawings, utility requests, or construction: can the existing electrical service safely support the new load? We help commercial owners, multifamily operators, EV charging vendors, engineers, architects, and property managers confirm capacity before EV charger installs, panel upgrades, tenant improvements, HVAC changes, kitchen equipment, service increases, and permit resubmittals.\n\nThe report can support LADBS plan check responses, LADWP or SCE service planning, charger count decisions, phased installation planning, load management design, budget decisions, and contractor scope before a project becomes expensive to change.',
           table_data: null,
         },
         {
@@ -626,6 +633,77 @@ export default async function ServiceLandingPage({ params }: PageProps) {
             )}
           </Container>
         </Section>
+      )}
+
+      {landing === 'electrical-load-studies' && (
+        <section className="py-12 sm:py-20 lg:py-28 px-6 sm:px-8 lg:px-12" style={{ background: "var(--section-gray)" }}>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-12 items-start">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: "var(--primary)" }}>
+                  Capacity answers before you commit
+                </p>
+                <SectionHeading className="mb-5">
+                  Need a load study before EV chargers, permits, or a service upgrade?
+                </SectionHeading>
+                <p className="text-lg leading-relaxed mb-6" style={{ color: "var(--secondary)" }}>
+                  If you are adding EV chargers, upgrading equipment, building out a tenant space, or responding to plan check comments, a load study gives you the capacity data needed before drawings, equipment orders, utility requests, or construction decisions.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <AppleButton href="tel:+13236428509" variant="primary" size="lg">
+                    <Phone className="w-5 h-5 mr-2" />
+                    Call (323) 642-8509
+                  </AppleButton>
+                  <AppleButton href="/contact-us/" variant="secondary" size="lg">
+                    Request Load Study
+                  </AppleButton>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    title: "EV charger capacity",
+                    text: "See how many Level 2 or DC fast chargers the existing service can support before equipment is purchased.",
+                    icon: Battery,
+                  },
+                  {
+                    title: "Commercial building loads",
+                    text: "Measure actual demand for tenant improvements, equipment additions, HVAC changes, and facility upgrades.",
+                    icon: Zap,
+                  },
+                  {
+                    title: "Permit documentation",
+                    text: "Use capacity data for LADBS permit review, utility planning, engineer coordination, and project budgeting.",
+                    icon: FileText,
+                  },
+                  {
+                    title: "Upgrade decisions",
+                    text: "Know whether load management, panel work, service upgrades, or phased installation makes the most sense.",
+                    icon: ClipboardCheck,
+                  },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={item.title}
+                      className="rounded-lg p-6"
+                      style={{ background: "var(--background)", border: "1px solid var(--section-border)" }}
+                    >
+                      <Icon className="w-8 h-8 mb-4" style={{ color: "var(--primary)" }} />
+                      <h2 className="text-xl font-semibold mb-3" style={{ color: "var(--text)" }}>
+                        {item.title}
+                      </h2>
+                      <p className="text-base leading-relaxed mb-0" style={{ color: "var(--secondary)" }}>
+                        {item.text}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
       )}
 
       {/* Second Video Section (ev-charging.mp4) with Second Content Card - Only for Commercial EV Chargers page */}
