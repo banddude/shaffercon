@@ -131,6 +131,7 @@ const priorityPosts = [
 ];
 
 const postBySlug = new Map(posts.map((post) => [post.slug, post]));
+const recentPosts = posts.slice(0, 12);
 
 const llmsTxt = `# Shaffer Construction, Inc.
 
@@ -171,6 +172,14 @@ ${landingPages
 ${priorityPosts
   .map((slug) => postBySlug.get(slug))
   .filter(Boolean)
+  .map((post) =>
+    entry(post.title, `/industry-insights/${post.slug}/`, post.description),
+  )
+  .join("\n")}
+
+## Recent Industry Insights
+
+${recentPosts
   .map((post) =>
     entry(post.title, `/industry-insights/${post.slug}/`, post.description),
   )
