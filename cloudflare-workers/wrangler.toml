@@ -8,5 +8,5 @@ workers_dev = true
 
 [env.production]
 routes = [
-  { pattern = "api.shaffercon.com/contact", custom_domain = true }
+  { pattern = "api.shaffercon.com/contact", zone_name = "shaffercon.com" }
 ]

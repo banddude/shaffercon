@@ -26,6 +26,8 @@ jobs:
         run: echo "timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
 
       - name: Save submission to JSON
+        env:
+          ATTRIBUTION_JSON: ${{ toJson(github.event.client_payload.attribution) }}
         run: |
           FILENAME="leads/$(date -u +%Y-%m-%d_%H-%M-%S)_${{ github.event.client_payload.email }}.json"
           jq -n \
@@ -36,6 +38,7 @@ jobs:
             --arg phone "${{ github.event.client_payload.phone }}" \
             --arg address "${{ github.event.client_payload.address }}" \
             --arg message "${{ github.event.client_payload.message }}" \
+            --argjson attribution "${ATTRIBUTION_JSON:-null}" \
             '{
               timestamp: $timestamp,
               firstName: $firstName,
@@ -43,7 +46,8 @@ jobs:
               email: $email,
               phone: $phone,
               address: $address,
-              message: $message
+              message: $message,
+              attribution: $attribution
             }' > "$FILENAME"
 
       - name: Commit submission
@@ -79,6 +83,14 @@ jobs:
               `**Email:** ${p.email}`,
               `**Phone:** ${p.phone || '(not provided)'}`,
               `**Address:** ${p.address || '(not provided)'}`,
+              `**Source page:** ${p.attribution?.pageUrl || '(not captured)'}`,
+              `**Landing page:** ${p.attribution?.landingPage || '(not captured)'}`,
+              `**Referrer:** ${p.attribution?.referrer || '(not captured)'}`,
+              `**UTM:** ${[
+                p.attribution?.utmSource,
+                p.attribution?.utmMedium,
+                p.attribution?.utmCampaign,
+              ].filter(Boolean).join(' / ') || '(none)'}`,
               ``,
               `**Message:**`,
               ``,

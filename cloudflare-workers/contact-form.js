@@ -25,6 +25,7 @@ export default {
       // Parse form data
       const formData = await request.json();
       const { firstName, lastName, email, phone, address, message } = formData;
+      const attribution = normalizeAttribution(formData.attribution);
 
       // Validate required fields
       if (!firstName || !lastName || !email) {
@@ -57,6 +58,7 @@ export default {
               phone: phone || '',
               address: address || '',
               message: message || '',
+              attribution,
             },
           }),
         }
@@ -111,3 +113,30 @@ export default {
     }
   },
 };
+
+function textValue(value) {
+  if (typeof value !== 'string') return '';
+  return value.slice(0, 2000);
+}
+
+function normalizeAttribution(value) {
+  const source = value && typeof value === 'object' ? value : {};
+
+  return {
+    pageUrl: textValue(source.pageUrl),
+    pagePath: textValue(source.pagePath),
+    pageTitle: textValue(source.pageTitle),
+    referrer: textValue(source.referrer),
+    landingPage: textValue(source.landingPage),
+    utmSource: textValue(source.utmSource),
+    utmMedium: textValue(source.utmMedium),
+    utmCampaign: textValue(source.utmCampaign),
+    utmTerm: textValue(source.utmTerm),
+    utmContent: textValue(source.utmContent),
+    gclid: textValue(source.gclid),
+    gbraid: textValue(source.gbraid),
+    wbraid: textValue(source.wbraid),
+    msclkid: textValue(source.msclkid),
+    fbclid: textValue(source.fbclid),
+  };
+}

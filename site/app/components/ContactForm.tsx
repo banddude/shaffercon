@@ -10,6 +10,64 @@ interface ContactFormProps {
   siteConfig: SiteConfig;
 }
 
+interface LeadAttribution {
+  pageUrl: string;
+  pagePath: string;
+  pageTitle: string;
+  referrer: string;
+  landingPage: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  utmTerm: string;
+  utmContent: string;
+  gclid: string;
+  gbraid: string;
+  wbraid: string;
+  msclkid: string;
+  fbclid: string;
+}
+
+function searchValue(params: URLSearchParams, key: string) {
+  return params.get(key) || "";
+}
+
+function readLeadAttribution(): LeadAttribution {
+  const params = new URLSearchParams(window.location.search);
+  const storageKey = "shaffercon_landing_page";
+  const pageUrl = window.location.href;
+
+  let landingPage = pageUrl;
+  try {
+    const storedLandingPage = window.sessionStorage.getItem(storageKey);
+    if (storedLandingPage) {
+      landingPage = storedLandingPage;
+    } else {
+      window.sessionStorage.setItem(storageKey, pageUrl);
+    }
+  } catch (error) {
+    landingPage = pageUrl;
+  }
+
+  return {
+    pageUrl,
+    pagePath: `${window.location.pathname}${window.location.search}`,
+    pageTitle: document.title,
+    referrer: document.referrer || "",
+    landingPage,
+    utmSource: searchValue(params, "utm_source"),
+    utmMedium: searchValue(params, "utm_medium"),
+    utmCampaign: searchValue(params, "utm_campaign"),
+    utmTerm: searchValue(params, "utm_term"),
+    utmContent: searchValue(params, "utm_content"),
+    gclid: searchValue(params, "gclid"),
+    gbraid: searchValue(params, "gbraid"),
+    wbraid: searchValue(params, "wbraid"),
+    msclkid: searchValue(params, "msclkid"),
+    fbclid: searchValue(params, "fbclid"),
+  };
+}
+
 export default function ContactForm({ title, siteConfig }: ContactFormProps) {
   const config = siteConfig;
   const [formData, setFormData] = useState({
@@ -58,9 +116,11 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
       return;
     }
 
+    const attribution = readLeadAttribution();
+
     try {
       // Submit to Cloudflare Worker (GitHub token is secure on the server)
-      // TODO: Switch back to https://api.shaffercon.com/contact once DNS propagates
+      // Keep the workers.dev endpoint until api.shaffercon.com resolves.
       const response = await fetch('https://shaffercon-contact-form.mikejshaffer.workers.dev', {
         method: 'POST',
         headers: {
@@ -73,6 +133,7 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
           phone: formData.phone,
           address: formData.address,
           message: formData.message,
+          attribution,
         }),
       });
 
@@ -96,7 +157,7 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
     } catch (error) {
       // Fallback to mailto on error
       const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
-        `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\nMessage:\n${formData.message}`
+        `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}\nSource page: ${attribution.pageUrl}\nLanding page: ${attribution.landingPage}\nReferrer: ${attribution.referrer}\n\nMessage:\n${formData.message}`
       )}`;
       window.location.href = mailtoLink;
     }
