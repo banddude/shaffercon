@@ -1,0 +1,6 @@
+# Local database backups created before content cleanup passes.
+database/data/site.db.backup-*
+
+# One off local cleanup experiments, not part of the publishing pipeline.
+scripts/ai_tell_sweep.py
+scripts/emdash_gemma_v2.py
