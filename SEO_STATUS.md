@@ -1,6 +1,6 @@
 # Shaffer Construction SEO Status
 
-Last updated: May 12, 2026
+Last updated: May 13, 2026
 
 This is the current source of truth for website SEO, traffic tracking, lead tracking, and next work. Supporting detail lives in `SEO_BUSINESS_IMPACT_PLAN.md` and dated files under `seo-updates/`.
 
@@ -20,24 +20,24 @@ Grow qualified calls, quote requests, and commercial electrical opportunities fr
 
 ## Latest Baseline
 
-Latest full check: `seo-updates/website-stats-and-leads-2026-05-11.md`
+Latest full check: `seo-updates/website-stats-and-leads-2026-05-13.md`
 
-GA4, May 5 to May 10:
+GA4, May 11 to May 12:
 
-1. Active users, 245.
-2. Sessions, 253.
-3. Page views, 268.
-4. Engaged sessions, 56.
-5. `generate_lead` events, 15.
+1. Active users, 67.
+2. Sessions, 71.
+3. Page views, 81.
+4. Engaged sessions, 24.
+5. `generate_lead` events, 3.
 
-Search Console, May 5 to May 10:
+Search Console, May 11 to May 12:
 
-1. Clicks, 48.
-2. Impressions, 11,912.
-3. CTR, 0.40 percent.
-4. Average position, 12.29.
+1. Clicks, 20.
+2. Impressions, 3,781.
+3. CTR, 0.53 percent.
+4. Average position, 14.96.
 
-Interpretation: tracking is working. Search traffic is roughly flat. Average position improved slightly, but CTR is still weak, so the fastest SEO gains are title, meta, and internal link improvements on pages already ranking.
+Interpretation: the last two complete days recovered from the prior weekend, but the seven day Search Console trend is still softer than the prior week. CTR and average position remain the main SEO constraints.
 
 ## Completed Work
 
