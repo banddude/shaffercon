@@ -2,6 +2,8 @@
 
 Last updated: May 5, 2026
 
+Current execution status now lives in `SEO_STATUS.md`. Use this file for strategy and prioritization logic, then use `SEO_STATUS.md` for what is done, what is next, and the weekly operating routine.
+
 ## Goal
 
 Grow qualified calls, quote requests, and commercial electrical opportunities from organic search. Traffic matters only when it supports work Shaffer Construction wants to win.
