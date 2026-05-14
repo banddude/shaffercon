@@ -501,12 +501,32 @@ const DIRECT_REDIRECTS = {
   "/service-areas/pacific-palisades/exhaust-fan-ventilation-wiring/residential-exhaust-fan-ventilation-wiring": "/service-areas/pacific-palisades/residential-exhaust-fan-ventilation-wiring/"
 };
 
+const CANONICAL_TOP_LEVEL_SLUGS = new Set([
+  'about-us',
+  'contact-us',
+  'service-areas',
+  'commercial-electric-vehicle-chargers',
+  'commercial-service',
+  'electrical-load-studies',
+  'led-retrofit-services',
+  'residential-ev-charger',
+  'statewide-facilities-maintenance'
+]);
+
 async function handleRequest(request) {
   const url = new URL(request.url);
   const target = resolveRedirect(url.pathname);
 
   if (target) {
-    return Response.redirect(new URL(target, 'https://shaffercon.com').toString(), 301);
+    const targetUrl = new URL(target, 'https://shaffercon.com');
+    if (
+      targetUrl.protocol !== url.protocol ||
+      targetUrl.hostname !== url.hostname ||
+      targetUrl.pathname !== url.pathname ||
+      targetUrl.search !== url.search
+    ) {
+      return Response.redirect(targetUrl.toString(), 301);
+    }
   }
 
   if (url.hostname === 'www.shaffercon.com') {
@@ -586,6 +606,10 @@ function resolveRedirect(pathname) {
   const path = normalizePath(pathname);
   const parts = path.split('/').filter(Boolean);
   const slug = parts[parts.length - 1] || '';
+
+  if (parts.length === 1 && CANONICAL_TOP_LEVEL_SLUGS.has(slug)) {
+    return pathname.endsWith('/') ? '' : '/' + slug + '/';
+  }
 
   if (DIRECT_REDIRECTS[path]) {
     return DIRECT_REDIRECTS[path];
