@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import {
+  serviceCategoryForPath,
   trackCTAClick,
   trackEmailClick,
   trackGenerateLead,
@@ -18,6 +19,23 @@ function eventLocation() {
 
 export function AnalyticsEvents() {
   useEffect(() => {
+    try {
+      const landingKey = "shaffercon_landing_page";
+      const categoryKey = "shaffercon_landing_service_category";
+      const currentUrl = window.location.href;
+      const currentLocation = eventLocation();
+
+      if (!window.sessionStorage.getItem(landingKey)) {
+        window.sessionStorage.setItem(landingKey, currentUrl);
+      }
+
+      if (!window.sessionStorage.getItem(categoryKey)) {
+        window.sessionStorage.setItem(categoryKey, serviceCategoryForPath(currentLocation));
+      }
+    } catch (error) {
+      // Attribution is helpful, but tracking should never block navigation.
+    }
+
     const handleClick = (event: MouseEvent) => {
       const target = event.target;
       if (!(target instanceof Element)) return;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { classNames } from "@/app/styles/theme";
-import { trackFormSubmit, trackGenerateLead } from "@/app/lib/analytics";
+import { serviceCategoryForPath, trackFormSubmit, trackGenerateLead, trackQualifiedLead } from "@/app/lib/analytics";
 import type { SiteConfig } from "@/lib/db";
 
 interface ContactFormProps {
@@ -26,6 +26,8 @@ interface LeadAttribution {
   wbraid: string;
   msclkid: string;
   fbclid: string;
+  serviceCategory: string;
+  landingServiceCategory: string;
 }
 
 function searchValue(params: URLSearchParams, key: string) {
@@ -38,12 +40,18 @@ function readLeadAttribution(): LeadAttribution {
   const pageUrl = window.location.href;
 
   let landingPage = pageUrl;
+  let landingServiceCategory = serviceCategoryForPath(`${window.location.pathname}${window.location.search}`);
   try {
     const storedLandingPage = window.sessionStorage.getItem(storageKey);
+    const storedServiceCategory = window.sessionStorage.getItem("shaffercon_landing_service_category");
     if (storedLandingPage) {
       landingPage = storedLandingPage;
     } else {
       window.sessionStorage.setItem(storageKey, pageUrl);
+    }
+
+    if (storedServiceCategory) {
+      landingServiceCategory = storedServiceCategory;
     }
   } catch (error) {
     landingPage = pageUrl;
@@ -65,6 +73,8 @@ function readLeadAttribution(): LeadAttribution {
     wbraid: searchValue(params, "wbraid"),
     msclkid: searchValue(params, "msclkid"),
     fbclid: searchValue(params, "fbclid"),
+    serviceCategory: serviceCategoryForPath(`${window.location.pathname}${window.location.search}`),
+    landingServiceCategory,
   };
 }
 
@@ -138,8 +148,12 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
       });
 
       if (response.ok) {
-        trackFormSubmit("Contact form", window.location.pathname);
-        trackGenerateLead("contact_form", window.location.pathname);
+        const result = await response.json().catch(() => ({ accepted: true }));
+        if (result.accepted !== false) {
+          trackFormSubmit("Contact form", window.location.pathname);
+          trackGenerateLead("contact_form", window.location.pathname);
+          trackQualifiedLead("contact_form", window.location.pathname);
+        }
         setSubmitted(true);
         // Reset form
         setFormData({

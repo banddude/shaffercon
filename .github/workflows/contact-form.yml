@@ -28,6 +28,9 @@ jobs:
       - name: Save submission to JSON
         env:
           ATTRIBUTION_JSON: ${{ toJson(github.event.client_payload.attribution) }}
+          SPAM_ASSESSMENT_JSON: ${{ toJson(github.event.client_payload.spamAssessment) }}
+          JOB_CATEGORY: ${{ github.event.client_payload.jobCategory }}
+          LEAD_QUALITY: ${{ github.event.client_payload.leadQuality }}
         run: |
           FILENAME="leads/$(date -u +%Y-%m-%d_%H-%M-%S)_${{ github.event.client_payload.email }}.json"
           jq -n \
@@ -38,7 +41,10 @@ jobs:
             --arg phone "${{ github.event.client_payload.phone }}" \
             --arg address "${{ github.event.client_payload.address }}" \
             --arg message "${{ github.event.client_payload.message }}" \
+            --arg jobCategory "${JOB_CATEGORY:-unknown}" \
+            --arg leadQuality "${LEAD_QUALITY:-needs_review}" \
             --argjson attribution "${ATTRIBUTION_JSON:-null}" \
+            --argjson spamAssessment "${SPAM_ASSESSMENT_JSON:-null}" \
             '{
               timestamp: $timestamp,
               firstName: $firstName,
@@ -47,7 +53,10 @@ jobs:
               phone: $phone,
               address: $address,
               message: $message,
-              attribution: $attribution
+              attribution: $attribution,
+              jobCategory: $jobCategory,
+              leadQuality: $leadQuality,
+              spamAssessment: $spamAssessment
             }' > "$FILENAME"
 
       - name: Commit submission
@@ -83,8 +92,14 @@ jobs:
               `**Email:** ${p.email}`,
               `**Phone:** ${p.phone || '(not provided)'}`,
               `**Address:** ${p.address || '(not provided)'}`,
+              `**Job category:** ${p.jobCategory || '(not classified)'}`,
+              `**Lead quality:** ${p.leadQuality || '(not classified)'}`,
+              `**Spam score:** ${p.spamAssessment?.score ?? '(not scored)'}`,
+              `**Spam reasons:** ${p.spamAssessment?.reasons?.join(', ') || '(none)'}`,
               `**Source page:** ${p.attribution?.pageUrl || '(not captured)'}`,
               `**Landing page:** ${p.attribution?.landingPage || '(not captured)'}`,
+              `**Landing service:** ${p.attribution?.landingServiceCategory || '(not captured)'}`,
+              `**Current service:** ${p.attribution?.serviceCategory || '(not captured)'}`,
               `**Referrer:** ${p.attribution?.referrer || '(not captured)'}`,
               `**UTM:** ${[
                 p.attribution?.utmSource,
