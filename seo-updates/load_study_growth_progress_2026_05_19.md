@@ -472,3 +472,50 @@ Deploy evidence, pending follow up push and deploy.
 Known risks, the NFPA URL is a direct PDF reference and should be checked again if NFPA changes its media paths.
 
 Next action, commit and push the SEO warning fix, then verify deployments.
+
+## Entry 11
+
+Start time, 2026 05 19.
+
+End time, 2026 05 19.
+
+Owner, Aiva.
+
+Objective, record final deploy and live verification evidence.
+
+Starting git status, commit `42e382a` pushed to `origin/main`.
+
+Files changed:
+
+1. `seo-updates/load_study_growth_progress_2026_05_19.md`.
+
+Commands run:
+
+1. `gh run view 26133322063 --repo banddude/shaffercon --json status,conclusion,url,headSha,displayTitle`.
+2. `curl -L -s https://shaffercon.com/electrical-load-studies/`.
+3. Live contact page bundle check for `loadStudyIntake`, `Load Study Details`, `qualified_lead`, and `service=load-study`.
+4. Live article checks for CPSC, ESFI, LADBS, NFPA, and load study links.
+5. Live Cloudflare Worker spam smoke test.
+6. `/usr/bin/python3 scripts/dead_link_audit.py`.
+
+Verification:
+
+1. GitHub Pages deploy `26133207280` for commit `a827c50` completed successfully.
+2. GitHub Pages deploy `26133322063` for commit `42e382a` completed successfully.
+3. Cloudflare Worker `shaffercon-contact-form` deployed with version `1ae5f78f-9aeb-43c5-b0af-768efd71900d`.
+4. Live `/electrical-load-studies/` includes the new title, metadata, buyer path, and `Request Load Study` CTA.
+5. Live contact page bundle includes `loadStudyIntake`, `Load Study Details`, `qualified_lead`, and `service=load-study`.
+6. Live external source checks confirmed CPSC and ESFI links on the safety checklist article.
+7. Live external source checks confirmed LADBS and NFPA links on the inspection failures article.
+8. Live worker spam smoke test returned `{"success":true,"accepted":false,"message":"Form submitted successfully"}`.
+9. Dead internal link audit checked 1,328 unique internal href targets and all returned HTTP 200.
+
+Result, complete.
+
+Commit, pending documentation commit.
+
+Deploy evidence, GitHub Pages run `26133322063` and Cloudflare Worker version `1ae5f78f-9aeb-43c5-b0af-768efd71900d`.
+
+Known risks, GA4 still needs `service_category` registered as a custom dimension before load study reporting can be sliced cleanly.
+
+Next action, push documentation update, send `notify all`, then complete the goal.
