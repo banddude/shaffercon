@@ -28,6 +28,7 @@ jobs:
       - name: Save submission to JSON
         env:
           ATTRIBUTION_JSON: ${{ toJson(github.event.client_payload.attribution) }}
+          LOAD_STUDY_INTAKE_JSON: ${{ toJson(github.event.client_payload.loadStudyIntake) }}
           SPAM_ASSESSMENT_JSON: ${{ toJson(github.event.client_payload.spamAssessment) }}
           JOB_CATEGORY: ${{ github.event.client_payload.jobCategory }}
           LEAD_QUALITY: ${{ github.event.client_payload.leadQuality }}
@@ -44,6 +45,7 @@ jobs:
             --arg jobCategory "${JOB_CATEGORY:-unknown}" \
             --arg leadQuality "${LEAD_QUALITY:-needs_review}" \
             --argjson attribution "${ATTRIBUTION_JSON:-null}" \
+            --argjson loadStudyIntake "${LOAD_STUDY_INTAKE_JSON:-null}" \
             --argjson spamAssessment "${SPAM_ASSESSMENT_JSON:-null}" \
             '{
               timestamp: $timestamp,
@@ -54,6 +56,7 @@ jobs:
               address: $address,
               message: $message,
               attribution: $attribution,
+              loadStudyIntake: $loadStudyIntake,
               jobCategory: $jobCategory,
               leadQuality: $leadQuality,
               spamAssessment: $spamAssessment
@@ -96,6 +99,14 @@ jobs:
               `**Lead quality:** ${p.leadQuality || '(not classified)'}`,
               `**Spam score:** ${p.spamAssessment?.score ?? '(not scored)'}`,
               `**Spam reasons:** ${p.spamAssessment?.reasons?.join(', ') || '(none)'}`,
+              `**Load study property type:** ${p.loadStudyIntake?.propertyType || '(not provided)'}`,
+              `**Load study reason:** ${p.loadStudyIntake?.studyReason || '(not provided)'}`,
+              `**New load type:** ${p.loadStudyIntake?.newLoadType || '(not provided)'}`,
+              `**Charger count:** ${p.loadStudyIntake?.chargerCount || '(not provided)'}`,
+              `**Utility:** ${p.loadStudyIntake?.utilityProvider || '(not provided)'}`,
+              `**Permit deadline:** ${p.loadStudyIntake?.permitDeadline || '(not provided)'}`,
+              `**Stamped report:** ${p.loadStudyIntake?.stampedReport || '(not provided)'}`,
+              `**Photos, plans, or cutsheets:** ${p.loadStudyIntake?.plansAvailable || '(not provided)'}`,
               `**Source page:** ${p.attribution?.pageUrl || '(not captured)'}`,
               `**Landing page:** ${p.attribution?.landingPage || '(not captured)'}`,
               `**Landing service:** ${p.attribution?.landingServiceCategory || '(not captured)'}`,

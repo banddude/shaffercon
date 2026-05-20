@@ -26,8 +26,9 @@ export default {
       const formData = await request.json();
       const { firstName, lastName, email, phone, address, message } = formData;
       const attribution = normalizeAttribution(formData.attribution);
-      const jobCategory = inferJobCategory({ firstName, lastName, email, phone, address, message, attribution });
-      const spamAssessment = assessSubmission({ firstName, lastName, email, phone, address, message, attribution });
+      const loadStudyIntake = normalizeLoadStudyIntake(formData.loadStudyIntake);
+      const jobCategory = inferJobCategory({ firstName, lastName, email, phone, address, message, attribution, loadStudyIntake });
+      const spamAssessment = assessSubmission({ firstName, lastName, email, phone, address, message, attribution, loadStudyIntake });
 
       // Validate required fields
       if (!firstName || !lastName || !email) {
@@ -82,6 +83,7 @@ export default {
               address: address || '',
               message: message || '',
               attribution,
+              loadStudyIntake,
               jobCategory,
               leadQuality: spamAssessment.leadQuality,
               spamAssessment,
@@ -169,6 +171,21 @@ function normalizeAttribution(value) {
   };
 }
 
+function normalizeLoadStudyIntake(value) {
+  const source = value && typeof value === 'object' ? value : {};
+
+  return {
+    propertyType: textValue(source.propertyType),
+    studyReason: textValue(source.studyReason),
+    newLoadType: textValue(source.newLoadType),
+    chargerCount: textValue(source.chargerCount),
+    utilityProvider: textValue(source.utilityProvider),
+    permitDeadline: textValue(source.permitDeadline),
+    stampedReport: textValue(source.stampedReport),
+    plansAvailable: textValue(source.plansAvailable),
+  };
+}
+
 function normalizeText(value) {
   return textValue(value).toLowerCase();
 }
@@ -188,6 +205,7 @@ function hasAny(haystack, terms) {
 
 function inferJobCategory(data) {
   const attribution = data.attribution || {};
+  const loadStudyIntake = data.loadStudyIntake || {};
   const haystack = [
     data.message,
     data.address,
@@ -196,6 +214,14 @@ function inferJobCategory(data) {
     attribution.landingPage,
     attribution.serviceCategory,
     attribution.landingServiceCategory,
+    loadStudyIntake.propertyType,
+    loadStudyIntake.studyReason,
+    loadStudyIntake.newLoadType,
+    loadStudyIntake.chargerCount,
+    loadStudyIntake.utilityProvider,
+    loadStudyIntake.permitDeadline,
+    loadStudyIntake.stampedReport,
+    loadStudyIntake.plansAvailable,
   ].map(normalizeText).join(' ');
 
   if (hasAny(haystack, ['electrical-load-studies', 'load study', 'load studies', 'load calculation', 'capacity study'])) {
@@ -227,6 +253,7 @@ function inferJobCategory(data) {
 
 function assessSubmission(data) {
   const attribution = data.attribution || {};
+  const loadStudyIntake = data.loadStudyIntake || {};
   const haystack = [
     data.firstName,
     data.lastName,
@@ -237,6 +264,9 @@ function assessSubmission(data) {
     attribution.referrer,
     attribution.pagePath,
     attribution.landingPage,
+    loadStudyIntake.propertyType,
+    loadStudyIntake.studyReason,
+    loadStudyIntake.newLoadType,
   ].map(normalizeText).join(' ');
   const phone = compactPhone(data.phone);
   const email = normalizeText(data.email);

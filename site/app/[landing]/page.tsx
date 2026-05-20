@@ -11,7 +11,7 @@ import { HeroVideo } from "@/app/components/HeroVideo";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { ServiceLandingSchema } from "@/app/components/schemas/ServiceLandingSchema";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
-import { Phone, Zap, Award, MapPin, Clock, Battery, Wrench, Car, HeadphonesIcon, ClipboardCheck, FileText } from "lucide-react";
+import { Phone, Zap, Award, MapPin, Battery, Wrench, Car, HeadphonesIcon, ClipboardCheck, FileText, Building2, Gauge, CalendarClock, UtilityPole } from "lucide-react";
 
 interface PageProps {
   params: Promise<{
@@ -126,11 +126,11 @@ async function getServiceLandingPage(slug: string) {
     return {
       slug: 'electrical-load-studies',
       title: 'Electrical Load Study Los Angeles',
-      page_title: 'Electrical Load Study Los Angeles',
-      hero_text: 'Need to confirm electrical capacity before EV chargers, a panel upgrade, tenant improvement, or LADBS permit submittal? Shaffer Construction performs Los Angeles electrical load studies for commercial buildings, multifamily properties, and EV charging projects, with documentation for utility planning, permit review, budgeting, and safe design.',
+      page_title: 'Electrical Load Study for LA Permits and EV Chargers',
+      hero_text: 'Confirm electrical capacity before EV chargers, a tenant improvement, a panel upgrade, or an LADBS permit response. Shaffer Construction performs Los Angeles load studies for commercial buildings, multifamily properties, and EV charging projects, with measured data for design, utility planning, budgets, and code decisions.',
       hero_image: '/ev-charging.mp4',
-      meta_title: 'Electrical Load Study Los Angeles',
-      meta_description: 'Los Angeles electrical load studies for EV chargers, panel upgrades, tenant improvements, permits, utility capacity, and commercial building reports.',
+      meta_title: 'Electrical Load Study Los Angeles | EV Chargers, Permits, Capacity',
+      meta_description: 'Los Angeles electrical load studies for EV chargers, tenant improvements, LADBS permits, panel upgrades, utility planning, and commercial capacity reports.',
       sections: [
         {
           section_type: 'info_card',
@@ -615,8 +615,8 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                     <Phone className="w-5 h-5 mr-2" />
                     Call (323) 642-8509
                   </AppleButton>
-                  <AppleButton href="/contact-us/" variant="secondary" size="lg">
-                    Get Free Quote
+                  <AppleButton href={landing === 'electrical-load-studies' ? "/contact-us?service=load-study" : "/contact-us/"} variant="secondary" size="lg">
+                    {landing === 'electrical-load-studies' ? "Request Load Study" : "Get Free Quote"}
                   </AppleButton>
                 </div>
               </div>
@@ -654,7 +654,7 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                     <Phone className="w-5 h-5 mr-2" />
                     Call (323) 642-8509
                   </AppleButton>
-                  <AppleButton href="/contact-us/" variant="secondary" size="lg">
+                  <AppleButton href="/contact-us?service=load-study" variant="secondary" size="lg">
                     Request Load Study
                   </AppleButton>
                 </div>
@@ -701,6 +701,116 @@ export default async function ServiceLandingPage({ params }: PageProps) {
                   );
                 })}
               </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {landing === 'electrical-load-studies' && (
+        <section className="py-12 sm:py-20 lg:py-28 px-6 sm:px-8 lg:px-12" style={{ background: "var(--background)" }}>
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-3xl mb-10">
+              <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: "var(--primary)" }}>
+                What happens next
+              </p>
+              <SectionHeading className="mb-5">
+                A clear capacity answer before the project gets expensive
+              </SectionHeading>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--secondary)" }}>
+                The best load study lead usually has one urgent question, can this property safely support the new load? The page now routes visitors toward the details needed to answer that question quickly.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-5 mb-10">
+              {[
+                {
+                  title: "What we check",
+                  icon: Gauge,
+                  items: [
+                    "Existing service and panel capacity",
+                    "Measured demand and phase balance",
+                    "New EV, HVAC, kitchen, tenant, or equipment loads",
+                    "Utility and permit constraints",
+                  ],
+                },
+                {
+                  title: "What you get",
+                  icon: FileText,
+                  items: [
+                    "Capacity findings in plain language",
+                    "Monitoring summary and recommendations",
+                    "Upgrade, load management, or phased path",
+                    "Permit or utility support documentation",
+                  ],
+                },
+                {
+                  title: "What to send",
+                  icon: ClipboardCheck,
+                  items: [
+                    "Site address and property type",
+                    "Photos of main gear and panels",
+                    "Planned new loads or charger count",
+                    "Permit deadline, utility notes, or plans",
+                  ],
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="rounded-lg p-6"
+                    style={{ background: "var(--section-gray)", border: "1px solid var(--section-border)" }}
+                  >
+                    <Icon className="w-8 h-8 mb-4" style={{ color: "var(--primary)" }} />
+                    <h2 className="text-xl font-semibold mb-4" style={{ color: "var(--text)" }}>
+                      {item.title}
+                    </h2>
+                    <ul className="space-y-3">
+                      {item.items.map((text) => (
+                        <li key={text} className="flex gap-3 text-base leading-relaxed" style={{ color: "var(--secondary)" }}>
+                          <span className="mt-2 h-2 w-2 flex-none rounded-full" style={{ background: "var(--primary)" }} />
+                          <span>{text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-5">
+              {[
+                {
+                  title: "Commercial and multifamily",
+                  text: "Useful before tenant improvements, EV charger planning, service upgrades, and equipment additions.",
+                  icon: Building2,
+                },
+                {
+                  title: "Permit and utility timing",
+                  text: "Helps respond to LADBS comments, utility planning requests, and design questions before drawings lock in.",
+                  icon: CalendarClock,
+                },
+                {
+                  title: "LADWP and SCE planning",
+                  text: "Gives owners and project teams measured electrical data before service changes or new load commitments.",
+                  icon: UtilityPole,
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.title} className="flex gap-4">
+                    <Icon className="w-7 h-7 flex-none mt-1" style={{ color: "var(--primary)" }} />
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2" style={{ color: "var(--text)" }}>
+                        {item.title}
+                      </h3>
+                      <p className="text-base leading-relaxed" style={{ color: "var(--secondary)" }}>
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -896,6 +1006,10 @@ export default async function ServiceLandingPage({ params }: PageProps) {
 
           // Skip first four sections for commercial EV page as they're rendered specially
           if (landing === 'commercial-electric-vehicle-chargers' && (index === 0 || index === 1 || index === 2 || index === 3)) {
+            return null;
+          }
+
+          if (landing === 'electrical-load-studies' && (index === 0 || index === 1 || index === 2 || index === 3)) {
             return null;
           }
 
