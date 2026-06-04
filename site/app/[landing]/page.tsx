@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Subheading, ContentBox, Button } from "@/app/components/UI";
 import { AppleHero, AppleButton, AppleCard, AppleGrid } from "@/app/components/UI/AppleStyle";
 import CTA from "@/app/components/CTA";
+import { FAQPageSchema } from "@/app/components/schemas/FAQPageSchema";
 import { ASSET_PATH } from "@/app/config";
 import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
 import { HeroVideo } from "@/app/components/HeroVideo";
@@ -440,6 +441,53 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // supporting guides. Spokes already link back up (nav + blog CTA), so this
 // completes the cluster and signals these pages as the topical authority.
 // All slugs verified to exist as content files.
+// Commercial-intent FAQs grounded in real search queries these pages rank for.
+// Educational/process answers, complete sentences, no invented pricing or claims.
+const SERVICE_FAQS: Record<string, { question: string; answer: string }[]> = {
+  "commercial-electric-vehicle-chargers": [
+    { question: "How much does commercial EV charger installation cost in Los Angeles?", answer: "Commercial EV charging costs depend on the number and type of chargers, your building's existing electrical capacity, trenching and conduit runs, and whether a service or panel upgrade is needed. We start every project with a load study so you get an accurate scope before any equipment is ordered. Available utility rebates and federal incentives often offset a meaningful portion of the total, and we walk you through those during the estimate." },
+    { question: "Do I need an electrical load study before installing commercial chargers?", answer: "In almost every case, yes. A load study confirms whether your existing service and panels can support the new charging load, which protects you from ordering equipment your building cannot power. It also gives LADBS the documentation they need to approve your permit, so it keeps the whole project moving smoothly." },
+    { question: "What is the difference between Level 2 and DC fast charging for businesses?", answer: "Level 2 charging runs on 240 volts and suits workplaces, multifamily properties, and overnight fleet charging where vehicles sit for several hours. DC fast charging delivers a much faster charge and fits retail, fleet depots, and public sites where drivers need to be back on the road quickly. We help you match the right mix to how your vehicles and visitors actually use the space." },
+    { question: "Are there rebates or incentives for commercial EV charging in California?", answer: "Yes. California utilities run rebate programs for qualifying commercial charging projects, and federal tax incentives can apply as well. The programs and funding levels change over time, so we review what you currently qualify for and handle the supporting paperwork as part of the project." },
+    { question: "Can you install charging for fleets, multifamily, and workplaces?", answer: "Yes. We design and install charging for fleet depots, apartment and condo properties, office parking, and retail sites across Los Angeles. Each property type has different load, layout, and access needs, and we plan the system around how your drivers and tenants will use it." },
+  ],
+  "electrical-load-studies": [
+    { question: "What is an electrical load study?", answer: "An electrical load study measures how much power your building actually uses over a set monitoring period, rather than relying on estimates. The report shows your real demand, available spare capacity, and whether your service and panels can support new equipment. It is the foundation for safe, code-compliant planning on EV chargers, tenant improvements, and panel upgrades." },
+    { question: "When do I need a load study in Los Angeles?", answer: "You typically need one before adding significant electrical load, such as EV chargers, new HVAC or kitchen equipment, or a tenant improvement. LADBS and your utility often want documented capacity before approving the work. Running the study first prevents ordering equipment your service cannot support." },
+    { question: "How long does an electrical load study take?", answer: "We install monitoring equipment on your panels and record real usage, usually over a period of several weeks, to capture your true peak demand across normal operations. Once monitoring is complete, we prepare a clear report with our findings and recommendations. The exact window depends on your facility and how variable your loads are." },
+    { question: "Does LADBS require a load study for a panel upgrade or new equipment?", answer: "For many commercial projects and larger loads, documented capacity is part of getting plans approved. A load study gives the building department and your utility the data they need, which helps your permit move through review without back-and-forth. We prepare the report in the format reviewers expect." },
+    { question: "How much does an electrical load study cost?", answer: "The cost depends on the size of your facility, the number of panels being monitored, and the length of the monitoring period. Because the study often prevents costly oversizing or failed inspections later, it usually pays for itself in avoided rework. We provide a fixed quote up front so there are no surprises." },
+  ],
+  "led-retrofit-services": [
+    { question: "What is an LED retrofit?", answer: "An LED retrofit replaces older, less efficient lighting with modern LED fixtures and lamps, often along with updated controls. The result is lower energy use, better light quality, and less maintenance because LEDs last far longer than the fixtures they replace. We handle the assessment, installation, and cleanup so your operation keeps running." },
+    { question: "Are there rebates for commercial LED retrofits in California?", answer: "Yes. Utility rebates for qualifying LED upgrades often cover a meaningful share of project costs, and federal Section 179D deductions can apply for commercial buildings. We identify the programs you qualify for and handle the rebate paperwork as part of the job, so you capture the savings without the administrative hassle." },
+    { question: "How much can an LED retrofit save on energy?", answer: "Savings depend on your current fixtures, run hours, and electricity rates, but lighting is often one of the easiest places to cut commercial energy use. Many properties see a strong return once rebates and reduced maintenance are factored in. We can model the expected savings for your specific site during the assessment." },
+    { question: "Do you handle the rebate paperwork?", answer: "Yes. We manage the rebate application and supporting documentation so you do not have to chase forms or deadlines. Capturing available rebates is part of how we keep your retrofit cost-effective." },
+    { question: "How long does a commercial LED retrofit take?", answer: "Timeline depends on the size of the property and the number of fixtures, and we can often schedule work in phases or after hours to avoid disrupting your operation. We give you a clear schedule with the estimate so you know what to expect." },
+  ],
+  "residential-ev-charger": [
+    { question: "How much does home EV charger installation cost in Los Angeles?", answer: "Home EV charger cost depends on the distance from your panel to the parking spot, whether your existing panel has spare capacity, and any wall or conduit work required. We check your panel and electrical capacity first so the quote reflects your actual home. Where a panel is near full, we will tell you honestly whether an upgrade is needed." },
+    { question: "Do I need a panel upgrade to install an EV charger?", answer: "Not always. Many homes can add a Level 2 charger on their existing panel, while others need more capacity, especially older Los Angeles homes with smaller services. A quick load check tells us for certain, and we explain your options clearly before any work begins." },
+    { question: "What is the difference between Level 1 and Level 2 home charging?", answer: "Level 1 uses a standard household outlet and charges slowly, which works for low-mileage drivers but can take all day. Level 2 runs on a dedicated 240-volt circuit and charges several times faster, so your car is ready overnight. Most homeowners choose Level 2 for the convenience." },
+    { question: "Do I need a permit to install an EV charger at home in Los Angeles?", answer: "Yes. EV charger installations require a permit and inspection in Los Angeles, and our C-10 license lets us pull the permit and handle the inspection for you. Permitted work protects your home's value and ensures the installation is safe and code-compliant." },
+    { question: "How long does home EV charger installation take?", answer: "Many straightforward installations are completed in a single day once the permit is in hand. Projects that need a panel upgrade or longer conduit runs take additional time. We give you a clear timeline with your estimate." },
+  ],
+  "commercial-service": [
+    { question: "What commercial electrical services do you provide?", answer: "We handle commercial electrical work across Los Angeles, including service and panel upgrades, lighting, dedicated equipment circuits, code corrections, tenant improvements, and ongoing maintenance. Whether you are opening a new space or maintaining an existing one, we scope the work clearly and keep your operation running. Our team is comfortable on both new construction and occupied buildings." },
+    { question: "Are you licensed for commercial electrical work in California?", answer: "Yes. Shaffer Construction holds a California C-10 electrical contractor license, which allows us to pull permits and perform commercial electrical work directly. Working with a licensed contractor protects you on safety, code compliance, and insurance." },
+    { question: "Do you handle permits and inspections?", answer: "Yes. We manage the permit process with LADBS and coordinate inspections as part of the project, so you are not left navigating the building department on your own. We schedule inspections and address any items so your work passes the first time." },
+    { question: "Can you work after hours to avoid disrupting my business?", answer: "Yes. We regularly schedule commercial work during evenings, weekends, or off-peak hours so your customers and staff are not affected. We plan the timing around your operation during the estimate." },
+    { question: "Do you offer emergency commercial electrical service?", answer: "Yes. Electrical problems can shut a business down, so we respond to commercial emergencies and work to restore safe power quickly. Reach out and we will let you know our current availability for your area." },
+  ],
+  "statewide-facilities-maintenance": [
+    { question: "What is electrical facilities maintenance?", answer: "Facilities maintenance keeps the electrical systems across your properties running reliably through scheduled service, inspections, and prompt repairs. Instead of reacting to failures, you get a consistent partner who knows your sites and catches issues early. This reduces downtime and keeps your locations safe and compliant." },
+    { question: "Do you service multiple locations across California?", answer: "Yes. We support multi-site portfolios across California with consistent standards and reporting, so a retailer or operator with locations in different cities gets the same quality everywhere. Centralized coordination means one point of contact instead of juggling separate local contractors." },
+    { question: "Do you offer both scheduled and emergency maintenance?", answer: "Yes. We provide planned, recurring maintenance to prevent problems, along with emergency response when something goes wrong. Combining both keeps your facilities running while controlling long-term costs." },
+    { question: "What types of facilities do you serve?", answer: "We serve retail chains, warehouses, commercial buildings, and facility portfolios that need dependable electrical upkeep across multiple sites. Each program is built around how your properties operate and what your team needs to track." },
+    { question: "How does multi-site electrical maintenance work?", answer: "We set up a maintenance program tailored to your portfolio, with clear scheduling, reporting, and a single point of contact for all your locations. You get visibility into the work across every site without managing it piece by piece." },
+  ],
+};
+
 const RELATED_GUIDES: Record<string, { href: string; label: string }[]> = {
   "commercial-electric-vehicle-chargers": [
     { href: "/industry-insights/commercial-ev-charging-stations-roi-guide-los-angeles/", label: "Commercial EV charging stations: ROI guide" },
@@ -1211,6 +1259,27 @@ export default async function ServiceLandingPage({ params }: PageProps) {
           return null;
         });
       })()}
+
+      {/* FAQ Section + schema */}
+      {SERVICE_FAQS[landing] && SERVICE_FAQS[landing].length > 0 && (
+        <Section padding="md" border="top">
+          <Container maxWidth="lg">
+            <FAQPageSchema faqs={SERVICE_FAQS[landing]} />
+            <SectionHeading className="text-center mb-8">Frequently Asked Questions</SectionHeading>
+            <div className="space-y-4 max-w-3xl mx-auto">
+              {SERVICE_FAQS[landing].map((faq, index) => (
+                <details key={index} className="p-6 rounded-lg cursor-pointer group" style={{ background: "var(--background)", border: "1px solid var(--section-border)" }}>
+                  <summary className="text-lg font-semibold list-none flex justify-between items-center" style={{ color: "var(--text)" }}>
+                    <span>{faq.question}</span>
+                    <span className="text-2xl group-open:rotate-45 transition-transform" style={{ color: "var(--primary)" }}>+</span>
+                  </summary>
+                  <p className="mt-4 text-base leading-relaxed" style={{ color: "var(--secondary)" }}>{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
 
       {/* Related Guides - topic cluster links */}
       {RELATED_GUIDES[landing] && RELATED_GUIDES[landing].length > 0 && (
