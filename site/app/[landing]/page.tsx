@@ -436,6 +436,52 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // Page component
+// Topic-cluster links: each money/service page links DOWN to its best
+// supporting guides. Spokes already link back up (nav + blog CTA), so this
+// completes the cluster and signals these pages as the topical authority.
+// All slugs verified to exist as content files.
+const RELATED_GUIDES: Record<string, { href: string; label: string }[]> = {
+  "commercial-electric-vehicle-chargers": [
+    { href: "/industry-insights/commercial-ev-charging-stations-roi-guide-los-angeles/", label: "Commercial EV charging stations: ROI guide" },
+    { href: "/industry-insights/ev-charger-installation-guide-for-los-angeles-plan-permit-install-and-futureproof/", label: "EV charger installation guide for Los Angeles" },
+    { href: "/industry-insights/how-to-choose-right-ev-charger-los-angeles/", label: "How to choose the right EV charger" },
+    { href: "/industry-insights/do-i-need-panel-upgrade-install-ev-charger/", label: "Do you need a panel upgrade for an EV charger?" },
+    { href: "/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/", label: "Complete guide to electrical panel upgrades" },
+    { href: "/industry-insights/commercial-electrical-code-compliance-los-angeles/", label: "Commercial electrical code compliance" },
+  ],
+  "electrical-load-studies": [
+    { href: "/industry-insights/electrical-load-studies-what-they-are-los-angeles/", label: "What electrical load studies are" },
+    { href: "/industry-insights/do-i-need-panel-upgrade-install-ev-charger/", label: "Do you need a panel upgrade for an EV charger?" },
+    { href: "/industry-insights/complete-guide-electrical-panel-upgrades-los-angeles/", label: "Complete guide to electrical panel upgrades" },
+    { href: "/industry-insights/ladbs-electrical-permit-process-step-by-step-guide/", label: "The LADBS electrical permit process" },
+    { href: "/industry-insights/commercial-electrical-code-compliance-los-angeles/", label: "Commercial electrical code compliance" },
+  ],
+  "led-retrofit-services": [
+    { href: "/industry-insights/led-retrofit-guide-los-angeles-businesses/", label: "LED retrofit guide for LA businesses" },
+    { href: "/industry-insights/complete-home-led-lighting-upgrade-guide/", label: "Complete home LED lighting upgrade guide" },
+    { href: "/industry-insights/recessed-lighting-installation-guide/", label: "Recessed lighting installation guide" },
+    { href: "/industry-insights/commercial-electrical-code-compliance-los-angeles/", label: "Commercial electrical code compliance" },
+  ],
+  "residential-ev-charger": [
+    { href: "/industry-insights/ultimate-guide-home-ev-charger-installation-los-angeles/", label: "Ultimate guide to home EV charger installation" },
+    { href: "/industry-insights/how-to-choose-right-ev-charger-los-angeles/", label: "How to choose the right EV charger" },
+    { href: "/industry-insights/should-i-install-an-ev-charger-at-home-a-practical-guide-for-los-angeles-homeowners/", label: "Should you install an EV charger at home?" },
+    { href: "/industry-insights/do-i-need-panel-upgrade-install-ev-charger/", label: "Do you need a panel upgrade for an EV charger?" },
+    { href: "/industry-insights/ev-charger-installation-guide-for-los-angeles-plan-permit-install-and-futureproof/", label: "EV charger installation guide for Los Angeles" },
+  ],
+  "commercial-service": [
+    { href: "/industry-insights/commercial-electrical-code-compliance-los-angeles/", label: "Commercial electrical code compliance" },
+    { href: "/industry-insights/knowing-when-to-upgrade-your-commercial-electrical-systems/", label: "When to upgrade commercial electrical systems" },
+    { href: "/industry-insights/retail-store-electrical-planning-design-guide/", label: "Retail store electrical planning guide" },
+    { href: "/industry-insights/office-electrical-upgrades-modern-workplaces/", label: "Office electrical upgrades for modern workplaces" },
+  ],
+  "statewide-facilities-maintenance": [
+    { href: "/industry-insights/reliable-facilities-maintenance-electrician-services-by-shaffer-construction-inc/", label: "Facilities maintenance electrician services" },
+    { href: "/industry-insights/transforming-your-business-with-commercial-electrical-maintenence-services/", label: "Commercial electrical maintenance services" },
+    { href: "/industry-insights/commercial-electrical-code-compliance-los-angeles/", label: "Commercial electrical code compliance" },
+  ],
+};
+
 export default async function ServiceLandingPage({ params }: PageProps) {
   const { landing } = await params;
   const page = await getServiceLandingPage(landing);
@@ -1165,6 +1211,28 @@ export default async function ServiceLandingPage({ params }: PageProps) {
           return null;
         });
       })()}
+
+      {/* Related Guides - topic cluster links */}
+      {RELATED_GUIDES[landing] && RELATED_GUIDES[landing].length > 0 && (
+        <Section padding="md" border="top">
+          <Container maxWidth="lg">
+            <SectionHeading className="mb-6">Related Guides</SectionHeading>
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {RELATED_GUIDES[landing].map((g) => (
+                <li key={g.href}>
+                  <a
+                    href={g.href}
+                    className="flex items-center gap-3 p-4 rounded-lg transition-all hover:translate-x-1"
+                    style={{ background: "var(--background)", border: "1px solid var(--section-border)", textDecoration: "none" }}
+                  >
+                    <span className="text-base font-medium" style={{ color: "var(--text)" }}>{g.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      )}
 
       {/* CTA Section */}
       <CTA
