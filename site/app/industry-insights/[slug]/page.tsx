@@ -28,6 +28,25 @@ async function getBlogPost(slug: string) {
   return getPostBySlug(slug);
 }
 
+// Cities used to bridge blog authority down into the location/service grid.
+// These contextual links are the highest-leverage internal links on the site
+// because blog posts carry the most traffic and link equity.
+const LOCAL_LINK_CITIES: { slug: string; name: string }[] = [
+  { slug: "silver-lake", name: "Silver Lake" },
+  { slug: "los-feliz", name: "Los Feliz" },
+  { slug: "pasadena", name: "Pasadena" },
+  { slug: "beverly-hills", name: "Beverly Hills" },
+  { slug: "santa-monica", name: "Santa Monica" },
+  { slug: "long-beach", name: "Long Beach" },
+];
+
+function buildLocalLinks(serviceSlug: string, shortLabel: string) {
+  return LOCAL_LINK_CITIES.map((c) => ({
+    href: `/service-areas/${c.slug}/${serviceSlug}/`,
+    label: `${shortLabel} in ${c.name}`,
+  }));
+}
+
 function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
   if (!post) return null;
 
@@ -44,6 +63,7 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
         { href: "/residential-ev-charger/", label: "Home EV charger installation" },
         { href: "/contact-us/", label: "Request a panel quote" },
       ],
+      localLinks: buildLocalLinks("residential-electrical-panel-upgrades", "Panel upgrades"),
     };
   }
 
@@ -58,6 +78,7 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
         { href: "/electrical-load-studies/", label: "Load study reports" },
         { href: "/service-areas/", label: "Local service areas" },
       ],
+      localLinks: buildLocalLinks("residential-electrical-code-compliance-corrections", "Code corrections"),
     };
   }
 
@@ -72,6 +93,7 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
         { href: "/statewide-facilities-maintenance/", label: "Facilities maintenance" },
         { href: "/contact-us/", label: "Request a lighting quote" },
       ],
+      localLinks: buildLocalLinks("residential-lighting-installation-retrofitting", "Lighting installation"),
     };
   }
 
@@ -86,6 +108,7 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
         { href: "/electrical-load-studies/", label: "EV load studies" },
         { href: "/contact-us/", label: "Request an EV quote" },
       ],
+      localLinks: buildLocalLinks("residential-ev-charger-installation", "EV charger installation"),
     };
   }
 
@@ -99,6 +122,7 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
       { href: "/residential-ev-charger/", label: "Home EV chargers" },
       { href: "/service-areas/", label: "Service areas" },
     ],
+    localLinks: buildLocalLinks("residential-electrical-troubleshooting-repairs", "Electrician"),
   };
 }
 
@@ -158,6 +182,26 @@ function PostCTABox({
             Related services:
           </span>
           {cta.links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="underline-offset-4 hover:underline"
+              style={{ color: "var(--primary)" }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
+      {cta.localLinks && cta.localLinks.length > 0 && (
+        <div
+          className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm"
+          style={{ color: "var(--secondary)" }}
+        >
+          <span className="font-semibold" style={{ color: "var(--text)" }}>
+            Available in your area:
+          </span>
+          {cta.localLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}

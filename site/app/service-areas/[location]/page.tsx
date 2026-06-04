@@ -1,7 +1,18 @@
 import { notFound } from "next/navigation";
 import { getDb } from "@/lib/db";
 import { getLocalSeoFacts } from "@/lib/local-seo";
-import { filterPriorityServices } from "@/lib/seo-priority";
+import { isPriorityService } from "@/lib/seo-priority";
+
+// Show ALL services on the hub (not just priority) so every nested service
+// page gets at least one internal link from its city hub. Priority services
+// are ordered first for emphasis.
+function sortPriorityFirst<T extends { service_type: string; service_name: string }>(services: T[]): T[] {
+  return [...services].sort(
+    (a, b) =>
+      Number(isPriorityService(b.service_type, b.service_name)) -
+      Number(isPriorityService(a.service_type, a.service_name))
+  );
+}
 import type { Metadata } from "next";
 import { Section, Container, PageTitle, SectionHeading, Paragraph, Grid, GridItem } from "@/app/components/UI";
 import { ASSET_PATH } from "@/app/config";
@@ -128,8 +139,8 @@ async function getLocationPage(locationSlug: string) {
     relatedServices: relatedServices.map(s => s.service_name),
     nearbyAreas,
     localSeoFacts: getLocalSeoFacts(db, page.location_slug, page.location_name),
-    residentialServices: filterPriorityServices(residentialServices),
-    commercialServices: filterPriorityServices(commercialServices),
+    residentialServices: sortPriorityFirst(residentialServices),
+    commercialServices: sortPriorityFirst(commercialServices),
   };
 }
 
