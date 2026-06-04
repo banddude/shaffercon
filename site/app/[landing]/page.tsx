@@ -320,7 +320,7 @@ async function getServiceLandingPage(slug: string) {
           section_type: 'info_card',
           heading: 'Multi-Location Coverage',
           subheading: '',
-          content: 'Single point of contact for all your California facilities. From San Diego to Sacramento, consistent quality and familiar faces at every location. One invoice, one standard of excellence across your entire portfolio.',
+          content: 'We handle electrical work at properties across California, from San Diego to Sacramento, with consistent quality and familiar faces at every site. The facilities maintenance contractors and property managers who bring us in get dependable, code-compliant electrical work wherever their locations are.',
           table_data: null,
         },
         {
@@ -349,7 +349,7 @@ async function getServiceLandingPage(slug: string) {
           section_type: 'content',
           heading: 'Industries We Serve',
           subheading: '',
-          content: 'Industries We Serve\n\n• Retail Stores: National chains, shopping centers, standalone locations\n• Warehouses: Distribution centers, fulfillment facilities, storage warehouses\n• Commercial Properties: Office buildings, medical facilities, educational institutions\n• Industrial Facilities: Manufacturing plants, production facilities\n• Multi-Family Properties: Apartment complexes, HOAs, property management\n\nMulti-Family Properties: Apartment complexes, HOAs, property management\n\nWhether you need service at one location or one hundred, our infrastructure scales to meet your needs. Single point of contact, unified invoicing, and technology-driven reporting streamline your vendor management while ensuring consistent excellence across your entire portfolio.',
+          content: 'Industries We Serve\n\n• Retail Stores: National chains, shopping centers, standalone locations\n• Warehouses: Distribution centers, fulfillment facilities, storage warehouses\n• Commercial Properties: Office buildings, medical facilities, educational institutions\n• Industrial Facilities: Manufacturing plants, production facilities\n• Multi-Family Properties: Apartment complexes, HOAs, property management\n\nMulti-Family Properties: Apartment complexes, HOAs, property management\n\nWhether the work is at one location or one hundred, we scale to handle it. We deliver consistent, code-compliant electrical work across every site for the facilities maintenance contractors and property managers who rely on us.',
           table_data: null,
         },
       ],
@@ -480,11 +480,11 @@ const SERVICE_FAQS: Record<string, { question: string; answer: string }[]> = {
     { question: "Do you offer emergency commercial electrical service?", answer: "Yes. Electrical problems can shut a business down, so we respond to commercial emergencies and work to restore safe power quickly. Reach out and we will let you know our current availability for your area." },
   ],
   "statewide-facilities-maintenance": [
-    { question: "What is electrical facilities maintenance?", answer: "Facilities maintenance keeps the electrical systems across your properties running reliably through scheduled service, inspections, and prompt repairs. Instead of reacting to failures, you get a consistent partner who knows your sites and catches issues early. This reduces downtime and keeps your locations safe and compliant." },
-    { question: "Do you service multiple locations across California?", answer: "Yes. We support multi-site portfolios across California with consistent standards and reporting, so a retailer or operator with locations in different cities gets the same quality everywhere. Centralized coordination means one point of contact instead of juggling separate local contractors." },
-    { question: "Do you offer both scheduled and emergency maintenance?", answer: "Yes. We provide planned, recurring maintenance to prevent problems, along with emergency response when something goes wrong. Combining both keeps your facilities running while controlling long-term costs." },
-    { question: "What types of facilities do you serve?", answer: "We serve retail chains, warehouses, commercial buildings, and facility portfolios that need dependable electrical upkeep across multiple sites. Each program is built around how your properties operate and what your team needs to track." },
-    { question: "How does multi-site electrical maintenance work?", answer: "We set up a maintenance program tailored to your portfolio, with clear scheduling, reporting, and a single point of contact for all your locations. You get visibility into the work across every site without managing it piece by piece." },
+    { question: "What electrical facilities maintenance work do you handle?", answer: "We perform electrical maintenance and repair work across commercial and multi-site properties, including panel and service work, lighting, dedicated circuits, and code corrections. We handle the hands-on electrical scope so sites stay safe and operational. Our team is comfortable working in occupied buildings without disrupting daily operations." },
+    { question: "Do you work with facilities maintenance contractors and property managers?", answer: "Yes. We regularly perform electrical work under facilities maintenance contractors and property management companies, handling the electrical portion of their work orders across multiple locations. We are set up to be a dependable electrical partner for teams that manage larger property portfolios." },
+    { question: "Do you service multiple locations across California?", answer: "Yes. We handle electrical work at properties throughout California, so contractors and managers with sites in different cities have one electrical contractor they can rely on for consistent, code-compliant work. This keeps the electrical scope predictable across every location." },
+    { question: "Do you offer both scheduled and emergency electrical work?", answer: "Yes. We handle planned, recurring electrical maintenance as well as urgent repairs when something fails. Combining both keeps facilities running while keeping long-term costs under control." },
+    { question: "What types of facilities do you work on?", answer: "We work on retail, warehouse, and commercial properties, including multi-site portfolios that need dependable electrical work. We scope each job around how the property operates and what the site needs to stay running safely." },
   ],
 };
 
