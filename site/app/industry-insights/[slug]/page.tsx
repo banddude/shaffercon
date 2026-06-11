@@ -6,6 +6,7 @@ import { PageTitle } from "@/app/components/UI";
 import { ArticleSchema } from "@/app/components/schemas/ArticleSchema";
 import { LocalBusinessSchema } from "@/app/components/schemas/LocalBusinessSchema";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
+import { FAQPageSchema } from "@/app/components/schemas/FAQPageSchema";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
 import { ArrowLeft, ArrowRight, CalendarDays, Phone } from "lucide-react";
 
@@ -298,6 +299,8 @@ export default async function BlogPostPage({ params }: PageProps) {
           { label: post.title }
         ]}
       />
+      {/* FAQPage schema for posts whose JSON mirrors a visible on-page FAQ section */}
+      {post.faqs && post.faqs.length > 0 && <FAQPageSchema faqs={post.faqs} />}
       <article className="max-w-6xl mx-auto">
         <header className="mb-10">
           <Link

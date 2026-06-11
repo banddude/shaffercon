@@ -47,12 +47,12 @@ async function getServiceLandingPage(slug: string) {
     return {
       id: 1,
       slug: 'commercial-electric-vehicle-chargers',
-      title: 'Commercial EV Charger Installation',
-      page_title: 'Commercial EV Charger Installation Los Angeles',
+      title: 'Commercial EV Charging Station Installation',
+      page_title: 'Commercial EV Charging Station Installation in Los Angeles',
       hero_text: "Commercial EV charging projects need more than a charger on a wall. Shaffer Construction plans, permits, and installs Level 2 and DC fast charging systems for Los Angeles fleets, multifamily properties, retail centers, workplaces, warehouses, and commercial parking facilities. We start with the electrical load study, coordinate the permit path, install the charging infrastructure, and support the site after commissioning.",
       hero_image: '/commercial-ev-hero.mp4',
-      meta_title: 'Commercial EV Charger Installation Los Angeles',
-      meta_description: 'Commercial EV charger installation in Los Angeles for fleets, retail, multifamily, and workplaces. Load studies, permits, Level 2 and DC fast charging.',
+      meta_title: 'Commercial EV Charging Station Installation Los Angeles',
+      meta_description: 'Commercial EV charging station installation in Los Angeles. Level 2 and DC fast chargers for fleets, multifamily, retail, and workplaces, with load studies and permits.',
       canonical_url: null,
       og_image: null,
       sections: [

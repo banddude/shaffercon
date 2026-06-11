@@ -10,6 +10,7 @@ export interface BlogPost {
   ogImage?: string;
   canonicalUrl?: string;
   content: string;
+  faqs?: { question: string; answer: string }[];
   filename?: string;
 }
 
