@@ -11,12 +11,13 @@ Grow qualified calls, quote requests, and commercial electrical opportunities fr
 ## Current State
 
 1. Search Console is connected and API access works through the service account.
-2. GA4 is installed and reporting production traffic.
-3. GA4 lead tracking is deployed for phone clicks, email clicks, contact page CTA clicks, and contact form submits.
-4. The primary business KPI is `generate_lead`.
-5. GitHub contact form leads are captured on the `leads` branch.
-6. The contact form is receiving mostly spam, while real customer inquiries are also coming through `hello@shaffercon.com`.
-7. The daily blogger is operational after the May 8 repo cleanliness fix.
+2. Live GSC data is now available from any AIVA host for round 3: `google raw searchconsole searchanalytics query --user self --params-json '{"siteUrl":"sc-domain:shaffercon.com"}' --body-json '{"startDate":"...","endDate":"...","dimensions":["query"]}'` (Worker-proxied, no more month-old CSV exports).
+3. GA4 is installed and reporting production traffic.
+4. GA4 lead tracking is deployed for phone clicks, email clicks, contact page CTA clicks, and contact form submits.
+5. The primary business KPI is `generate_lead`.
+6. GitHub contact form leads are captured on the `leads` branch.
+7. The contact form is receiving mostly spam, while real customer inquiries are also coming through `hello@shaffercon.com`.
+8. The daily blogger is operational after the May 8 repo cleanliness fix.
 
 ## Latest Baseline
 
