@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getDb } from '@/lib/db';
 import { getAllPosts } from '@/lib/blog';
-import { getServiceSitemapPriority } from '@/lib/seo-priority';
+import { filterPriorityServices, getServiceSitemapPriority } from '@/lib/seo-priority';
 
 export const dynamic = 'force-static';
 
@@ -82,8 +82,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // Add service detail pages
-  servicePages.forEach(({ location, service_type, service_name, date }) => {
+  // Keep the sitemap focused on the service/location combinations that match
+  // our core search intent. Lower-priority routes remain live and indexable,
+  // but we do not ask Google to spend crawl budget on every generated variant.
+  const priorityServicePages = filterPriorityServices(servicePages);
+
+  // Add priority service detail pages
+  priorityServicePages.forEach(({ location, service_type, service_name, date }) => {
     const locationSlug = location.replace(/\s+/g, '-').toLowerCase();
     sitemap.push({
       url: `${baseUrl}/service-areas/${locationSlug}/${service_type}-${service_name}/`,
