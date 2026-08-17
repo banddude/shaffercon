@@ -16,6 +16,25 @@ export interface BlogPost {
 const contentDirectory = path.join(process.cwd(), '..', 'content', 'industry-insights');
 
 /**
+ * A small set of imported legacy posts contains HTML attributes serialized as
+ * href=\"...\", target=\"...\", or rel=\"...\" inside the content
+ * string. Browsers treat the backslashes and quotes as part of the URL, which
+ * creates bogus internal 404s that Search Console then crawls. Normalize only
+ * these URL/link attributes at read time so the stored source can remain
+ * untouched and future imports with the same legacy encoding are safe.
+ */
+export function normalizeLegacyBlogHtml(content: string): string {
+  return content.replace(/\b(href|target|rel)=\\"([^"]*)\\"/gi, '$1="$2"');
+}
+
+function normalizePost(post: BlogPost): BlogPost {
+  return {
+    ...post,
+    content: normalizeLegacyBlogHtml(post.content),
+  };
+}
+
+/**
  * Get all blog post slugs for static generation
  */
 export function getAllPostSlugs(): string[] {
@@ -42,10 +61,10 @@ export function getPostBySlug(slug: string): BlogPost | null {
     const post = JSON.parse(content) as BlogPost;
 
     if (post.slug === slug) {
-      return {
+      return normalizePost({
         ...post,
         filename: file,
-      };
+      });
     }
   }
 
@@ -63,10 +82,10 @@ export function getAllPosts(): BlogPost[] {
     .map(file => {
       const content = fs.readFileSync(path.join(contentDirectory, file), 'utf8');
       const post = JSON.parse(content) as BlogPost;
-      return {
+      return normalizePost({
         ...post,
         filename: file,
-      };
+      });
     });
 
   // Sort by date, newest first
