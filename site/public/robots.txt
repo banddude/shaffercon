@@ -11,6 +11,9 @@ Disallow: /_next/
 User-agent: GPTBot
 Allow: /
 
+User-agent: OAI-AdsBot
+Allow: /
+
 User-agent: OAI-SearchBot
 Allow: /
 
