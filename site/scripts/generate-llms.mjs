@@ -154,6 +154,7 @@ Source: generated from the current Shaffer Construction database and industry in
 * Altadena and Pasadena Eaton Fire rebuild electrical work and structural rebuild coordination.
 * Commercial LED retrofits with utility rebate support and energy savings planning.
 * Statewide California electrical facilities maintenance for multi-location operators.
+* Venetian plaster and decorative wall finish project coordination in Los Angeles through Shaffer Construction's general-building practice and specialty trade partners as required by scope.
 
 ## Primary Service Pages
 
@@ -166,6 +167,7 @@ ${landingPages
     ),
   )
   .join("\n")}
+${entry("Venetian Plaster Los Angeles", "/venetian-plaster-los-angeles/", "Venetian plaster, polished plaster, feature walls, and decorative wall finish project coordination in Los Angeles with a real project portfolio.")}
 
 ## High Value Supporting Guides
 
@@ -251,6 +253,7 @@ const fullSections = [
       ),
     )
     .join("\n"),
+  entry("Venetian Plaster Los Angeles", "/venetian-plaster-los-angeles/", "Venetian plaster, polished plaster, feature walls, and decorative wall finish project coordination in Los Angeles with real project photography."),
   ``,
   `## Location Landing Pages`,
   ``,
@@ -297,7 +300,7 @@ fs.mkdirSync(publicDir, { recursive: true });
 fs.writeFileSync(path.join(publicDir, "llms.txt"), `${llmsTxt.trim()}\n`);
 fs.writeFileSync(path.join(publicDir, "llms-full.txt"), `${fullSections.join("\n").trim()}\n`);
 
-console.log(`llms.txt generated with ${landingPages.length} primary services.`);
+console.log(`llms.txt generated with ${landingPages.length + 1} primary services.`);
 console.log(
   `llms-full.txt generated with ${servicePageCount} service pages, ${locationPageCount} locations, and ${blogPostCount} articles.`,
 );
