@@ -28,6 +28,10 @@ export function serviceCategoryForPath(path: string) {
     return 'electrical_load_studies';
   }
 
+  if (value.includes('venetian-plaster') || value.includes('decorative-plaster')) {
+    return 'venetian_plaster';
+  }
+
   if (value.includes('commercial-electric-vehicle') || value.includes('commercial-ev')) {
     return 'commercial_ev_charging';
   }

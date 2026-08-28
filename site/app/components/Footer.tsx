@@ -69,6 +69,12 @@ export default function Footer({ siteConfig }: FooterProps) {
                 </Link>
               </li>
               <li>
+                <Link href="/venetian-plaster-los-angeles/" className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1.5">
+                  <FileCheck className="w-3 h-3" style={{ color: "var(--primary)" }} />
+                  <span>Venetian Plaster</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/contact-us/" className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1.5">
                   <Mail className="w-3 h-3" style={{ color: "var(--primary)" }} />
                   <span>Contact</span>
