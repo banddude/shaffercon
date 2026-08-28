@@ -16,10 +16,10 @@ const POPULAR_AREA_SERVICES: { href: string; label: string }[] = [
   { href: "/service-areas/beverly-hills/residential-electrical-panel-upgrades/", label: "Panel Upgrades in Beverly Hills" },
   { href: "/service-areas/santa-monica/residential-lighting-installation-retrofitting/", label: "Lighting Installation in Santa Monica" },
   { href: "/service-areas/long-beach/residential-ev-charger-installation/", label: "EV Charger Installation in Long Beach" },
-  { href: "/service-areas/hollywood/residential-electrical-code-compliance-corrections/", label: "Code Corrections in Hollywood" },
+  { href: "/service-areas/west-hollywood/residential-ev-charger-installation/", label: "EV Charger Installation in West Hollywood" },
   { href: "/service-areas/glendale/residential-electrical-panel-upgrades/", label: "Panel Upgrades in Glendale" },
   { href: "/service-areas/culver-city/residential-ev-charger-installation/", label: "EV Charger Installation in Culver City" },
-  { href: "/service-areas/sherman-oaks/residential-electrical-troubleshooting-repairs/", label: "Electrical Repairs in Sherman Oaks" },
+  { href: "/service-areas/sherman-oaks/", label: "Electrician in Sherman Oaks" },
   { href: "/service-areas/highland-park/residential-electrical-safety-inspections/", label: "Safety Inspections in Highland Park" },
   { href: "/service-areas/venice/residential-lighting-installation-retrofitting/", label: "Lighting Installation in Venice" },
 ];

@@ -10,6 +10,7 @@ import { ASSET_PATH } from "@/app/config";
 import { SlowMotionVideo } from "@/app/components/SlowMotionVideo";
 import { HeroVideo } from "@/app/components/HeroVideo";
 import Breadcrumb from "@/app/components/Breadcrumb";
+import LinkCardGrid from "@/app/components/LinkCardGrid";
 import { ServiceLandingSchema } from "@/app/components/schemas/ServiceLandingSchema";
 import { BreadcrumbSchema } from "@/app/components/schemas/BreadcrumbSchema";
 import { Phone, Zap, Award, MapPin, Battery, Wrench, Car, HeadphonesIcon, ClipboardCheck, FileText, Building2, Gauge, CalendarClock, UtilityPole } from "lucide-react";
@@ -19,6 +20,24 @@ interface PageProps {
     landing: string;
   }>;
 }
+
+const EV_LOCAL_SERVICE_LINKS: Record<string, Array<{ href: string; label: string }>> = {
+  "commercial-electric-vehicle-chargers": [
+    { href: "/service-areas/glendale/commercial-ev-charger-installation/", label: "Commercial EV charger installation in Glendale" },
+    { href: "/service-areas/torrance/commercial-ev-charger-installation/", label: "Commercial EV charger installation in Torrance" },
+    { href: "/service-areas/pasadena/commercial-ev-charger-installation/", label: "Commercial EV charger installation in Pasadena" },
+    { href: "/service-areas/santa-monica/commercial-ev-charger-installation/", label: "Commercial EV charger installation in Santa Monica" },
+    { href: "/service-areas/west-hollywood/commercial-ev-charger-installation/", label: "Commercial EV charger installation in West Hollywood" },
+  ],
+  "residential-ev-charger": [
+    { href: "/service-areas/santa-monica/residential-ev-charger-installation/", label: "EV charger installation in Santa Monica" },
+    { href: "/service-areas/west-hollywood/residential-ev-charger-installation/", label: "EV charger installation in West Hollywood" },
+    { href: "/service-areas/pasadena/residential-ev-charger-installation/", label: "EV charger installation in Pasadena" },
+    { href: "/service-areas/glendale/residential-ev-charger-installation/", label: "EV charger installation in Glendale" },
+    { href: "/service-areas/sherman-oaks/residential-ev-charger-installation/", label: "EV charger installation in Sherman Oaks" },
+    { href: "/service-areas/silver-lake/residential-ev-charger-installation/", label: "EV charger installation in Silver Lake" },
+  ],
+};
 
 const SERVICE_LANDING_SLUGS = [
   'commercial-electric-vehicle-chargers',
@@ -1304,6 +1323,18 @@ export default async function ServiceLandingPage({ params }: PageProps) {
       )}
 
       {/* CTA Section */}
+      {EV_LOCAL_SERVICE_LINKS[landing]?.length > 0 && (
+        <Section padding="md">
+          <Container maxWidth="lg">
+            <SectionHeading>EV Charger Installation Service Areas</SectionHeading>
+            <p className="text-lg mt-4" style={{ color: "var(--secondary)" }}>
+              Explore local EV charging pages for city-specific permitting, electrical capacity, and installation details.
+            </p>
+            <LinkCardGrid items={EV_LOCAL_SERVICE_LINKS[landing]} columns={3} />
+          </Container>
+        </Section>
+      )}
+
       <CTA
         heading="Ready to Get Started?"
         text="Contact us today for a consultation!"
