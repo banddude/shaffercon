@@ -8,6 +8,10 @@ export interface BlogPost {
   metaTitle?: string;
   metaDescription?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  topic?: string;
+  authorType?: "Person" | "Organization";
+  authorName?: string;
   canonicalUrl?: string;
   content: string;
   filename?: string;
