@@ -1,112 +1,20 @@
-# Cloudflare Workers
+# Contact form delivery
 
-This directory contains the Cloudflare Workers used by shaffercon.com.
+The live website posts to `shaffercon-contact-form.mikejshaffer.workers.dev`.
+Deploy the default Worker in this directory, not the legacy `cloudflare-worker/contact-form-worker` starter.
 
-## SEO Redirect Worker
+Delivery uses the native Cloudflare Email Sending binding:
+- Fixed recipient: `hello@shaffercon.com`.
+- Fixed verified sender: `contactform@form.shaffercon.com`.
+- Reply-To: the validated submitter address.
+- Intake and attribution fields are retained in a plain-text email.
+- There is no GitHub dispatch, public lead branch, or public issue output.
+- The UI receives success only after the provider returns a message ID. Inbox receipt remains an end-to-end acceptance check.
 
-`shaffercon-seo-redirects.js` handles old WordPress and deleted service URLs that still appear in Google Search Console. It returns real `301` redirects for known legacy paths and passes every other request through to GitHub Pages unchanged.
+Before deployment, verify the destination and onboard the sending domain. Preserve existing Google Workspace MX and existing SPF/DMARC records; any additional sending-domain DNS configuration requires owner approval. The binding is restricted to the exact recipient and sender in `wrangler.toml`. No API token belongs in the source. Remove the now-unused GitHub binding at cutover.
 
-Current routes:
+Run `node --test cloudflare-workers/contact-form.test.mjs` from the repository root. Tests use only synthetic data and a mocked email binding; they send no mail.
 
-```text
-shaffercon.com/*
-www.shaffercon.com/*
-```
+After deployment, make one synthetic submission through the live form, verify the matching private inbox receipt and Reply-To, and verify no repository dispatch or public issue was created. Do not mark delivery complete based only on HTTP 200. Never put customer payloads or verification-email links in commits, issues, or logs.
 
-Deploy with the Cloudflare account credentials in Keychain:
-
-```bash
-CLOUDFLARE_EMAIL=$(security find-generic-password -s CLOUDFLARE_EMAIL -w 2>/dev/null || printf 'mikejshaffer@gmail.com')
-CLOUDFLARE_API_KEY=$(security find-generic-password -s CLOUDFLARE_API_KEY -w 2>/dev/null)
-ACCOUNT=8e83fee9ba5b2bf423d5ffddaaee74c6
-
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/workers/scripts/shaffercon-seo-redirects" \
-  -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
-  -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
-  -H "Content-Type: application/javascript" \
-  --data-binary @cloudflare-workers/shaffercon-seo-redirects.js
-```
-
-## Contact Form Worker
-
-This worker securely handles contact form submissions by keeping the GitHub token server-side.
-
-## Setup Steps
-
-### 1. Install Wrangler CLI
-```bash
-npm install -g wrangler
-```
-
-### 2. Login to Cloudflare
-```bash
-wrangler login
-```
-
-### 3. Set GitHub Token as Secret
-```bash
-cd cloudflare-workers
-wrangler secret put GITHUB_TOKEN
-# When prompted, paste your GitHub personal access token
-```
-
-### 4. Deploy the Worker
-```bash
-wrangler deploy
-```
-
-### 5. Set Up Custom Domain (Optional but Recommended)
-In Cloudflare dashboard:
-1. Go to Workers & Pages → shaffercon-contact-form
-2. Click "Triggers" tab
-3. Add custom domain: `api.shaffercon.com`
-4. Add route: `/contact`
-
-Or use the default workers.dev URL:
-- `https://shaffercon-contact-form.YOUR-SUBDOMAIN.workers.dev`
-
-### 6. Update ContactForm.tsx
-Change the fetch URL from GitHub API to your worker:
-```javascript
-const response = await fetch('https://api.shaffercon.com/contact', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(formData),
-});
-```
-
-## Testing Locally
-
-```bash
-# Test locally with wrangler
-wrangler dev
-
-# Worker will be available at http://localhost:8787
-```
-
-## Environment Variables
-
-The worker uses one secret environment variable:
-- `GITHUB_TOKEN` - Your GitHub personal access token with `repo` scope
-
-Set this via:
-```bash
-wrangler secret put GITHUB_TOKEN
-```
-
-## How It Works
-
-1. User submits contact form on website
-2. Form sends POST request to Cloudflare Worker
-3. Worker validates data and triggers GitHub repository dispatch
-4. GitHub Action saves submission to `leads` branch
-5. Worker returns success/error to form
-
-## Security Benefits
-
-✅ GitHub token never exposed in client-side code
-✅ CORS configured for shaffercon.com only
-✅ Request validation and error handling
-✅ Free tier: 100,000 requests/day
+The in-memory request throttle is best-effort per isolate, not a global rate limit. Origin checks prevent cross-site browser submissions but do not authenticate arbitrary HTTP clients. Keyword-based silent rejection was removed because ordinary customer wording can match vendor-pitch terms.

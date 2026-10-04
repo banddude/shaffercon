@@ -1,12 +1,12 @@
 name = "shaffercon-contact-form"
 main = "contact-form.js"
-compatibility_date = "2024-01-01"
+compatibility_date = "2026-10-04"
 workers_dev = true
 
-# Environment variables (set via Cloudflare dashboard or wrangler CLI)
-# GITHUB_TOKEN will be set as a secret
-
-[env.production]
-routes = [
-  { pattern = "api.shaffercon.com/contact", zone_name = "shaffercon.com" }
-]
+# Free path: Email Routing is enabled on the form.shaffercon.com subdomain only
+# (subdomain MX + SPF). The destination must be a verified Email Routing address.
+# This does not enable apex Email Routing or change Google Workspace MX.
+[[send_email]]
+name = "EMAIL"
+destination_address = "hello@shaffercon.com"
+allowed_sender_addresses = ["contactform@form.shaffercon.com"]

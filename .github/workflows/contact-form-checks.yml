@@ -1,0 +1,34 @@
+name: Contact form checks
+on:
+  pull_request:
+    paths:
+      - 'cloudflare-workers/**'
+      - 'site/app/components/ContactForm.tsx'
+      - 'site/scripts/test-contact-form.cjs'
+      - 'site/package*.json'
+      - '.github/workflows/contact-form-checks.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare-workers/**'
+      - 'site/app/components/ContactForm.tsx'
+      - 'site/scripts/test-contact-form.cjs'
+      - 'site/package*.json'
+      - '.github/workflows/contact-form-checks.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test cloudflare-workers/contact-form.test.mjs
+      - name: Install frontend test dependencies
+        working-directory: site
+        run: npm ci
+      - name: Contact form behavior regressions
+        working-directory: site
+        run: node scripts/test-contact-form.cjs

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { classNames } from "@/app/styles/theme";
 import { serviceCategoryForPath, trackFormSubmit, trackGenerateLead, trackQualifiedLead } from "@/app/lib/analytics";
 import type { SiteConfig } from "@/lib/db";
@@ -144,10 +144,9 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
 
   const [submitted, setSubmitted] = useState(false);
 
-  // Track when the form rendered. Bot tools typically submit within
-  // milliseconds of page load; humans take seconds. Submissions under
-  // 3 seconds are treated as suspicious.
-  const [renderedAt] = useState<number>(() => Date.now());
+  const sending = useRef(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fallbackEmail, setFallbackEmail] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -167,13 +166,13 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
       return;
     }
 
-    // Time check: real humans take more than 3 seconds to fill out a form
-    const elapsed = Date.now() - renderedAt;
-    if (elapsed < 3000) {
-      // Suspicious — pretend success but don't actually submit
-      setSubmitted(true);
-      return;
-    }
+    // Autofill can complete a real inquiry immediately. Never pretend a fast
+    // submission was delivered, and never send a second request while pending.
+    if (sending.current) return;
+    sending.current = true;
+    setIsSubmitting(true);
+    setSubmitted(false);
+    setFallbackEmail(null);
 
     const attribution = readLeadAttribution();
     const loadStudyIntake = isLoadStudyContext ? {
@@ -188,7 +187,7 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
     } : null;
 
     try {
-      // Submit to Cloudflare Worker (GitHub token is secure on the server)
+      // Submit privately through the restricted email Worker.
       // Keep the workers.dev endpoint until api.shaffercon.com resolves.
       const response = await fetch('https://shaffercon-contact-form.mikejshaffer.workers.dev', {
         method: 'POST',
@@ -207,26 +206,28 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
         }),
       });
 
-      if (response.ok) {
-        const result = await response.json().catch(() => ({ accepted: true }));
-        if (result.accepted !== false) {
-          trackFormSubmit("Contact form", window.location.pathname);
-          trackGenerateLead("contact_form", window.location.pathname);
-          trackQualifiedLead("contact_form", window.location.pathname);
-        }
-        setSubmitted(true);
-        // Reset form
-        setFormData(emptyFormData);
-      } else {
-        throw new Error('Failed to submit');
+      const result = await response.json().catch(() => null);
+      if (!response.ok || result?.success !== true || result?.accepted !== true) {
+        throw new Error('Email delivery not accepted');
       }
-    } catch (error) {
+      setSubmitted(true);
+      setFormData(emptyFormData);
+      // Analytics failure must never turn a delivered inquiry into a retry.
+      try {
+        trackFormSubmit("Contact form", window.location.pathname);
+        trackGenerateLead("contact_form", window.location.pathname);
+        trackQualifiedLead("contact_form", window.location.pathname);
+      } catch { /* Delivery has already succeeded. */ }
+    } catch {
       // Fallback to mailto on error
       const intakeLines = loadStudyIntake ? `\nProperty type: ${loadStudyIntake.propertyType}\nStudy reason: ${loadStudyIntake.studyReason}\nNew load type: ${loadStudyIntake.newLoadType}\nCharger count: ${loadStudyIntake.chargerCount}\nUtility: ${loadStudyIntake.utilityProvider}\nPermit deadline: ${loadStudyIntake.permitDeadline}\nStamped report needed: ${loadStudyIntake.stampedReport}\nPhotos or plans available: ${loadStudyIntake.plansAvailable}\n` : "";
       const mailtoLink = `mailto:${config.contact.email}?subject=Service Request&body=${encodeURIComponent(
         `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAddress: ${formData.address}${intakeLines}\nSource page: ${attribution.pageUrl}\nLanding page: ${attribution.landingPage}\nReferrer: ${attribution.referrer}\n\nMessage:\n${formData.message}`
       )}`;
-      window.location.href = mailtoLink;
+      setFallbackEmail(mailtoLink);
+    } finally {
+      sending.current = false;
+      setIsSubmitting(false);
     }
   };
 
@@ -594,6 +595,8 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
 
         <button
           type="submit"
+          disabled={isSubmitting}
+          aria-busy={isSubmitting}
           className={classNames.buttonPrimary}
           style={{
             background: "var(--primary)",
@@ -608,9 +611,17 @@ export default function ContactForm({ title, siteConfig }: ContactFormProps) {
             e.currentTarget.style.opacity = '1';
           }}
         >
-          Send Request
+          {isSubmitting ? "Sending…" : "Send Request"}
         </button>
       </form>
+
+      {fallbackEmail && (
+        <div role="alert" className="mt-6 p-4 rounded-lg border" style={{ borderColor: "var(--primary)", color: "var(--text)" }}>
+          Your inquiry has not been sent. Please try again or{' '}
+          <a href={fallbackEmail} className="underline" style={{ color: "var(--primary)" }}>email us directly</a>.
+          Your form details are still here.
+        </div>
+      )}
 
       {submitted && (
         <div
