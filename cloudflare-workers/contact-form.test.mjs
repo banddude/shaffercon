@@ -18,13 +18,13 @@ test('valid inquiry sends privately to the one approved recipient', async () => 
   const s = sink(); const r = await worker.fetch(request(), s.env);
   assert.equal(r.status, 200); assert.equal((await r.json()).accepted, true);
   assert.equal(s.sent.length, 1); assert.equal(s.sent[0].to, 'hello@shaffercon.com');
-  assert.equal(s.sent[0].from.email, 'contactform@shaffercon.com');
+  assert.equal(s.sent[0].from.email, 'contactform@form.shaffercon.com');
   assert.equal(s.sent[0].replyTo, good.email); assert.match(s.sent[0].text, /panel upgrade/);
 });
 test('submitted routing fields cannot expand recipients or sender', async () => {
   const s = sink(); await worker.fetch(request({ ...good, to: 'outsider@example.net', cc: ['outsider@example.net'], from: 'fake@example.net' }), s.env);
   assert.equal(s.sent[0].to, 'hello@shaffercon.com'); assert.equal(s.sent[0].cc, undefined);
-  assert.equal(s.sent[0].from.email, 'contactform@shaffercon.com');
+  assert.equal(s.sent[0].from.email, 'contactform@form.shaffercon.com');
 });
 test('keeps deployed load-study and attribution fields in the email', async () => {
   const s = sink(); await worker.fetch(request({ ...good, loadStudyIntake: { studyReason: 'New load study' }, attribution: { pagePath: '/electrical-load-studies/' } }), s.env);

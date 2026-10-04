@@ -3,9 +3,10 @@ main = "contact-form.js"
 compatibility_date = "2026-10-04"
 workers_dev = true
 
-# Requires the sending domain and this exact destination to be verified.
+# Free path: Email Routing is enabled on the form.shaffercon.com subdomain only
+# (subdomain MX + SPF). The destination must be a verified Email Routing address.
 # This does not enable inbound Email Routing or change Google Workspace MX.
 [[send_email]]
 name = "EMAIL"
 destination_address = "hello@shaffercon.com"
-allowed_sender_addresses = ["contactform@shaffercon.com"]
+allowed_sender_addresses = ["contactform@form.shaffercon.com"]

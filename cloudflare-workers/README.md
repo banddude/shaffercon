@@ -5,7 +5,7 @@ Deploy the default Worker in this directory, not the legacy `cloudflare-worker/c
 
 Delivery uses the native Cloudflare Email Sending binding:
 - Fixed recipient: `hello@shaffercon.com`.
-- Fixed verified sender: `contactform@shaffercon.com`.
+- Fixed verified sender: `contactform@form.shaffercon.com`.
 - Reply-To: the validated submitter address.
 - Intake and attribution fields are retained in a plain-text email.
 - There is no GitHub dispatch, public lead branch, or public issue output.

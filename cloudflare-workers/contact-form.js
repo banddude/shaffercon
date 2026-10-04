@@ -1,6 +1,6 @@
 // Private contact delivery. Recipient is fixed in both code and the binding.
 const DESTINATION = 'hello@shaffercon.com';
-const SENDER = 'contactform@shaffercon.com';
+const SENDER = 'contactform@form.shaffercon.com';
 const ORIGINS = new Set(['https://shaffercon.com', 'https://www.shaffercon.com']);
 const MAX_BODY_BYTES = 32768;
 const recent = new Map(); // Best-effort isolate-local abuse protection, never logged.
