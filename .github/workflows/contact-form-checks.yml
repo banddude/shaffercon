@@ -1,0 +1,22 @@
+name: Contact form checks
+on:
+  pull_request:
+    paths:
+      - 'cloudflare-workers/**'
+      - '.github/workflows/contact-form-checks.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare-workers/**'
+      - '.github/workflows/contact-form-checks.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test cloudflare-workers/contact-form.test.mjs

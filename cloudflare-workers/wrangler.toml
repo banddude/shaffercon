@@ -1,12 +1,11 @@
 name = "shaffercon-contact-form"
 main = "contact-form.js"
-compatibility_date = "2024-01-01"
+compatibility_date = "2026-10-04"
 workers_dev = true
 
-# Environment variables (set via Cloudflare dashboard or wrangler CLI)
-# GITHUB_TOKEN will be set as a secret
-
-[env.production]
-routes = [
-  { pattern = "api.shaffercon.com/contact", zone_name = "shaffercon.com" }
-]
+# Requires the sending domain and this exact destination to be verified.
+# This does not enable inbound Email Routing or change Google Workspace MX.
+[[send_email]]
+name = "EMAIL"
+destination_address = "hello@shaffercon.com"
+allowed_sender_addresses = ["contactform@shaffercon.com"]
