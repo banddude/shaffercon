@@ -28,6 +28,24 @@ function decodeHtmlEntities(text: string): string {
     .replace(/&#039;/g, "'");
 }
 
+interface ServiceHubLink {
+  href: string;
+  label: string;
+}
+
+function getServiceHubLinks(serviceType: string, serviceName: string): ServiceHubLink[] {
+  if (serviceName !== "ev-charger-installation") return [];
+
+  const hub = serviceType === "commercial"
+    ? { href: "/commercial-electric-vehicle-chargers/", label: "Commercial EV charger installation in Los Angeles" }
+    : { href: "/residential-ev-charger/", label: "Home EV charger installation in Los Angeles" };
+
+  return [
+    hub,
+    { href: "/electrical-load-studies/", label: "Electrical load studies for EV charging" },
+  ];
+}
+
 interface PageProps {
   params: Promise<{
     location: string;
@@ -452,6 +470,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   const pageTitle = pageData?.title || fullServiceName;
   const priorityDetail = getPriorityServiceDetail(serviceType, serviceName, locationName, serviceDisplayName);
+  const serviceHubLinks = getServiceHubLinks(serviceType, serviceName);
 
   return (
     <main className="w-full">
@@ -536,6 +555,15 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         <Container maxWidth="lg">
           {page.hero_intro && (
             <Paragraph className="text-center text-xl mb-12">{decodeHtmlEntities(page.hero_intro)}</Paragraph>
+          )}
+
+          {serviceHubLinks.length > 0 && (
+            <div className="mb-12">
+              <Paragraph className="text-center mb-4">
+                Planning an EV charging project beyond this local installation? These pages cover the broader Los Angeles installation and electrical-capacity process.
+              </Paragraph>
+              <LinkCardGrid items={serviceHubLinks} columns={2} />
+            </div>
           )}
 
           {/* Trust Bar */}

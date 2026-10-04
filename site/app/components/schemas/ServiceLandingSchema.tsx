@@ -89,6 +89,20 @@ const serviceProfiles: Record<string, ServiceProfile> = {
     ],
     areaServed: defaultAreaServed,
   },
+  "venetian-plaster-los-angeles": {
+    serviceType: "Venetian plaster and decorative wall finishes",
+    category: "Decorative plaster and interior wall finishes",
+    audience: ["Homeowners", "Interior designers", "General contractors", "Commercial property owners", "Hospitality operators"],
+    offers: [
+      "Venetian plaster",
+      "Polished plaster",
+      "Decorative feature walls",
+      "Bathroom decorative finishes",
+      "Fireplace and architectural plaster finishes",
+      "Commercial decorative plaster",
+    ],
+    areaServed: defaultAreaServed,
+  },
   "statewide-facilities-maintenance": {
     serviceType: "Facilities electrical maintenance",
     category: "Facilities maintenance",

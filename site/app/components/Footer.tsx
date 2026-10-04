@@ -16,10 +16,10 @@ const POPULAR_AREA_SERVICES: { href: string; label: string }[] = [
   { href: "/service-areas/beverly-hills/residential-electrical-panel-upgrades/", label: "Panel Upgrades in Beverly Hills" },
   { href: "/service-areas/santa-monica/residential-lighting-installation-retrofitting/", label: "Lighting Installation in Santa Monica" },
   { href: "/service-areas/long-beach/residential-ev-charger-installation/", label: "EV Charger Installation in Long Beach" },
-  { href: "/service-areas/hollywood/residential-electrical-code-compliance-corrections/", label: "Code Corrections in Hollywood" },
+  { href: "/service-areas/west-hollywood/residential-ev-charger-installation/", label: "EV Charger Installation in West Hollywood" },
   { href: "/service-areas/glendale/residential-electrical-panel-upgrades/", label: "Panel Upgrades in Glendale" },
   { href: "/service-areas/culver-city/residential-ev-charger-installation/", label: "EV Charger Installation in Culver City" },
-  { href: "/service-areas/sherman-oaks/residential-electrical-troubleshooting-repairs/", label: "Electrical Repairs in Sherman Oaks" },
+  { href: "/service-areas/sherman-oaks/", label: "Electrician in Sherman Oaks" },
   { href: "/service-areas/highland-park/residential-electrical-safety-inspections/", label: "Safety Inspections in Highland Park" },
   { href: "/service-areas/venice/residential-lighting-installation-retrofitting/", label: "Lighting Installation in Venice" },
 ];
@@ -66,6 +66,12 @@ export default function Footer({ siteConfig }: FooterProps) {
                 <Link href="/industry-insights/" className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1.5">
                   <FileCheck className="w-3 h-3" style={{ color: "var(--primary)" }} />
                   <span>Industry Insights</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/venetian-plaster-los-angeles/" className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1.5">
+                  <FileCheck className="w-3 h-3" style={{ color: "var(--primary)" }} />
+                  <span>Venetian Plaster</span>
                 </Link>
               </li>
               <li>
