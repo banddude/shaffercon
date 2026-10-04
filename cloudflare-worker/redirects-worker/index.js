@@ -515,6 +515,24 @@ const CANONICAL_TOP_LEVEL_SLUGS = new Set([
 
 async function handleRequest(request) {
   const url = new URL(request.url);
+  const path = normalizePath(url.pathname);
+  const parts = path.split('/').filter(Boolean);
+  // BLOG_SLUGS is a legacy migration snapshot, not the current publishing
+  // catalog. New articles must reach GitHub Pages before a guessed fallback.
+  // Preserve explicit legacy redirects; only a real origin 404 may fall back.
+  const newBlogPath = (request.method === 'GET' || request.method === 'HEAD') &&
+    parts.length === 2 && parts[0] === 'industry-insights' &&
+    !BLOG_SLUGS.has(parts[1]) && !DIRECT_REDIRECTS[path];
+  if (newBlogPath) {
+    if (url.hostname === 'www.shaffercon.com') {
+      url.hostname = 'shaffercon.com';
+      return Response.redirect(url.toString(), 301);
+    }
+    const origin = await fetch(request);
+    if (origin.status !== 404) return origin;
+    const fallback = resolveTopicTarget(parts[1], true);
+    return Response.redirect(new URL(fallback, 'https://shaffercon.com').toString(), 301);
+  }
   const target = resolveRedirect(url.pathname);
 
   if (target) {
