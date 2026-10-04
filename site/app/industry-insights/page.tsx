@@ -66,7 +66,7 @@ export default async function IndustryInsightsPage() {
                     <div className={classNames.blogImageContainer}>
                       <img
                         src={post.ogImage}
-                        alt={post.title}
+                        alt={post.ogImageAlt || post.title}
                         className={classNames.blogImage}
                         loading="lazy"
                         decoding="async"

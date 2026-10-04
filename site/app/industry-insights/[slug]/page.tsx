@@ -1,3 +1,4 @@
+import { ServiceLandingSchema } from "@/app/components/schemas/ServiceLandingSchema";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -51,6 +52,21 @@ function getPostCTA(post: Awaited<ReturnType<typeof getBlogPost>>) {
   if (!post) return null;
 
   const text = `${post.slug} ${post.title}`.toLowerCase();
+
+  if (post.topic === "plaster") {
+    return {
+      heading: "Plan your decorative plaster finish",
+      body: "Send photos, approximate dimensions, and finish references. Shaffer Construction can help define the preparation, decorative finish, and details for your Los Angeles project.",
+      href: "/venetian-plaster-los-angeles/",
+      label: "Explore Venetian plaster finishes",
+      links: [
+        { href: "/industry-insights/venetian-plaster-vs-limewash-los-angeles/", label: "Plaster vs. limewash" },
+        { href: "/industry-insights/venetian-plaster-cost-factors-los-angeles/", label: "Estimate checklist" },
+        { href: "/contact-us/", label: "Request a plaster estimate" },
+      ],
+      localLinks: [],
+    };
+  }
 
   if (/(panel|subpanel|zinsco|federal-pacific|fpe|service-upgrade)/.test(text)) {
     return {
@@ -283,14 +299,19 @@ export default async function BlogPostPage({ params }: PageProps) {
         title={post.title}
         description={post.metaDescription || post.title}
         datePublished={post.date}
+        authorType={post.authorType}
+        authorName={post.authorName}
         image={post.ogImage}
         url={articleUrl}
       />
-      <LocalBusinessSchema
-        areaServed="Los Angeles"
-        serviceUrl={articleUrl}
-        services={["EV Charger Installation", "Electrical Services", "Load Study Services"]}
-      />
+      {post.topic === "plaster" ? (
+        <ServiceLandingSchema name="Venetian Plaster and Decorative Wall Finishes in Los Angeles"
+          description="Hand-applied decorative plaster for feature walls and specialty interiors."
+          url={`${baseUrl}/venetian-plaster-los-angeles/`} />
+      ) : (
+        <LocalBusinessSchema areaServed="Los Angeles" serviceUrl={articleUrl}
+          services={["EV Charger Installation", "Electrical Services", "Load Study Services"]} />
+      )}
       <BreadcrumbSchema
         items={[
           { label: "Home", href: "/" },
@@ -321,7 +342,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             >
               <img
                 src={post.ogImage}
-                alt={post.title}
+                alt={post.ogImageAlt || post.title}
                 className="w-full h-auto"
                 style={{ maxHeight: '520px', objectFit: 'cover' }}
               />

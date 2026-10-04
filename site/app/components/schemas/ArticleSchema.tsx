@@ -15,6 +15,7 @@ interface ArticleSchemaProps {
   datePublished: string;
   dateModified?: string;
   authorName?: string;
+  authorType?: "Person" | "Organization";
   image?: string;
   url: string;
 }
@@ -25,6 +26,7 @@ export function ArticleSchema({
   datePublished,
   dateModified,
   authorName = "Mike Shaffer",
+  authorType = "Person",
   image,
   url,
 }: ArticleSchemaProps) {
@@ -35,7 +37,9 @@ export function ArticleSchema({
     "description": description,
     "datePublished": datePublished,
     "dateModified": dateModified || datePublished,
-    "author": {
+    "author": authorType === "Organization" ? {
+      "@type": "Organization", "name": authorName, "url": "https://shaffercon.com/about-us/"
+    } : {
       "@type": "Person",
       "name": authorName,
       "url": "https://shaffercon.com/about-us/",

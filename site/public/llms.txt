@@ -43,6 +43,9 @@ Source: generated from the current Shaffer Construction database and industry in
 
 ## Recent Industry Insights
 
+* [Venetian Plaster for Bathrooms and Fireplace Walls](https://shaffercon.com/industry-insights/venetian-plaster-bathrooms-fireplaces-design-guide/): Explore plaster bathroom and fireplace design ideas, with practical questions about lighting, moisture exposure, surface preparation, and finish selection.
+* [What Affects Venetian Plaster Cost in Los Angeles?](https://shaffercon.com/industry-insights/venetian-plaster-cost-factors-los-angeles/): Understand how wall preparation, finish detail, access, samples, and project scope affect a Venetian plaster estimate in Los Angeles.
+* [Venetian Plaster vs. Limewash: Choosing a Wall Finish](https://shaffercon.com/industry-insights/venetian-plaster-vs-limewash-los-angeles/): Compare the look, texture, preparation, and maintenance of Venetian plaster and limewash before choosing a finish for your Los Angeles home.
 * [BMW iX3 Preorders at $61,500 with 434-Mile Range, Greenlane Texas I-45 Truck Charging, Blink-Emobi Roaming Deal, Soda Mountain Solar Approved, Cybercab Ramp](https://shaffercon.com/industry-insights/bmw-ix3-preorders-61500-434-mile-range-greenlane-texas-i-45-truck-charging-blink-emobi-roaming-soda-mountain-solar-cybercab-ramp/): May 7 2026 EV news: BMW iX3 US preorders at $61,500 with 434 mi range, Greenlane Texas truck charging, Blink-Emobi roaming, Soda Mountain solar, Cybercab ramp.
 * [WattEV Tesla Semi Order Leads May 2026 EV Charging News](https://shaffercon.com/industry-insights/wattev-370-tesla-semis-port-oakland-lexus-tz-3-row-ev-suv-vw-id-cross-byd-datang-30k-orders-ansi-fire-safety-standards/): May 6 2026 EV news: WattEV's 370 Tesla Semi order, Lexus TZ 3-row reveal, VW ID Cross spotted, BYD Datang 30K orders, ANSI fire-safety EV charger standards.
 * [Commercial EV Charger Installation Cost in Los Angeles](https://shaffercon.com/industry-insights/commercial-ev-charger-installation-cost-los-angeles/): Learn what affects commercial EV charger installation cost in Los Angeles for Level 2, DC fast charging, permits, load studies, and utility work.
@@ -52,9 +55,6 @@ Source: generated from the current Shaffer Construction database and industry in
 * [Kia EV9 +481% in April, GM Postpones Hummer EV and Silverado EV, CATL 6-Min Shenxing Battery, Cybertruck Q1 Record Low, Pilot-Tesla Megacharger Summer Launch](https://shaffercon.com/industry-insights/kia-ev9-up-481-april-gm-postpones-hummer-silverado-ev-catl-6-min-shenxing-battery-cybertruck-q1-record-low-pilot-tesla-megacharger-summer-launch/): May 3 2026 EV news: Kia EV9 +481% in April, GM delays Hummer/Silverado EVs, CATL 6-min Shenxing battery, Cybertruck Q1 record low, Pilot-Tesla Megachargers.
 * [Tesla Semi Megacharger and Basecharger, Rivian Georgia 300K Capacity, Hyundai IONIQ 5 +11%, Voltpost DC Lamppost Chargers, Lucid Gravity Award](https://shaffercon.com/industry-insights/tesla-semi-megacharger-basecharger-rivian-georgia-300k-capacity-hyundai-ioniq-5-up-11-voltpost-dc-lamppost-chargers-lucid-gravity-award/): May 2 2026 EV news: Tesla Semi Megacharger/Basecharger pricing, Rivian Georgia 300K capacity, Hyundai IONIQ 5 +11%, Voltpost DC chargers, Lucid Gravity award.
 * [South Coast AQMD $30M Resiliency Program, Rivian Q1 Earnings + $1B VW, Oregon NEVI Awards, Sierra Club Report, $548B Market Forecast](https://shaffercon.com/industry-insights/south-coast-aqmd-30m-resiliency-program-rivian-q1-earnings-1b-vw-oregon-nevi-awards-sierra-club-report-548b-market-forecast/): May 1 2026 EV news: AQMD $30M LA charger resiliency program, Rivian Q1 + $1B VW investment, Oregon NEVI awards, Sierra Club report, $548B market.
-* [Rivian-Caruso 150 LA Fast Chargers, VW ID. Polo $29K Debut, XCharge GridLink Award, Walmart-ABB Phoenix Expansion, Hyundai Closes In On GM](https://shaffercon.com/industry-insights/rivian-caruso-150-la-fast-chargers-vw-id-polo-29k-debut-xcharge-gridlink-award-walmart-abb-phoenix-hyundai-closes-on-gm/): April 30 2026 EV news: Rivian-Caruso 150 LA chargers, VW ID. Polo $29K, XCharge GridLink E+E award, Walmart-ABB Phoenix, Hyundai gaining on GM.
-* [Walmart 224-Stall Fast Charging Network, California Heavy-Duty AV Rules, ZEV Market 4-Year Low, $272.5B EV Aftermarket, and Ford's 6.87-Second EV Record](https://shaffercon.com/industry-insights/walmart-224-stall-fast-charging-network-california-heavy-duty-av-rules-zev-market-4-year-low-272b-ev-aftermarket-ford-687-second-ev-record/): April 29 2026 EV news: Walmart's 31-station 400kW network, California heavy-duty autonomous rules, ZEV share at 13.7%, $272B aftermarket, Ford 6.87s record.
-* [Q1 2026 Fast Charging Report, EVgo NACS Expansion, CATL 60 GWh Sodium-Ion Deal, Toyota EV Sales Up 139%, and Kia EV6/EV9 Price Cuts](https://shaffercon.com/industry-insights/q1-2026-fast-charging-report-evgo-nacs-expansion-catl-60gwh-sodium-ion-toyota-ev-sales-139-percent-kia-ev6-ev9-price-cuts/): April 28, 2026 EV news: 73K U.S. fast-charging ports, EVgo NACS rollout, CATL's 60 GWh sodium-ion deal, Toyota EV sales up 139%, Kia $10K EV cuts.
 
 ## Service Area Pages
 
@@ -87,7 +87,7 @@ Source: generated from the current Shaffer Construction database and industry in
 * Three license classifications under one contractor, C-10 Electrical, A General Engineering, and B General Building.
 * Direct owner accountability from Mike Shaffer.
 * Los Angeles based office on Larchmont Boulevard.
-* 880 neighborhood service pages, 22 location landing pages, and 351 industry insight articles.
+* 880 neighborhood service pages, 22 location landing pages, and 354 industry insight articles.
 * Public sitemap: https://shaffercon.com/sitemap.xml
 * Comprehensive LLM index: https://shaffercon.com/llms-full.txt
 
