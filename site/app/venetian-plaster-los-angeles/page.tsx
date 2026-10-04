@@ -267,6 +267,14 @@ export default function VenetianPlasterPage() {
         </Container>
       </Section>
 
+      <Section padding="lg">
+        <Container maxWidth="lg">
+          <SectionHeading className="mb-6">Decorative Plaster in Los Angeles</SectionHeading>
+          <Paragraph>Shaffer Construction is based in Los Angeles and serves homes and commercial interiors across the area, including Silver Lake, Los Feliz, Hollywood, West Hollywood, Beverly Hills, and Pasadena. Include your project neighborhood when you contact us so we can review access, scheduling, and the scope for your space.</Paragraph>
+          <p className="mt-5"><Link href="/contact-us/" style={{ color: "var(--primary)" }}>Discuss a local plaster project</Link></p>
+        </Container>
+      </Section>
+
       <CTA
         heading="Have a Wall in Mind?"
         text="Send us photos of the space, approximate dimensions, and a reference for the finish you like. We can start from there."
