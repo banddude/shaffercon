@@ -5,7 +5,7 @@ workers_dev = true
 
 # Free path: Email Routing is enabled on the form.shaffercon.com subdomain only
 # (subdomain MX + SPF). The destination must be a verified Email Routing address.
-# This does not enable inbound Email Routing or change Google Workspace MX.
+# This does not enable apex Email Routing or change Google Workspace MX.
 [[send_email]]
 name = "EMAIL"
 destination_address = "hello@shaffercon.com"
