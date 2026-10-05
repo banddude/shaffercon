@@ -374,7 +374,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const baseUrl = 'https://shaffercon.com';
-  const url = `${baseUrl}/service-areas/${location}/${service}`;
+  const url = `${baseUrl}/service-areas/${location}/${service}/`;
 
   // Build proper display name (handle EV/AV/LED/GFCI/AFCI abbreviations)
   const locationDisplay = location.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -404,12 +404,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: { absolute: title },
     description,
     alternates: {
-      canonical: page.canonical_url || url,
+      canonical: url,
     },
     openGraph: {
       title,
       description,
-      url: page.canonical_url || url,
+      url,
       siteName: 'Shaffer Construction',
       locale: 'en_US',
       type: 'website',
