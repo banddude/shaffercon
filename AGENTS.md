@@ -14,6 +14,10 @@ Instead run:
 
 It appends the new slug (slash + no-slash source variants) to the Cloudflare
 bulk redirect list used by shaffercon.com. Existing items are never modified.
+Only missing source variants are appended; the script verifies the async
+operation completed and that no pre-existing item changed before reporting
+success. Remember: any push to main auto-deploys the site to GitHub Pages
+(including site/app/not-found.tsx changes).
 
 
 ### Making Content Changes
