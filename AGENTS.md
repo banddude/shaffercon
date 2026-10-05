@@ -2,22 +2,33 @@
 
 ## 🚀 DEPLOYMENT WORKFLOW - HOW TO MAKE CHANGES LIVE
 
-### Legacy blog redirects (IMPORTANT - changed 2026-10-05)
+### Legacy blog redirects (IMPORTANT - changed 2026-10-05, staged)
 
 When publishing a new post, legacy top-level /<slug> links must keep working.
-Do NOT edit BLOG_SLUGS in cloudflare-worker/redirects-worker/index.js anymore
-(the worker is no longer routed; it is kept only for rollback).
 
-Instead run:
+Current staged state: the shaffercon-seo-redirects worker is STILL ROUTED and
+handles legacy redirects. It is being migrated to the Cloudflare bulk
+redirect list `shaffercon_legacy_blog_redirects`; after the approved cutover
+the worker routes are deleted (script kept only for rollback) and the flow
+below becomes the only path. Until the cutover is authorized, do NOT edit
+BLOG_SLUGS in cloudflare-worker/redirects-worker/index.js for new posts;
+coordinate the cutover with DEV/AIVA instead.
+
+At and after cutover, publish flow is:
 
     CLOUDFLARE_EMAIL=... CLOUDFLARE_API_KEY=... python3 scripts/sync-legacy-redirects.py
 
-It appends the new slug (slash + no-slash source variants) to the Cloudflare
-bulk redirect list used by shaffercon.com. Existing items are never modified.
-Only missing source variants are appended; the script verifies the async
-operation completed and that no pre-existing item changed before reporting
-success. Remember: any push to main auto-deploys the site to GitHub Pages
-(including site/app/not-found.tsx changes).
+It appends ONLY the missing source variants (bare-domain form, which matches
+both http and https requests; Cloudflare scheme-specific sources match only
+their own scheme) to the bulk redirect list. Existing items are never
+modified or re-posted. The script hard-fails on any API/schema problem,
+verifies the async bulk operation on
+/rules/lists/bulk_operations/{operation_id}, and proves the write with one
+final paginated snapshot (exact target/status/flags per planned item, no
+duplicates, no count drift, every pre-existing item unchanged) before
+reporting success. The 10,000-item list cap is checked before any write.
+Any push to main auto-deploys the site to GitHub Pages (including
+site/app/not-found.tsx changes).
 
 
 ### Making Content Changes
