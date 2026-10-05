@@ -245,7 +245,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const baseUrl = 'https://shaffercon.com';
-  const url = `${baseUrl}/industry-insights/${slug}`;
+  const url = `${baseUrl}/industry-insights/${slug}/`;
   const title = post.metaTitle || post.title;
   const description = post.metaDescription || '';
 
@@ -253,12 +253,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: { absolute: title },
     description,
     alternates: {
-      canonical: post.canonicalUrl || url,
+      canonical: url,
     },
     openGraph: {
       title,
       description,
-      url: post.canonicalUrl || url,
+      url,
       siteName: 'Shaffer Construction',
       locale: 'en_US',
       type: 'article',
