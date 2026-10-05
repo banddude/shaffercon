@@ -122,6 +122,8 @@ export default function NotFound() {
       }
 
       function redirect(to) {
+        var target = String(to).replace(/^https?:\\/\\/[^\\/]+/, "");
+        if (target === window.location.pathname) return;
         window.location.replace(to);
       }
 

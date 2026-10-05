@@ -4,7 +4,8 @@ compatibility_date = "2024-01-01"
 workers_dev = false
 preview_urls = false
 
-routes = [
-  { pattern = "shaffercon.com/*", zone_name = "shaffercon.com" },
-  { pattern = "www.shaffercon.com/*", zone_name = "shaffercon.com" }
-]
+# Routes removed 2026-10-05: legacy redirects moved to the Cloudflare bulk
+# redirect list (shaffercon_legacy_blog_redirects) to stop the worker burning
+# ~50k Workers requests/day. Script kept for rollback; do NOT re-add routes
+# without removing the bulk redirect rule first (the rule runs before workers).
+# Rollback: POST /zones/<zone>/workers/routes {"pattern":"shaffercon.com/*","script":"shaffercon-seo-redirects"}
