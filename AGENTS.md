@@ -2,6 +2,20 @@
 
 ## 🚀 DEPLOYMENT WORKFLOW - HOW TO MAKE CHANGES LIVE
 
+### Legacy blog redirects (IMPORTANT - changed 2026-10-05)
+
+When publishing a new post, legacy top-level /<slug> links must keep working.
+Do NOT edit BLOG_SLUGS in cloudflare-worker/redirects-worker/index.js anymore
+(the worker is no longer routed; it is kept only for rollback).
+
+Instead run:
+
+    CLOUDFLARE_EMAIL=... CLOUDFLARE_API_KEY=... python3 scripts/sync-legacy-redirects.py
+
+It appends the new slug (slash + no-slash source variants) to the Cloudflare
+bulk redirect list used by shaffercon.com. Existing items are never modified.
+
+
 ### Making Content Changes
 1. **Edit Database**: Update content in `database/data/site.db` using SQL
 2. **Commit Changes**: `git add . && git commit -m "Your message"`
