@@ -43,6 +43,7 @@ Source: generated from the current Shaffer Construction database and industry in
 
 ## Recent Industry Insights
 
+* [Blink Energy Rebrand Signals Smarter EV Charging for LA](https://shaffercon.com/industry-insights/blink-energy-rebrand-cpuc-flexible-load-ev-charging-los-angeles/): Blink's rebrand to Blink Energy, a CPUC load flexibility decision, and new CEC charging data show how Los Angeles owners should plan EV power.
 * [EV Charging Where Vehicles Already Stop: Lessons for LA](https://shaffercon.com/industry-insights/ev-charging-where-vehicles-already-stop-los-angeles-ladwp-rebate/): A Georgia fast-charging site, UK depot charging, and LADWP's planned November rebate enrollment show Los Angeles owners how to plan EV charging projects.
 * [Venetian Plaster for Bathrooms and Fireplace Walls](https://shaffercon.com/industry-insights/venetian-plaster-bathrooms-fireplaces-design-guide/): Explore plaster bathroom and fireplace design ideas, with practical questions about lighting, moisture exposure, surface preparation, and finish selection.
 * [What Affects Venetian Plaster Cost in Los Angeles?](https://shaffercon.com/industry-insights/venetian-plaster-cost-factors-los-angeles/): Understand how wall preparation, finish detail, access, samples, and project scope affect a Venetian plaster estimate in Los Angeles.
@@ -54,7 +55,6 @@ Source: generated from the current Shaffer Construction database and industry in
 * [Ford Employee Pricing and Free Chargers, Kia EV6 $5K Cut with Plug & Charge, Volvo Plug & Charge, Tesla FSD 10 Billion Miles, Municipal Rate Reset](https://shaffercon.com/industry-insights/ford-employee-pricing-free-chargers-kia-ev6-5k-cut-plug-charge-volvo-plug-charge-tesla-fsd-10-billion-miles-municipal-rate-reset/): May 5 2026 EV news: Ford employee pricing and free chargers, Kia EV6 $5K cut + Plug & Charge, Volvo Plug & Charge, Tesla FSD 10B miles, municipal rate reset.
 * [300K Used EV Lease Returns, IONNA-Circle K 350 Sites, Lexus ES EV Debut, Mercedes CLA Fastest-Charging, Tesla Cybercab Production](https://shaffercon.com/industry-insights/300k-used-ev-lease-returns-ionna-circle-k-350-sites-lexus-es-ev-debut-mercedes-cla-fastest-charging-tesla-cybercab-production/): May 4 2026 EV news: 300K used EV lease returns, IONNA-Circle K 350 sites, Lexus ES EV with NACS, Mercedes CLA fast charging, Tesla Cybercab production.
 * [Kia EV9 +481% in April, GM Postpones Hummer EV and Silverado EV, CATL 6-Min Shenxing Battery, Cybertruck Q1 Record Low, Pilot-Tesla Megacharger Summer Launch](https://shaffercon.com/industry-insights/kia-ev9-up-481-april-gm-postpones-hummer-silverado-ev-catl-6-min-shenxing-battery-cybertruck-q1-record-low-pilot-tesla-megacharger-summer-launch/): May 3 2026 EV news: Kia EV9 +481% in April, GM delays Hummer/Silverado EVs, CATL 6-min Shenxing battery, Cybertruck Q1 record low, Pilot-Tesla Megachargers.
-* [Tesla Semi Megacharger and Basecharger, Rivian Georgia 300K Capacity, Hyundai IONIQ 5 +11%, Voltpost DC Lamppost Chargers, Lucid Gravity Award](https://shaffercon.com/industry-insights/tesla-semi-megacharger-basecharger-rivian-georgia-300k-capacity-hyundai-ioniq-5-up-11-voltpost-dc-lamppost-chargers-lucid-gravity-award/): May 2 2026 EV news: Tesla Semi Megacharger/Basecharger pricing, Rivian Georgia 300K capacity, Hyundai IONIQ 5 +11%, Voltpost DC chargers, Lucid Gravity award.
 
 ## Service Area Pages
 
@@ -87,7 +87,7 @@ Source: generated from the current Shaffer Construction database and industry in
 * Three license classifications under one contractor, C-10 Electrical, A General Engineering, and B General Building.
 * Direct owner accountability from Mike Shaffer.
 * Los Angeles based office on Larchmont Boulevard.
-* 880 neighborhood service pages, 22 location landing pages, and 355 industry insight articles.
+* 880 neighborhood service pages, 22 location landing pages, and 356 industry insight articles.
 * Public sitemap: https://shaffercon.com/sitemap.xml
 * Comprehensive LLM index: https://shaffercon.com/llms-full.txt
 
