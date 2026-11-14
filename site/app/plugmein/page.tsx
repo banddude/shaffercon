@@ -37,9 +37,26 @@ const videoStyle: CSSProperties = {
   boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
 };
 
+// The site's global CSS hides native video controls (for background hero videos).
+// Bring them back for these two videos only.
+const showControlsCss = `
+video.plugmein-video::-webkit-media-controls,
+video.plugmein-video::-webkit-media-controls-enclosure,
+video.plugmein-video::-webkit-media-controls-panel,
+video.plugmein-video::-webkit-media-controls-overlay-play-button,
+video.plugmein-video::-webkit-media-controls-start-playback-button,
+video.plugmein-video::-webkit-media-controls-fullscreen-button,
+video.plugmein-video::-webkit-media-controls-picture-in-picture-button {
+  display: revert !important;
+  opacity: revert !important;
+  pointer-events: revert !important;
+  appearance: revert !important;
+}`;
+
 export default function PlugMeInPage() {
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: showControlsCss }} />
       <Section>
         <Container>
           <PageTitle>Plug Me In</PageTitle>
@@ -54,6 +71,7 @@ export default function PlugMeInPage() {
         <Container>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1rem" }}>Widescreen</h2>
           <video
+            className="plugmein-video"
             style={videoStyle}
             src="/videos/plugmein-wide.mp4"
             poster="/videos/plugmein-wide.jpg"
@@ -69,6 +87,7 @@ export default function PlugMeInPage() {
           <h2 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1rem" }}>Vertical</h2>
           <div style={{ maxWidth: "420px", margin: "0 auto" }}>
             <video
+              className="plugmein-video"
               style={videoStyle}
               src="/videos/plugmein-vertical.mp4"
               poster="/videos/plugmein-vertical.jpg"
