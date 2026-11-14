@@ -19,10 +19,13 @@
   html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
   body { -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
   #stage { position: fixed; inset: 0; cursor: pointer; }
+  /* Always fill the full width (no side bars); extra height is trimmed top and bottom. */
   #stage video, #stage .poster {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: contain; background: #000;
+    position: absolute; left: 0; top: 50%; width: 100%; height: auto;
+    transform: translateY(-50%); background: #000; display: block;
   }
+  #stage .wide { aspect-ratio: 16 / 9; }
+  #stage .tall { aspect-ratio: 9 / 16; }
   /* Landscape shows the widescreen cut, portrait shows the vertical cut. Both keep playing,
      so flipping the phone just changes which one is visible: no reload, no skip. */
   .tall { opacity: 0; }
@@ -80,14 +83,33 @@
   }
   function loop() { sync(); if (!song.paused) requestAnimationFrame(loop); }
 
-  function play() {
+  // The song drives everything: videos only run while the song is actually playing.
+  let stalled = false;
+  song.addEventListener('playing', () => {
+    stalled = false;
     stage.classList.add('started', 'playing');
     for (const v of vids) { v.currentTime = song.currentTime; v.play().catch(() => {}); }
-    song.play().then(() => requestAnimationFrame(loop)).catch(() => stage.classList.remove('playing'));
+    requestAnimationFrame(loop);
+  });
+  song.addEventListener('pause', () => {
+    if (!stalled) stage.classList.remove('playing');
+    vids.forEach(v => v.pause());
+  });
+  song.addEventListener('waiting', () => vids.forEach(v => v.pause()));
+
+  function play() {
+    stage.classList.add('started', 'playing');
+    const tryPlay = () => song.play();
+    tryPlay().catch(() => {
+      // Not loaded yet: start as soon as it can.
+      song.addEventListener('canplay', () => tryPlay().catch(() => stage.classList.remove('playing')), { once: true });
+      song.load();
+    });
     poke();
   }
   function pause() {
-    song.pause(); vids.forEach(v => v.pause());
+    stalled = false;
+    song.pause();
     stage.classList.remove('playing');
   }
   function poke() {
@@ -104,19 +126,24 @@
       poke();
       return;
     }
-    song.paused ? play() : pause();
+    stage.classList.contains('playing') ? pause() : play();
   });
   stage.addEventListener('pointermove', poke);
 
-  // If a video stalls, hold the song so picture and sound stay together.
+  // If the visible video stalls, hold the song so picture and sound stay together.
   for (const v of vids) {
-    v.addEventListener('waiting', () => { if (!song.paused && getComputedStyle(v).opacity !== '0') { song.pause(); v.addEventListener('canplay', () => { if (stage.classList.contains('playing')) { song.play(); requestAnimationFrame(loop); } }, { once: true }); } });
+    v.addEventListener('waiting', () => {
+      if (song.paused || getComputedStyle(v).opacity === '0') return;
+      stalled = true;
+      song.pause();
+      v.addEventListener('canplay', () => { if (stalled) song.play().catch(() => {}); }, { once: true });
+    });
   }
   song.addEventListener('ended', () => {
     pause(); song.currentTime = 0; vids.forEach(v => v.currentTime = 0);
     stage.classList.remove('started'); fill.style.width = '0';
   });
-  document.addEventListener('keydown', (e) => { if (e.code === 'Space') { e.preventDefault(); song.paused ? play() : pause(); } });
+  document.addEventListener('keydown', (e) => { if (e.code === 'Space') { e.preventDefault(); stage.classList.contains('playing') ? pause() : play(); } });
 })();
 </script>
 </body>
