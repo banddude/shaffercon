@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { Section, Container, PageTitle, Paragraph } from "@/app/components/UI";
 
 const baseUrl = "https://shaffercon.com";
-const title = "Plug Me In | A Shaffer Construction Music Video";
+const title = "Plug Me In Music Video";
 const description =
   "A love song about an EV charger. The Shaffer Construction music video, in widescreen and vertical. EV chargers, panel upgrades and electrical work in Los Angeles: (323) 642-8509.";
 
