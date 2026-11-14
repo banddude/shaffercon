@@ -75,7 +75,7 @@
     const t = song.currentTime;
     for (const v of vids) {
       const drift = v.currentTime - t;
-      if (Math.abs(drift) > 0.25) { v.currentTime = t; v.playbackRate = 1; }
+      if (Math.abs(drift) > 0.4) { v.currentTime = t; v.playbackRate = 1; }
       else if (Math.abs(drift) > 0.03) { v.playbackRate = Math.max(0.9, Math.min(1.1, 1 - drift * 1.5)); }
       else { v.playbackRate = 1; }
     }
@@ -99,10 +99,11 @@
 
   function play() {
     stage.classList.add('started', 'playing');
-    const tryPlay = () => song.play();
-    tryPlay().catch(() => {
-      // Not loaded yet: start as soon as it can.
-      song.addEventListener('canplay', () => tryPlay().catch(() => stage.classList.remove('playing')), { once: true });
+    // Start everything inside the tap itself: iPhones only allow playback started by a tap.
+    for (const v of vids) { v.currentTime = song.currentTime; v.play().catch(() => {}); }
+    song.play().catch((err) => {
+      if (err && err.name === 'NotAllowedError') { pause(); return; }
+      song.addEventListener('canplay', () => song.play().catch(() => pause()), { once: true });
       song.load();
     });
     poke();
@@ -129,6 +130,7 @@
     stage.classList.contains('playing') ? pause() : play();
   });
   stage.addEventListener('pointermove', poke);
+  window.addEventListener('touchstart', () => { song.load(); }, { once: true, passive: true });
 
   // If the visible video stalls, hold the song so picture and sound stay together.
   for (const v of vids) {
