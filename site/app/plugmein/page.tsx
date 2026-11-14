@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 import { Section, Container, PageTitle, Paragraph } from "@/app/components/UI";
+import OrientationVideo from "./OrientationVideo";
 
 const baseUrl = "https://shaffercon.com";
 const title = "Plug Me In Music Video";
@@ -28,14 +28,6 @@ export const metadata: Metadata = {
   },
 };
 
-const videoStyle: CSSProperties = {
-  width: "100%",
-  height: "auto",
-  display: "block",
-  borderRadius: "16px",
-  background: "#000",
-  boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
-};
 
 // The site's global CSS hides native video controls (for background hero videos).
 // Bring them back for these two videos only.
@@ -69,33 +61,7 @@ export default function PlugMeInPage() {
 
       <Section>
         <Container>
-          <h2 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1rem" }}>Widescreen</h2>
-          <video
-            className="plugmein-video"
-            style={videoStyle}
-            src="/videos/plugmein-wide.mp4"
-            poster="/videos/plugmein-wide.jpg"
-            controls
-            playsInline
-            preload="metadata"
-          />
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <h2 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1rem" }}>Vertical</h2>
-          <div style={{ maxWidth: "420px", margin: "0 auto" }}>
-            <video
-              className="plugmein-video"
-              style={videoStyle}
-              src="/videos/plugmein-vertical.mp4"
-              poster="/videos/plugmein-vertical.jpg"
-              controls
-              playsInline
-              preload="metadata"
-            />
-          </div>
+          <OrientationVideo />
         </Container>
       </Section>
 
